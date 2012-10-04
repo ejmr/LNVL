@@ -5,9 +5,10 @@
 -- other programs to use and not really an executable on its own.
 --
 -- The program tests if we can create and draw an LNVL.Scene object
--- with a little dialog.  The enter and backspace keys move back and
--- forth through the text, respectively.  Although it will currently
--- crash if we go too far forward or backward.
+-- with a little dialog.  It reads a script filename from the
+-- command-line and loads that.  The enter and backspace keys move
+-- back and forth through the text, respectively.  Although it will
+-- currently crash if we go too far forward or backward.
 --
 --]]
 
@@ -18,14 +19,11 @@ scene = nil
 function love.load(arguments)
     love.graphics.setMode(800, 600)
     love.graphics.setBackgroundColor(0, 0, 0)
-    scene = LNVL.Scene:new{
-        "Hello world,",
-        "This is our first test script.",
-        "\n\n\n",
-        "...",
-        "\n\n",
-        "Hey look at my dramatic RPG ellipses!  I am so emo!"
-    }
+
+    if #arguments > 1 then
+        assert(loadfile(arguments[2]))()
+        scene = START
+    end
 end
 
 function love.keypressed(key)
