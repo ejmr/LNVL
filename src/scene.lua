@@ -32,8 +32,8 @@ function LNVL.Scene:new(properties)
     -- existing defaults and not use the arguments to the constructor
     -- to create new properties specific to each object.
     for name,value in pairs(properties) do
-        if scene[name] ~= nil then
-            scene[name] = value
+        if rawget(scene, name) ~= nil then
+            rawset(scene, name, value)
             table.remove(properties, name)
         end
     end
