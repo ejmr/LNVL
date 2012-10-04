@@ -20,6 +20,17 @@ function LNVL.Scene:new(properties)
     -- of the scene when we draw it.
     scene.background_color = {255, 255, 255}
 
+    -- Apply any properties passed in as arguments that replace any
+    -- named defaults we have set above.  We only change values of
+    -- properties we have created already, meaning we can only change
+    -- existing defaults and not use the arguments to the constructor
+    -- to create new properties specific to each object.
+    for name,value in pairs(properties) do
+        if scene[name] ~= nil then
+            scene[name] = value
+        end
+    end
+
     return scene
 end
 
