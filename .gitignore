@@ -1,0 +1,2 @@
+# Ignore the package we build to test the engine.
+*.love

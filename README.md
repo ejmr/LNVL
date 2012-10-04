@@ -9,6 +9,12 @@ main inspiration for LNVL, but this project does not attempt to be an
 all-encompassing visual novel engine like Ren’Py.
 
 
+License
+-------
+
+[GNU General Public License.](http://www.gnu.org/copyleft/gpl.html)
+
+
 
 [nvl]: http://en.wikipedia.org/wiki/Visual_novel
 [love]: http://love2d.org/
