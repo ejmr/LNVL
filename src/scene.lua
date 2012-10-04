@@ -51,6 +51,11 @@ function LNVL.Scene:new(properties)
     -- strings to other objects.
     scene.contents = properties
 
+    -- contentIndex: An integer indicating where we are currently in
+    -- the scene contents.  This is useful for keeping track of what
+    -- to display or do since we can step back and forth in a scene.
+    scene.contentIndex = 1
+
     return scene
 end
 
@@ -91,4 +96,19 @@ end
 -- This method draws the scene to the screen.
 function LNVL.Scene:draw()
     self:drawContainer()
+end
+
+-- Renders the current content to screen.  That is, whatever is it
+-- 'self.content[self.contentIndex]', which could be many things based
+-- on its type.  This function returns no value.
+function LNVL.Scene:drawCurrentContent()
+    local content = self.contents[self.contentIndex]
+    local contentType = type(content)
+
+    -- Right now all we know how to handle are strings.
+    if contentType == "string" then
+        self:drawText(content)
+    else
+        error("LNVL.Scene cannot render " .. contentType .. " content")
+    end
 end
