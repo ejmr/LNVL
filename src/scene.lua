@@ -34,8 +34,14 @@ function LNVL.Scene:new(properties)
     for name,value in pairs(properties) do
         if scene[name] ~= nil then
             scene[name] = value
+            table.remove(properties, name)
         end
     end
+
+    -- The rest of the 'properties' table becomes the contents of the
+    -- scene, which could be an array of anything from strings to
+    -- other objects.
+    scene.contents = properties
 
     return scene
 end
