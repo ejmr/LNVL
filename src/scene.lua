@@ -36,12 +36,17 @@ LNVL.Scene.Dimensions = {
     Y = 300,
 }
 
--- This method draws the scene to the screen.
-function LNVL.Scene:draw()
+-- This method draws the container or border of the scene.
+function LNVL.Scene:drawContainer()
     love.graphics.setColor(255, 255, 255)
     love.graphics.rectangle("fill",
                             self.Dimensions.X,
                             self.Dimensions.Y,
                             self.Dimensions.Width,
                             self.Dimensions.Height)
+end
+
+-- This method draws the scene to the screen.
+function LNVL.Scene:draw()
+    self:drawContainer()
 end
