@@ -19,9 +19,7 @@ LNVL.Scene.__call =
         new_scene.__index = LNVL.Scene
         setmetatable(new_scene, LNVL.Scene)
 
-        -- contents: A copy of the arguments given to us when creating
-        -- the scene.
-        new_scene.contents = contents
+        new_scene.background_color = {255, 255, 255}
 
         return new_scene
     end
@@ -38,7 +36,7 @@ LNVL.Scene.Dimensions = {
 
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(self.background_color)
     love.graphics.rectangle("fill",
                             self.Dimensions.X,
                             self.Dimensions.Y,
