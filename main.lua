@@ -15,7 +15,7 @@ scene = nil
 function love.load(arguments)
     love.graphics.setMode(800, 600)
     love.graphics.setBackgroundColor(0, 0, 0)
-    scene = LNVL.Scene{}
+    scene = LNVL.Scene:new{}
 end
 
 function love.draw()

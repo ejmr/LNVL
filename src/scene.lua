@@ -10,19 +10,18 @@ LNVL.Scene = {}
 LNVL.Scene.__index = LNVL.Scene
 setmetatable(LNVL.Scene, LNVL.Scene)
 
--- If the class name is used directly like a function then it acts as
--- a constructor that returns an LNVL.Scene object.  The argument is a
--- single table that contains the contents for the scene.
-LNVL.Scene.__call =
-    function (contents)
-        local new_scene = {}
-        new_scene.__index = LNVL.Scene
-        setmetatable(new_scene, LNVL.Scene)
+-- Our constructor.
+function LNVL.Scene:new(properties)
+    local scene = {}
+    setmetatable(scene, self)
+    scene.__index = self
 
-        new_scene.background_color = {255, 255, 255}
+    -- background_color: The color that fills the background container
+    -- of the scene when we draw it.
+    scene.background_color = {255, 255, 255}
 
-        return new_scene
-    end
+    return scene
+end
 
 -- These are the default dimensions for a Scene.  These values will be
 -- given as the values to arguments of the same name for functions
