@@ -14,8 +14,10 @@ START = LNVL.Scene{
     -- Each choice has two parts: a line of text to present to the
     -- player, and the name of the scene to jump to if that is the
     -- selection he makes.
-    LNVL.Menu({"Not Guilty", "NOT_GUILTY"},
-              {"Obviously Guilty", "THE_TRUTH"}),
+    LNVL.Menu{
+        {"Not Guilty", "NOT_GUILTY"},
+        {"Obviously Guilty", "THE_TRUTH"}
+    },
 }
 
 NOT_GUILTY = LNVL.Scene{
