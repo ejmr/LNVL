@@ -16,12 +16,12 @@ function LNVL.Scene:new(properties)
     setmetatable(scene, self)
     scene.__index = self
 
-    -- background_color: The color that fills the background container
+    -- backgroundColor: The color that fills the background container
     -- of the scene when we draw it.
-    scene.background_color = {255, 255, 255}
+    scene.backgroundColor = {255, 255, 255}
 
-    -- foreground_color: The color we use when drawing text.
-    scene.foreground_color = {0, 0, 0}
+    -- foregroundColor: The color we use when drawing text.
+    scene.foregroundColor = {0, 0, 0}
 
     -- font: The default font for the dialog.
     scene.font = love.graphics.newFont(20)
@@ -38,9 +38,9 @@ function LNVL.Scene:new(properties)
         end
     end
 
-    -- The rest of the 'properties' table becomes the contents of the
-    -- scene, which could be an array of anything from strings to
-    -- other objects.
+    -- contents: The rest of the 'properties' table becomes the
+    -- contents of the scene, which could be an array of anything from
+    -- strings to other objects.
     scene.contents = properties
 
     return scene
@@ -58,7 +58,7 @@ LNVL.Scene.Dimensions = {
 
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
-    love.graphics.setColor(self.background_color)
+    love.graphics.setColor(self.backgroundColor)
     love.graphics.rectangle("fill",
                             self.Dimensions.X,
                             self.Dimensions.Y,
@@ -71,7 +71,7 @@ end
 -- text.
 function LNVL.Scene:drawText(text)
     self:drawContainer()
-    love.graphics.setColor(self.foreground_color)
+    love.graphics.setColor(self.foregroundColor)
     love.graphics.setFont(self.font)
     love.graphics.printf(text,
                          self.Dimensions.X + 10,
