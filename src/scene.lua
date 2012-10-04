@@ -20,6 +20,12 @@ function LNVL.Scene:new(properties)
     -- of the scene when we draw it.
     scene.background_color = {255, 255, 255}
 
+    -- foreground_color: The color we use when drawing text.
+    scene.foreground_color = {0, 0, 0}
+
+    -- font: The default font for the dialog.
+    scene.font = love.graphics.newFont(20)
+
     -- Apply any properties passed in as arguments that replace any
     -- named defaults we have set above.  We only change values of
     -- properties we have created already, meaning we can only change
@@ -52,6 +58,20 @@ function LNVL.Scene:drawContainer()
                             self.Dimensions.Y,
                             self.Dimensions.Width,
                             self.Dimensions.Height)
+end
+
+-- This method takes a string of text and draws it to the scene.  It
+-- will clear the scene first, so sequential calls will not append the
+-- text.
+function LNVL.Scene:drawText(text)
+    self:drawContainer()
+    love.graphics.setColor(self.foreground_color)
+    love.graphics.setFont(self.font)
+    love.graphics.printf(text,
+                         self.Dimensions.X + 10,
+                         self.Dimensions.Y + 10,
+                         self.Dimensions.Width - 10,
+                         "left")
 end
 
 -- This method draws the scene to the screen.
