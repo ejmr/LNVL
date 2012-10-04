@@ -26,7 +26,9 @@ LNVL.Scene.__call =
         return new_scene
     end
 
--- These are the default dimensions for a Scene.
+-- These are the default dimensions for a Scene.  These values will be
+-- given as the values to arguments of the same name for functions
+-- like love.graphics.rectangle().
 LNVL.Scene.Dimensions = {
     Width = 600,
     Height = 240,
