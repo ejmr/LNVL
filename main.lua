@@ -14,7 +14,7 @@
 
 require("LNVL")
 
-scene = nil
+local scene = nil
 
 function love.load(arguments)
     love.graphics.setMode(800, 600)
