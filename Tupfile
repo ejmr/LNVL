@@ -1,0 +1,17 @@
+# The name of the '*.love' file for the engine.  Since LNVL is
+# intended for use as a library we do not need to distribute this, but
+# it is useful for testing purposes.
+ENGINE = lnvl.love
+
+# The source code for LNVL.
+SOURCES += *.lua
+SOURCES += src/
+
+# Create the $(ENGINE) file.
+: $(SOURCES) \
+|> ^ Building $(ENGINE)^ \
+    zip --quiet --recurse-paths --compression-method store --update %o %f \
+|> $(ENGINE)
+
+# Create a TAGS file for use with GNU Emacs.
+: | TAGS |> ^ Creating TAGS^ ctags-exuberant -Re --languages=lua |> TAGS
