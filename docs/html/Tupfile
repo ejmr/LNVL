@@ -1,0 +1,4 @@
+# Convert the documentation, written in the Markdown format, to HTML.
+: foreach ../*.md | *.html \
+|> ^ Writing %o^ pandoc %f -f markdown -t html5 -o %o \
+|> %B.html

@@ -1,2 +1,7 @@
 # Ignore the package we build to test the engine.
 *.love
+
+# Ignore the HTML documentation we generate.  Except for the Tupfile
+# that generates the HTML.
+docs/html/*
+!docs/html/Tupfile
