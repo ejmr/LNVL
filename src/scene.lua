@@ -7,22 +7,12 @@
 
 -- Create the LNVL.Scene class.
 LNVL.Scene = {}
-LNVL.Scene.__index =
-    function (table, key)
-        if type(rawget(table, key) == "function") then
-            return rawget(LNVL.Scene, key)
-        else
-            return rawget(table, key)
-        end
-    end
-
-setmetatable(LNVL.Scene, LNVL.Scene)
+LNVL.Scene.__index = LNVL.Scene
 
 -- Our constructor.
 function LNVL.Scene:new(properties)
     local scene = {}
-    setmetatable(scene, self)
-    scene.__index = self
+    setmetatable(scene, LNVL.Scene)
 
     -- backgroundColor: The color that fills the background container
     -- of the scene when we draw it.
