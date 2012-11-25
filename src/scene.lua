@@ -24,6 +24,11 @@ function LNVL.Scene:new(properties)
     -- font: The default font for the dialog.
     scene.font = love.graphics.newFont(20)
 
+    -- fullscreen: This boolean controls whether or not the scene
+    -- should take up the entire screen.  If it is false then the
+    -- content of the scene is confined to a dialog box.
+    scene.fullscreen = false
+
     -- Apply any properties passed in as arguments that replace any
     -- named defaults we have set above.  We only change values of
     -- properties we have created already, meaning we can only change
