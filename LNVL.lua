@@ -17,6 +17,7 @@ LNVL = {}
 -- table these require() statements must come after we declare the
 -- LNVL table above.
 
+require("src/clamped-array")
 require("src/scene")
 
 -- Define the LNVL module.
