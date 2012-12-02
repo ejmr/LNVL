@@ -18,6 +18,7 @@ LNVL = {}
 -- LNVL table above.
 
 require("src/clamped-array")
+require("src/character")
 require("src/scene")
 
 -- Define the LNVL module.
