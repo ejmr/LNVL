@@ -1,0 +1,19 @@
+--[[
+--
+-- This file implements an array class which is 'clamped' at its end.
+-- That means if the array has a clamed end of six then the only valid
+-- indexes for the array are one through six, inclusive.  Trying to
+-- access an index less than one is the same as using the index one,
+-- and trying to access an index higher than the clamped maximum is
+-- the same as accessing the index assigned to the maximum index.
+--
+-- Here is an usage example:
+--
+--     foo = LNVL.ClampedArray:new{3}
+--     foo[1] = 10
+--     foo[0] = 2      -- Same as foo[1] = 2
+--     foo[9] = 8      -- Same as foo[3] = 8
+--
+-- So the values of 'foo' are {10, nil, 8}' now.
+--
+--]]
