@@ -9,7 +9,7 @@
 --
 -- Here is an usage example:
 --
---     foo = LNVL.ClampedArray:new{3}
+--     foo = LNVL.ClampedArray:new(3)
 --     foo[1] = 10
 --     foo[0] = 2      -- Same as foo[1] = 2
 --     foo[9] = 8      -- Same as foo[3] = 8
