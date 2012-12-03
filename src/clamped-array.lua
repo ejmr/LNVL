@@ -70,3 +70,11 @@ LNVL.ClampedArray.__newindex =
 
         rawset(table, key, value)
     end
+
+-- The __len() metatable function returns the length up to the first
+-- nil array element.  That nil element is not included as part of the
+-- length, e.g. the array {10, 20, nil} has a length of two.
+LNVL.ClampedArray.__len =
+    function (table)
+        return table.__first_nil_index
+    end
