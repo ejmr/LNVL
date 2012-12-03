@@ -23,13 +23,16 @@
 
 LNVL.ClampedArray = {}
 
--- The constructor takes one argument, which is the maximum index
--- value the array allows (inclusive).  We store this in the
--- 'maxmimum_index' property.
-function LNVL.ClampedArray:new(max)
+-- The constructor, which takes no arguments.
+function LNVL.ClampedArray:new()
     local array = {}
     setmetatable(array, LNVL.ClampedArray)
-    array.maximum_index = max
+
+    -- __first_nil_index: This hidden property is an integer that
+    -- indicates the first index in the array's contents that is nil
+    -- and which has no non-nil elements after it.
+    self.__first_nil_index = 1
+
     return array
 end
 
