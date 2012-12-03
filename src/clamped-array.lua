@@ -41,9 +41,10 @@ end
 --
 --     [1, __first_nil_index)
 --
--- If not then we return nil.  That is assuming the key is a number.
--- If the key is not a number then we assume the user is accessing a
--- property by name and simply return that.
+-- If not then we return the value of the highest index not equated to
+-- a nil value.  That is assuming the key is a number.  If the key is
+-- not a number then we assume the user is accessing a property by
+-- name and simply return that.
 LNVL.ClampedArray.__index =
     function (table, key)
         if type(key) == "number" then
