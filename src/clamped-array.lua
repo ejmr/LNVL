@@ -36,17 +36,21 @@ function LNVL.ClampedArray:new()
     return array
 end
 
--- The __index() metamethod ensures that we do not exceed the bounds
--- of the array's indexes.  If 'key' is not a number then we return
--- immediately because we do not perform the check because that means
--- we could be looking up a property name.
+-- When we access an element of the array we make sure the key is
+-- within the bounds:
+--
+--     [1, __first_nil_index)
+--
+-- If not then we return nil.  That is assuming the key is a number.
+-- If the key is not a number then we assume the user is accessing a
+-- property by name and simply return that.
 LNVL.ClampedArray.__index =
     function (table, key)
         if type(key) == "number" then
             if key < 1 then
                 key = 1
-            elseif key > table.maximum_index then
-                key = table.maximum_index
+            elseif key => table.__first_nil_index then
+                key = table.__first_nil_index - 1
             end
         end
 
