@@ -50,7 +50,7 @@ LNVL.ClampedArray.__index =
         if type(key) == "number" then
             if key < 1 then
                 key = 1
-            elseif key => table.__first_nil_index then
+            elseif key >= table.__first_nil_index then
                 key = table.__first_nil_index - 1
             end
         end
