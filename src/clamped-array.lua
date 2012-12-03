@@ -58,16 +58,13 @@ LNVL.ClampedArray.__index =
         return rawget(table, key)
     end
 
--- The __newindex() metamethod works similarly to __index(), ensuring
--- that we cannot set numeric indexes above the maximum assigned when
--- we constructed the array.
+-- The __newindex() metatable function takes care to properly update
+-- the array's __first_nil_index property when the key is a number.
 LNVL.ClampedArray.__newindex =
     function (table, key, value)
         if type(key) == "number" then
-            if key < 1 then
-                key = 1
-            elseif key > table.maximum_index then
-                key = table.maximum_index
+            if value == nil and key < table.__first_nil_index then
+                table.__first_nil_index = key
             end
         end
 
