@@ -23,17 +23,23 @@
 
 LNVL.ClampedArray = {}
 
--- The constructor, which takes no arguments.
-function LNVL.ClampedArray:new()
-    local array = {}
-    setmetatable(array, LNVL.ClampedArray)
+-- The constructor, which can take an array of arguments, which we
+-- assume are numbers but do not enforce.
+function LNVL.ClampedArray:new(values)
+    local self = {}
+    setmetatable(self, LNVL.ClampedArray)
 
     -- __first_nil_index: This hidden property is an integer that
     -- indicates the first index in the array's contents that is nil
     -- and which has no non-nil elements after it.
     self.__first_nil_index = 1
 
-    return array
+    -- This loop fills the array with any values we may have received.
+    for key,value in ipairs(values) do
+        self[key] = value
+    end
+
+    return self
 end
 
 -- When we access an element of the array we make sure the key is
