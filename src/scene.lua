@@ -44,7 +44,7 @@ function LNVL.Scene:new(properties)
     -- contents: The rest of the 'properties' table becomes the
     -- contents of the scene, which could be an array of anything from
     -- strings to other objects.
-    scene.contents = properties
+    scene.contents = LNVL.ClampedArray:new(properties)
 
     -- contentIndex: An integer indicating where we are currently in
     -- the scene contents.  This is useful for keeping track of what
