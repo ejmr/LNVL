@@ -12,8 +12,7 @@
 --
 --]]
 
-require("LNVL")
-
+local LNVL = require("LNVL")
 local scene = nil
 
 function love.load(arguments)

@@ -86,3 +86,6 @@ LNVL.ClampedArray.__len =
     function (table)
         return table.__first_nil_index
     end
+
+-- Return the class as a module.
+return LNVL.ClampedArray

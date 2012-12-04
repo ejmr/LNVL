@@ -17,9 +17,9 @@ LNVL = {}
 -- table these require() statements must come after we declare the
 -- LNVL table above.
 
-require("src/clamped-array")
-require("src/character")
-require("src/scene")
+LNVL.ClampedArray = require("src.clamped-array")
+LNVL.Character = require("src.character")
+LNVL.Scene = require("src.scene")
 
--- Define the LNVL module.
-module("LNVL")
+-- Return the LNVL module.
+return LNVL

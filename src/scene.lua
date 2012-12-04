@@ -107,3 +107,6 @@ function LNVL.Scene:drawCurrentContent()
         error("LNVL.Scene cannot render " .. contentType .. " content")
     end
 end
+
+-- Return the class as a module.
+return LNVL.Scene

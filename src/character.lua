@@ -85,3 +85,6 @@ function LNVL.Character:says(text)
     table.insert(self.dialog, text)
     return self
 end
+
+-- Return the class as a module.
+return LNVL.Character
