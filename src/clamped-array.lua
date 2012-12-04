@@ -71,6 +71,8 @@ LNVL.ClampedArray.__newindex =
         if type(key) == "number" then
             if value == nil and key < table.__first_nil_index then
                 table.__first_nil_index = key
+            elseif key > table.__first_nil_index then
+                table.__first_nil_index = key
             end
         end
 
