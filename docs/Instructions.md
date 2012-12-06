@@ -73,8 +73,8 @@ List of Instructions
 --------------------
 
 Below are all of the instructions recognized by LNVL, listed
-alphabetically by name.  There are also descriptions of the value and
-actors for each instruction where appropriate.
+alphabetically by name.  Following the description of each instruction
+is a list of any required or optional arguments it may have.
 
 ### say ###
 
