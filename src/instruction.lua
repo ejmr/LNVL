@@ -27,16 +27,10 @@ function LNVL.Instruction:new(properties)
     return instruction
 end
 
--- This table contains all of the functions that process instructions.
+-- This table contains all of the instructions in the LNVL engine.
 -- The keys for the table are strings, the names of the instructions.
--- The values are functions which accept at least two arguments:
---
--- 1. A value.
--- 2. An actor.
---
--- See the documentation referenced at the top of this file for more
--- information about the design of these 'action functions'.
-LNVL.Instruction.Actions = {}
+-- The values are the LNVL.Instruction objects themselves.
+LNVL.Instructions = {}
 
 -- Return our class as a module.
 return LNVL.Instruction
