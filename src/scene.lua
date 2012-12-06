@@ -118,7 +118,7 @@ end
 function LNVL.Scene:drawCurrentContent()
     local content = self.contents[self.contentIndex]
     local instruction = LNVL.Instructions[content[1]]
-    instruction.action(content[2])
+    instruction(content[2])
 end
 
 -- Return the class as a module.

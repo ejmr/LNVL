@@ -28,6 +28,17 @@ function LNVL.Instruction:new(properties)
     return instruction
 end
 
+-- We define a __call() metatable method as a shortcut for executing
+-- the 'action' function of an instruction.
+LNVL.Instruction.__call =
+    function (f, ...)
+        if type(f) == "function" then
+            return f(...)
+        else
+            return f.action(...)
+        end
+    end
+
 -- This table contains all of the instructions in the LNVL engine.
 -- The keys for the table are strings, the names of the instructions.
 -- The values are the LNVL.Instruction objects themselves.
