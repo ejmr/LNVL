@@ -41,6 +41,23 @@ enter a scene, the actor would be the character.  Some instructions do
 not have actors; those instructions have a `nil` value for this
 property.
 
+### An Example Instruction ###
+
+Here is an example of an instruction that tells LNVL to display a line
+of dialog by a character:
+
+    {
+        "name": "say",
+        "value": "Hello!",
+        "actor": Lobby,
+    }
+
+LNVL would look-up the action function for this instruction—let’s call
+it `say()`—and call it like so: `say("Hello!", Lobby)`.  In this
+example `Lobby` is likely an `LNVL.Character` object.  The instruction
+would use information about the character to determine how to display
+and format the dialog, for example.
+
 
 
 [1]: http://www.lua.org/manual/5.1/manual.html#2.5.7
