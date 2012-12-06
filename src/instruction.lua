@@ -13,7 +13,8 @@
 LNVL.Instruction = {}
 LNVL.Instruction.__index = LNVL.Instruction
 
--- Our constructor.
+-- Our constructor.  It requires a table with two properties, named
+-- and defined in comments within the constructor.
 function LNVL.Instruction:new(properties)
     local instruction = {}
     setmetatable(instruction, LNVL.Instruction)
