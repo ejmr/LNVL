@@ -41,6 +41,34 @@ table.  The keys are the names of the instructions as strings.  The
 values are the objects themselves.
 
 
+Opcodes and Their Role
+----------------------
+
+LNVL does not *directly* build a list of instructions to execute.
+Instead it creates a list of ‘opcodes’.  Each opcode contains the
+information LNVL needs to determine which instruction to run and how
+to run it.  This extra step of indirection in the process allows LNVL
+to pass additional information to instructions more easily.
+
+Each `LNVL.Scene` has a list of opcodes that describe what happens in
+that scene.  As the player steps through the scene in the game, LNVL
+steps through each opcode one-by-one.  Multiple opcodes may point to
+the same instruction but provide different supplementary data, e.g. a
+scene may have a lot of opcodes for the `say` instruction but each
+will provide its own line of dialog.
+
+The `LNVL.Opcode` class represents opcodes.  An opcode has two
+properties:
+
+1. `instruction`: The name of the instruction LNVL should execute when
+it encounters this opcode.
+
+2. `arguments`: A table of additional arguments to give to the
+instruction when LNVL executes it.  The definitions of the
+instructions dictate the contents of this table, so they will vary
+from opcode to opcode.
+
+
 List of Instructions
 --------------------
 
