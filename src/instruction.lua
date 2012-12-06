@@ -21,18 +21,8 @@ function LNVL.Instruction:new(properties)
     -- name: The name of the instruction as a string.
     instruction.name = properties.name
 
-    -- value: The value associated with the instruction, which may be
-    -- of any type.
-    instruction.value = properties.value
-
-    -- actor: The actor for the instructor, i.e. the object which
-    -- executes the instruction.  Not every instruction has an actor,
-    -- and those which do not have a nil value for this property.
-    if properties["actor"] ~= nil then
-        instruction.actor = properties.actor
-    else
-        instruction.actor = nil
-    end
+    -- action: A function representing the logic for the instruction.
+    instruction.action = properties.action
 
     return instruction
 end
