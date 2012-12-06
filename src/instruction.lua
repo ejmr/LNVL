@@ -31,7 +31,17 @@ end
 -- This table contains all of the instructions in the LNVL engine.
 -- The keys for the table are strings, the names of the instructions.
 -- The values are the LNVL.Instruction objects themselves.
+--
+-- All of the individual instructions defined below are described in
+-- detail by the HTML document referenced at the top of this file.
 LNVL.Instructions = {}
+
+LNVL.Instructions["say"] = LNVL.Instruction:new{
+    name = "say",
+    action = function (arguments)
+                 arguments.scene:drawText(arguments.content)
+             end
+}
 
 -- Return our class as a module.
 return LNVL.Instruction
