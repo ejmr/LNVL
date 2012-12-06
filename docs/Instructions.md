@@ -29,7 +29,8 @@ to differentiate between instructions.
 2. `action`: A function that executes the instruction.  The function
 accepts a table of arguments but the exact arguments differ from
 instruction to instruction.  See the documentation for individual
-instructions for details on what arguments they require.
+instructions for details on what arguments they require.  These
+functions are not expected to return anything.
 
 **Note:** Unless stated otherwise, the arguments table for the action
 function of every instruction has a `scene` property representing the
