@@ -17,6 +17,7 @@ LNVL = {}
 -- table these require() statements must come after we declare the
 -- LNVL table above.
 
+LNVL.Instruction = require("src.instruction")
 LNVL.ClampedArray = require("src.clamped-array")
 LNVL.Character = require("src.character")
 LNVL.Scene = require("src.scene")
