@@ -42,14 +42,35 @@ function LNVL.Scene:new(properties)
     end
 
     -- contents: The rest of the 'properties' table becomes the
-    -- contents of the scene, which could be an array of anything from
-    -- strings to other objects.
+    -- contents of the scene.  Initially the table could contain
+    -- anything, but in a loop below we will transform each element of
+    -- 'contents' into an 2-tuple where the first element is the name
+    -- of an instruction and the second element is a table of
+    -- arguments to give to the action function for that instruction.
+    -- See the 'docs/HTML/Instructions.html' file for more information
+    -- on this system.
     scene.contents = LNVL.ClampedArray:new(properties)
 
     -- contentIndex: An integer indicating where we are currently in
     -- the scene contents.  This is useful for keeping track of what
     -- to display or do since we can step back and forth in a scene.
     scene.contentIndex = 1
+
+    -- The last thing we do is go through the contents of the scene
+    -- and convert them into LNVL instructions.
+    for key,content in ipairs(scene.contents) do
+        if getmetatable(content) ~= LNVL.Instruction then
+            local contentType = type(content)
+
+            -- Strings become 'say' instructions.
+            if contentType == "string" then
+                local info = {}
+                info[1] = "say"
+                info[2] = {scene=scene, content=content}
+                scene.contents[key] = info
+            end
+        end
+    end
 
     return scene
 end
@@ -93,19 +114,11 @@ function LNVL.Scene:draw()
     self:drawContainer()
 end
 
--- Renders the current content to screen.  That is, whatever is it
--- 'self.content[self.contentIndex]', which could be many things based
--- on its type.  This function returns no value.
+-- Renders the current content to screen.
 function LNVL.Scene:drawCurrentContent()
     local content = self.contents[self.contentIndex]
-    local contentType = type(content)
-
-    -- Right now all we know how to handle are strings.
-    if contentType == "string" then
-        self:drawText(content)
-    else
-        error("LNVL.Scene cannot render " .. contentType .. " content")
-    end
+    local instruction = LNVL.Instructions[content[1]]
+    instruction.action(content[2])
 end
 
 -- Return the class as a module.
