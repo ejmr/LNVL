@@ -24,39 +24,20 @@ Instructions in LNVL are [tables][1].  They all have the
 the following properties:
 
 1. `name`: A string naming the instruction.  This is the intended way
-to differentiate between instructions.  Each instruction has an
-associated 'action', a function which will execute that instruction.
-That function accepts at least two arguments, described in the order
-below.  Actions may accept additional arguments as needed for
-instructions; however, there are no guidelines for these arguments and
-developers should keep them to a minimum so as to introduce as little
-inconsistency in the system as possible.
+to differentiate between instructions.
 
-2. `value`: A value associated with the instruction, usually meant for
-use with the action described above.
+2. `action`: A function that executes the instruction.  The function
+accepts a table of arguments but the exact arguments differ from
+instruction to instruction.  See the documentation for individual
+instructions for details on what arguments they require.
 
-3. `actor`: The object (i.e. another table) that performs that action
-function above.  For example, if the instruction is for a character to
-enter a scene, the actor would be the character.  Some instructions do
-not have actors; those instructions have a `nil` value for this
-property.
+**Note:** Unless stated otherwise, the arguments table for the action
+function of every instruction has a `scene` property representing the
+`LNVL.Scene` object containing the instruction.
 
-### An Example Instruction ###
-
-Here is an example of an instruction that tells LNVL to display a line
-of dialog by a character:
-
-    {
-        "name": "say",
-        "value": "Hello!",
-        "actor": Lobby,
-    }
-
-LNVL would look-up the action function for this instruction—let’s call
-it `say()`—and call it like so: `say("Hello!", Lobby)`.  In this
-example `Lobby` is likely an `LNVL.Character` object.  The instruction
-would use information about the character to determine how to display
-and format the dialog, for example.
+Every `LNVL.Instruction` object exists in the `LNVL.Instructions`
+table.  The keys are the names of the instructions as strings.  The
+values are the objects themselves.
 
 
 List of Instructions
@@ -68,14 +49,10 @@ actors for each instruction where appropriate.
 
 ### say ###
 
-This instruction prints dialog to the screen.
+This instruction prints dialog to the screen.  The table for its
+action function requires the following properties:
 
-**Value:** The string to display.
-
-**Actor:** If this is nil then LNVL displays the value as-is.  If the
-actor is non-nil then it must be an `LNVL.Character` object, in which
-case the properties of that character affect the display of the dialog
-(for example its color).
+1. `content`: A string representing the dialog to say.
 
 
 
