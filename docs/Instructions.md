@@ -24,12 +24,16 @@ Instructions in LNVL are [tables][1].  They all have the
 the following properties:
 
 1. `name`: A string naming the instruction.  This is the intended way
-to differentiate between instructions.
+to differentiate between instructions.  Each instruction has an
+associated 'action', a function which will execute that instruction.
+That function accepts at least two arguments, described in the order
+below.  Actions may accept additional arguments as needed for
+instructions; however, there are no guidelines for these arguments and
+developers should keep them to a minimum so as to introduce as little
+inconsistency in the system as possible.
 
-2. `action`: A function that performs the action of the instruction.
-Typically this will be a reference to an existing function since most
-instructions will not need custom logic.  Each action function
-receives at least one argument, described below.
+2. `value`: A value associated with the instruction, usually meant for
+use with the action described above.
 
 3. `actor`: The object (i.e. another table) that performs that action
 function above.  For example, if the instruction is for a character to
