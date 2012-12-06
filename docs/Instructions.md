@@ -59,6 +59,25 @@ would use information about the character to determine how to display
 and format the dialog, for example.
 
 
+List of Instructions
+--------------------
+
+Below are all of the instructions recognized by LNVL, listed
+alphabetically by name.  There are also descriptions of the value and
+actors for each instruction where appropriate.
+
+### say ###
+
+This instruction prints dialog to the screen.
+
+**Value:** The string to display.
+
+**Actor:** If this is nil then LNVL displays the value as-is.  If the
+actor is non-nil then it must be an `LNVL.Character` object, in which
+case the properties of that character affect the display of the dialog
+(for example its color).
+
+
 
 [1]: http://www.lua.org/manual/5.1/manual.html#2.5.7
 [2]: http://www.lua.org/manual/5.1/manual.html#2.8
