@@ -60,7 +60,7 @@ will provide its own line of dialog.
 The `LNVL.Opcode` class represents opcodes.  An opcode has two
 properties:
 
-1. `instruction`: The name of the instruction LNVL should execute when
+1. `name`: The name of the instruction LNVL should execute when
 it encounters this opcode.
 
 2. `arguments`: A table of additional arguments to give to the
