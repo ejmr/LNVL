@@ -27,9 +27,9 @@ end
 
 function love.keypressed(key)
     if key == "return" then
-        scene.contentIndex = scene.contentIndex + 1
+        scene.opcodeIndex = scene.opcodeIndex + 1
     elseif key == "backspace" then
-        scene.contentIndex = scene.contentIndex - 1
+        scene.opcodeIndex = scene.opcodeIndex - 1
     end
 end
 

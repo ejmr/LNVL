@@ -41,36 +41,28 @@ function LNVL.Scene:new(properties)
         end
     end
 
-    -- contents: The rest of the 'properties' table becomes the
-    -- contents of the scene.  Initially the table could contain
-    -- anything, but in a loop below we will transform each element of
-    -- 'contents' into an 2-tuple where the first element is the name
-    -- of an instruction and the second element is a table of
-    -- arguments to give to the action function for that instruction.
-    -- See the 'docs/HTML/Instructions.html' file for more information
-    -- on this system.
-    scene.contents = LNVL.ClampedArray:new(properties)
+    -- The rest of the 'properties' we turn into opcodes by first
+    -- looping through them and creating the appropriate LNVL.Opcode
+    -- objects for each.
 
-    -- contentIndex: An integer indicating where we are currently in
-    -- the scene contents.  This is useful for keeping track of what
-    -- to display or do since we can step back and forth in a scene.
-    scene.contentIndex = 1
+    local opcodes = {}
 
-    -- The last thing we do is go through the contents of the scene
-    -- and convert them into LNVL instructions.
-    for key,content in ipairs(scene.contents) do
-        if getmetatable(content) ~= LNVL.Instruction then
-            local contentType = type(content)
+    for _,content in ipairs(properties) do
+        local contentType = type(content)
 
-            -- Strings become 'say' instructions.
-            if contentType == "string" then
-                local info = {}
-                info[1] = "say"
-                info[2] = {scene=scene, content=content}
-                scene.contents[key] = info
-            end
+        -- Plain become "say" opcodes.
+        if contentType == "string" then
+            table.insert(opcodes,
+                         LNVL.Opcode:new("say", {scene=scene, content=content}))
         end
     end
+
+    -- opcodes: The list of opcodes for the scene, created above.
+    scene.opcodes = LNVL.ClampedArray:new(opcodes)
+
+    -- opcodeIndex: An index for the 'opcodes' list indicating the
+    -- current opcode we should process in the scene.
+    scene.opcodeIndex = 1
 
     return scene
 end
@@ -116,9 +108,9 @@ end
 
 -- Renders the current content to screen.
 function LNVL.Scene:drawCurrentContent()
-    local content = self.contents[self.contentIndex]
-    local instruction = LNVL.Instructions[content[1]]
-    instruction(content[2])
+    local opcode = self.opcodes[self.opcodeIndex]
+    local instruction = LNVL.Instructions[opcode.name]
+    instruction(opcode.arguments)
 end
 
 -- Return the class as a module.
