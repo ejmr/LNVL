@@ -78,10 +78,13 @@ is a list of any required or optional arguments it may have.
 
 ### say ###
 
-This instruction prints dialog to the screen.  The table for its
-action function requires the following properties:
+This instruction prints dialog to the screen.  The arguments table for
+its action function requires the following properties:
 
 1. `content`: A string representing the dialog to say.
+
+2. `character`: **(Optional)** A instance of an `LNVL.Character` who
+will speak the dialog.
 
 
 
