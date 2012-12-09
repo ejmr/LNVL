@@ -4,28 +4,10 @@
 -- actors in scenes and are typically the medium through which most
 -- dialog will be shown.
 --
--- The current line of dialog a character will speak is accessible
--- through the 'currentDialog' property.
---
 --]]
 
 -- Create the LNVL.Character class.
 LNVL.Character = {}
-
--- We use a special __index() function for Character objects to create
--- the 'currentDialog' property.  This way we can avoid writing
---
---     character.dialog[character.dialogIndex]
---
--- all throughout the code.
-LNVL.Character.__index =
-    function (table, key)
-        if key == "currentDialog" then
-            return table.dialog[table.dialogIndex]
-        else
-            return rawget(LNVL.Character, key)
-        end
-    end
 
 -- The constructor for characters.
 function LNVL.Character:new(properties)
