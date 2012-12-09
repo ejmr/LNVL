@@ -54,6 +54,24 @@ function LNVL.Scene:new(properties)
         if contentType == "string" then
             table.insert(opcodes,
                          LNVL.Opcode:new("say", {scene=scene, content=content}))
+        elseif contentType == "table" then
+            -- If the content is a table then we need to look at the
+            -- metatable of the content, because most likely what we
+            -- have here is the result of calling the method of
+            -- another object in the arguments list to the Scene
+            -- constructor.
+            --
+            -- Most likely the content is already an opcode created by
+            -- another function.  If that is the case then we may need
+            -- to add some additional information before storing it in
+            -- the opcodes array.  For example, we need to add the
+            -- 'scene' data to opcodes for the 'say' instruction.
+            if getmetatable(content) == LNVL.Opcode then
+                if content.name == "say" then
+                    content.scene = scene
+                end
+                table.insert(opcodes, content)
+            end
         end
     end
 

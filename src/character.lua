@@ -26,16 +26,6 @@ function LNVL.Character:new(properties)
      -- with values in the 0--255 range.
      character.color = {0, 0, 0}
 
-     -- dialog: This array contains a list of strings representing
-     -- everything the character will say.  The says() method adds
-     -- strings to this array.
-     character.dialog = {}
-
-     -- dialogIndex: This integer is an index for the 'dialog' array
-     -- above.  It lets us known what is the current line of dialog we
-     -- should display.
-     character.dialogIndex = 1
-
      -- Overwrite any default property values above with ones given to
      -- the constructor.
      for name,value in pairs(properties) do
@@ -54,18 +44,18 @@ function LNVL.Character:new(properties)
  end
 
 -- This is the method that characters use to speak in scripts.  It
--- adds the given string of text to the 'dialog' property and then
--- returns the entire Character.  We do this because we are very
--- likely calling this method as an argument to another function like
--- LNVL.Scene:new(), which means Lua will evaluate the argument
--- (i.e. call the method) before the logic in the calling function
--- runs.  In those functions we want access to the Character object,
--- and the data given to the character, e.g. here the text to speak.
--- So the only way to get that is to attach the two and then return
--- the entire object so the calling function will get them both.
+-- accepts a string of text as an argument and returns a 'say' opcode
+-- binding that line of text with the current Character object.  We do
+-- this because we are very likely calling this method as an argument
+-- to another function like LNVL.Scene:new(), which means Lua will
+-- evaluate the argument (i.e. call the method) before the logic in
+-- the calling function runs.  In those functions we want access to
+-- the Character object, and the data given to the character,
+-- e.g. here the text to speak.  So the only way to get that is to
+-- attach the two and then return the entire object so we will have
+-- access to them later.
 function LNVL.Character:says(text)
-    table.insert(self.dialog, text)
-    return self
+    return LNVL.Opcode:new("say", {content=text, character=self})
 end
 
 -- Return the class as a module.
