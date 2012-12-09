@@ -73,10 +73,13 @@ List of Instructions
 --------------------
 
 Below are all of the instructions recognized by LNVL, listed
-alphabetically by name.  Following the description of each instruction
-is a list of any required or optional arguments it may have.
+alphabetically by name.  Instruction names are always written in
+lowercase within the engine itself; e.g. the section for the ‘Say’
+instruction refers to `say` in the code.  Following the description of
+each instruction is a list of any required or optional arguments it
+may have.
 
-### say ###
+### Say ###
 
 This instruction prints dialog to the screen.  The arguments table for
 its action function requires the following properties:
