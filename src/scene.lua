@@ -50,7 +50,7 @@ function LNVL.Scene:new(properties)
     for _,content in ipairs(properties) do
         local contentType = type(content)
 
-        -- Plain become "say" opcodes.
+        -- Plain strings become "say" opcodes.
         if contentType == "string" then
             table.insert(opcodes,
                          LNVL.Opcode:new("say", {scene=scene, content=content}))
