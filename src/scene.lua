@@ -68,7 +68,7 @@ function LNVL.Scene:new(properties)
             -- 'scene' data to opcodes for the 'say' instruction.
             if getmetatable(content) == LNVL.Opcode then
                 if content.name == "say" then
-                    content.scene = scene
+                    content.arguments.scene = scene
                 end
                 table.insert(opcodes, content)
             end
