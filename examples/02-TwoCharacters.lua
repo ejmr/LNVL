@@ -4,10 +4,10 @@
 -- determines what his text looks like on screen.  Then we use those
 -- objects inside of the Scene to actually create conversation.
 
-Eric = LNVL.Character{name = "Eric", color = "#c8ffc8"}
-Jeff = LNVL.Character{name = "Jeff", color = "#c8c8ff"}
+Eric = LNVL.Character:new{name = "Eric", color = "#c8ffc8"}
+Jeff = LNVL.Character:new{name = "Jeff", color = "#c8c8ff"}
 
-START = LNVL.Scene{
+START = LNVL.Scene:new{
     Jeff:says "Why did you use a copyrighted song for an example?",
     Eric:says "Oh come on, who is going to sue us?",
     Jeff:says "Susumu Hirawhat's-his-name?  You know, the author?",

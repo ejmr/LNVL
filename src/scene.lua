@@ -41,15 +41,46 @@ function LNVL.Scene:new(properties)
         end
     end
 
-    -- contents: The rest of the 'properties' table becomes the
-    -- contents of the scene, which could be an array of anything from
-    -- strings to other objects.
-    scene.contents = LNVL.ClampedArray:new(properties)
+    -- The rest of the 'properties' we turn into opcodes by first
+    -- looping through them and creating the appropriate LNVL.Opcode
+    -- objects for each.
 
-    -- contentIndex: An integer indicating where we are currently in
-    -- the scene contents.  This is useful for keeping track of what
-    -- to display or do since we can step back and forth in a scene.
-    scene.contentIndex = 1
+    local opcodes = {}
+
+    for _,content in ipairs(properties) do
+        local contentType = type(content)
+
+        -- Plain strings become "say" opcodes.
+        if contentType == "string" then
+            table.insert(opcodes,
+                         LNVL.Opcode:new("say", {scene=scene, content=content}))
+        elseif contentType == "table" then
+            -- If the content is a table then we need to look at the
+            -- metatable of the content, because most likely what we
+            -- have here is the result of calling the method of
+            -- another object in the arguments list to the Scene
+            -- constructor.
+            --
+            -- Most likely the content is already an opcode created by
+            -- another function.  If that is the case then we may need
+            -- to add some additional information before storing it in
+            -- the opcodes array.  For example, we need to add the
+            -- 'scene' data to opcodes for the 'say' instruction.
+            if getmetatable(content) == LNVL.Opcode then
+                if content.name == "say" then
+                    content.arguments.scene = scene
+                end
+                table.insert(opcodes, content)
+            end
+        end
+    end
+
+    -- opcodes: The list of opcodes for the scene, created above.
+    scene.opcodes = LNVL.ClampedArray:new(opcodes)
+
+    -- opcodeIndex: An index for the 'opcodes' list indicating the
+    -- current opcode we should process in the scene.
+    scene.opcodeIndex = 1
 
     return scene
 end
@@ -93,19 +124,11 @@ function LNVL.Scene:draw()
     self:drawContainer()
 end
 
--- Renders the current content to screen.  That is, whatever is it
--- 'self.content[self.contentIndex]', which could be many things based
--- on its type.  This function returns no value.
+-- Renders the current content to screen.
 function LNVL.Scene:drawCurrentContent()
-    local content = self.contents[self.contentIndex]
-    local contentType = type(content)
-
-    -- Right now all we know how to handle are strings.
-    if contentType == "string" then
-        self:drawText(content)
-    else
-        error("LNVL.Scene cannot render " .. contentType .. " content")
-    end
+    local opcode = self.opcodes[self.opcodeIndex]
+    local instruction = LNVL.Instructions[opcode.name]
+    instruction(opcode.arguments)
 end
 
 -- Return the class as a module.
