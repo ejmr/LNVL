@@ -29,5 +29,17 @@ function LNVL.Opcode:new(name, arguments)
     return opcode
 end
 
+-- This function converts Opcode objects to strings intended for
+-- debugging purposes.
+LNVL.Opcode.__tostring =
+    function (opcode)
+        output = string.format("Opcode %q = {\n", opcode.name)
+        for key,value in pairs(opcode.arguments) do
+            output = output .. string.format("\n\t%s: %s", key, value)
+        end
+        output = output .. "\n}"
+        return output
+    end
+
 -- Return the class as a module.
 return LNVL.Opcode
