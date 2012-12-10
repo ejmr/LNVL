@@ -8,6 +8,7 @@
 
 -- Create the LNVL.Character class.
 LNVL.Character = {}
+LNVL.Character.__index = LNVL.Character
 
 -- The constructor for characters.
 function LNVL.Character:new(properties)
