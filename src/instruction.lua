@@ -28,6 +28,13 @@ function LNVL.Instruction:new(properties)
     return instruction
 end
 
+-- A simple tostring() method for debugging purposes, which does
+-- nothing but returns the name of the instruction.
+LNVL.Instruction.__tostring =
+    function (instruction)
+        return string.format("<Instruction %s>", instruction.name)
+    end
+
 -- We define a __call() metatable method as a shortcut for executing
 -- the 'action' function of an instruction.
 LNVL.Instruction.__call =
