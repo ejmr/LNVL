@@ -67,5 +67,17 @@ function LNVL.Character:says(text)
     return LNVL.Opcode:new("say", {content=text, character=self})
 end
 
+-- If we call a Character object as a function then we treat that as a
+-- short-cut for calling the says() method.  This can make dialog
+-- scripts more readable.
+LNVL.Character.__call =
+    function (f, ...)
+        if type(f) == "function" then
+            return f(...)
+        else
+            return f:says(...)
+        end
+    end
+
 -- Return the class as a module.
 return LNVL.Character
