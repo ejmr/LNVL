@@ -105,18 +105,42 @@ function LNVL.Scene:drawContainer()
                             self.Dimensions.Height)
 end
 
--- This method takes a string of text and draws it to the scene.  It
--- will clear the scene first, so sequential calls will not append the
--- text.
+-- This method draws text within the scene's container.  The argument
+-- can be either a string or a table.  If it is a string then we
+-- render the text using the current foreground color of the Scene
+-- object.  If it is a table then we iterate through its contents like
+-- an array; if the element is a string then we print that text, and
+-- if it is a table then we set the foreground color to that, under
+-- the assumption the table has three numeric values, i.e. RGB values.
+--
+-- Each call to this method clears the container, so sequential calls
+-- will not append text.  This method returns no value.
 function LNVL.Scene:drawText(text)
     self:drawContainer()
-    love.graphics.setColor(self.foregroundColor)
     love.graphics.setFont(self.font)
-    love.graphics.printf(text,
-                         self.Dimensions.X + 10,
-                         self.Dimensions.Y + 10,
-                         self.Dimensions.Width - 10,
-                         "left")
+
+    local process =
+        function(element)
+            if type(element) == "string" then
+                love.graphics.printf(element,
+                                     self.Dimensions.X + 10,
+                                     self.Dimensions.Y + 10,
+                                     self.Dimensions.Width - 10,
+                                     "left")
+            elseif type(element) == "table" then
+                love.graphics.setColor(element)
+            end
+        end
+
+    -- If the 'text' argument is just a string then make a simple
+    -- array with the Scene foreground color as the first element and
+    -- the string as the second.  That way we can assume 'text' is
+    -- always an array and process it using one loop below.
+    if type(text) == "string" then
+        text = { self.foregroundColor, text }
+    end
+
+    for _,element in ipairs(text) do process(element) end
 end
 
 -- This method draws the scene to the screen.
