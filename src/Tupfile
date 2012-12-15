@@ -1,0 +1,4 @@
+# Create the settings.lua file from the example settings file.
+: settings.lua.example \
+|> ^ Creating settings^ cp settings.lua.example settings.lua \
+|> settings.lua
