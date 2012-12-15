@@ -43,5 +43,40 @@ end
 -- When we finish parsing we need to close our file.
 rgb_file:close()
 
+-- This method accepts a color as a string, in hexadecimal format, and
+-- returns a table with the corresponding RGB values.  The string can
+-- be in the following formats:
+--
+-- 1. RRGGBB
+-- 2. RGB
+--
+-- The second form is treated as if each element is doubled, i.e. we
+-- treat 'faf' as if it were 'ffaaff'.  The string may optionally
+-- begin with the '#' character, so strings like '#ffaaff' are also
+-- acceptable.
+function LNVL.Color.fromHex(color_hex)
+    local long_regex = "#?(%x%x)(%x%x)(%x%x)"
+    local short_regex = "#?(%x)(%x)(%x)"
+
+    -- We can decide which regular expression to use based on the
+    -- string length.  The short format '#fff' can be no longer than
+    -- four characters.
+    if string.len(color_hex) <= 4 then
+        for red,green,blue in string.gmatch(color_hex, short_regex) do
+            red = string.rep(red, 2)
+            green = string.rep(green, 2)
+            blue = string.rep(blue, 2)
+            return { tonumber(red, 16), tonumber(blue, 16), tonumber(green, 16) }
+        end
+    else
+        for red,green,blue in string.gmatch(color_hex, long_regex) do
+            return { tonumber(red, 16), tonumber(blue, 16), tonumber(green, 16) }
+        end
+    end
+
+    -- We should never get here.
+    error(string.format("Could not parse the color string %s", color_hex))
+end
+
 -- Return our table as a module.
 return LNVL.Color
