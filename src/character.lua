@@ -35,6 +35,14 @@ function LNVL.Character:new(properties)
         end
     end
 
+    -- If the loop above set the 'color' property to a string then we
+    -- assume it now has a value like '#33cfaf', i.e. a hex color
+    -- string.  We need to convert that back into a table of RGB color
+    -- values.
+    if type(character.color) == "string" then
+        character.color = LNVL.Color.fromHex(character.color)
+    end
+
     -- Make sure the character has a name, because we do not support
     -- unnamed characters.
     if character.name == nil or character.name == "" then
