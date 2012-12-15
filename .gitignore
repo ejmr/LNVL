@@ -5,3 +5,7 @@
 # that generates the HTML.
 docs/html/*
 !docs/html/Tupfile
+
+# Ignore the settings file the engine actually uses.  We only want Git
+# to track the example file.
+src/settings.lua
