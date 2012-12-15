@@ -14,8 +14,13 @@ License
 
 [GNU General Public License.](http://www.gnu.org/copyleft/gpl.html)
 
+One file, `src/rgb.txt`, comes from the [XFree86 project][xfree86] and
+therefore uses [version 1.1 of their license.][xlicense]
+
 
 
 [nvl]: http://en.wikipedia.org/wiki/Visual_novel
 [love]: http://love2d.org/
 [renpy]: http://www.renpy.org/
+[xfree86]: http://www.xfree86.org/
+[xlicense]: http://www.xfree86.org/legal/licenses.html
