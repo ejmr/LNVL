@@ -1,0 +1,18 @@
+--[[
+--
+-- This module contains the global settings for LNVL.
+--
+--]]
+
+-- Our table of settings.
+LNVL.Settings = {}
+LNVL.Settings.__index = LNVL.Settings
+
+-- These settings control the height and width of the entire screen.
+LNVL.Settings.Screen = {}
+LNVL.Settings.Screen.Width = 800
+LNVL.Settings.Screen.Height = 600
+LNVL.Settings.Screen.Fullscreen = false
+
+-- Return the table of settings as the module.
+return LNVL.Settings
