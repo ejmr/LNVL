@@ -63,7 +63,12 @@ LNVL.Instructions["say"] = LNVL.Instruction:new{
                  -- add additional formatting to the output, such as
                  -- the character's name.
                  if arguments["character"] ~= nil then
-                     text = string.format("%s: %s", arguments.character.name, text)
+                     text = {
+                         arguments.character.color,
+                         string.format("%s: %s",
+                                       arguments.character.name,
+                                       arguments.content)
+                     }
                  end
 
                  arguments.scene:drawText(text)
