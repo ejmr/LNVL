@@ -28,6 +28,13 @@ function LNVL.Instruction:new(properties)
     return instruction
 end
 
+-- A simple tostring() method for debugging purposes, which does
+-- nothing but returns the name of the instruction.
+LNVL.Instruction.__tostring =
+    function (instruction)
+        return string.format("<Instruction %s>", instruction.name)
+    end
+
 -- We define a __call() metatable method as a shortcut for executing
 -- the 'action' function of an instruction.
 LNVL.Instruction.__call =
@@ -50,7 +57,21 @@ LNVL.Instructions = {}
 LNVL.Instructions["say"] = LNVL.Instruction:new{
     name = "say",
     action = function (arguments)
-                 arguments.scene:drawText(arguments.content)
+                 local text = arguments.content
+
+                 -- If the text is spoken by a character then we can
+                 -- add additional formatting to the output, such as
+                 -- the character's name.
+                 if arguments["character"] ~= nil then
+                     text = {
+                         arguments.character.color,
+                         string.format("%s: %s",
+                                       arguments.character.name,
+                                       arguments.content)
+                     }
+                 end
+
+                 arguments.scene:drawText(text)
              end
 }
 

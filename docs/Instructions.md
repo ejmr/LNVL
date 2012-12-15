@@ -87,7 +87,8 @@ its action function requires the following properties:
 1. `content`: A string representing the dialog to say.
 
 2. `character`: **(Optional)** A instance of an `LNVL.Character` who
-will speak the dialog.
+will speak the dialog.  If this argument is present the text will
+appear in the color defined by the `character.color` property.
 
 
 

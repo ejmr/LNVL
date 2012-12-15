@@ -35,6 +35,14 @@ function LNVL.Character:new(properties)
         end
     end
 
+    -- If the loop above set the 'color' property to a string then we
+    -- assume it now has a value like '#33cfaf', i.e. a hex color
+    -- string.  We need to convert that back into a table of RGB color
+    -- values.
+    if type(character.color) == "string" then
+        character.color = LNVL.Color.fromHex(character.color)
+    end
+
     -- Make sure the character has a name, because we do not support
     -- unnamed characters.
     if character.name == nil or character.name == "" then
@@ -58,6 +66,18 @@ end
 function LNVL.Character:says(text)
     return LNVL.Opcode:new("say", {content=text, character=self})
 end
+
+-- If we call a Character object as a function then we treat that as a
+-- short-cut for calling the says() method.  This can make dialog
+-- scripts more readable.
+LNVL.Character.__call =
+    function (f, ...)
+        if type(f) == "function" then
+            return f(...)
+        else
+            return f:says(...)
+        end
+    end
 
 -- Return the class as a module.
 return LNVL.Character
