@@ -69,6 +69,21 @@ instructions dictate the contents of this table, so they will vary
 from opcode to opcode.
 
 
+List of Opcodes
+---------------
+
+Below are all of the opcodes used in the LNVL engine, listed
+alphabetically by name.  Opcodes are always written in lowercase
+within the engine code.  Each entry describes what the opcode does and
+what instruction or instructions it creates.
+
+### Say ###
+
+The `say` opcode generates a `say` instruction.  The commonly-used
+methods of `LNVL.Character` objects create this opcode in order to
+compile dialog for a particular scene.
+
+
 List of Instructions
 --------------------
 
