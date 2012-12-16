@@ -39,17 +39,17 @@ Here is a simple example:
 This script creates one character, Lobby Jones, and one scene.  All of
 the action in LNVL takes place within scenes, so every script must
 define at least one scene.  The action always begins with the `START`
-scene, so that is the one we create.  And within that scene we have
+scene, so that is the one you create.  And within that scene you have
 our Lobby character speak four lines of dialog.  The user would see
 these lines one-by-one and could navigate back and forth between them
 at his leisure.
 
 Computer programmers may recognize this language is actually the
 [Lua programming language][lua].  That is true.  The special language
-LNVL provides is [domain-specific language][dsl] (DSL) written in
-Lua.  This DSL makes it easier to write scripts for LNVL, but it also
-means that, if necessary, authors have the full power of the Lua
-programming language at their disposal.
+LNVL provides is [domain-specific language][dsl] (DSL) written in Lua.
+This DSL makes it easier to write scripts for LNVL, but it also means
+that, if necessary, authors have the full power of the Lua programming
+language at their disposal.
 
 
 Creating Scenes
@@ -57,8 +57,9 @@ Creating Scenes
 
 A *scene* is the container for everything that happens in LNVL.  All
 character dialog, all background images, all transitions, all of these
-things take place inside of a scene.  That means we cannot do anything
-without first creating a scene.  Here is the most basic example:
+things take place inside of a scene.  That means you cannot do
+anything without first creating a scene.  Here is the most basic
+example:
 
     START = LNVL.Scene:new{}
 
@@ -69,7 +70,7 @@ one LNVL always expects to exist because that is the first one is
 displays.  That means every LNVL script *must* define the `START`
 scene.
 
-Our example scene is empty though.  We can add narration to the scene
+Our example scene is empty though.  You can add narration to the scene
 by adding strings.  LNVL will display each string one at a time,
 allowing the user to move back and forth through them.  LNVL considers
 strings separated with commas as different lines of dialog.  However,
@@ -100,11 +101,11 @@ i.e. the color of that character’s dialog on screen.
 
 ### Speaking With Characters ###
 
-We use characters inside of scenes to specify who says which lines of
-dialog.  All we have to do is write strings of dialog in the scene
-like in the example above, except we provide the character name before
-the string.  That tells LNVL which character is speaking that line.
-For example, here is a short scene of two characters speaking:
+You use characters inside of scenes to specify who says which lines of
+dialog.  All you have to do is write strings of dialog in the scene
+like in the example above, except you provide the character name
+before the string.  That tells LNVL which character is speaking that
+line.  For example, here is a short scene of two characters speaking:
 
     Lobby = LNVL.Character:new{name="Lobby", color="#363"}
     Eric = LNVL.Character:new{name="Eric", color=#66a}
