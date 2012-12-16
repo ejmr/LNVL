@@ -5,7 +5,7 @@ PANDOC_FLAGS += --standalone
 PANDOC_FLAGS += --table-of-contents
 PANDOC_FLAGS += --css=Style.css
 PANDOC_FLAGS += --smart
-PANDOC_FLAGS += --indented-code-classes=lua,numberLines
+PANDOC_FLAGS += --indented-code-classes=lua
 
 # Convert the documentation, written in the Markdown format, to HTML.
 : foreach ../*.md | *.html \
