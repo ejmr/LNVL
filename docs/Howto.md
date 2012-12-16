@@ -86,6 +86,37 @@ line using the `..` operator.  For example:
     }
 
 
+Characters
+----------
+
+Every good story needs characters.  So LNVL provides a way to create
+characters and plug them into your tale.  Here is a simple example of
+a character:
+
+    Lobby = LNVL.Character:new{name="Lobby", color="#363"}
+
+The creates the character `Lobby` and defines his name and color,
+i.e. the color of that character’s dialog on screen.
+
+### Speaking With Characters ###
+
+We use characters inside of scenes to specify who says which lines of
+dialog.  All we have to do is write strings of dialog in the scene
+like in the example above, except we provide the character name before
+the string.  That tells LNVL which character is speaking that line.
+For example, here is a short scene of two characters speaking:
+
+    Lobby = LNVL.Character:new{name="Lobby", color="#363"}
+    Eric = LNVL.Character:new{name="Eric", color=#66a}
+
+    START = LNVL.Scene:new{
+        Eric "Hello Lobby!",
+        Lobby "Eh?  What?  What time is this?",
+        Eric "Are you alright Lobby?",
+        Lobby "I'm going back to bed, forget this..."
+    }
+
+
 
 [lua]: http://www.lua.org/
 [dsl]: http://en.wikipedia.org/wiki/Domain_specific_language
