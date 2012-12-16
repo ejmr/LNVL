@@ -1,4 +1,8 @@
+# The options to give to Pandoc.
+PANDOC_FLAGS += -f markdown
+PANDOC_FLAGS += -t html5
+
 # Convert the documentation, written in the Markdown format, to HTML.
 : foreach ../*.md | *.html \
-|> ^ Writing %o^ pandoc %f -f markdown -t html5 -o %o \
+|> ^ Writing %o^ pandoc %f $(PANDOC_FLAGS) -o %o \
 |> %B.html
