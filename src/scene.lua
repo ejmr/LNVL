@@ -69,8 +69,22 @@ function LNVL.Scene:new(properties)
             if getmetatable(content) == LNVL.Opcode then
                 if content.name == "say" then
                     content.arguments.scene = scene
+                    table.insert(opcodes, content)
+                elseif content.name == "monologue" then
+                    -- For the 'monologue' opcode
+                    -- content.arguments.content will be a table of
+                    -- strings.  We need to create a 'say' opcode for
+                    -- each of them.
+                    for _,line in ipairs(content.arguments.content) do
+                        local say =
+                            LNVL.Opcode:new("say",
+                                            { scene=scene,
+                                              content=line,
+                                              character=content.arguments.character
+                                            })
+                        table.insert(opcodes, say)
+                    end
                 end
-                table.insert(opcodes, content)
             end
         end
     end
