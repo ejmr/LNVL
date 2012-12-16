@@ -27,16 +27,14 @@ editor.  But the scripts use their own special language.  This
 language provides ways for you to do all of the things listed above.
 Here is a simple example:
 
-```lua
-Lobby = LNVL.Character:new{name="Lobby Jones", image="images/Lobby.png"}
+    Lobby = LNVL.Character:new{name="Lobby Jones", image="images/Lobby.png"}
 
-START = LNVL.Scene:new{
-    Lobby "Hello everyone!",
-    Lobby "My name is Lobby Jones.",
-    Lobby "And this is my short introduction.",
-    Lobby "Now goodbye to you!"
-}
-```
+    START = LNVL.Scene:new{
+        Lobby "Hello everyone!",
+        Lobby "My name is Lobby Jones.",
+        Lobby "And this is my short introduction.",
+        Lobby "Now goodbye to you!"
+    }
 
 This script creates one character, Lobby Jones, and one scene.  All of
 the action in LNVL takes place within scenes, so every script must
