@@ -48,45 +48,7 @@ function LNVL.Scene:new(properties)
     local opcodes = {}
 
     for _,content in ipairs(properties) do
-        local contentType = type(content)
-
-        -- Plain strings become "say" opcodes.
-        if contentType == "string" then
-            table.insert(opcodes,
-                         LNVL.Opcode:new("say", {scene=scene, content=content}))
-        elseif contentType == "table" then
-            -- If the content is a table then we need to look at the
-            -- metatable of the content, because most likely what we
-            -- have here is the result of calling the method of
-            -- another object in the arguments list to the Scene
-            -- constructor.
-            --
-            -- Most likely the content is already an opcode created by
-            -- another function.  If that is the case then we may need
-            -- to add some additional information before storing it in
-            -- the opcodes array.  For example, we need to add the
-            -- 'scene' data to opcodes for the 'say' instruction.
-            if getmetatable(content) == LNVL.Opcode then
-                if content.name == "say" then
-                    content.arguments.scene = scene
-                    table.insert(opcodes, content)
-                elseif content.name == "monologue" then
-                    -- For the 'monologue' opcode
-                    -- content.arguments.content will be a table of
-                    -- strings.  We need to create a 'say' opcode for
-                    -- each of them.
-                    for _,line in ipairs(content.arguments.content) do
-                        local say =
-                            LNVL.Opcode:new("say",
-                                            { scene=scene,
-                                              content=line,
-                                              character=content.arguments.character
-                                            })
-                        table.insert(opcodes, say)
-                    end
-                end
-            end
-        end
+        table.insert(opcodes, self:createOpcodeFromContent(content))
     end
 
     -- opcodes: The list of opcodes for the scene, created above.
@@ -97,6 +59,40 @@ function LNVL.Scene:new(properties)
     scene.opcodeIndex = 1
 
     return scene
+end
+
+-- We use this method to process the contents given to Scene objects
+-- and turn them into the appropriate opcodes.  The method accepts one
+-- argument, which may be anything that can be a valid element of the
+-- 'properties' argument to Scene:new().  The method returns an
+-- appropriate LNVL.Opcode object based on the argument.
+function LNVL.Scene:createOpcodeFromContent(content)
+    local contentType = type(content)
+
+    -- If the content is a string then all we only need to create a
+    -- simple 'say' opcode, because that means the content is a line
+    -- of dialog being spoken without any character involved.
+    if contentType == "string" then
+        return LNVL.Opcode:new("say", {scene=self, content=content})
+    end
+
+    -- If the content is not a string then it must be a table, and
+    -- furthermore must be an LNVL.Opcode.
+    assert(contentType == "table" and getmetatable(content) == LNVL.Opcode,
+           "Unknown content type in Scene")
+
+    -- At this point we know that 'content' is an opcode so we create
+    -- another variable for it.  This is to help readability, because
+    -- we may be adding 'content' properties to this opcode, and
+    -- seeing 'content' twice in a table lookup could be confusing.
+    local opcode = content
+
+    -- If our opcode is already a 'say' then we make sure it has a
+    -- 'scene' property so that later we can display it.
+    if opcode.name == "say" then
+        opcode.arguments.scene = self
+        return opcode
+    end
 end
 
 -- These are the default dimensions for a Scene.  These values will be
