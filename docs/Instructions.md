@@ -77,6 +77,12 @@ alphabetically by name.  Opcodes are always written in lowercase
 within the engine code.  Each entry describes what the opcode does and
 what instruction or instructions it creates.
 
+### Monologue ###
+
+The `monologue` opcode expands into multiple `say` opcodes, used by
+the `LNVL.Character:monologue()` method to present multiple lines of
+dialog by a single character at once.
+
 ### Say ###
 
 The `say` opcode generates a `say` instruction.  The commonly-used
