@@ -46,10 +46,10 @@ at his leisure.
 
 Computer programmers may recognize this language is actually the
 [Lua programming language][lua].  That is true.  The special language
-LNVL provides is [domain-specific language][dsl] (DSL) written in Lua.
-This DSL makes it easier to write scripts for LNVL, but it also means
-that, if necessary, authors have the full power of the Lua programming
-language at their disposal.
+LNVL provides is a [domain-specific language][dsl] (DSL) written in
+Lua.  This DSL makes it easier to write scripts for LNVL, but it also
+means that, if necessary, authors have the full power of the Lua
+programming language at their disposal.
 
 
 Creating Scenes
