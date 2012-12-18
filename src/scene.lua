@@ -163,7 +163,8 @@ function LNVL.Scene:draw()
     self:drawContainer()
 end
 
--- Renders the current content to screen.
+-- Renders the current content to screen.  This function returns no
+-- value because instructions return no arguments.
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
     local instruction = LNVL.Instructions[opcode.name]
