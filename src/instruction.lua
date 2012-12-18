@@ -13,11 +13,18 @@
 LNVL.Instruction = {}
 LNVL.Instruction.__index = LNVL.Instruction
 
+-- This is a list of all the valid instructions.
+LNVL.Instruction.ValidInstructions = {
+    say = true
+}
+
 -- Our constructor.  It requires a table with two properties, named
 -- and defined in comments within the constructor.
 function LNVL.Instruction:new(properties)
     local instruction = {}
     setmetatable(instruction, LNVL.Instruction)
+    assert(LNVL.Instruction.ValidInstructions[properties.name] ~= nil,
+           string.format("Unknown instruction %s", properties.name))
 
     -- name: The name of the instruction as a string.
     instruction.name = properties.name
