@@ -117,6 +117,31 @@ line.  For example, here is a short scene of two characters speaking:
         Lobby "I'm going back to bed, forget this..."
     }
 
+To make a character speak all you have to do is type the dialog after
+the character’s name.  This helps your scripts read naturally.  But
+what if you have one character speak numerous lines in a row?  You
+could copy the character name each time, but LNVL provides a way for
+you to avoid that repetition: by writing a *monologue.*  Here is an
+example:
+
+    START = LNVL.Scene:new{
+        Eric:monologue {
+            "Look Lobby, we need to talk.",
+            "You have a problem.",
+            "And it worries me.  It worries all your friends.",
+            "You don't work.  You steal money from me constantly. " ..
+                "You're intoxicated every day...",
+            "We just want to help you Lobby."
+        },
+        Lobby "Eh, what?  Sorry.  I wasn't listening."
+    }
+
+By using `Eric:monologue { … }` you can write multiple lines of dialog
+for that character without having to prefix every line with the
+character’s name.  But be careful to add the comma after the closing
+curly-brace in a monologue.  That is a common syntax error that will
+cause LNVL to reject your script.
+
 
 
 [lua]: http://www.lua.org/
