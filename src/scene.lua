@@ -48,7 +48,18 @@ function LNVL.Scene:new(properties)
     local opcodes = {}
 
     for _,content in ipairs(properties) do
-        table.insert(opcodes, self:createOpcodeFromContent(content))
+        local new_opcode = self:createOpcodeFromContent(content)
+
+        -- The new opcode will always be a table.  But if its
+        -- metatable is not LNVL.Opcode then that means we have an
+        -- array of opcodes we need to insert individually.
+        if getmetatable(new_opcode) == LNVL.Opcode then
+            table.insert(opcodes, new_opcode)
+        else
+            for _,op in ipairs(new_opcode) do
+                table.insert(opcodes, op)
+            end
+        end
     end
 
     -- opcodes: The list of opcodes for the scene, created above.
@@ -65,7 +76,8 @@ end
 -- and turn them into the appropriate opcodes.  The method accepts one
 -- argument, which may be anything that can be a valid element of the
 -- 'properties' argument to Scene:new().  The method returns an
--- appropriate LNVL.Opcode object based on the argument.
+-- appropriate LNVL.Opcode object based on the argument.  It may also
+-- return an array of LNVL.Opcode objects.
 function LNVL.Scene:createOpcodeFromContent(content)
     local contentType = type(content)
 
