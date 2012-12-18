@@ -11,3 +11,16 @@ pre {
     margin: 1em;
     padding: 1em;
 }
+
+a:link {
+    text-decoration: none;
+}
+
+h1 {
+    border-top: 0.25em solid black;
+    border-bottom: 0.25em solid black;
+}
+
+h2 {
+    border-bottom: 0.1em dotted black;
+}
