@@ -12,12 +12,20 @@
 LNVL.Opcode = {}
 LNVL.Opcode.__index = LNVL.Opcode
 
+-- This contains all of the valid opcodes LNVL recognizes.
+LNVL.Opcode.ValidOpcodes = {
+    monologue = true,
+    say = true
+}
+
 -- The opcode constructor, which requires two arguments: the name of
 -- an instruction as a string, and a table (which may be nil) of
 -- arguments to give to that instruction later.
 function LNVL.Opcode:new(name, arguments)
     local opcode = {}
     setmetatable(opcode, LNVL.Opcode)
+    assert(LNVL.Opcode.ValidOpcodes[name] ~= nil,
+           string.format("Unknown opcode %s", name))
 
     -- name: The name of the instruction this opcode will execute.
     opcode.name = name
