@@ -15,7 +15,8 @@ LNVL = {}
 
 -- Because all of the code in the 'src/' directory adds to the LNVL
 -- table these require() statements must come after we declare the
--- LNVL table above.
+-- LNVL table above.  We must require() each module in a specific
+-- order, so insertions or changes to this list must be careful.
 
 LNVL.Color = require("src.color")
 LNVL.Opcode = require("src.opcode")
