@@ -87,12 +87,17 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- seeing 'content' twice in a table lookup could be confusing.
     local opcode = content
 
-    -- If our opcode is already a 'say' then we make sure it has a
-    -- 'scene' property so that later we can display it.
+    -- If our opcode is already a 'say' then we have nothing to do.
+    -- We do need to add a 'scene' property to the 'arguments' table
+    -- of the opcode but this happens later, just before we render the
+    -- dialog to screen.  So we can return the opcode right away.
     if opcode.name == "say" then
-        opcode.arguments.scene = self
         return opcode
     end
+
+    -- We should never reach this point because it means we have some
+    -- content that we do not understand how to handle.
+    error("Unknown content type in Scene")
 end
 
 -- These are the default dimensions for a Scene.  These values will be
@@ -162,6 +167,11 @@ end
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
     local instruction = LNVL.Instructions[opcode.name]
+
+    -- Make sure the opcode has access to the Scene so that it can
+    -- draw dialog to screen.
+    opcode.arguments.scene = self
+
     instruction(opcode.arguments)
 end
 
