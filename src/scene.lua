@@ -126,24 +126,14 @@ function LNVL.Scene:createOpcodeFromContent(content)
     error("Unknown content type in Scene")
 end
 
--- These are the default dimensions for a Scene.  These values will be
--- given as the values to arguments of the same name for functions
--- like love.graphics.rectangle().
-LNVL.Scene.Dimensions = {
-    Width = 600,
-    Height = 240,
-    X = 100,
-    Y = 300,
-}
-
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
     love.graphics.setColor(self.backgroundColor)
     love.graphics.rectangle("fill",
-                            self.Dimensions.X,
-                            self.Dimensions.Y,
-                            self.Dimensions.Width,
-                            self.Dimensions.Height)
+                            LNVL.Settings.Scenes.X,
+                            LNVL.Settings.Scenes.Y,
+                            LNVL.Settings.Scenes.Width,
+                            LNVL.Settings.Scenes.Height)
 end
 
 -- This method draws text within the scene's container.  The argument
@@ -164,9 +154,9 @@ function LNVL.Scene:drawText(text)
         function(element)
             if type(element) == "string" then
                 love.graphics.printf(element,
-                                     self.Dimensions.X + 10,
-                                     self.Dimensions.Y + 10,
-                                     self.Dimensions.Width - 10,
+                                     LNVL.Settings.Scenes.X + 10,
+                                     LNVL.Settings.Scenes.Y + 10,
+                                     LNVL.Settings.Scenes.Width - 10,
                                      "left")
             elseif type(element) == "table" then
                 love.graphics.setColor(element)

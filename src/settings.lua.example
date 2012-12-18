@@ -1,0 +1,33 @@
+--[[
+--
+-- This module contains the global settings for LNVL.
+--
+--]]
+
+-- Our table of settings.
+LNVL.Settings = {}
+LNVL.Settings.__index = LNVL.Settings
+
+-- These settings control the height and width of the entire screen.
+LNVL.Settings.Screen = {}
+LNVL.Settings.Screen.Width = 800
+LNVL.Settings.Screen.Height = 600
+LNVL.Settings.Screen.Fullscreen = false
+
+-- The default dimensions of Scene windows.  The X and Y values
+-- determine the default position where the window appears when not in
+-- fullscreen mode.
+LNVL.Settings.Scenes = {}
+do
+    local ratio = LNVL.Settings.Screen.Width / 10
+    LNVL.Settings.Scenes.Width = LNVL.Settings.Screen.Width - (ratio * 2)
+end
+do
+    local ratio = LNVL.Settings.Screen.Height / 10
+    LNVL.Settings.Scenes.Height = LNVL.Settings.Screen.Height - (ratio * 5)
+end
+LNVL.Settings.Scenes.X = (LNVL.Settings.Screen.Width / 10)
+LNVL.Settings.Scenes.Y = (LNVL.Settings.Screen.Height / 2) - 50
+
+-- Return the table of settings as the module.
+return LNVL.Settings

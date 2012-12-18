@@ -16,7 +16,7 @@ local LNVL = require("LNVL")
 local scene = nil
 
 function love.load(arguments)
-    love.graphics.setMode(800, 600)
+    love.graphics.setMode(LNVL.Settings.Screen.Width, LNVL.Settings.Screen.Height)
     love.graphics.setBackgroundColor(0, 0, 0)
 
     if #arguments > 1 then

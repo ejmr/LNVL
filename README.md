@@ -9,6 +9,19 @@ main inspiration for LNVL, but this project does not attempt to be an
 all-encompassing visual novel engine like Ren’Py.
 
 
+Installation and Configuration
+------------------------------
+
+In order to use LNVL you first need to unzip it wherever you intend to
+use that engine, i.e. where you will use `require("LNVL")` in your
+code.  LNVL uses the [Tup build system][tup]; if you have Tup
+installed you can run the command `tup upd` to build the engine.  If
+you do not have Tup then all you need to do is copy one file.  Within
+the `src` directory is the `src/settings.lua.example` file; create a
+copy of that file named `src/settings.lua`, and read through it to
+see how you can configure LNVL.
+
+
 License
 -------
 
@@ -24,3 +37,4 @@ therefore uses [version 1.1 of their license.][xlicense]
 [renpy]: http://www.renpy.org/
 [xfree86]: http://www.xfree86.org/
 [xlicense]: http://www.xfree86.org/legal/licenses.html
+[tup]: http://gittup.org/tup/
