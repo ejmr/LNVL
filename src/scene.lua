@@ -107,6 +107,21 @@ function LNVL.Scene:createOpcodeFromContent(content)
         return opcode
     end
 
+    -- If the opcode is 'monologue' then we expand it into an array of
+    -- 'say' opcodes for each line of dialog in the monologue.
+    if opcode.name == "monologue" then
+        local say_opcodes = {}
+        for _,content in ipairs(opcode.arguments.content) do
+            table.insert(say_opcodes,
+                         LNVL.Opcode:new("say",
+                                         { scene=self,
+                                           content=content,
+                                           character=opcode.arguments.character
+                                         }))
+        end
+        return say_opcodes
+    end
+
     -- We should never reach this point because it means we have some
     -- content that we do not understand how to handle.
     error("Unknown content type in Scene")
