@@ -85,7 +85,7 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- simple 'say' opcode, because that means the content is a line
     -- of dialog being spoken without any character involved.
     if contentType == "string" then
-        return LNVL.Opcode:new("say", {scene=self, content=content})
+        return LNVL.Opcode:new("say", {content=content})
     end
 
     -- If the content is not a string then it must be a table, and
@@ -114,8 +114,7 @@ function LNVL.Scene:createOpcodeFromContent(content)
         for _,content in ipairs(opcode.arguments.content) do
             table.insert(say_opcodes,
                          LNVL.Opcode:new("say",
-                                         { scene=self,
-                                           content=content,
+                                         { content=content,
                                            character=opcode.arguments.character
                                          }))
         end
