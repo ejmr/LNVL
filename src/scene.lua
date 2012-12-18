@@ -89,10 +89,10 @@ end
 -- given as the values to arguments of the same name for functions
 -- like love.graphics.rectangle().
 LNVL.Scene.Dimensions = {
-    Width = 600,
-    Height = 240,
-    X = 100,
-    Y = 300,
+    Width = LNVL.Settings.Scenes.Width,
+    Height = LNVL.Settings.Scenes.Height,
+    X = LNVL.Settings.Scenes.X,
+    Y = LNVL.Settings.Scenes.Y
 }
 
 -- This method draws the container or border of the scene.
