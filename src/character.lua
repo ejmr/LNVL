@@ -105,5 +105,22 @@ LNVL.Character.__call =
         end
     end
 
+-- This method accepts a string as a path to an image file, and
+-- changes the character's current image to that.  If the file is not
+-- part of the 'character.images' table then we will store it there
+-- for future reference; and if we have already loaded that image once
+-- we just use that table without reloading the image file.
+--
+-- The method returns an opcode telling the engine to change to the
+-- given image.
+function LNVL.Character:becomes(filename)
+end
+
+-- This method is a short-cut for character:becomes(character.image),
+-- i.e. changing back to their 'normal', default image.
+function LNVL.Character:becomesNormal()
+    return self:becomes(self.images.normal)
+end
+
 -- Return the class as a module.
 return LNVL.Character
