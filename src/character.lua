@@ -27,12 +27,29 @@ function LNVL.Character:new(properties)
     -- with values in the 0--255 range.
     character.color = {0, 0, 0}
 
+    -- images: A hash of images for the character.  These are the
+    -- sprites we display on screen when the character is speaking,
+    -- for example.  All of the values in the table are Image objects,
+    -- i.e. created by love.graphics.newImage().  The keys are strings
+    -- which are pathnames to the image files.  However, the table
+    -- also has one key named 'normal'; this key points to the
+    -- default image for the character, the one we intend to use the
+    -- most often.
+    character.images = { normal = nil }
+
     -- Overwrite any default property values above with ones given to
     -- the constructor.
     for name,value in pairs(properties) do
         if rawget(character, name) ~= nil then
             rawset(character, name, value)
         end
+    end
+
+    -- The loop above may have set an 'image' property.  If so, this
+    -- is the image file we want to use for the normal character
+    -- image, so we need to check for it.
+    if character["image"] ~= nil then
+        character.images.normal = love.graphics.newImage(character.image)
     end
 
     -- If the loop above set the 'color' property to a string then we
