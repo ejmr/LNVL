@@ -89,6 +89,12 @@ The `say` opcode generates a `say` instruction.  The commonly-used
 methods of `LNVL.Character` objects create this opcode in order to
 compile dialog for a particular scene.
 
+### Set-Character-Image ###
+
+The `set-character-image` opcode creates a `set-image` instruction
+that will change the image used to display an `LNVL.Character` on
+screen.
+
 
 List of Instructions
 --------------------
@@ -111,7 +117,19 @@ its action function requires the following properties:
 will speak the dialog.  If this argument is present the text will
 appear in the color defined by the `character.color` property.
 
+### Set-Image ###
+
+This instruction changes images for scenes, characters, and anything
+else that uses images for display.  The arguments table for its action
+function requires the following properties:
+
+1. `target`: The object whose image will change.  Currently the engine
+supports only `LNVL.Character` objects as valid targets.
+
+2. `image`: The new image to use.  This must be [an Image object][3].
+
 
 
 [1]: http://www.lua.org/manual/5.1/manual.html#2.5.7
 [2]: http://www.lua.org/manual/5.1/manual.html#2.8
+[3]: https://love2d.org/wiki/Image
