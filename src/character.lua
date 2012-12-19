@@ -126,10 +126,10 @@ function LNVL.Character:becomes(filename)
     return LNVL.Opcode:new("set-character-image", {character=self, image=filename})
 end
 
--- This method is a short-cut for character:becomes(character.image),
--- i.e. changing back to their 'normal', default image.
+-- This method is a short-cut for character:becomes("normal"),
+-- i.e. changing back to their default image.
 function LNVL.Character:becomesNormal()
-    return self:becomes(self.images.normal)
+    return self:becomes("normal")
 end
 
 -- Return the class as a module.
