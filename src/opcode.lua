@@ -15,7 +15,8 @@ LNVL.Opcode.__index = LNVL.Opcode
 -- This contains all of the valid opcodes LNVL recognizes.
 LNVL.Opcode.ValidOpcodes = {
     monologue = true,
-    say = true
+    say = true,
+    ["set-character-image"] = true,
 }
 
 -- The opcode constructor, which requires two arguments: the name of
