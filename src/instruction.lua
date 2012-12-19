@@ -15,7 +15,7 @@ LNVL.Instruction.__index = LNVL.Instruction
 
 -- This is a list of all the valid instructions.
 LNVL.Instruction.ValidInstructions = {
-    say = true,
+    ["say"] = true,
     ["set-image"] = true,
 }
 
