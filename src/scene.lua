@@ -121,6 +121,12 @@ function LNVL.Scene:createOpcodeFromContent(content)
         return say_opcodes
     end
 
+    -- If the opcode is 'set-character-image' then we have nothing to
+    -- add so we can simply return it.
+    if opcode.name == "set-character-image" then
+        return opcode
+    end
+
     -- We should never reach this point because it means we have some
     -- content that we do not understand how to handle.
     error("Unknown content type in Scene")

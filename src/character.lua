@@ -119,6 +119,11 @@ LNVL.Character.__call =
 -- The method returns an opcode telling the engine to change to the
 -- given image.
 function LNVL.Character:becomes(filename)
+    if self.images[filename] == nil then
+        self.images[filename] = love.graphics.newImage(filename)
+    end
+
+    return LNVL.Opcode:new("set-character-image", {character=self, image=filename})
 end
 
 -- This method is a short-cut for character:becomes(character.image),
