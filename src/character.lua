@@ -37,6 +37,11 @@ function LNVL.Character:new(properties)
     -- most often.
     character.images = { normal = nil }
 
+    -- currentImage: A key for the 'images' table above, i.e. a
+    -- string, naming the image we currently use to draw the
+    -- character.
+    character.currentImage = "normal"
+
     -- Overwrite any default property values above with ones given to
     -- the constructor.
     for name,value in pairs(properties) do
