@@ -128,12 +128,7 @@ end
 
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
-    love.graphics.setColor(self.backgroundColor)
-    love.graphics.rectangle("fill",
-                            LNVL.Settings.Scenes.X,
-                            LNVL.Settings.Scenes.Y,
-                            LNVL.Settings.Scenes.Width,
-                            LNVL.Settings.Scenes.Height)
+    LNVL.Graphics.drawContainer{backgroundColor=self.backgroundColor}
 end
 
 -- This method draws text within the scene's container.  The argument
