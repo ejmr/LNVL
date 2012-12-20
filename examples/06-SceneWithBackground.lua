@@ -7,4 +7,4 @@ START = LNVL.Scene:new{
     "What a nice day!",
 }
 
-START.background = "images/Sunny-Hill.jpg"
+START:setBackground "examples/images/Sunny-Hill.jpg"
