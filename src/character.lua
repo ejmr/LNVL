@@ -55,6 +55,7 @@ function LNVL.Character:new(properties)
     -- image, so we need to check for it.
     if properties["image"] ~= nil then
         character.images.normal = love.graphics.newImage(properties.image)
+        character.images[properties.image] = character.images.normal
     end
 
     -- If the loop above set the 'color' property to a string then we
