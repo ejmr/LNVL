@@ -128,50 +128,15 @@ end
 
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
-    love.graphics.setColor(self.backgroundColor)
-    love.graphics.rectangle("fill",
-                            LNVL.Settings.Scenes.X,
-                            LNVL.Settings.Scenes.Y,
-                            LNVL.Settings.Scenes.Width,
-                            LNVL.Settings.Scenes.Height)
+    LNVL.Graphics.drawContainer{backgroundColor=self.backgroundColor}
 end
 
--- This method draws text within the scene's container.  The argument
--- can be either a string or a table.  If it is a string then we
--- render the text using the current foreground color of the Scene
--- object.  If it is a table then we iterate through its contents like
--- an array; if the element is a string then we print that text, and
--- if it is a table then we set the foreground color to that, under
--- the assumption the table has three numeric values, i.e. RGB values.
---
--- Each call to this method clears the container, so sequential calls
--- will not append text.  This method returns no value.
+-- This method draws text within the scene's container.  It will clear
+-- the container each time, erasing the current text on screen.  This
+-- method returns no value.
 function LNVL.Scene:drawText(text)
     self:drawContainer()
-    love.graphics.setFont(self.font)
-
-    local process =
-        function(element)
-            if type(element) == "string" then
-                love.graphics.printf(element,
-                                     LNVL.Settings.Scenes.X + 10,
-                                     LNVL.Settings.Scenes.Y + 10,
-                                     LNVL.Settings.Scenes.Width - 10,
-                                     "left")
-            elseif type(element) == "table" then
-                love.graphics.setColor(element)
-            end
-        end
-
-    -- If the 'text' argument is just a string then make a simple
-    -- array with the Scene foreground color as the first element and
-    -- the string as the second.  That way we can assume 'text' is
-    -- always an array and process it using one loop below.
-    if type(text) == "string" then
-        text = { self.foregroundColor, text }
-    end
-
-    for _,element in ipairs(text) do process(element) end
+    LNVL.Graphics.drawText(self.font, text)
 end
 
 -- This method draws the scene to the screen.
