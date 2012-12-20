@@ -18,6 +18,10 @@ function LNVL.Scene:new(properties)
     -- of the scene when we draw it.
     scene.backgroundColor = {255, 255, 255}
 
+    -- borderColor: The color of the border around the scene
+    -- container.  If this is set to nil then there will be no border.
+    scene.borderColor = {120, 120, 120}
+
     -- foregroundColor: The color we use when drawing text.
     scene.foregroundColor = {0, 0, 0}
 
@@ -147,7 +151,10 @@ end
 
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
-    LNVL.Graphics.drawContainer{backgroundColor=self.backgroundColor}
+    LNVL.Graphics.drawContainer{
+        backgroundColor=self.backgroundColor,
+        borderColor=self.borderColor
+    }
 end
 
 -- This method draws text within the scene's container.  It will clear
