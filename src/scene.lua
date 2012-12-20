@@ -31,18 +31,15 @@ function LNVL.Scene:new(properties)
 
     -- background: This is a string that is a path to an image file
     -- that is the background for the scene.  It is optional and thus
-    -- is nil by default.
+    -- is nil by default.  The method setBackground() will change this
+    -- property and the 'backgroundImage' property below.
     scene.background = nil
 
     -- backgroundImage: If the above 'background' property is not nil
     -- then this property is a LÖVE Image object loaded from the path
     -- of the 'background' property.  Since it is optional it is also
     -- nil by default.
-    if scene.background ~= nil then
-        scene.backgroundImage = love.graphics.newImage(scene.background)
-    else
-        scene.backgroundImage = nil
-    end
+    scene.backgroundImage = nil
 
     -- Apply any properties passed in as arguments that replace any
     -- named defaults we have set above.  We only change values of
@@ -141,6 +138,13 @@ function LNVL.Scene:createOpcodeFromContent(content)
     error("Unknown content type in Scene")
 end
 
+-- This method sets the background image.  It accepts a path to the
+-- file for the image.  It returns nothing.
+function LNVL.Scene:setBackground(filename)
+    self.background = filename
+    self.backgroundImage = love.graphics.newImage(filename)
+end
+
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
     LNVL.Graphics.drawContainer{backgroundColor=self.backgroundColor}
@@ -150,12 +154,17 @@ end
 -- the container each time, erasing the current text on screen.  This
 -- method returns no value.
 function LNVL.Scene:drawText(text)
-    self:drawContainer()
     LNVL.Graphics.drawText(self.font, self.foregroundColor, text)
 end
 
--- This method draws the scene to the screen.
+-- This method draws the scene to the screen.  If the scene has a
+-- background image we draw this as well.
 function LNVL.Scene:draw()
+    if self.backgroundImage ~= nil then
+        love.graphics.setColorMode("replace")
+        love.graphics.draw(self.backgroundImage, 0, 0)
+    end
+
     self:drawContainer()
 end
 
