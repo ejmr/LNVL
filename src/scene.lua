@@ -29,6 +29,21 @@ function LNVL.Scene:new(properties)
     -- content of the scene is confined to a dialog box.
     scene.fullscreen = false
 
+    -- background: This is a string that is a path to an image file
+    -- that is the background for the scene.  It is optional and thus
+    -- is nil by default.
+    scene.background = nil
+
+    -- backgroundImage: If the above 'background' property is not nil
+    -- then this property is a LÖVE Image object loaded from the path
+    -- of the 'background' property.  Since it is optional it is also
+    -- nil by default.
+    if scene.background ~= nil then
+        scene.backgroundImage = love.graphics.newImage(scene.background)
+    else
+        scene.backgroundImage = nil
+    end
+
     -- Apply any properties passed in as arguments that replace any
     -- named defaults we have set above.  We only change values of
     -- properties we have created already, meaning we can only change
