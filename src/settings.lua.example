@@ -29,5 +29,10 @@ end
 LNVL.Settings.Scenes.X = (LNVL.Settings.Screen.Width / 10)
 LNVL.Settings.Scenes.Y = (LNVL.Settings.Screen.Height / 2) - 50
 
+-- A scene container, i.e. the rectangle where dialog appears, may
+-- have an optional border around it.  This value represents the width
+-- of that border in pixels.
+LNVL.Settings.Scenes.BorderSize = 5
+
 -- Return the table of settings as the module.
 return LNVL.Settings
