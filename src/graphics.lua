@@ -1,8 +1,8 @@
 --[[
 --
--- This module provides a namespace of methods for drawing things: the
--- LNVL.Graphics class.  All methods are static and there is no reason
--- to create instances of the class.
+-- This module provides a namespace of functions for drawing things:
+-- the LNVL.Graphics class.  All functions are static and there is no
+-- reason to create instances of the class.
 --
 --]]
 
@@ -10,8 +10,8 @@
 LNVL.Graphics = {}
 LNVL.Graphics.__index = LNVL.Graphics
 
--- This method draws a 'container', a rectangle that presumably we
--- will use to contain dialog.  The method accepts two keyword
+-- This function draws a 'container', a rectangle that presumably we
+-- will use to contain dialog.  The function accepts two keyword
 -- arguments:
 --
 -- 1. 'backgroundColor': The background color of the container.  This
@@ -19,7 +19,7 @@ LNVL.Graphics.__index = LNVL.Graphics
 --
 -- 2. 'borderColor': (Optional) the color of the container border.
 --
--- The method returns no value.
+-- The function returns no value.
 function LNVL.Graphics.drawContainer(arguments)
     assert(arguments["backgroundColor"] ~= nil,
            "Cannot draw a container without a background color.")
