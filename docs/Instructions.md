@@ -69,6 +69,33 @@ instructions dictate the contents of this table, so they will vary
 from opcode to opcode.
 
 
+How Opcodes and Instructions Interact
+-------------------------------------
+
+When LNVL loads a scene, that is, an `LNVL.Scene` object, it creates an
+array of opcodes.  Each piece of content in the scene, every argument
+given to the `LNVL.Scene:new()` constructor, results in the creation
+of one or more `LNVL.Opcode` objects which the engine collects in that
+array.  This happens in the `LNVL.Scene:createOpcodeFromContent()`
+method, which LNVL calls once for each piece of scene content and
+creates one or more opcodes as a result.
+
+Instructions are generic actions that LNVL provides, such as
+displaying dialog or drawing an image.  Opcodes fill in the blanks of
+instructions so that they have specific effects.  For example, the
+`set-image` instruction provides a generic way to set the image for
+any object; the `set-character-image` opcode creates a `set-image`
+instruction with the additional information necessary to modify a
+given character image.
+
+That is the basic relationship between opcodes and instructions.
+Opcodes provide specific parameters to instructions, which are more
+generic actions in the engine.  Everything LNVL does that the user
+sees is the result of executing an instruction.  This happens in the
+`LNVL.Scene:drawCurrentContent()` method since scenes are what
+contains the opcodes LNVL uses to piece together instructions.
+
+
 List of Opcodes
 ---------------
 
