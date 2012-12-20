@@ -79,6 +79,7 @@ LNVL.Instructions["say"] = LNVL.Instruction:new{
                      }
                  end
 
+                 arguments.scene:draw()
                  arguments.scene:drawText(text)
              end
 }
