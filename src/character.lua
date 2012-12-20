@@ -50,11 +50,11 @@ function LNVL.Character:new(properties)
         end
     end
 
-    -- The loop above may have set an 'image' property.  If so, this
-    -- is the image file we want to use for the normal character
+    -- The constructor arguments may have an 'image' property.  If so,
+    -- this is the image file we want to use for the normal character
     -- image, so we need to check for it.
-    if character["image"] ~= nil then
-        character.images.normal = love.graphics.newImage(character.image)
+    if properties["image"] ~= nil then
+        character.images.normal = love.graphics.newImage(properties.image)
     end
 
     -- If the loop above set the 'color' property to a string then we
