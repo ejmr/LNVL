@@ -86,6 +86,35 @@ line using the `..` operator.  For example:
         "But now this is our last line of dialog."
     }
 
+### Backgrounds ###
+
+By default a scene has a black background.  There are two ways you can
+change this.
+
+The first way is to set the `backgroundColor` property of the scene.
+You must assign the property a table of three or four values,
+representing the red, green, blue, and alpha channels, respectively.
+But to make this easier LNVL provides a `Color` module that has
+pre-defined tables for colors.  For example, after creating a scene
+and its dialog we can change its background color like so:
+
+    START.backgroundColor = LNVL.Color.NavyBlue
+
+The file `src/rgb.txt` names every color you can use.  Or you can use
+[short-hand hexadecimal notation][color-hex]:
+
+    START.backgroundColor = LNVL.Color.fromHex("#088008")
+
+But sometimes you will not want a solid background color, because that
+can be bland.  So LNVL lets you use images for scene backgrounds.  You
+give a scene a background picture with the simple `setBackground`
+function, for example:
+
+    START:setBackground "examples/images/Sunny-Hill.jpg"
+
+**Note:** You must use a colon here.  `START.setBackground` is an
+error that will crash LNVL.
+
 
 Characters
 ----------
@@ -146,3 +175,4 @@ cause LNVL to reject your script.
 
 [lua]: http://www.lua.org/
 [dsl]: http://en.wikipedia.org/wiki/Domain_specific_language
+[color-hex]: http://en.wikipedia.org/wiki/Web_colors#Shorthand_hexadecimal_form
