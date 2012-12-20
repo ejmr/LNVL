@@ -142,7 +142,57 @@ character’s name.  But be careful to add the comma after the closing
 curly-brace in a monologue.  That is a common syntax error that will
 cause LNVL to reject your script.
 
+### Character Images ###
+
+Often you will want to show a character on screen, as is common in
+visual novels, role-playing games, and all manner of genres.  LNVL
+allows you to assign multiple images to a character and change between
+them throughout a scene.  This can help convey your story by showing
+changes in a character’s emotion through art, for example.
+
+To use images with a character you must first provide a default image,
+like so:
+
+    Lobby = LNVL.Character:new{
+        name = "Lobby Jones",
+        color = "#363",
+        image = "images/Lobby-Default.png",
+    }
+
+Notice the new property: `image`.  This has a path to an image file
+which LNVL will use as the default picture for that character.  Now
+LNVL will show that image whenever the character speaks.
+
+But it would be dull if you could only use one image.  So LNVL lets
+you change character images during scenes by making a character
+‘become’ something else.  Think of it as the character becoming
+surprised, excited, saddened—like that.  That is why you use the
+`becomes` function of characters in scripts to change their images.
+Here is an example:
+
+    START = LNVL.Scene:new{
+        Lobby "So I thought about what you said and...",
+        Lobby:becomes("images/Lobby-crying.png"),
+        Lobby "...I realize I need help.",
+        Lobby "I'm sorry for everything.  Please forgive me!",
+        Lobby:becomesNormal(),
+        Lobby "Heh, nah, I'm just kidding.  Dummy.",
+        Lobby:becomes("images/Lobby-laughing.png"),
+    }
+
+The lines like `Lobby:becomes("images/Lobby-crying.png")` tell LNVL to
+change the character image of screen.  As you can see, it accepts the
+path to an image file as its argument.  The path must obey
+[the restrictions LÖVE has on files][love-files].
+
+The initial image you give when creating the character is the ‘normal’
+image.  That means `Lobby:becomesNormal()` reverts the character back
+to his original image.  You could use `becomes()` and provide the path
+to the original image, but LNVL lets you use `becomesNormal()` as a
+short-cut.
+
 
 
 [lua]: http://www.lua.org/
 [dsl]: http://en.wikipedia.org/wiki/Domain_specific_language
+[love-files]: https://love2d.org/wiki/love.filesystem
