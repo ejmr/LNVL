@@ -5,13 +5,13 @@
 Eric = LNVL.Character:new{
     name = "Eric",
     color = "#c8ffc8",
-    image = "images/Eric-Normal.png",
+    image = "examples/images/Eric-Normal.png",
 }
 
 Jeff = LNVL.Character:new{
     name = "Jeff",
     color = "#c8c8ff",
-    image = "images/Jeff-Normal.png",
+    image = "examples/images/Jeff-Normal.png",
 }
 
 START = LNVL.Scene:new{
@@ -20,10 +20,10 @@ START = LNVL.Scene:new{
     Jeff:says "Sushimiya Hirasawa.  Because you copied his lyrics.",
     Eric:says "Oh my God could you please at least get his name right.",
     Eric:says "Let me see that anyways...",
-    Eric:becomes("images/Eric-Surprised.png"),
+    Eric:becomes("examples/images/Eric-Surprised.png"),
     Eric:says "Holy Hell, this is for one-hundred million yen in damages!",
     Eric:says "What is that?  Like, fifty dollars?!  We don't have that!",
-    Jeff:becomes("images/Jeff-Facepalm.png"),
+    Jeff:becomes("examples/images/Jeff-Facepalm.png"),
     Jeff:says "I wanted to make just one game before you got us sued into the ground.",
     Eric:becomesNormal(),
     Eric:says "Time for Plan-B.",
