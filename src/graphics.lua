@@ -56,6 +56,7 @@ end
 -- values, i.e. RGB values.  Users should use drawContainer() above to
 -- clear it before drawing text.  The function returns no value.
 function LNVL.Graphics.drawText(font, color, text)
+    love.graphics.setColorMode("modulate")
     love.graphics.setFont(font)
 
     -- We use this function to iterate through the 'text' argument if
