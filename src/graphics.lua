@@ -33,7 +33,7 @@ function LNVL.Graphics.drawContainer(arguments)
                                 LNVL.Settings.Scenes.X,
                                 LNVL.Settings.Scenes.Y,
                                 LNVL.Settings.Scenes.Width + 10,
-                                LNVL.Settings.Scenes.Heigh + 10)
+                                LNVL.Settings.Scenes.Height + 10)
     end
 
     love.graphics.setColor(arguments.backgroundColor)
