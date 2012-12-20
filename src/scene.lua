@@ -151,7 +151,7 @@ end
 -- method returns no value.
 function LNVL.Scene:drawText(text)
     self:drawContainer()
-    LNVL.Graphics.drawText(self.font, text)
+    LNVL.Graphics.drawText(self.font, self.foregroundColor, text)
 end
 
 -- This method draws the scene to the screen.
