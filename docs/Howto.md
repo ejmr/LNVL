@@ -115,6 +115,34 @@ function, for example:
 **Note:** You must use a colon here.  `START.setBackground` is an
 error that will crash LNVL.
 
+### Fonts ###
+
+Naturally fonts are important in LNVL because every scene uses one to
+render dialog.  Visual novels would be boring if every one used the
+same font.  So there are multiple ways you can change the font for
+scenes.
+
+The first way is to change the global font.  The file
+`src/settings.lua` provides many of the default values for LNVL.
+Inside that file is the setting `LNVL.Settings.Scenes.DefaultFont`.
+As its verbose name indicates, it represents the default font that
+every scene will use.  You can change that default font by giving that
+setting the value of [a `Font` object][love-font] using the LÖVE engine
+functions; see their documentation for more information.
+
+You may also change the font for an individual scene only.  You do
+this in a way similar to how you change the background image.  Here is
+an example:
+
+    START:setFont("path/to/myFont.ttf", 16)
+
+The first argument is a path to the font file, and the second is the
+size of the font in pixels.  So this example code loads a TrueType
+font (TTF) and tells the scene to draw the dialog with that font at a
+size of sixteen pixels.  This will only affect the `START` scene;
+every other scene will continue to use the global default font
+discussed above.
+
 
 Characters
 ----------
@@ -176,3 +204,4 @@ cause LNVL to reject your script.
 [lua]: http://www.lua.org/
 [dsl]: http://en.wikipedia.org/wiki/Domain_specific_language
 [color-hex]: http://en.wikipedia.org/wiki/Web_colors#Shorthand_hexadecimal_form
+[love-font]: https://love2d.org/wiki/Font
