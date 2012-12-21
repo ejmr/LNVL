@@ -17,6 +17,7 @@ LNVL.Instruction.__index = LNVL.Instruction
 LNVL.Instruction.ValidInstructions = {
     ["say"] = true,
     ["set-image"] = true,
+    ["draw-image"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
@@ -97,6 +98,15 @@ LNVL.Instructions["set-image"] = LNVL.Instruction:new{
 
                  -- If we reach this point then it is an error.
                  error(string.format("Cannot set-image for %s", targetType))
+             end
+}
+
+LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
+    name = "draw-image",
+    action = function (arguments)
+                 love.graphics.draw(arguments.image,
+                                    arguments.location[1],
+                                    arguments.location[2])
              end
 }
 
