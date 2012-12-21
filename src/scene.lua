@@ -149,6 +149,13 @@ function LNVL.Scene:setBackground(filename)
     self.backgroundImage = love.graphics.newImage(filename)
 end
 
+-- This method sets the font for the scene.  It requires a filename to
+-- a font file (e.g. a TTF file) and a font size in pixels.  The
+-- method returns no value.
+function LNVL.Scene:setFont(filename, size)
+    self.font = love.graphics.newFont(filename, size)
+end
+
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
     LNVL.Graphics.drawContainer{
