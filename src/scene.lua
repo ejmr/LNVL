@@ -26,7 +26,7 @@ function LNVL.Scene:new(properties)
     scene.foregroundColor = {0, 0, 0}
 
     -- font: The default font for the dialog.
-    scene.font = love.graphics.newFont(20)
+    scene.font = LNVL.Settings.Scenes.DefaultFont
 
     -- fullscreen: This boolean controls whether or not the scene
     -- should take up the entire screen.  If it is false then the

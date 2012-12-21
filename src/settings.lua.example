@@ -34,5 +34,14 @@ LNVL.Settings.Scenes.Y = (LNVL.Settings.Screen.Height / 2) - 50
 -- of that border in pixels.
 LNVL.Settings.Scenes.BorderSize = 5
 
+-- This setting controls the default font for all scenes.  Its value
+-- must be a Font object from the LÖVE engine.  The documentation at
+--
+--     https://love2d.org/wiki/Font
+--
+-- provides more information on fonts.  By default LNVL uses a simple,
+-- large font.
+LNVL.Settings.Scenes.DefaultFont = love.graphics.newFont(24)
+
 -- Return the table of settings as the module.
 return LNVL.Settings
