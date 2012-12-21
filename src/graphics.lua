@@ -30,10 +30,10 @@ function LNVL.Graphics.drawContainer(arguments)
     if arguments["borderColor"] ~= nil then
         love.graphics.setColor(arguments.borderColor)
         love.graphics.rectangle("fill",
-                                LNVL.Settings.Scenes.X,
-                                LNVL.Settings.Scenes.Y,
-                                LNVL.Settings.Scenes.Width + 10,
-                                LNVL.Settings.Scenes.Heigh + 10)
+                                LNVL.Settings.Scenes.X - LNVL.Settings.Scenes.BorderSize,
+                                LNVL.Settings.Scenes.Y - LNVL.Settings.Scenes.BorderSize,
+                                LNVL.Settings.Scenes.Width + LNVL.Settings.Scenes.BorderSize * 2,
+                                LNVL.Settings.Scenes.Height + LNVL.Settings.Scenes.BorderSize * 2)
     end
 
     love.graphics.setColor(arguments.backgroundColor)

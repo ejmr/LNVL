@@ -18,11 +18,15 @@ function LNVL.Scene:new(properties)
     -- of the scene when we draw it.
     scene.backgroundColor = {255, 255, 255}
 
+    -- borderColor: The color of the border around the scene
+    -- container.  If this is set to nil then there will be no border.
+    scene.borderColor = {120, 120, 120}
+
     -- foregroundColor: The color we use when drawing text.
     scene.foregroundColor = {0, 0, 0}
 
     -- font: The default font for the dialog.
-    scene.font = love.graphics.newFont(20)
+    scene.font = LNVL.Settings.Scenes.DefaultFont
 
     -- fullscreen: This boolean controls whether or not the scene
     -- should take up the entire screen.  If it is false then the
@@ -145,9 +149,19 @@ function LNVL.Scene:setBackground(filename)
     self.backgroundImage = love.graphics.newImage(filename)
 end
 
+-- This method sets the font for the scene.  It requires a filename to
+-- a font file (e.g. a TTF file) and a font size in pixels.  The
+-- method returns no value.
+function LNVL.Scene:setFont(filename, size)
+    self.font = love.graphics.newFont(filename, size)
+end
+
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
-    LNVL.Graphics.drawContainer{backgroundColor=self.backgroundColor}
+    LNVL.Graphics.drawContainer{
+        backgroundColor=self.backgroundColor,
+        borderColor=self.borderColor
+    }
 end
 
 -- This method draws text within the scene's container.  It will clear
