@@ -106,6 +106,16 @@ instruction refers to `say` in the code.  Following the description of
 each instruction is a list of any required or optional arguments it
 may have.
 
+### Draw-Image ###
+
+This instruction renders an image to the screen.  The arguments table
+for its action function requires the following properties:
+
+1. `image`: The image to display.  This must be [an Image object][3].
+
+2. `location`: An array of two elements representing the X and Y
+coordinates on screen where the engine will draw the image.
+
 ### Say ###
 
 This instruction prints dialog to the screen.  The arguments table for
