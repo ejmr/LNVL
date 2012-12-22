@@ -17,6 +17,7 @@ LNVL.Opcode.ValidOpcodes = {
     ["monologue"] = true,
     ["say"] = true,
     ["set-character-image"] = true,
+    ["draw-character"] = true,
 }
 
 -- The opcode constructor, which requires two arguments: the name of
