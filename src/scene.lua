@@ -121,9 +121,11 @@ function LNVL.Scene:createOpcodeFromContent(content)
         return say_opcodes
     end
 
-    -- If the opcode is 'set-character-image' then we have nothing to
-    -- add so we can simply return it.
-    if opcode.name == "set-character-image" then
+    -- We have no extra data to add to the following opcodes so we
+    -- return them as-is.
+
+    if opcode.name == "set-character-image"
+    or opcode.name == "draw-character" then
         return opcode
     end
 
