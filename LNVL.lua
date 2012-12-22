@@ -20,6 +20,7 @@ LNVL = {}
 
 LNVL.Settings = require("src.settings")
 LNVL.Color = require("src.color")
+LNVL.Position = require("src.position")
 LNVL.Graphics = require("src.graphics")
 LNVL.Opcode = require("src.opcode")
 LNVL.Instruction = require("src.instruction")
