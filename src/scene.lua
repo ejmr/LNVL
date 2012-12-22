@@ -156,7 +156,7 @@ end
 -- value because instructions return no arguments.
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
-    local instruction = LNVL.Instructions[opcode.name]
+    local instruction = LNVL.Instruction.getForOpcode(opcode.name)
 
     -- Make sure the opcode has access to the Scene so that it can
     -- draw dialog to screen.

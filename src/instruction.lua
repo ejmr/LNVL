@@ -37,6 +37,21 @@ function LNVL.Instruction:new(properties)
     return instruction
 end
 
+-- This function takes the name of an LNVL.Opcode as a string and
+-- returns the LNVL.Instruction to execute for that opcode.  We need
+-- this function because there is not a one-to-one mapping between
+-- opcodes and instructions.
+function LNVL.Instruction.getForOpcode(name)
+    local map = {
+        ["monologue"] = "say",
+        ["say"] = "say",
+        ["set-character-image"] = "set-image",
+        ["draw-character"] = "draw-image",
+    }
+
+    return LNVL.Instructions[map[name]]
+end
+
 -- A simple tostring() method for debugging purposes, which does
 -- nothing but returns the name of the instruction.
 LNVL.Instruction.__tostring =
