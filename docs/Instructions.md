@@ -77,6 +77,12 @@ alphabetically by name.  Opcodes are always written in lowercase
 within the engine code.  Each entry describes what the opcode does and
 what instruction or instructions it creates.
 
+### Draw-Character ###
+
+The `draw-character` opcode renders a character to screen.  The opcode
+provides information to the `draw-image` instruction, telling it what
+image to draw and where.
+
 ### Monologue ###
 
 The `monologue` opcode expands into multiple `say` opcodes, used by
