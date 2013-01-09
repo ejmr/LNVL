@@ -99,14 +99,6 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- seeing 'content' twice in a table lookup could be confusing.
     local opcode = content
 
-    -- If our opcode is already a 'say' then we have nothing to do.
-    -- We do need to add a 'scene' property to the 'arguments' table
-    -- of the opcode but this happens later, just before we render the
-    -- dialog to screen.  So we can return the opcode right away.
-    if opcode.name == "say" then
-        return opcode
-    end
-
     -- If the opcode is 'monologue' then we expand it into an array of
     -- 'say' opcodes for each line of dialog in the monologue.
     if opcode.name == "monologue" then
@@ -122,9 +114,12 @@ function LNVL.Scene:createOpcodeFromContent(content)
     end
 
     -- We have no extra data to add to the following opcodes so we
-    -- return them as-is.
+    -- return them as-is.  Some of these opcodes may need a 'scene'
+    -- property, but the drawCurrentContent() method ensures that
+    -- property exists, so we do not need to add it here.
 
-    if opcode.name == "set-character-image"
+    if opcode.name == "say"
+    or opcode.name == "set-character-image"
     or opcode.name == "draw-character" then
         return opcode
     end
