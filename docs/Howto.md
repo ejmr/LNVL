@@ -110,7 +110,7 @@ before the string.  That tells LNVL which character is speaking that
 line.  For example, here is a short scene of two characters speaking:
 
     Lobby = LNVL.Character:new{name="Lobby", color="#363"}
-    Eric = LNVL.Character:new{name="Eric", color=#66a}
+    Eric = LNVL.Character:new{name="Eric", color="#66a"}
 
     START = LNVL.Scene:new{
         Eric "Hello Lobby!",
