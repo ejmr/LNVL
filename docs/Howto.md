@@ -98,7 +98,7 @@ a character:
 
     Lobby = LNVL.Character:new{name="Lobby", color="#363"}
 
-The creates the character `Lobby` and defines his name and color,
+This creates the character `Lobby` and defines his name and color,
 i.e. the color of that character’s dialog on screen.
 
 ### Speaking With Characters ###
