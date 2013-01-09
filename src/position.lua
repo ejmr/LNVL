@@ -13,7 +13,7 @@ LNVL.Position.__index = LNVL.Position
 -- These three positions specify the general area an object should
 -- appear but do not give any exact location.  It is up to the object
 -- given the position to determine just exactly what it means to be
--- position to the 'right', for example.  The values assigned to these
+-- positioned to the 'right', for example.  The values assigned to these
 -- properties are arbitrary; all that matters is that they are all
 -- distinct from each other.
 LNVL.Position.Center = 1
