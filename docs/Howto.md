@@ -6,8 +6,10 @@ It is a tutorial and a guide for users wanting to use LNVL to create
 their own stories.  This document assumes you can run LNVL and are
 comfortable writing scripts with a text editor of your choice, but
 makes no other assumptions about your knowledge of scripting or
-programming languages.  The document will sometimes refer to the
-reader as the *author.*
+programming languages.  However, it does assume you are familiar with
+[visual novels][nvl] and their related concepts.
+
+The document will sometimes refer to the reader as *the author.*
 
 
 The Bird’s-Eye View of LNVL
@@ -196,3 +198,4 @@ short-cut.
 [lua]: http://www.lua.org/
 [dsl]: http://en.wikipedia.org/wiki/Domain_specific_language
 [love-files]: https://love2d.org/wiki/love.filesystem
+[nvl]: http://en.wikipedia.org/wiki/Visual_novel
