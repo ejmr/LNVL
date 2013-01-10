@@ -61,7 +61,7 @@ function LNVL.Graphics.drawText(font, text)
     -- it happens to be a table, handling the string and table
     -- elements appropriately.
     local process =
-        function(element)
+        function (element)
             if type(element) == "string" then
                 love.graphics.printf(element,
                                      LNVL.Settings.Scenes.X + 10,
