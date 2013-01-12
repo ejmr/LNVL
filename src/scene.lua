@@ -121,6 +121,9 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- seeing 'content' twice in a table lookup could be confusing.
     local opcode = content
 
+    -- The metatable for 'opcode' must be LNVL.Opcode.
+    assert(getmetatable(opcode) == LNVL.Opcode, "Unknown content type in Scene")
+
     -- If the opcode is 'monologue' then we expand it into an array of
     -- 'say' opcodes for each line of dialog in the monologue.
     if opcode.name == "monologue" then
