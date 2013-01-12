@@ -109,10 +109,10 @@ LNVL.Instructions["set-image"] = LNVL.Instruction:new{
                  -- 'currentImage' to the new one in the instruction.
                  if targetType == LNVL.Character then
                      arguments.target.currentImage = arguments.image
+                 else
+                     -- If we reach this point then it is an error.
+                     error(string.format("Cannot set-image for %s", targetType))
                  end
-
-                 -- If we reach this point then it is an error.
-                 error(string.format("Cannot set-image for %s", targetType))
              end
 }
 
