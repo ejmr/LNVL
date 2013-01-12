@@ -88,10 +88,32 @@ function LNVL.Scene:createOpcodeFromContent(content)
         return LNVL.Opcode:new("say", {content=content})
     end
 
-    -- If the content is not a string then it must be a table, and
-    -- furthermore must be an LNVL.Opcode.
-    assert(contentType == "table" and getmetatable(content) == LNVL.Opcode,
-           "Unknown content type in Scene")
+    -- If the content is not a string then it must be a table.
+    assert(contentType == "table", "Unknown content type in Scene")
+
+    -- We now know our content is a table.  However, that can mean one
+    -- of two things:
+    --
+    -- 1. If the metatable is LNVL.Opcode then the table represents an
+    -- opcode that we possibly need to deal with in some specific way.
+    --
+    -- 2. If there is no metatable then we assume the table represents
+    -- a collection on LNVL.Opcode objects.  We loop through these
+    -- calling createOpcodeFromContent() recursively on each,
+    -- collecting the results into a table.  We then return that back
+    -- to the LNVL.Scene constructor which will flatten that table of
+    -- opcodes out into individual entries in its list of opcodes for
+    -- the scene.
+    --
+    -- This code deals with the second scenario.  Code in the rest of
+    -- the function handles the first.
+    if getmetatable(content) ~= LNVL.Opcode then
+        local opcodes = {}
+        for _,opcode in ipairs(content) do
+            table.insert(opcodes, self:createOpcodeFromContent(opcode))
+        end
+        return opcodes
+    end
 
     -- At this point we know that 'content' is an opcode so we create
     -- another variable for it.  This is to help readability, because
