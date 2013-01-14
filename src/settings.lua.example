@@ -14,6 +14,15 @@ LNVL.Settings.Screen.Width = 800
 LNVL.Settings.Screen.Height = 600
 LNVL.Settings.Screen.Fullscreen = false
 
+-- An array of two elements, i.e. XY-coordinates, representing the
+-- center point in the screen.  This position is calculated
+-- dynamically from the screen settings above and should not need any
+-- manual modification.
+LNVL.Settings.Screen.Center = {
+    LNVL.Settings.Screen.Width / 2,
+    LNVL.Settings.Screen.Height / 2,
+}
+
 -- The default dimensions of Scene windows.  The X and Y values
 -- determine the default position where the window appears when not in
 -- fullscreen mode.
@@ -28,6 +37,7 @@ do
 end
 LNVL.Settings.Scenes.X = (LNVL.Settings.Screen.Width / 10)
 LNVL.Settings.Scenes.Y = (LNVL.Settings.Screen.Height / 2) - 50
+
 
 -- Return the table of settings as the module.
 return LNVL.Settings
