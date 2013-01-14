@@ -138,6 +138,27 @@ function LNVL.Scene:createOpcodeFromContent(content)
         return say_opcodes
     end
 
+    -- If the opcode is 'draw-character' then we need to convert the
+    -- 'position' data into the appropriate 'location' data expected
+    -- by the 'draw-image' instruction which the opcode will become.
+    if opcode.name == "draw-character" then
+        if opcode.arguments.position == LNVL.Position.Center then
+            opcode.arguments.location = LNVL.Settings.Screen.Center
+        elseif opcode.arguments.position == LNVL.Position.Right then
+            opcode.arguments.location = {
+                LNVL.Settings.Screen.Width - 200,
+                LNVL.Settings.Screen.Center[2],
+            }
+        elseif opcode.arguments.position == LNVL.Position.Left then
+            opcode.arguments.location = {
+                200,
+                LNVL.Settings.Screen.Center[2],
+            }
+        end
+
+        return opcode
+    end
+
     -- We have no extra data to add to the following opcodes so we
     -- return them as-is.  Some of these opcodes may need a 'scene'
     -- property, but the drawCurrentContent() method ensures that
@@ -145,7 +166,7 @@ function LNVL.Scene:createOpcodeFromContent(content)
 
     if opcode.name == "say"
     or opcode.name == "set-character-image"
-    or opcode.name == "draw-character" then
+    then
         return opcode
     end
 
