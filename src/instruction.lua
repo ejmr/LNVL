@@ -15,7 +15,9 @@ LNVL.Instruction.__index = LNVL.Instruction
 
 -- This is a list of all the valid instructions.
 LNVL.Instruction.ValidInstructions = {
-    say = true
+    ["say"] = true,
+    ["set-image"] = true,
+    ["draw-image"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
@@ -33,6 +35,21 @@ function LNVL.Instruction:new(properties)
     instruction.action = properties.action
 
     return instruction
+end
+
+-- This function takes the name of an LNVL.Opcode as a string and
+-- returns the LNVL.Instruction to execute for that opcode.  We need
+-- this function because there is not a one-to-one mapping between
+-- opcodes and instructions.
+function LNVL.Instruction.getForOpcode(name)
+    local map = {
+        ["monologue"] = "say",
+        ["say"] = "say",
+        ["set-character-image"] = "set-image",
+        ["draw-character"] = "draw-image",
+    }
+
+    return LNVL.Instructions[map[name]]
 end
 
 -- A simple tostring() method for debugging purposes, which does
@@ -81,6 +98,31 @@ LNVL.Instructions["say"] = LNVL.Instruction:new{
 
                  arguments.scene:draw()
                  arguments.scene:drawText(text)
+             end
+}
+
+LNVL.Instructions["set-image"] = LNVL.Instruction:new{
+    name = "set-image",
+    action = function (arguments)
+                 local targetType = getmetatable(arguments.target)
+
+                 -- If the target is a Character then we change their
+                 -- 'currentImage' to the new one in the instruction.
+                 if targetType == LNVL.Character then
+                     arguments.target.currentImage = arguments.image
+                 else
+                     -- If we reach this point then it is an error.
+                     error(string.format("Cannot set-image for %s", targetType))
+                 end
+             end
+}
+
+LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
+    name = "draw-image",
+    action = function (arguments)
+                 love.graphics.draw(arguments.image,
+                                    arguments.location[1],
+                                    arguments.location[2])
              end
 }
 

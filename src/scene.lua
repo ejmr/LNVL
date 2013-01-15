@@ -104,10 +104,32 @@ function LNVL.Scene:createOpcodeFromContent(content)
         return LNVL.Opcode:new("say", {content=content})
     end
 
-    -- If the content is not a string then it must be a table, and
-    -- furthermore must be an LNVL.Opcode.
-    assert(contentType == "table" and getmetatable(content) == LNVL.Opcode,
-           "Unknown content type in Scene")
+    -- If the content is not a string then it must be a table.
+    assert(contentType == "table", "Unknown content type in Scene")
+
+    -- We now know our content is a table.  However, that can mean one
+    -- of two things:
+    --
+    -- 1. If the metatable is LNVL.Opcode then the table represents an
+    -- opcode that we possibly need to deal with in some specific way.
+    --
+    -- 2. If there is no metatable then we assume the table represents
+    -- a collection on LNVL.Opcode objects.  We loop through these
+    -- calling createOpcodeFromContent() recursively on each,
+    -- collecting the results into a table.  We then return that back
+    -- to the LNVL.Scene constructor which will flatten that table of
+    -- opcodes out into individual entries in its list of opcodes for
+    -- the scene.
+    --
+    -- This code deals with the second scenario.  Code in the rest of
+    -- the function handles the first.
+    if getmetatable(content) ~= LNVL.Opcode then
+        local opcodes = {}
+        for _,opcode in ipairs(content) do
+            table.insert(opcodes, self:createOpcodeFromContent(opcode))
+        end
+        return opcodes
+    end
 
     -- At this point we know that 'content' is an opcode so we create
     -- another variable for it.  This is to help readability, because
@@ -115,13 +137,8 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- seeing 'content' twice in a table lookup could be confusing.
     local opcode = content
 
-    -- If our opcode is already a 'say' then we have nothing to do.
-    -- We do need to add a 'scene' property to the 'arguments' table
-    -- of the opcode but this happens later, just before we render the
-    -- dialog to screen.  So we can return the opcode right away.
-    if opcode.name == "say" then
-        return opcode
-    end
+    -- The metatable for 'opcode' must be LNVL.Opcode.
+    assert(getmetatable(opcode) == LNVL.Opcode, "Unknown content type in Scene")
 
     -- If the opcode is 'monologue' then we expand it into an array of
     -- 'say' opcodes for each line of dialog in the monologue.
@@ -135,6 +152,52 @@ function LNVL.Scene:createOpcodeFromContent(content)
                                          }))
         end
         return say_opcodes
+    end
+
+    -- If the opcode is 'draw-character' then we need to convert the
+    -- 'position' data into the appropriate 'location' data expected
+    -- by the 'draw-image' instruction which the opcode will become.
+    --
+    -- We also need to add the 'image' property to the opcode so
+    -- that the instruction will know what to draw later.  In this case
+    -- we want it to draw the current character image.
+    if opcode.name == "draw-character" then
+        if opcode.arguments.position == LNVL.Position.Center then
+            opcode.arguments.location = LNVL.Settings.Screen.Center
+        elseif opcode.arguments.position == LNVL.Position.Right then
+            opcode.arguments.location = {
+                LNVL.Settings.Screen.Width - 200,
+                LNVL.Settings.Screen.Center[2],
+            }
+        elseif opcode.arguments.position == LNVL.Position.Left then
+            opcode.arguments.location = {
+                200,
+                LNVL.Settings.Screen.Center[2],
+            }
+        end
+
+        opcode.arguments.image =
+            opcode.arguments.character.images[opcode.arguments.character.currentImage]
+
+        return opcode
+    end
+
+    -- For this opcode we need to set the 'target' property to point
+    -- to the associated Character object so that the resulting
+    -- 'set-image' instruction knows what to update.
+    if opcode.name == "set-character-image" then
+        opcode.arguments.target = opcode.arguments.character
+        return opcode
+    end
+
+    -- We have no extra data to add to the following opcodes so we
+    -- return them as-is.  Some of these opcodes may need a 'scene'
+    -- property, but the drawCurrentContent() method ensures that
+    -- property exists, so we do not need to add it here.
+
+    if opcode.name == "say"
+    then
+        return opcode
     end
 
     -- We should never reach this point because it means we have some
@@ -186,7 +249,7 @@ end
 -- value because instructions return no arguments.
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
-    local instruction = LNVL.Instructions[opcode.name]
+    local instruction = LNVL.Instruction.getForOpcode(opcode.name)
 
     -- Make sure the opcode has access to the Scene so that it can
     -- draw dialog to screen.

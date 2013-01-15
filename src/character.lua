@@ -27,12 +27,35 @@ function LNVL.Character:new(properties)
     -- with values in the 0--255 range.
     character.color = {0, 0, 0}
 
+    -- images: A hash of images for the character.  These are the
+    -- sprites we display on screen when the character is speaking,
+    -- for example.  All of the values in the table are Image objects,
+    -- i.e. created by love.graphics.newImage().  The keys are strings
+    -- which are pathnames to the image files.  However, the table
+    -- also has one key named 'normal'; this key points to the
+    -- default image for the character, the one we intend to use the
+    -- most often.
+    character.images = { normal = nil }
+
+    -- currentImage: A key for the 'images' table above, i.e. a
+    -- string, naming the image we currently use to draw the
+    -- character.
+    character.currentImage = "normal"
+
     -- Overwrite any default property values above with ones given to
     -- the constructor.
     for name,value in pairs(properties) do
         if rawget(character, name) ~= nil then
             rawset(character, name, value)
         end
+    end
+
+    -- The constructor arguments may have an 'image' property.  If so,
+    -- this is the image file we want to use for the normal character
+    -- image, so we need to check for it.
+    if properties["image"] ~= nil then
+        character.images.normal = love.graphics.newImage(properties.image)
+        character.images[properties.image] = character.images.normal
     end
 
     -- If the loop above set the 'color' property to a string then we
@@ -87,6 +110,33 @@ LNVL.Character.__call =
             return f:says(...)
         end
     end
+
+-- This method accepts a string as a path to an image file, and
+-- changes the character's current image to that.  If the file is not
+-- part of the 'character.images' table then we will store it there
+-- for future reference; and if we have already loaded that image once
+-- we just use that table without reloading the image file.
+--
+-- The method returns two opcodes telling the engine to set the new
+-- image and then draw it to the screen.
+function LNVL.Character:becomes(filename)
+    if self.images[filename] == nil then
+        self.images[filename] = love.graphics.newImage(filename)
+    end
+
+    local opcodes = {
+        LNVL.Opcode:new("set-character-image", {character=self, image=filename}),
+        LNVL.Opcode:new("draw-character", {character=self, position=LNVL.Position.Center}),
+    }
+
+    return opcodes
+end
+
+-- This method is a short-cut for character:becomes("normal"),
+-- i.e. changing back to their default image.
+function LNVL.Character:becomesNormal()
+    return self:becomes("normal")
+end
 
 -- Return the class as a module.
 return LNVL.Character

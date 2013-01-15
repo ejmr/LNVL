@@ -18,8 +18,10 @@ LNVL = {}
 -- LNVL table above.  We must require() each module in a specific
 -- order, so insertions or changes to this list must be careful.
 
+LNVL.Debug = require("src.debug")
 LNVL.Settings = require("src.settings")
 LNVL.Color = require("src.color")
+LNVL.Position = require("src.position")
 LNVL.Graphics = require("src.graphics")
 LNVL.Opcode = require("src.opcode")
 LNVL.Instruction = require("src.instruction")

@@ -37,6 +37,23 @@ respectively.  This makes LNVL scripts look like they use a
 Characters
 ----------
 
+Characters are crucial to any great story.  LNVL provides the
+`LNVL.Character` class to represent characters in scripts.  Characters
+have methods to speak dialog, deliver monologues, chat in different
+colors and fonts, change images at certain points during a scene, and
+so on.
+
+The design of the `LNVL.Character` class provides only the basic
+functionality for communication and some aesthetic control, such as
+how a character enters a scene (e.g. from the left or right side).
+This design follows a principle of simplicity that LNVL attempts to
+adhere to.  However, developers using LNVL may want to do more with
+characters.  There are visual novels with simulation elements, or even
+complex role-playing game elements and character stastics.
+Programmers who wish to add these features to their game will find the
+`LNVL.Character` class the best place to begin implementing such
+extensions.
+
 
 Menus and Choices
 -----------------

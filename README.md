@@ -42,6 +42,13 @@ One file, `src/rgb.txt`, comes from the [XFree86 project][xfree86] and
 therefore uses [version 1.1 of their license.][xlicense]
 
 
+Special Thanks
+--------------
+
+* The code for `LNVL.Debug.tableToString()` uses the work of
+  [Julio Manuel Fernandez-Diaz](http://lua-users.org/wiki/TableSerialization).
+
+
 
 [nvl]: http://en.wikipedia.org/wiki/Visual_novel
 [love]: http://love2d.org/
