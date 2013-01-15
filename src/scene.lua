@@ -159,13 +159,20 @@ function LNVL.Scene:createOpcodeFromContent(content)
         return opcode
     end
 
+    -- For this opcode we need to set the 'target' property to point
+    -- to the associated Character object so that the resulting
+    -- 'set-image' instruction knows what to update.
+    if opcode.name == "set-character-image" then
+        opcode.arguments.target = opcode.arguments.character
+        return opcode
+    end
+
     -- We have no extra data to add to the following opcodes so we
     -- return them as-is.  Some of these opcodes may need a 'scene'
     -- property, but the drawCurrentContent() method ensures that
     -- property exists, so we do not need to add it here.
 
     if opcode.name == "say"
-    or opcode.name == "set-character-image"
     then
         return opcode
     end
