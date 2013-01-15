@@ -141,6 +141,10 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- If the opcode is 'draw-character' then we need to convert the
     -- 'position' data into the appropriate 'location' data expected
     -- by the 'draw-image' instruction which the opcode will become.
+    --
+    -- We also need to add the 'image' property to the opcode so
+    -- that the instruction will know what to draw later.  In this case
+    -- we want it to draw the current character image.
     if opcode.name == "draw-character" then
         if opcode.arguments.position == LNVL.Position.Center then
             opcode.arguments.location = LNVL.Settings.Screen.Center
@@ -155,6 +159,9 @@ function LNVL.Scene:createOpcodeFromContent(content)
                 LNVL.Settings.Screen.Center[2],
             }
         end
+
+        opcode.arguments.image =
+            opcode.arguments.character.images[opcode.arguments.character.currentImage]
 
         return opcode
     end
