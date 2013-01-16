@@ -42,6 +42,13 @@ function LNVL.Character:new(properties)
     -- character.
     character.currentImage = "normal"
 
+    -- position: This property has one of the LNVL.Position.*
+    -- constants as its value.  It indicates where on the screen the
+    -- character's images should appear by default.  Characters will
+    -- appear on the left side of the screen unless a script overrides
+    -- this value.
+    character.position = LNVL.Position.Left
+
     -- Overwrite any default property values above with ones given to
     -- the constructor.
     for name,value in pairs(properties) do
