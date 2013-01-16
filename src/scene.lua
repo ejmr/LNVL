@@ -162,20 +162,22 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- that the instruction will know what to draw later.  In this case
     -- we want it to draw the current character image.
     if opcode.name == "draw-character" then
+        local vertical_position = LNVL.Settings.Scenes.Y + 80
+
         if opcode.arguments.position == LNVL.Position.Center then
             opcode.arguments.location = {
                 LNVL.Settings.Screen.Center[1],
-                LNVL.Settings.Scenes.Y + 80,
+                vertical_position,
             }
         elseif opcode.arguments.position == LNVL.Position.Right then
             opcode.arguments.location = {
                 LNVL.Settings.Screen.Width - 200,
-                LNVL.Settings.Scenes.Y + 80,
+                vertical_position,
             }
         elseif opcode.arguments.position == LNVL.Position.Left then
             opcode.arguments.location = {
                 200,
-                LNVL.Settings.Scenes.Y + 80,
+                vertical_position,
             }
         end
 
