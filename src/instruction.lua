@@ -120,6 +120,7 @@ LNVL.Instructions["set-image"] = LNVL.Instruction:new{
 LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
     name = "draw-image",
     action = function (arguments)
+                 arguments.scene:draw()
                  love.graphics.setColorMode("replace")
                  love.graphics.draw(arguments.image,
                                     arguments.location[1],
