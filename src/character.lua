@@ -125,6 +125,13 @@ LNVL.Character.__call =
         end
     end
 
+-- This method changes the position of a character, which primarily
+-- affects where we draw his image.  The argument is a string which
+-- must be a valid key for the LNVL.Position table.
+function LNVL.Character:isAt(place)
+    self.position = LNVL.Position[place]
+end
+
 -- This method accepts a string as a path to an image file, and
 -- changes the character's current image to that.  If the file is not
 -- part of the 'character.images' table then we will store it there
