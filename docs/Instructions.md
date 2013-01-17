@@ -116,6 +116,16 @@ The `monologue` opcode expands into multiple `say` opcodes, used by
 the `LNVL.Character:monologue()` method to present multiple lines of
 dialog by a single character at once.
 
+### No-Op ###
+
+The `no-op` opcode is unique in that it invokes no instruction.
+There are certain methods which can appear within a scene, such as
+`LNVL.Character:isAt()`, which require no instruction to affect the
+game.  However, because they appear in a scene they must return an
+opcode in order for the engine to properly compile the list of
+instructions to execute.  The `no-op` opcode exists for those
+functions to use.
+
 ### Say ###
 
 The `say` opcode generates a `say` instruction.  The commonly-used
