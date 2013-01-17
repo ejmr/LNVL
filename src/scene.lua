@@ -201,6 +201,7 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- property exists, so we do not need to add it here.
 
     if opcode.name == "say"
+    or opcode.name == "no-op"
     then
         return opcode
     end
@@ -254,6 +255,11 @@ end
 -- value because instructions return no arguments.
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
+
+    -- If the opcode is a no-op then we do not need to invoke any
+    -- instruction because there is none for that opcode.
+    if opcode.name == "no-op" then return end
+
     local instruction = LNVL.Instruction.getForOpcode(opcode.name)
 
     -- Make sure the opcode has access to the Scene so that it can

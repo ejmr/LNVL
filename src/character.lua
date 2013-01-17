@@ -130,6 +130,7 @@ LNVL.Character.__call =
 -- must be a valid key for the LNVL.Position table.
 function LNVL.Character:isAt(place)
     self.position = LNVL.Position[place]
+    return LNVL.Opcode:new("no-op")
 end
 
 -- This method accepts a string as a path to an image file, and
