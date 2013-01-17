@@ -13,6 +13,18 @@
 -- and data.
 LNVL = {}
 
+-- This property represents the current Scene in use.  We should
+-- rarely change the value of this property directly.  Instead the
+-- changeToScene() function is the preferred way to change this.
+LNVL.currentScene = nil
+
+-- This function takes the name of a scene as a string and makes that
+-- the current scene.  That string must match the name of a global
+-- Scene object, i.e. one inside the _G table.
+function LNVL.changeToScene(name)
+    LNVL.currentScene = _G[name]
+end
+
 -- Because all of the code in the 'src/' directory adds to the LNVL
 -- table these require() statements must come after we declare the
 -- LNVL table above.  We must require() each module in a specific
