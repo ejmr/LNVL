@@ -13,7 +13,6 @@
 --]]
 
 local LNVL = require("LNVL")
-local scene = nil
 
 function love.load(arguments)
     love.graphics.setMode(LNVL.Settings.Screen.Width, LNVL.Settings.Screen.Height)
@@ -21,18 +20,18 @@ function love.load(arguments)
 
     if #arguments > 1 then
         assert(loadfile(arguments[2]))()
-        scene = START
+        LNVL.changeToScene("START")
     end
 end
 
 function love.keypressed(key)
     if key == "return" then
-        scene.opcodeIndex = scene.opcodeIndex + 1
+        LNVL.currentScene.opcodeIndex = LNVL.currentScene.opcodeIndex + 1
     elseif key == "backspace" then
-        scene.opcodeIndex = scene.opcodeIndex - 1
+        LNVL.currentScene.opcodeIndex = LNVL.currentScene.opcodeIndex - 1
     end
 end
 
 function love.draw()
-    scene:drawCurrentContent()
+    LNVL.currentScene:drawCurrentContent()
 end
