@@ -37,6 +37,7 @@ function LNVL.ClampedArray:new(values)
     -- This loop fills the array with any values we may have received.
     for key,value in ipairs(values) do
         self[key] = value
+        self.__first_nil_index = self.__first_nil_index + 1
     end
 
     return self
