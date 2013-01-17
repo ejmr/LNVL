@@ -33,13 +33,16 @@ wish to extend or expand the engine.  If you have the programs
 create nice HTML versions of all of the documents.
 
 
-License
--------
+Copyright and License
+---------------------
 
-[GNU General Public License.](http://www.gnu.org/copyleft/gpl.html)
+Copyright 2012, 2013 Eric James Michael Ritz
 
-One file, `src/rgb.txt`, comes from the [XFree86 project][xfree86] and
-therefore uses [version 1.1 of their license.][xlicense]
+LNVL uses the [GNU General Public License][gpl].
+
+However, one file, `src/rgb.txt`, comes from the
+[XFree86 project][xfree86] and therefore uses
+[version 1.1 of their license.][xlicense]
 
 
 Special Thanks
@@ -57,3 +60,4 @@ Special Thanks
 [xlicense]: http://www.xfree86.org/legal/licenses.html
 [tup]: http://gittup.org/tup/
 [pandoc]: http://johnmacfarlane.net/pandoc/
+[gpl]: http://www.gnu.org/copyleft/gpl.html
