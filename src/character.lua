@@ -57,6 +57,13 @@ function LNVL.Character:new(properties)
         end
     end
 
+    -- If the constructor received a 'position' property then set the
+    -- appropriate value to the character by looking up that property
+    -- in the LNVL.Position table.
+    if properties["position"] ~= nil then
+        character.position = LNVL.Position[properties["position"]]
+    end
+
     -- The constructor arguments may have an 'image' property.  If so,
     -- this is the image file we want to use for the normal character
     -- image, so we need to check for it.
