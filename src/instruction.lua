@@ -48,6 +48,7 @@ function LNVL.Instruction.getForOpcode(name)
         ["say"] = "say",
         ["set-character-image"] = "set-image",
         ["draw-character"] = "draw-image",
+        ["change-scene"] = "set-scene",
     }
 
     return LNVL.Instructions[map[name]]
