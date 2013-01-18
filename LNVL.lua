@@ -36,13 +36,9 @@ LNVL.Scene = require("src.scene")
 
 -- This function takes the name of a scene as a string and returns a
 -- 'change-scene' opcode that LNVL will use to change the value of
--- LNVL.currentScene later on.  It is an error if the given scene name
--- does not exist in the global scope.
+-- LNVL.currentScene later on.
 function LNVL.changeToScene(name)
-    local scene = _G[name]
-    assert(scene ~= nil and getmetatable(scene) == LNVL.Scene,
-       "Cannot switch to scene " .. name)
-    return LNVL.Opcode:new("change-scene", {scene=scene})
+    return LNVL.Opcode:new("change-scene", {scene=name})
 end
 
 -- Return the LNVL module.
