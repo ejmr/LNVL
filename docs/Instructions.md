@@ -104,6 +104,11 @@ alphabetically by name.  Opcodes are always written in lowercase
 within the engine code.  Each entry describes what the opcode does and
 what instruction or instructions it creates.
 
+### Change-Scene ###
+
+The `change-scene` opcode tells LNVL to switch to a different scene,
+i.e. another `LNVL.Scene` object.
+
 ### Draw-Character ###
 
 The `draw-character` opcode renders a character to screen.  The opcode
@@ -170,6 +175,15 @@ function requires the following properties:
 supports only `LNVL.Character` objects as valid targets.
 
 2. `image`: The new image to use.  This must be [an Image object][3].
+
+### Set-Scene ###
+
+This instruction changes the currently active scene.  The arguments
+table for its action function requires one property:
+
+1. `scene`: The scene to use as the new current scene, which must be
+an `LNVL.Scene` object.  This instruction affects the value of the
+global `LNVL.currentScene` variable.
 
 
 
