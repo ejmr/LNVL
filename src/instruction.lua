@@ -18,6 +18,7 @@ LNVL.Instruction.ValidInstructions = {
     ["say"] = true,
     ["set-image"] = true,
     ["draw-image"] = true,
+    ["set-scene"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
