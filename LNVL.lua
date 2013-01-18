@@ -18,13 +18,6 @@ LNVL = {}
 -- changeToScene() function is the preferred way to change this.
 LNVL.currentScene = nil
 
--- This function takes the name of a scene as a string and makes that
--- the current scene.  That string must match the name of a global
--- Scene object, i.e. one inside the _G table.
-function LNVL.changeToScene(name)
-    LNVL.currentScene = _G[name]
-end
-
 -- Because all of the code in the 'src/' directory adds to the LNVL
 -- table these require() statements must come after we declare the
 -- LNVL table above.  We must require() each module in a specific
@@ -40,6 +33,17 @@ LNVL.Instruction = require("src.instruction")
 LNVL.ClampedArray = require("src.clamped-array")
 LNVL.Character = require("src.character")
 LNVL.Scene = require("src.scene")
+
+-- This function takes the name of a scene as a string and returns a
+-- 'change-scene' opcode that LNVL will use to change the value of
+-- LNVL.currentScene later on.  It is an error if the given scene name
+-- does not exist in the global scope.
+function LNVL.changeToScene(name)
+    local scene = _G[name]
+    assert(scene ~= nil and getmetatable(scene) == LNVL.Scene,
+       "Cannot switch to scene " .. name)
+    return LNVL.Opcode:new("change-scene", {scene=scene})
+end
 
 -- Return the LNVL module.
 return LNVL
