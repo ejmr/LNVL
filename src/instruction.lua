@@ -127,5 +127,12 @@ LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
              end
 }
 
+LNVL.Instructions["set-scene"] = LNVL.Instruction:new{
+    name = "set-scene",
+    action = function (arguments)
+                 LNVL.currentScene = arguments.scene
+             end
+}
+
 -- Return our class as a module.
 return LNVL.Instruction
