@@ -38,7 +38,7 @@ LNVL.Scene = require("src.scene")
 -- 'change-scene' opcode that LNVL will use to change the value of
 -- LNVL.currentScene later on.
 function LNVL.changeToScene(name)
-    return LNVL.Opcode:new("change-scene", {scene=name})
+    return LNVL.Opcode:new("change-scene", {name=name})
 end
 
 -- Return the LNVL module.

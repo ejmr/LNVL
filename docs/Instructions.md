@@ -181,10 +181,10 @@ supports only `LNVL.Character` objects as valid targets.
 This instruction changes the currently active scene.  The arguments
 table for its action function requires one property:
 
-1. `scene`: The name of the scene to use as the new current scene.
-The instruction looks for an `LNVL.Scene` object with this name in the
-global scope, i.e. inside of `_G`.  That scene becomes the value of
-the global `LNVL.currentScene` variable.
+1. `name`: The name of a scene as a string to use as the new current
+scene.  The instruction looks for an `LNVL.Scene` object with this
+name in the global scope, i.e. inside of `_G`.  That scene becomes the
+value of the global `LNVL.currentScene` variable.
 
 
 
