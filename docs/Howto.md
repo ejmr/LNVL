@@ -145,6 +145,58 @@ size of sixteen pixels.  This will only affect the `START` scene;
 every other scene will continue to use the global default font
 discussed above.
 
+### Changing Scenes ###
+
+Cramming an entire story into one scene would create a mess.  You
+*could* do it, but that doesn’t make it a good idea.  It is easier to
+put a story together by breaking it down into scenes just as you would
+if you were writing a play.  You can create as many scenes as you want
+by assigning them to names of your choice.  For example:
+
+    START = LNVL.Scene:new{…}
+
+    MIDDLE = LNVL.Scene:new{…}
+
+    END = LNVL.Scene:new{…}
+
+This example code creates three scenes.  Remember that every LNVL
+script must have the `START` screen.  But the rest of the names are
+arbitrary and can be anything you want.  The example scene names are
+in all capital letters, but this is not a requirement, only a
+suggested convention.
+
+Creating scenes, however, does nothing to connect them to one another.
+Given the example above, LNVL would not know how to progress from
+`START` to the `MIDDLE` scene.  You can connect the two using the
+`changeToScene()` function.  Here is an example:
+
+    START = LNVL.Scene:new{
+        "And so our story begins...",
+        "Except I really have nothing to say as a narrator.",
+        "Oh well.  Let's move along!",
+        LNVL.changeToScene("MIDDLE"),
+    }
+
+    MIDDLE = LNVL.Scene:new{
+        "Now then...",
+
+        -- Just pretend an actual story is here and save me the effort
+        -- of writing some dumb garbage, ok?
+
+    }
+
+The important line here is the final part of the `START` scene:
+`LNVL.changeToScene("MIDDLE")`.  This tells LNVL to transition to the
+`MIDDLE` scene once it reaches the end of `START`.  Notice the name of
+the scene is in quotes; this is a requirement.  If you omit the quotes
+then LNVL will crash with an error.
+
+You can place additional dialog or anything else after a line using
+`changeTo()` but there is no good reason to do so.  LNVL will not
+display any dialog or do anything else in a scene once it is told to
+switch to another scene.  So that means `changeTo()` is best placed at
+a point in a scene where there is nothing left to do before moving on.
+
 
 Characters
 ----------

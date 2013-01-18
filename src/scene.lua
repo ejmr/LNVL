@@ -196,6 +196,7 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- property exists, so we do not need to add it here.
 
     if opcode.name == "say"
+    or opcode.name == "change-scene"
     then
         return opcode
     end

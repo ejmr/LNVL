@@ -13,6 +13,11 @@
 -- and data.
 LNVL = {}
 
+-- This property represents the current Scene in use.  We should
+-- rarely change the value of this property directly.  Instead the
+-- changeToScene() function is the preferred way to change this.
+LNVL.currentScene = nil
+
 -- Because all of the code in the 'src/' directory adds to the LNVL
 -- table these require() statements must come after we declare the
 -- LNVL table above.  We must require() each module in a specific
@@ -28,6 +33,13 @@ LNVL.Instruction = require("src.instruction")
 LNVL.ClampedArray = require("src.clamped-array")
 LNVL.Character = require("src.character")
 LNVL.Scene = require("src.scene")
+
+-- This function takes the name of a scene as a string and returns a
+-- 'change-scene' opcode that LNVL will use to change the value of
+-- LNVL.currentScene later on.
+function LNVL.changeToScene(name)
+    return LNVL.Opcode:new("change-scene", {name=name})
+end
 
 -- Return the LNVL module.
 return LNVL

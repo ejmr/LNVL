@@ -68,6 +68,11 @@ instruction when LNVL executes it.  The definitions of the
 instructions dictate the contents of this table, so they will vary
 from opcode to opcode.
 
+The function `LNVL.drawCurrentContent()` adds the aforementioned
+`scene` property to `arguments`.  Because of this, opcodes *must not*
+provide their own `scene` property because LNVL will overrite its
+value when executing the related instruction.
+
 
 How Opcodes and Instructions Interact
 -------------------------------------
@@ -103,6 +108,11 @@ Below are all of the opcodes used in the LNVL engine, listed
 alphabetically by name.  Opcodes are always written in lowercase
 within the engine code.  Each entry describes what the opcode does and
 what instruction or instructions it creates.
+
+### Change-Scene ###
+
+The `change-scene` opcode tells LNVL to switch to a different scene,
+i.e. another `LNVL.Scene` object.
 
 ### Draw-Character ###
 
@@ -170,6 +180,16 @@ function requires the following properties:
 supports only `LNVL.Character` objects as valid targets.
 
 2. `image`: The new image to use.  This must be [an Image object][3].
+
+### Set-Scene ###
+
+This instruction changes the currently active scene.  The arguments
+table for its action function requires one property:
+
+1. `name`: The name of a scene as a string to use as the new current
+scene.  The instruction looks for an `LNVL.Scene` object with this
+name in the global scope, i.e. inside of `_G`.  That scene becomes the
+value of the global `LNVL.currentScene` variable.
 
 
 

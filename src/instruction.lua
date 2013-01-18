@@ -18,6 +18,7 @@ LNVL.Instruction.ValidInstructions = {
     ["say"] = true,
     ["set-image"] = true,
     ["draw-image"] = true,
+    ["set-scene"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
@@ -47,6 +48,7 @@ function LNVL.Instruction.getForOpcode(name)
         ["say"] = "say",
         ["set-character-image"] = "set-image",
         ["draw-character"] = "draw-image",
+        ["change-scene"] = "set-scene",
     }
 
     return LNVL.Instructions[map[name]]
@@ -123,6 +125,16 @@ LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
                  love.graphics.draw(arguments.image,
                                     arguments.location[1],
                                     arguments.location[2])
+             end
+}
+
+LNVL.Instructions["set-scene"] = LNVL.Instruction:new{
+    name = "set-scene",
+    action = function (arguments)
+                 local scene = _G[arguments.name]
+                 assert(scene ~= nil and getmetatable(scene) == LNVL.Scene,
+                    "Cannot load scene " .. arguments.name)
+                 LNVL.currentScene = scene
              end
 }
 
