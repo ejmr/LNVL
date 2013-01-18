@@ -20,7 +20,7 @@ function love.load(arguments)
 
     if #arguments > 1 then
         assert(loadfile(arguments[2]))()
-        LNVL.changeToScene("START")
+        LNVL.currentScene = START
     end
 end
 
