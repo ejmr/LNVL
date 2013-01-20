@@ -42,12 +42,26 @@ function LNVL.Character:new(properties)
     -- character.
     character.currentImage = "normal"
 
+    -- position: This property has one of the LNVL.Position.*
+    -- constants as its value.  It indicates where on the screen the
+    -- character's images should appear by default.  Characters will
+    -- appear on the left side of the screen unless a script overrides
+    -- this value.
+    character.position = LNVL.Position.Left
+
     -- Overwrite any default property values above with ones given to
     -- the constructor.
     for name,value in pairs(properties) do
         if rawget(character, name) ~= nil then
             rawset(character, name, value)
         end
+    end
+
+    -- If the constructor received a 'position' property then set the
+    -- appropriate value to the character by looking up that property
+    -- in the LNVL.Position table.
+    if properties["position"] ~= nil then
+        character.position = LNVL.Position[properties["position"]]
     end
 
     -- The constructor arguments may have an 'image' property.  If so,
@@ -110,6 +124,14 @@ LNVL.Character.__call =
             return f:says(...)
         end
     end
+
+-- This method changes the position of a character, which primarily
+-- affects where we draw his image.  The argument is a string which
+-- must be a valid key for the LNVL.Position table.
+function LNVL.Character:isAt(place)
+    self.position = LNVL.Position[place]
+    return LNVL.Opcode:new("no-op")
+end
 
 -- This method accepts a string as a path to an image file, and
 -- changes the character's current image to that.  If the file is not

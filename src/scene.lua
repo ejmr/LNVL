@@ -162,17 +162,22 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- that the instruction will know what to draw later.  In this case
     -- we want it to draw the current character image.
     if opcode.name == "draw-character" then
+        local vertical_position = LNVL.Settings.Scenes.Y + 80
+
         if opcode.arguments.position == LNVL.Position.Center then
-            opcode.arguments.location = LNVL.Settings.Screen.Center
+            opcode.arguments.location = {
+                LNVL.Settings.Screen.Center[1],
+                vertical_position,
+            }
         elseif opcode.arguments.position == LNVL.Position.Right then
             opcode.arguments.location = {
                 LNVL.Settings.Screen.Width - 200,
-                LNVL.Settings.Screen.Center[2],
+                vertical_position,
             }
         elseif opcode.arguments.position == LNVL.Position.Left then
             opcode.arguments.location = {
                 200,
-                LNVL.Settings.Screen.Center[2],
+                vertical_position,
             }
         end
 
@@ -197,6 +202,7 @@ function LNVL.Scene:createOpcodeFromContent(content)
 
     if opcode.name == "say"
     or opcode.name == "change-scene"
+    or opcode.name == "no-op"
     then
         return opcode
     end
@@ -250,12 +256,22 @@ end
 -- value because instructions return no arguments.
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
+
+    -- If the opcode is a no-op then we do not need to invoke any
+    -- instruction because there is none for that opcode.
+    if opcode.name == "no-op" then return end
+
     local instruction = LNVL.Instruction.getForOpcode(opcode.name)
 
     -- Make sure the opcode has access to the Scene so that it can
     -- draw dialog to screen.
     opcode.arguments.scene = self
 
+    -- We always draw the scene before executing the instruction
+    -- because not every instruction is involved with rendering
+    -- content.  So if we did not draw the scene here then those
+    -- instructions would result in a blank screen.
+    self:draw()
     instruction(opcode.arguments)
 end
 

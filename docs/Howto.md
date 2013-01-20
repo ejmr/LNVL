@@ -302,6 +302,65 @@ to his original image.  You could use `becomes()` and provide the path
 to the original image, but LNVL lets you use `becomesNormal()` as a
 short-cut.
 
+### Image Positions ###
+
+You will not want every character portrait to appear at the same place
+on screen.  If you did then they would overlap and block each other
+out!  So LNVL allows you specify where each character image should
+appear.
+
+Character images appear on the left side on the screen by default.
+The first way you can change this is to specify the position when you
+create a character, like so:
+
+    Lobby = LNVL.Character:new{
+        name = "Lobby Jones",
+        color = "#363",
+        image = "images/Lobby-Default.png",
+        position = "Right",
+    }
+
+This is almost exactly like the character definition we used earlier.
+Except there is the new `position` property.  The string `"Right"`
+tells LNVL that it should draw Lobby’s image on the right side of the
+screen instead of the usual left.  There are three acceptable values
+for `position`:
+
+1. `"Left"`
+2. `"Center"`
+3. `"Right"`
+
+They do not provide pixel-perfect control over the position.  Instead
+LNVL decides what is best for ‘Right’, for example, based on settings
+such as the screen size and the width of other elements on screen.
+This helps prevent you from accidentally covering up other things with
+character images.
+
+The second way to change a character position is by using the `isAt`
+function.  It requires one of the three strings above as its
+argument.  But unlike the `position` property, `isAt` allows you to
+change the position of a character dynamically in the middle of the
+scene.  For example:
+
+    START = LNVL.Scene:new{
+        Lobby "Want to see how fast I can run?",
+        Lobby:isAt "Center",
+        Lobby "Ok---hold on, I'm getting there.",
+        Lobby:isAt "Right",
+        Lobby:becomes("images/Lobby-exhausted.png"),
+        Lobby "I need to stop smoking...",
+    }
+
+Each use of `isAt` makes LNVL draw the character image at the new
+position.  This is useful to move a character to a new position when
+you introduce another in a scene to avoid any overlap.  You can also
+use it for dramatic effects; if you have characters in an argument,
+for example, you could group characters on each side based on their
+conflicting points-of-view, maybe with a mediator in the center trying
+to calm everyone down.  Look at popular visual novels for ideas about
+how you can convey feelings in a story through the use of character
+portrait positioning.
+
 
 
 [lua]: http://www.lua.org/

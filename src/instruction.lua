@@ -98,7 +98,6 @@ LNVL.Instructions["say"] = LNVL.Instruction:new{
                      }
                  end
 
-                 arguments.scene:draw()
                  arguments.scene:drawText(text)
              end
 }
@@ -122,6 +121,7 @@ LNVL.Instructions["set-image"] = LNVL.Instruction:new{
 LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
     name = "draw-image",
     action = function (arguments)
+                 love.graphics.setColorMode("replace")
                  love.graphics.draw(arguments.image,
                                     arguments.location[1],
                                     arguments.location[2])
