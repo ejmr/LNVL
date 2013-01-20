@@ -266,6 +266,11 @@ function LNVL.Scene:drawCurrentContent()
     -- draw dialog to screen.
     opcode.arguments.scene = self
 
+    -- We always draw the scene before executing the instruction
+    -- because not every instruction is involved with rendering
+    -- content.  So if we did not draw the scene here then those
+    -- instructions would result in a blank screen.
+    self:draw()
     instruction(opcode.arguments)
 end
 
