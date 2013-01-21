@@ -77,13 +77,30 @@ value when executing the related instruction.
 How Opcodes and Instructions Interact
 -------------------------------------
 
-When LNVL loads a scene, that is, an `LNVL.Scene` object, it creates an
-array of opcodes.  Each piece of content in the scene, every argument
-given to the `LNVL.Scene:new()` constructor, results in the creation
-of one or more `LNVL.Opcode` objects which the engine collects in that
-array.  This happens in the `LNVL.Scene:createOpcodeFromContent()`
-method, which LNVL calls once for each piece of scene content and
-creates one or more opcodes as a result.
+When LNVL loads a scene, that is, an `LNVL.Scene` object, it creates
+an array of opcodes.  Each piece of content in the scene, every
+argument given to the `LNVL.Scene:new()` constructor, results in the
+creation of one or more `LNVL.Opcode` objects which the engine
+collects in that array.  This happens in the
+`LNVL.Scene:createOpcodeFromContent()` method, which LNVL calls once
+for each piece of scene content to transform it into opcodes.  The
+specific transformation process is this:
+
+1. If the content is a string then LNVL creates a simple `say` opcode
+that will print that string.
+
+2. If the content is an `LNVL.Opcode` object, which is the return
+value of most functions used as arguments of `LNVL.Scene:new()`, then
+LNVL sends it to a *processor.*  The `LNVL.Opcode.Processor` table
+maps the names of opcodes (listed below) to processor functions.
+These are functions which accept the content, i.e. opcode object, as
+its sole parameter and augment it with any extra data that LNVL may
+need later when converting that particular opcode into an
+instruction.
+
+3. If the content is a table with no metatable then LNVL assumes it is
+an array of opcode objects and processes each as per the description
+above.
 
 Instructions are generic actions that LNVL provides, such as
 displaying dialog or drawing an image.  Opcodes fill in the blanks of

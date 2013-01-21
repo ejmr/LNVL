@@ -111,7 +111,8 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- of two things:
     --
     -- 1. If the metatable is LNVL.Opcode then the table represents an
-    -- opcode that we possibly need to deal with in some specific way.
+    -- opcode and we return that after running it through the
+    -- appropriate 'processor function'.
     --
     -- 2. If there is no metatable then we assume the table represents
     -- a collection on LNVL.Opcode objects.  We loop through these
@@ -121,8 +122,8 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- opcodes out into individual entries in its list of opcodes for
     -- the scene.
     --
-    -- This code deals with the second scenario.  Code in the rest of
-    -- the function handles the first.
+    -- The loop below deals with the second scenario.  Code in the
+    -- rest of the function handles the first.
     if getmetatable(content) ~= LNVL.Opcode then
         local opcodes = {}
         for _,opcode in ipairs(content) do
@@ -131,85 +132,15 @@ function LNVL.Scene:createOpcodeFromContent(content)
         return opcodes
     end
 
-    -- At this point we know that 'content' is an opcode so we create
-    -- another variable for it.  This is to help readability, because
-    -- we may be adding 'content' properties to this opcode, and
-    -- seeing 'content' twice in a table lookup could be confusing.
-    local opcode = content
+    -- At this point we know that 'content' is an opcode so its
+    -- metatable must be LNVL.Opcode.
+    assert(getmetatable(content) == LNVL.Opcode, "Unknown content type in Scene")
 
-    -- The metatable for 'opcode' must be LNVL.Opcode.
-    assert(getmetatable(opcode) == LNVL.Opcode, "Unknown content type in Scene")
-
-    -- If the opcode is 'monologue' then we expand it into an array of
-    -- 'say' opcodes for each line of dialog in the monologue.
-    if opcode.name == "monologue" then
-        local say_opcodes = {}
-        for _,content in ipairs(opcode.arguments.content) do
-            table.insert(say_opcodes,
-                         LNVL.Opcode:new("say",
-                                         { content=content,
-                                           character=opcode.arguments.character
-                                         }))
-        end
-        return say_opcodes
-    end
-
-    -- If the opcode is 'draw-character' then we need to convert the
-    -- 'position' data into the appropriate 'location' data expected
-    -- by the 'draw-image' instruction which the opcode will become.
-    --
-    -- We also need to add the 'image' property to the opcode so
-    -- that the instruction will know what to draw later.  In this case
-    -- we want it to draw the current character image.
-    if opcode.name == "draw-character" then
-        local vertical_position = LNVL.Settings.Scenes.Y + 80
-
-        if opcode.arguments.position == LNVL.Position.Center then
-            opcode.arguments.location = {
-                LNVL.Settings.Screen.Center[1],
-                vertical_position,
-            }
-        elseif opcode.arguments.position == LNVL.Position.Right then
-            opcode.arguments.location = {
-                LNVL.Settings.Screen.Width - 200,
-                vertical_position,
-            }
-        elseif opcode.arguments.position == LNVL.Position.Left then
-            opcode.arguments.location = {
-                200,
-                vertical_position,
-            }
-        end
-
-        opcode.arguments.image =
-            opcode.arguments.character.images[opcode.arguments.character.currentImage]
-
-        return opcode
-    end
-
-    -- For this opcode we need to set the 'target' property to point
-    -- to the associated Character object so that the resulting
-    -- 'set-image' instruction knows what to update.
-    if opcode.name == "set-character-image" then
-        opcode.arguments.target = opcode.arguments.character
-        return opcode
-    end
-
-    -- We have no extra data to add to the following opcodes so we
-    -- return them as-is.  Some of these opcodes may need a 'scene'
-    -- property, but the drawCurrentContent() method ensures that
-    -- property exists, so we do not need to add it here.
-
-    if opcode.name == "say"
-    or opcode.name == "change-scene"
-    or opcode.name == "no-op"
-    then
-        return opcode
-    end
-
-    -- We should never reach this point because it means we have some
-    -- content that we do not understand how to handle.
-    error("Unknown content type in Scene")
+    -- Processor the content and return the results for the scene to
+    -- save in its list of opcodes.  This handles the first of the two
+    -- possible scenarios describe in the longer comment above.
+    local processor = LNVL.Opcode.Processor[content.name]
+    return processor(content)
 end
 
 -- This method sets the background image.  It accepts a path to the
