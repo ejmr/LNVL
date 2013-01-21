@@ -68,11 +68,11 @@ example:
 The name for this new scene is `START`, which is a special name.  Any
 non-trivial story using LNVL will contain multiple scenes, but there
 must always be an initial scene.  `START` is that initial scene, the
-one LNVL always expects to exist because that is the first one is
+one LNVL always expects to exist because that is the first one it
 displays.  That means every LNVL script *must* define the `START`
 scene.
 
-Our example scene is empty though.  You can add narration to the scene
+The example scene is empty though.  You can add narration to the scene
 by adding strings.  LNVL will display each string one at a time,
 allowing the user to move back and forth through them.  LNVL considers
 strings separated with commas as different lines of dialog.  However,
@@ -94,11 +94,11 @@ By default a scene has a black background.  There are two ways you can
 change this.
 
 The first way is to set the `backgroundColor` property of the scene.
-You must assign the property a table of three or four values,
-representing the red, green, blue, and alpha channels, respectively.
-But to make this easier LNVL provides a `Color` module that has
-pre-defined tables for colors.  For example, after creating a scene
-and its dialog we can change its background color like so:
+You must assign the property a list of three or four numbers,
+representing the red, green, blue, and (optional) alpha channels,
+respectively.  But to make this easier LNVL provides a `Color` module
+that has pre-defined names for colors.  For example, after creating a
+scene and its dialog you can change its background color like so:
 
     START.backgroundColor = LNVL.Color.NavyBlue
 
@@ -132,9 +132,9 @@ every scene will use.  You can change that default font by giving that
 setting the value of [a `Font` object][love-font] using the LÖVE engine
 functions; see their documentation for more information.
 
-You may also change the font for an individual scene only.  You do
-this in a way similar to how you change the background image.  Here is
-an example:
+You may also change the font only for an individual scene without
+affecting the rest.  The way you do this is similar to how you change
+the background image of a scene.  For example:
 
     START:setFont("path/to/myFont.ttf", 16)
 
@@ -166,8 +166,8 @@ in all capital letters, but this is not a requirement, only a
 suggested convention.
 
 Creating scenes, however, does nothing to connect them to one another.
-Given the example above, LNVL would not know how to progress from
-`START` to the `MIDDLE` scene.  You can connect the two using the
+In the example above LNVL would not know how to progress from `START`
+to the `MIDDLE` scene.  You can connect the two using the
 `changeToScene()` function.  Here is an example:
 
     START = LNVL.Scene:new{
@@ -194,8 +194,8 @@ then LNVL will crash with an error.
 You can place additional dialog or anything else after a line using
 `changeTo()` but there is no good reason to do so.  LNVL will not
 display any dialog or do anything else in a scene once it is told to
-switch to another scene.  So that means `changeTo()` is best placed at
-a point in a scene where there is nothing left to do before moving on.
+switch to another scene.  So that means `changeTo()` is best placed as
+the final part of a scene.
 
 
 Characters
@@ -320,11 +320,11 @@ create a character, like so:
         position = "Right",
     }
 
-This is almost exactly like the character definition we used earlier.
-Except there is the new `position` property.  The string `"Right"`
-tells LNVL that it should draw Lobby’s image on the right side of the
-screen instead of the usual left.  There are three acceptable values
-for `position`:
+This is the same as the character definition from earlier but with one
+addition: the new `position` property.  The string `"Right"` tells
+LNVL that it should draw Lobby’s image on the right side of the screen
+instead of the usual left.  There are three acceptable values for
+`position`:
 
 1. `"Left"`
 2. `"Center"`
@@ -347,7 +347,7 @@ scene.  For example:
         Lobby:isAt "Center",
         Lobby "Ok---hold on, I'm getting there.",
         Lobby:isAt "Right",
-        Lobby:becomes("images/Lobby-exhausted.png"),
+        Lobby:becomes "images/Lobby-exhausted.png",
         Lobby "I need to stop smoking...",
     }
 
