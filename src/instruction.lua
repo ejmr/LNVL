@@ -3,7 +3,7 @@
 -- This file implements the instruction engine portion of LNVL.  See
 -- the document
 --
---     docs/html/Instructions.html
+--     docs/Instructions.md
 --
 -- for details about this system and its design.
 --
