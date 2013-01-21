@@ -111,7 +111,8 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- of two things:
     --
     -- 1. If the metatable is LNVL.Opcode then the table represents an
-    -- opcode that we possibly need to deal with in some specific way.
+    -- opcode and we return that after running it through the
+    -- appropriate 'processor function'.
     --
     -- 2. If there is no metatable then we assume the table represents
     -- a collection on LNVL.Opcode objects.  We loop through these
@@ -121,8 +122,8 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- opcodes out into individual entries in its list of opcodes for
     -- the scene.
     --
-    -- This code deals with the second scenario.  Code in the rest of
-    -- the function handles the first.
+    -- The loop below deals with the second scenario.  Code in the
+    -- rest of the function handles the first.
     if getmetatable(content) ~= LNVL.Opcode then
         local opcodes = {}
         for _,opcode in ipairs(content) do
@@ -132,11 +133,12 @@ function LNVL.Scene:createOpcodeFromContent(content)
     end
 
     -- At this point we know that 'content' is an opcode so its
-    --  metatable must be LNVL.Opcode.
+    -- metatable must be LNVL.Opcode.
     assert(getmetatable(content) == LNVL.Opcode, "Unknown content type in Scene")
 
     -- Processor the content and return the results for the scene to
-    -- save in its list of opcodes.
+    -- save in its list of opcodes.  This handles the first of the two
+    -- possible scenarios describe in the longer comment above.
     local processor = LNVL.Opcode.Processor[content.name]
     return processor(content)
 end
