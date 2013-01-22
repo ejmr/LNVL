@@ -127,7 +127,10 @@ function LNVL.Scene:createOpcodeFromContent(content)
     if getmetatable(content) ~= LNVL.Opcode then
         local opcodes = {}
         for _,opcode in ipairs(content) do
-            table.insert(opcodes, self:createOpcodeFromContent(opcode))
+            local processed_opcode = self:createOpcodeFromContent(opcode)
+            if processed_opcode ~= nil then
+                table.insert(opcodes, processed_opcode)
+            end
         end
         return opcodes
     end
