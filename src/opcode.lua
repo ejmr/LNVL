@@ -139,5 +139,17 @@ LNVL.Opcode.Processor["say"] = returnOpcode
 LNVL.Opcode.Processor["change-scene"] = returnOpcode
 LNVL.Opcode.Processor["no-op"] = returnOpcode
 
+-- If LNVL is running in debugging mode then make sure that every
+-- valid opcode has an associated processor function, because without
+-- one we will not be able to include those opcodes in scenes.  That
+-- can lead to some tricky bugs.
+if LNVL.Settings.DebugModeEnabled == true then
+    for name,_ in pairs(LNVL.Opcode.ValidOpcodes) do
+        if LNVL.Opcode.Processor[name] == nil then
+            error("No opcode processor for " .. name)
+        end
+    end
+end
+
 -- Return the class as a module.
 return LNVL.Opcode
