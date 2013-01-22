@@ -44,15 +44,16 @@ end
 -- This function converts Opcode objects to strings intended for
 -- debugging purposes.
 LNVL.Opcode.__tostring = function (opcode)
-    output = string.format("Opcode %q = {\n", opcode.name)
+    output = string.format("Opcode %q = {", opcode.name)
 
     if opcode.arguments ~= nil then
+        output = output .. "\n"
         for key,value in pairs(opcode.arguments) do
-            output = output .. string.format("\n\t%s: %s", key, value)
+            output = output .. string.format("\t%s: %s\n", key, value)
         end
     end
 
-    output = output .. "\n}"
+    output = output .. "}"
     return output
 end
 
