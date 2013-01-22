@@ -1,9 +1,9 @@
 --[[
---
--- This file implements characters in LNVL.  Characters represent
--- actors in scenes and are typically the medium through which most
--- dialog will be shown.
---
+    --
+    -- This file implements characters in LNVL.  Characters represent
+    -- actors in scenes and are typically the medium through which most
+    -- dialog will be shown.
+    --
 --]]
 
 -- Create the LNVL.Character class.
@@ -116,14 +116,13 @@ end
 -- If we call a Character object as a function then we treat that as a
 -- short-cut for calling the says() method.  This can make dialog
 -- scripts more readable.
-LNVL.Character.__call =
-    function (f, ...)
-        if type(f) == "function" then
-            return f(...)
-        else
-            return f:says(...)
-        end
+LNVL.Character.__call = function (f, ...)
+    if type(f) == "function" then
+        return f(...)
+    else
+        return f:says(...)
     end
+end
 
 -- This method changes the position of a character, which primarily
 -- affects where we draw his image.  The argument is a string which

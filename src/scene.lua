@@ -1,8 +1,8 @@
 --[[
---
--- This file implements scenes in LNVL.  Developers do all work with
--- scenes through Scene objects, a class that this file defines.
---
+    --
+    -- This file implements scenes in LNVL.  Developers do all work with
+    -- scenes through Scene objects, a class that this file defines.
+    --
 --]]
 
 -- Create the LNVL.Scene class.
@@ -161,8 +161,7 @@ end
 function LNVL.Scene:drawContainer()
     LNVL.Graphics.drawContainer{
         backgroundColor=self.backgroundColor,
-        borderColor=self.borderColor
-    }
+        borderColor=self.borderColor }
 end
 
 -- This method draws text within the scene's container.  It will clear

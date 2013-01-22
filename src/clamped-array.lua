@@ -1,24 +1,24 @@
 --[[
---
--- This file implements an array class which is 'clamped' at its end
--- by the first nil value.  For example:
---
---     foo = LNVL.ClampedArray:new()
---     foo[1] = 10
---     foo[0] = 2
---     foo[2] = 4
---     foo[3] = nil
---
--- So the values of 'foo' are {10, 4}' now.  ClampedArrays do not
--- allow indexes less than one; so the index zero is discarded.  Their
--- length also stops at the first nil value *if and only if* there are
--- no more nil values after that.  So here the length of the
--- ClampedArray is two, but if we added
---
---     foo[4] = 40
---
--- the length would become four, i.e. {10, 4, nil, 40}.
---
+    --
+    -- This file implements an array class which is 'clamped' at its end
+    -- by the first nil value.  For example:
+    --
+    --     foo = LNVL.ClampedArray:new()
+    --     foo[1] = 10
+    --     foo[0] = 2
+    --     foo[2] = 4
+    --     foo[3] = nil
+    --
+    -- So the values of 'foo' are {10, 4}' now.  ClampedArrays do not
+    -- allow indexes less than one; so the index zero is discarded.  Their
+    -- length also stops at the first nil value *if and only if* there are
+    -- no more nil values after that.  So here the length of the
+    -- ClampedArray is two, but if we added
+    --
+    --     foo[4] = 40
+    --
+    -- the length would become four, i.e. {10, 4, nil, 40}.
+    --
 --]]
 
 LNVL.ClampedArray = {}
@@ -52,41 +52,38 @@ end
 -- a nil value.  That is assuming the key is a number.  If the key is
 -- not a number then we assume the user is accessing a property by
 -- name and simply return that.
-LNVL.ClampedArray.__index =
-    function (table, key)
-        if type(key) == "number" then
-            if key < 1 then
-                key = 1
-            elseif key >= table.__first_nil_index then
-                key = table.__first_nil_index - 1
-            end
+LNVL.ClampedArray.__index = function (table, key)
+    if type(key) == "number" then
+        if key < 1 then
+            key = 1
+        elseif key >= table.__first_nil_index then
+            key = table.__first_nil_index - 1
         end
-
-        return rawget(table, key)
     end
+
+    return rawget(table, key)
+end
 
 -- The __newindex() metatable function takes care to properly update
 -- the array's __first_nil_index property when the key is a number.
-LNVL.ClampedArray.__newindex =
-    function (table, key, value)
-        if type(key) == "number" then
-            if value == nil and key < table.__first_nil_index then
-                table.__first_nil_index = key
-            elseif key > table.__first_nil_index then
-                table.__first_nil_index = key
-            end
+LNVL.ClampedArray.__newindex = function (table, key, value)
+    if type(key) == "number" then
+        if value == nil and key < table.__first_nil_index then
+            table.__first_nil_index = key
+        elseif key > table.__first_nil_index then
+            table.__first_nil_index = key
         end
-
-        rawset(table, key, value)
     end
+
+    rawset(table, key, value)
+end
 
 -- The __len() metatable function returns the length up to the first
 -- nil array element.  That nil element is not included as part of the
 -- length, e.g. the array {10, 20, nil} has a length of two.
-LNVL.ClampedArray.__len =
-    function (table)
-        return table.__first_nil_index
-    end
+LNVL.ClampedArray.__len = function (table)
+    return table.__first_nil_index
+end
 
 -- Return the class as a module.
 return LNVL.ClampedArray

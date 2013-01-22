@@ -1,12 +1,12 @@
 --[[
---
--- This file implements the instruction engine portion of LNVL.  See
--- the document
---
---     docs/Instructions.md
---
--- for details about this system and its design.
---
+    --
+    -- This file implements the instruction engine portion of LNVL.  See
+    -- the document
+    --
+    --     docs/Instructions.md
+    --
+    -- for details about this system and its design.
+    --
 --]]
 
 -- Create our LNVL.Instruction class.
@@ -56,21 +56,19 @@ end
 
 -- A simple tostring() method for debugging purposes, which does
 -- nothing but returns the name of the instruction.
-LNVL.Instruction.__tostring =
-    function (instruction)
-        return string.format("<Instruction %s>", instruction.name)
-    end
+LNVL.Instruction.__tostring = function (instruction)
+    return string.format("<Instruction %s>", instruction.name)
+end
 
 -- We define a __call() metatable method as a shortcut for executing
 -- the 'action' function of an instruction.
-LNVL.Instruction.__call =
-    function (f, ...)
-        if type(f) == "function" then
-            return f(...)
-        else
-            return f.action(...)
-        end
+LNVL.Instruction.__call = function (f, ...)
+    if type(f) == "function" then
+        return f(...)
+    else
+        return f.action(...)
     end
+end
 
 -- This table contains all of the instructions in the LNVL engine.
 -- The keys for the table are strings, the names of the instructions.
@@ -84,59 +82,56 @@ LNVL.Instructions = {}
 LNVL.Instructions["say"] = LNVL.Instruction:new{
     name = "say",
     action = function (arguments)
-                 local text = arguments.content
+        local text = arguments.content
 
-                 -- If the text is spoken by a character then we can
-                 -- add additional formatting to the output, such as
-                 -- the character's name.
-                 if arguments["character"] ~= nil then
-                     text = {
-                         arguments.character.color,
-                         string.format("%s: %s",
-                                       arguments.character.name,
-                                       arguments.content)
-                     }
-                 end
+        -- If the text is spoken by a character then we can
+        -- add additional formatting to the output, such as
+        -- the character's name.
+        if arguments["character"] ~= nil then
+            text = {
+                arguments.character.color,
+                string.format("%s: %s",
+                              arguments.character.name,
+                              arguments.content)
+            }
+        end
 
-                 arguments.scene:drawText(text)
-             end
-}
+        arguments.scene:drawText(text)
+    end }
+
 
 LNVL.Instructions["set-image"] = LNVL.Instruction:new{
     name = "set-image",
     action = function (arguments)
-                 local targetType = getmetatable(arguments.target)
+        local targetType = getmetatable(arguments.target)
 
-                 -- If the target is a Character then we change their
-                 -- 'currentImage' to the new one in the instruction.
-                 if targetType == LNVL.Character then
-                     arguments.target.currentImage = arguments.image
-                 else
-                     -- If we reach this point then it is an error.
-                     error(string.format("Cannot set-image for %s", targetType))
-                 end
-             end
-}
+        -- If the target is a Character then we change their
+        -- 'currentImage' to the new one in the instruction.
+        if targetType == LNVL.Character then
+            arguments.target.currentImage = arguments.image
+        else
+            -- If we reach this point then it is an error.
+            error(string.format("Cannot set-image for %s", targetType))
+        end
+    end }
 
 LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
     name = "draw-image",
     action = function (arguments)
-                 love.graphics.setColorMode("replace")
-                 love.graphics.draw(arguments.image,
-                                    arguments.location[1],
-                                    arguments.location[2])
-             end
-}
+        love.graphics.setColorMode("replace")
+        love.graphics.draw(arguments.image,
+                           arguments.location[1],
+                           arguments.location[2])
+    end }
 
 LNVL.Instructions["set-scene"] = LNVL.Instruction:new{
     name = "set-scene",
     action = function (arguments)
-                 local scene = _G[arguments.name]
-                 assert(scene ~= nil and getmetatable(scene) == LNVL.Scene,
-                    "Cannot load scene " .. arguments.name)
-                 LNVL.currentScene = scene
-             end
-}
+        local scene = _G[arguments.name]
+        assert(scene ~= nil and getmetatable(scene) == LNVL.Scene,
+               "Cannot load scene " .. arguments.name)
+        LNVL.currentScene = scene
+    end }
 
 -- Return our class as a module.
 return LNVL.Instruction

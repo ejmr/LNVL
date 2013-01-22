@@ -1,7 +1,7 @@
 --[[
---
--- This module contains the global settings for LNVL.
---
+    --
+    -- This module contains the global settings for LNVL.
+    --
 --]]
 
 -- Our table of settings.
