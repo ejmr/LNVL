@@ -45,9 +45,13 @@ end
 -- debugging purposes.
 LNVL.Opcode.__tostring = function (opcode)
     output = string.format("Opcode %q = {\n", opcode.name)
-    for key,value in pairs(opcode.arguments) do
-        output = output .. string.format("\n\t%s: %s", key, value)
+
+    if opcode.arguments ~= nil then
+        for key,value in pairs(opcode.arguments) do
+            output = output .. string.format("\n\t%s: %s", key, value)
+        end
     end
+
     output = output .. "\n}"
     return output
 end
@@ -89,7 +93,7 @@ end
 -- instruction will know what to draw later.  In this case we want it
 -- to draw the current character image.
 LNVL.Opcode.Processor["draw-character"] = function (opcode)
-    local vertical_position = LNVL.Settings.Scenes.Y + 80
+    local vertical_position = LNVL.Settings.Scenes.Y - 80
 
     if opcode.arguments.position == LNVL.Position.Center then
         opcode.arguments.location = {

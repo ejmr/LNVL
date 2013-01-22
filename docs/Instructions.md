@@ -66,7 +66,8 @@ it encounters this opcode.
 2. `arguments`: A table of additional arguments to give to the
 instruction when LNVL executes it.  The definitions of the
 instructions dictate the contents of this table, so they will vary
-from opcode to opcode.
+from opcode to opcode.  This property may be `nil`, e.g. the `no-op`
+opcode has no arguments table.
 
 The function `LNVL.drawCurrentContent()` adds the aforementioned
 `scene` property to `arguments`.  Because of this, opcodes *must not*
