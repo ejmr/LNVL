@@ -96,5 +96,14 @@ function LNVL.Debug.tableToString(table, name, indent)
     return cart .. autoref
 end
 
+-- This function takes an LNVL.Scene object and prints every opcode of
+-- that scene to the console.  This is useful for ensuring that the
+-- opcodes we expect to exist are there and in the correct order.
+function LNVL.Debug.printSceneOpcodes(scene)
+    for index,opcode in ipairs(scene.opcodes) do
+        print(string.format("[%i] %s\n", index, tostring(opcode)))
+    end
+end
+
 -- Return the class as the module.
 return LNVL.Debug
