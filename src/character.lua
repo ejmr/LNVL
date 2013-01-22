@@ -126,12 +126,12 @@ end
 
 -- This method changes the position of a character, which primarily
 -- affects where we draw his image.  The argument is a string which
--- must be a valid key for the LNVL.Position table.  The method has to
--- return an opcode but since we update the position immediately we
--- have nothing to process later, thus we return a 'no-op'.
+-- must be a valid key for the LNVL.Position table.  The method
+-- returns a 'draw-character' opcode under the assumption that we want
+-- to render the character in his new position now that we moved him.
 function LNVL.Character:isAt(place)
     self.position = LNVL.Position[place]
-    return LNVL.Opcode:new("no-op")
+    return LNVL.Opcode:new("draw-character", {character=self})
 end
 
 -- This method accepts a string as a path to an image file, and
