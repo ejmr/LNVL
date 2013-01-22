@@ -105,5 +105,23 @@ function LNVL.Debug.printSceneOpcodes(scene)
     end
 end
 
+-- If debugging mode is enabled then we add a metatable to the LNVL
+-- table that will print out all its opcodes every time the property
+-- LNVL.currentScene changes.  This lets us easily watch all of the
+-- opcode generation for a script with multiple scenes.
+if LNVL.Settings.DebugModeEnabled == true then
+    setmetatable(
+        LNVL,
+        {
+            __newindex = function (table, key, value)
+                rawset(table, key, value)
+
+                if key == "currentScene" then
+                    LNVL.Debug.printSceneOpcodes(table[key])
+                end
+            end
+        })
+end
+
 -- Return the class as the module.
 return LNVL.Debug
