@@ -115,6 +115,8 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
 
     opcode.arguments.image =
         opcode.arguments.character.images[opcode.arguments.character.currentImage]
+
+    return opcode
 end
 
 -- Processor for opcode 'set-character-image'
