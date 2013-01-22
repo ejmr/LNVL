@@ -149,7 +149,7 @@ function LNVL.Character:becomes(filename)
 
     local opcodes = {
         LNVL.Opcode:new("set-character-image", {character=self, image=filename}),
-        LNVL.Opcode:new("draw-character", {character=self, position=LNVL.Position.Center}),
+        LNVL.Opcode:new("draw-character", {character=self}),
     }
 
     return opcodes
