@@ -18,7 +18,11 @@ LNVL.Debug.__index = LNVL.Debug
 --
 -- 2. A string to use as initial indentation for every line of output.
 --
--- Julio Manuel Fernandez-Diaz is the original author of this code.
+-- Julio Manuel Fernandez-Diaz is the original author of this code,
+-- which we borrowed from here:
+--
+--     http://lua-users.org/wiki/TableSerialization
+--
 -- We have modified it only slightly to conform to the style of the
 -- LNVL codebase.
 function LNVL.Debug.tableToString(table, name, indent)
