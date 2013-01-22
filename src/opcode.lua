@@ -59,12 +59,15 @@ end
 
 -- The following table contains all of the 'processor functions' for
 -- opcodes.  Each key in the table the name of an opcode as a string;
--- these are the same keys which appear in the
--- LNVL.Opcode.ValidOpcodes table.  The value for each entry is
--- function which accepts one argument: an LNVL.Opcode object.  The
--- processor function will add any extra data or modify any existing
--- data for that particular instance of LNVL.Opcode and then return
--- either the modified object, or a new array of opcodes.
+-- these are the same keys which appear in the table of valid opcodes
+-- defined above.  The value for each entry is function which accepts
+-- one argument: an LNVL.Opcode object.  The processor function will
+-- add any extra data or modify any existing data for that particular
+-- instance of LNVL.Opcode and then return either the modified object,
+-- or a new array of opcodes.
+--
+-- It is a fatal error for any processor function to *not* return an
+-- opcode or a table of opcodes.
 LNVL.Opcode.Processor = {}
 
 -- Processor for opcode 'monologue'

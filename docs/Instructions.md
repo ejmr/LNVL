@@ -98,12 +98,14 @@ that will print that string.
 
 2. If the content is an `LNVL.Opcode` object, which is the return
 value of most functions used as arguments of `LNVL.Scene:new()`, then
-LNVL sends it to a *processor.*  The `LNVL.Opcode.Processor` table
-maps the names of opcodes (listed below) to processor functions.
-These are functions which accept the content, i.e. opcode object, as
-its sole parameter and augment it with any extra data that LNVL may
-need later when converting that particular opcode into an
-instruction.
+LNVL sends it to a *processor.* The `LNVL.Opcode.Processor` table maps
+the names of opcodes (listed below) to processor functions.  These are
+functions which accept the content, i.e. opcode object, as its sole
+parameter, augment it with any extra data that LNVL may need later
+when converting that particular opcode into an instruction, and then
+return the possibly-modified opcode.  (**Note:** It is a fatal error
+for any processor function to not return an opcode or array of
+opcode objects.)
 
 3. If the content is a table with no metatable then LNVL assumes it is
 an array of opcode objects and processes each as per the description
