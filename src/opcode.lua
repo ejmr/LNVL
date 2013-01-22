@@ -91,13 +91,19 @@ end
 --
 -- For this opcode we need to convert the 'position' data into the
 -- appropriate 'location' data expected by the 'draw-image'
--- instruction which the opcode will become.
+-- instruction which the opcode will become.  The 'position' property
+-- is optional.  If it does not exist then we will use the default
+-- position of the 'character' property that the opcode requires.
 --
 -- We also need to add the 'image' property to the opcode so that the
 -- instruction will know what to draw later.  In this case we want it
 -- to draw the current character image.
 LNVL.Opcode.Processor["draw-character"] = function (opcode)
     local vertical_position = LNVL.Settings.Scenes.Y - 80
+
+    if opcode.arguments["position"] == nil then
+        opcode.arguments.position = opcode.arguments.character.position
+    end
 
     if opcode.arguments.position == LNVL.Position.Center then
         opcode.arguments.location = {
