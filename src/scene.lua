@@ -222,5 +222,15 @@ function LNVL.Scene.changeTo(name)
     return LNVL.Opcode:new("change-scene", {name=name})
 end
 
+-- This method moves forward to the next content in the scene.
+function LNVL.Scene:moveForward()
+    self.opcodeIndex = self.opcodeIndex + 1
+end
+
+-- This method moves back to the previous content in the scene.
+function LNVL.Scene:moveBack()
+    self.opcodeIndex = self.opcodeIndex - 1
+end
+
 -- Return the class as a module.
 return LNVL.Scene
