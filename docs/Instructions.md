@@ -132,13 +132,16 @@ List of Opcodes
 
 Below are all of the opcodes used in the LNVL engine, listed
 alphabetically by name.  Opcodes are always written in lowercase
-within the engine code.  Each entry describes what the opcode does and
-what instruction or instructions it creates.
+within the engine code.  When the engine processes each opcode it
+gives the opcode a table of arguments.  The entries below list those
+arguments as well as the instruction(s) the opcode generates.
 
 ### Change-Scene ###
 
 The `change-scene` opcode tells LNVL to switch to a different scene,
 i.e. another `LNVL.Scene` object.
+
+This opcode takes no arguments.
 
 ### Draw-Character ###
 
@@ -146,11 +149,22 @@ The `draw-character` opcode renders a character to screen.  The opcode
 provides information to the `draw-image` instruction, telling it what
 image to draw and where.
 
+1. `character`: An instance of `LNVL.Character` to draw.
+
+2. `position`: *(Optional)* One of the `LNVL.Position.*` constants
+indicating where on screen the character should appear,
+e.g. `LNVL.Position.Right`.
+
 ### Monologue ###
 
 The `monologue` opcode expands into multiple `say` opcodes, used by
 the `LNVL.Character:monologue()` method to present multiple lines of
 dialog by a single character at once.
+
+1. `character`: An instance of `LNVL.Character` who is speaking the
+monologue.
+
+2. `content`: An array of strings representing lines of dialog.
 
 ### No-Op ###
 
@@ -162,17 +176,28 @@ opcode in order for the engine to properly compile the list of
 instructions to execute.  The `no-op` opcode exists for those
 functions to use.
 
+This opcode takes no arguments.
+
 ### Say ###
 
 The `say` opcode generates a `say` instruction.  The commonly-used
 methods of `LNVL.Character` objects create this opcode in order to
 compile dialog for a particular scene.
 
+1. `character`: *(Optional)* An instance of `LNVL.Character` who is
+speaking the line.
+
+2. `content`: A string representing the line of dialog.
+
 ### Set-Character-Image ###
 
 The `set-character-image` opcode creates a `set-image` instruction
 that will change the image used to display an `LNVL.Character` on
 screen.
+
+1. `character`: An instance of `LNVL.Character` to draw.
+
+2. `image`: The new [image][3] to use for the character.
 
 
 List of Instructions
@@ -202,7 +227,7 @@ its action function requires the following properties:
 
 1. `content`: A string representing the dialog to say.
 
-2. `character`: **(Optional)** A instance of an `LNVL.Character` who
+2. `character`: *(Optional)* A instance of an `LNVL.Character` who
 will speak the dialog.  If this argument is present the text will
 appear in the color defined by the `character.color` property.
 
