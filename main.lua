@@ -7,8 +7,7 @@
 -- The program tests if we can create and draw an LNVL.Scene object
 -- with a little dialog.  It reads a script filename from the
 -- command-line and loads that.  The enter and backspace keys move
--- back and forth through the text, respectively.  Although it will
--- currently crash if we go too far forward or backward.
+-- back and forth through the text, respectively.
 --
 --]]
 

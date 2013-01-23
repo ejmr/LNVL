@@ -86,6 +86,13 @@ function LNVL.Character:new(properties)
         error("Cannot create unnamed character")
     end
 
+    -- If we are in debugging mode then dump the character data to the
+    -- console so that we can verify everything looks correct.
+    if LNVL.Settings.DebugModeEnabled == true then
+        print("-- New Character --\n")
+        print(LNVL.Debug.tableToString(character, character.name))
+    end
+
     return character
 end
 
@@ -126,10 +133,16 @@ end
 
 -- This method changes the position of a character, which primarily
 -- affects where we draw his image.  The argument is a string which
--- must be a valid key for the LNVL.Position table.
+-- must be a valid key for the LNVL.Position table.  The method
+-- returns a 'draw-character' opcode under the assumption that we want
+-- to render the character in his new position now that we moved him.
 function LNVL.Character:isAt(place)
-    self.position = LNVL.Position[place]
-    return LNVL.Opcode:new("no-op")
+    return LNVL.Opcode:new(
+        "draw-character",
+        {
+            character=self,
+            position=LNVL.Position[place]
+        })
 end
 
 -- This method accepts a string as a path to an image file, and
@@ -147,7 +160,7 @@ function LNVL.Character:becomes(filename)
 
     local opcodes = {
         LNVL.Opcode:new("set-character-image", {character=self, image=filename}),
-        LNVL.Opcode:new("draw-character", {character=self, position=LNVL.Position.Center}),
+        LNVL.Opcode:new("draw-character", {character=self}),
     }
 
     return opcodes
@@ -157,6 +170,12 @@ end
 -- i.e. changing back to their default image.
 function LNVL.Character:becomesNormal()
     return self:becomes("normal")
+end
+
+-- This function converts a Character object into a string for
+-- debugging purposes.
+LNVL.Character.__tostring = function (character)
+    return character.name
 end
 
 -- Return the class as a module.

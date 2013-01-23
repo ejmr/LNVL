@@ -44,22 +44,37 @@ end
 -- This function converts Opcode objects to strings intended for
 -- debugging purposes.
 LNVL.Opcode.__tostring = function (opcode)
-    output = string.format("Opcode %q = {\n", opcode.name)
-    for key,value in pairs(opcode.arguments) do
-        output = output .. string.format("\n\t%s: %s", key, value)
+    output = string.format("Opcode %q = {", opcode.name)
+
+    if opcode.arguments ~= nil then
+        output = output .. "\n"
+
+        for key,value in pairs(opcode.arguments) do
+            -- Show the XY-coordinations for the 'location' property.
+            if key == "location" then
+                output = output .. string.format("\tlocation: X = %d, Y = %d\n",
+                                                 value[1], value[2])
+            else
+                output = output .. string.format("\t%s: %s\n", key, value)
+            end
+        end
     end
-    output = output .. "\n}"
+
+    output = output .. "}"
     return output
 end
 
 -- The following table contains all of the 'processor functions' for
 -- opcodes.  Each key in the table the name of an opcode as a string;
--- these are the same keys which appear in the
--- LNVL.Opcode.ValidOpcodes table.  The value for each entry is
--- function which accepts one argument: an LNVL.Opcode object.  The
--- processor function will add any extra data or modify any existing
--- data for that particular instance of LNVL.Opcode and then return
--- either the modified object, or a new array of opcodes.
+-- these are the same keys which appear in the table of valid opcodes
+-- defined above.  The value for each entry is function which accepts
+-- one argument: an LNVL.Opcode object.  The processor function will
+-- add any extra data or modify any existing data for that particular
+-- instance of LNVL.Opcode and then return either the modified object,
+-- or a new array of opcodes.
+--
+-- It is a fatal error for any processor function to *not* return an
+-- opcode or a table of opcodes.
 LNVL.Opcode.Processor = {}
 
 -- Processor for opcode 'monologue'
@@ -83,13 +98,28 @@ end
 --
 -- For this opcode we need to convert the 'position' data into the
 -- appropriate 'location' data expected by the 'draw-image'
--- instruction which the opcode will become.
+-- instruction which the opcode will become.  The 'position' property
+-- is optional.  If it does not exist then we will use the default
+-- position of the 'character' property that the opcode requires.
 --
 -- We also need to add the 'image' property to the opcode so that the
 -- instruction will know what to draw later.  In this case we want it
 -- to draw the current character image.
 LNVL.Opcode.Processor["draw-character"] = function (opcode)
-    local vertical_position = LNVL.Settings.Scenes.Y + 80
+    local vertical_position = LNVL.Settings.Scenes.Y - 80
+
+    -- If the opcode was given no position we use the character's
+    -- current position.  But if the opcode is given a position then
+    -- we assign that new one to the character, otherwise the new
+    -- position will only be in effect for this one opcode which is
+    -- not what we want, e.g. calling Character:isAt() would move a
+    -- character for one render and then reset their position instead
+    -- of moving them permanently until the next isAt() or movement.
+    if opcode.arguments["position"] == nil then
+        opcode.arguments.position = opcode.arguments.character.position
+    else
+        opcode.arguments.character.position = opcode.arguments.position
+    end
 
     if opcode.arguments.position == LNVL.Position.Center then
         opcode.arguments.location = {
@@ -110,6 +140,8 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
 
     opcode.arguments.image =
         opcode.arguments.character.images[opcode.arguments.character.currentImage]
+
+    return opcode
 end
 
 -- Processor for opcode 'set-character-image'
@@ -128,6 +160,18 @@ local returnOpcode = function (opcode) return opcode end
 LNVL.Opcode.Processor["say"] = returnOpcode
 LNVL.Opcode.Processor["change-scene"] = returnOpcode
 LNVL.Opcode.Processor["no-op"] = returnOpcode
+
+-- If LNVL is running in debugging mode then make sure that every
+-- valid opcode has an associated processor function, because without
+-- one we will not be able to include those opcodes in scenes.  That
+-- can lead to some tricky bugs.
+if LNVL.Settings.DebugModeEnabled == true then
+    for name,_ in pairs(LNVL.Opcode.ValidOpcodes) do
+        if LNVL.Opcode.Processor[name] == nil then
+            error("No opcode processor for " .. name)
+        end
+    end
+end
 
 -- Return the class as a module.
 return LNVL.Opcode

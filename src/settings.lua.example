@@ -8,6 +8,11 @@
 LNVL.Settings = {}
 LNVL.Settings.__index = LNVL.Settings
 
+-- This boolean setting enables or disables debugging mode.  When LNVL
+-- is in debugging mode it will print out various data to the console.
+-- Developers should set this to 'false' before releasing their games.
+LNVL.Settings.DebugModeEnabled = true
+
 -- These settings control the height and width of the entire screen.
 LNVL.Settings.Screen = {}
 LNVL.Settings.Screen.Width = 800

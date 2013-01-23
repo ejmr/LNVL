@@ -127,7 +127,10 @@ function LNVL.Scene:createOpcodeFromContent(content)
     if getmetatable(content) ~= LNVL.Opcode then
         local opcodes = {}
         for _,opcode in ipairs(content) do
-            table.insert(opcodes, self:createOpcodeFromContent(opcode))
+            local processed_opcode = self:createOpcodeFromContent(opcode)
+            if processed_opcode ~= nil then
+                table.insert(opcodes, processed_opcode)
+            end
         end
         return opcodes
     end
@@ -187,21 +190,25 @@ end
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
 
+    -- Draw the scene before anything else.  This ensures that the
+    -- scene container, background image, and any other static art
+    -- elements will appear on screen.  We must do this because not
+    -- every instruction we execute below will draw anything, so if we
+    -- left it up to every instruction to render the entire scene then
+    -- we would have a lot of blank screens, or we'd end up passing
+    -- more data around than necessary.
+    self:draw()
+
     -- If the opcode is a no-op then we do not need to invoke any
     -- instruction because there is none for that opcode.
     if opcode.name == "no-op" then return end
 
     local instruction = LNVL.Instruction.getForOpcode(opcode.name)
 
-    -- Make sure the opcode has access to the Scene so that it can
-    -- draw dialog to screen.
+    -- Make sure the opcode has access to the Scene so that the
+    -- instruction we invoke next can draw things to Scene if
+    -- necessary.
     opcode.arguments.scene = self
-
-    -- We always draw the scene before executing the instruction
-    -- because not every instruction is involved with rendering
-    -- content.  So if we did not draw the scene here then those
-    -- instructions would result in a blank screen.
-    self:draw()
     instruction(opcode.arguments)
 end
 

@@ -66,12 +66,19 @@ it encounters this opcode.
 2. `arguments`: A table of additional arguments to give to the
 instruction when LNVL executes it.  The definitions of the
 instructions dictate the contents of this table, so they will vary
-from opcode to opcode.
+from opcode to opcode.  This property may be `nil`, e.g. the `no-op`
+opcode has no arguments table.
 
 The function `LNVL.drawCurrentContent()` adds the aforementioned
 `scene` property to `arguments`.  Because of this, opcodes *must not*
 provide their own `scene` property because LNVL will overrite its
 value when executing the related instruction.
+
+Programmers can display a list of the opcodes for a scene using the
+`LNVL.Debug.printSceneOpcodes()` method.  If the global property
+`LNVL.Settings.DebugModeEnabled` is true then LNVL will call this
+method on `LNVL.currentScene` any time its value changes, making it
+easy to see the opcodes for all scenes in a given script.
 
 
 How Opcodes and Instructions Interact
@@ -91,12 +98,14 @@ that will print that string.
 
 2. If the content is an `LNVL.Opcode` object, which is the return
 value of most functions used as arguments of `LNVL.Scene:new()`, then
-LNVL sends it to a *processor.*  The `LNVL.Opcode.Processor` table
-maps the names of opcodes (listed below) to processor functions.
-These are functions which accept the content, i.e. opcode object, as
-its sole parameter and augment it with any extra data that LNVL may
-need later when converting that particular opcode into an
-instruction.
+LNVL sends it to a *processor.* The `LNVL.Opcode.Processor` table maps
+the names of opcodes (listed below) to processor functions.  These are
+functions which accept the content, i.e. opcode object, as its sole
+parameter, augment it with any extra data that LNVL may need later
+when converting that particular opcode into an instruction, and then
+return the possibly-modified opcode.  (**Note:** It is a fatal error
+for any processor function to not return an opcode or array of
+opcode objects.)
 
 3. If the content is a table with no metatable then LNVL assumes it is
 an array of opcode objects and processes each as per the description

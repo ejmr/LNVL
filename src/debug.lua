@@ -18,7 +18,11 @@ LNVL.Debug.__index = LNVL.Debug
 --
 -- 2. A string to use as initial indentation for every line of output.
 --
--- Julio Manuel Fernandez-Diaz is the original author of this code.
+-- Julio Manuel Fernandez-Diaz is the original author of this code,
+-- which we borrowed from here:
+--
+--     http://lua-users.org/wiki/TableSerialization
+--
 -- We have modified it only slightly to conform to the style of the
 -- LNVL codebase.
 function LNVL.Debug.tableToString(table, name, indent)
@@ -90,6 +94,33 @@ function LNVL.Debug.tableToString(table, name, indent)
     cart, autoref = "", ""
     addtocart(table, name, indent)
     return cart .. autoref
+end
+
+-- This function takes an LNVL.Scene object and prints every opcode of
+-- that scene to the console.  This is useful for ensuring that the
+-- opcodes we expect to exist are there and in the correct order.
+function LNVL.Debug.printSceneOpcodes(scene)
+    for index,opcode in ipairs(scene.opcodes) do
+        print(string.format("[%i] %s\n", index, tostring(opcode)))
+    end
+end
+
+-- If debugging mode is enabled then we add a metatable to the LNVL
+-- table that will print out all its opcodes every time the property
+-- LNVL.currentScene changes.  This lets us easily watch all of the
+-- opcode generation for a script with multiple scenes.
+if LNVL.Settings.DebugModeEnabled == true then
+    setmetatable(
+        LNVL,
+        {
+            __newindex = function (table, key, value)
+                rawset(table, key, value)
+
+                if key == "currentScene" then
+                    LNVL.Debug.printSceneOpcodes(table[key])
+                end
+            end
+        })
 end
 
 -- Return the class as the module.

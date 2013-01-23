@@ -133,5 +133,16 @@ LNVL.Instructions["set-scene"] = LNVL.Instruction:new{
         LNVL.currentScene = scene
     end }
 
+-- If LNVL is running in debugging mode then make sure that every
+-- instruction we list as valid has a match LNVL.Instruction object
+-- that implements it.
+if LNVL.Settings.DebugModeEnabled == true then
+    for name,_ in pairs(LNVL.Instruction.ValidInstructions) do
+        if LNVL.Instructions[name] == nil then
+            error("No implementation for the instruction " .. name)
+        end
+    end
+end
+
 -- Return our class as a module.
 return LNVL.Instruction
