@@ -13,12 +13,13 @@ LNVL.Position.__index = LNVL.Position
 -- These three positions specify the general area an object should
 -- appear but do not give any exact location.  It is up to the object
 -- given the position to determine just exactly what it means to be
--- positioned to the 'right', for example.  The values assigned to these
--- properties are arbitrary; all that matters is that they are all
--- distinct from each other.
-LNVL.Position.Center = 1
-LNVL.Position.Right = 2
-LNVL.Position.Left = 3
+-- positioned to the 'right', for example.  We assign strings to each
+-- because that improves debugging output, but the values assigned to
+-- these properties are arbitrary; all that truly matters is that they
+-- are distinct from each other.
+LNVL.Position.Center = "Center"
+LNVL.Position.Right = "Right"
+LNVL.Position.Left = "Left"
 
 -- Return the table as the module.
 return LNVL.Position
