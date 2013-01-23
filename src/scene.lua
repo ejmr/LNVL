@@ -174,9 +174,10 @@ function LNVL.Scene:drawText(text)
     LNVL.Graphics.drawText(self.font, self.foregroundColor, text)
 end
 
--- This method draws the scene to the screen.  If the scene has a
--- background image we draw this as well.
-function LNVL.Scene:draw()
+-- This method draws the parts of a scene that we want on screen
+-- everytime we render a scene, such as its background color/image and
+-- dialog container.
+function LNVL.Scene:drawEssentialElements()
     if self.backgroundImage ~= nil then
         love.graphics.setColorMode("replace")
         love.graphics.draw(self.backgroundImage, 0, 0)
