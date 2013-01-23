@@ -130,8 +130,12 @@ end
 -- returns a 'draw-character' opcode under the assumption that we want
 -- to render the character in his new position now that we moved him.
 function LNVL.Character:isAt(place)
-    self.position = LNVL.Position[place]
-    return LNVL.Opcode:new("draw-character", {character=self})
+    return LNVL.Opcode:new(
+        "draw-character",
+        {
+            character=self,
+            position=LNVL.Position[place]
+        })
 end
 
 -- This method accepts a string as a path to an image file, and
