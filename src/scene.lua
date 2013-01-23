@@ -187,18 +187,11 @@ function LNVL.Scene:drawEssentialElements()
 end
 
 -- Renders the current content to screen.  This function returns no
--- value because instructions return no arguments.
+-- value because instructions return no arguments.  We must take care
+-- to always call drawEssentialElements() before this; the draw()
+-- method takes care of that for us.
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
-
-    -- Draw the scene before anything else.  This ensures that the
-    -- scene container, background image, and any other static art
-    -- elements will appear on screen.  We must do this because not
-    -- every instruction we execute below will draw anything, so if we
-    -- left it up to every instruction to render the entire scene then
-    -- we would have a lot of blank screens, or we'd end up passing
-    -- more data around than necessary.
-    self:draw()
 
     -- If the opcode is a no-op then we do not need to invoke any
     -- instruction because there is none for that opcode.
@@ -211,6 +204,13 @@ function LNVL.Scene:drawCurrentContent()
     -- necessary.
     opcode.arguments.scene = self
     instruction(opcode.arguments)
+end
+
+-- This method draws the scene and is the method intended for use
+-- outside of LNVL, e.g. inside of the love.draw() function.
+function LNVL.Scene:draw()
+    self:drawEssentialElements()
+    self:drawCurrentContent()
 end
 
 -- This function takes the name of a scene as a string and returns a
