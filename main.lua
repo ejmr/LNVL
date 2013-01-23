@@ -32,5 +32,5 @@ function love.keypressed(key)
 end
 
 function love.draw()
-    LNVL.currentScene:drawCurrentContent()
+    LNVL.currentScene:draw()
 end
