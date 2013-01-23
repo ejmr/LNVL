@@ -101,8 +101,17 @@ end
 LNVL.Opcode.Processor["draw-character"] = function (opcode)
     local vertical_position = LNVL.Settings.Scenes.Y - 80
 
+    -- If the opcode was given no position we use the character's
+    -- current position.  But if the opcode is given a position then
+    -- we assign that new one to the character, otherwise the new
+    -- position will only be in effect for this one opcode which is
+    -- not what we want, e.g. calling Character:isAt() would move a
+    -- character for one render and then reset their position instead
+    -- of moving them permanently until the next isAt() or movement.
     if opcode.arguments["position"] == nil then
         opcode.arguments.position = opcode.arguments.character.position
+    else
+        opcode.arguments.character.position = opcode.arguments.position
     end
 
     if opcode.arguments.position == LNVL.Position.Center then
