@@ -4,7 +4,7 @@ START = LNVL.Scene:new{
     "This is the start of our story.",
     "Spoiler alert: it is extremely boring.",
     "But we do have...",
-    LNVL.changeToScene("FIELD"),
+    LNVL.Scene.changeTo("FIELD"),
 }
 
 FIELD = LNVL.Scene:new{

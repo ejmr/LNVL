@@ -212,5 +212,14 @@ function LNVL.Scene:drawCurrentContent()
     instruction(opcode.arguments)
 end
 
+-- This function takes the name of a scene as a string and returns a
+-- 'change-scene' opcode that LNVL will use to change the value of
+-- LNVL.currentScene later on.  This is not a method because we intend
+-- to use it in the parameters for the constructor of an LNVL.Scene
+-- object, and at that time we have no object to use.
+function LNVL.Scene.changeTo(name)
+    return LNVL.Opcode:new("change-scene", {name=name})
+end
+
 -- Return the class as a module.
 return LNVL.Scene

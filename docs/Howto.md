@@ -168,13 +168,13 @@ suggested convention.
 Creating scenes, however, does nothing to connect them to one another.
 In the example above LNVL would not know how to progress from `START`
 to the `MIDDLE` scene.  You can connect the two using the
-`changeToScene()` function.  Here is an example:
+`LNVL.Scene.changeTo()` function.  Here is an example:
 
     START = LNVL.Scene:new{
         "And so our story begins...",
         "Except I really have nothing to say as a narrator.",
         "Oh well.  Let's move along!",
-        LNVL.changeToScene("MIDDLE"),
+        LNVL.Scene.changeTo("MIDDLE"),
     }
 
     MIDDLE = LNVL.Scene:new{
@@ -186,7 +186,7 @@ to the `MIDDLE` scene.  You can connect the two using the
     }
 
 The important line here is the final part of the `START` scene:
-`LNVL.changeToScene("MIDDLE")`.  This tells LNVL to transition to the
+`LNVL.Scene.changeTo("MIDDLE")`.  This tells LNVL to transition to the
 `MIDDLE` scene once it reaches the end of `START`.  Notice the name of
 the scene is in quotes; this is a requirement.  If you omit the quotes
 then LNVL will crash with an error.
