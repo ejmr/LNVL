@@ -48,8 +48,15 @@ LNVL.Opcode.__tostring = function (opcode)
 
     if opcode.arguments ~= nil then
         output = output .. "\n"
+
         for key,value in pairs(opcode.arguments) do
-            output = output .. string.format("\t%s: %s\n", key, value)
+            -- Show the XY-coordinations for the 'location' property.
+            if key == "location" then
+                output = output .. string.format("\tlocation: X = %d, Y = %d\n",
+                                                 value[1], value[2])
+            else
+                output = output .. string.format("\t%s: %s\n", key, value)
+            end
         end
     end
 
