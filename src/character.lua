@@ -165,5 +165,11 @@ function LNVL.Character:becomesNormal()
     return self:becomes("normal")
 end
 
+-- This function converts a Character object into a string for
+-- debugging purposes.
+LNVL.Character.__tostring = function (character)
+    return character.name
+end
+
 -- Return the class as a module.
 return LNVL.Character
