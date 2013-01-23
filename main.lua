@@ -25,9 +25,9 @@ end
 
 function love.keypressed(key)
     if key == "return" then
-        LNVL.currentScene.opcodeIndex = LNVL.currentScene.opcodeIndex + 1
+        LNVL.currentScene:moveForward()
     elseif key == "backspace" then
-        LNVL.currentScene.opcodeIndex = LNVL.currentScene.opcodeIndex - 1
+        LNVL.currentScene:moveBack()
     end
 end
 
