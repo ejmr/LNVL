@@ -174,9 +174,10 @@ function LNVL.Scene:drawText(text)
     LNVL.Graphics.drawText(self.font, self.foregroundColor, text)
 end
 
--- This method draws the scene to the screen.  If the scene has a
--- background image we draw this as well.
-function LNVL.Scene:draw()
+-- This method draws the parts of a scene that we want on screen
+-- everytime we render a scene, such as its background color/image and
+-- dialog container.
+function LNVL.Scene:drawEssentialElements()
     if self.backgroundImage ~= nil then
         love.graphics.setColorMode("replace")
         love.graphics.draw(self.backgroundImage, 0, 0)
@@ -186,18 +187,11 @@ function LNVL.Scene:draw()
 end
 
 -- Renders the current content to screen.  This function returns no
--- value because instructions return no arguments.
+-- value because instructions return no arguments.  We must take care
+-- to always call drawEssentialElements() before this; the draw()
+-- method takes care of that for us.
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
-
-    -- Draw the scene before anything else.  This ensures that the
-    -- scene container, background image, and any other static art
-    -- elements will appear on screen.  We must do this because not
-    -- every instruction we execute below will draw anything, so if we
-    -- left it up to every instruction to render the entire scene then
-    -- we would have a lot of blank screens, or we'd end up passing
-    -- more data around than necessary.
-    self:draw()
 
     -- If the opcode is a no-op then we do not need to invoke any
     -- instruction because there is none for that opcode.
@@ -212,6 +206,13 @@ function LNVL.Scene:drawCurrentContent()
     instruction(opcode.arguments)
 end
 
+-- This method draws the scene and is the method intended for use
+-- outside of LNVL, e.g. inside of the love.draw() function.
+function LNVL.Scene:draw()
+    self:drawEssentialElements()
+    self:drawCurrentContent()
+end
+
 -- This function takes the name of a scene as a string and returns a
 -- 'change-scene' opcode that LNVL will use to change the value of
 -- LNVL.currentScene later on.  This is not a method because we intend
@@ -219,6 +220,16 @@ end
 -- object, and at that time we have no object to use.
 function LNVL.Scene.changeTo(name)
     return LNVL.Opcode:new("change-scene", {name=name})
+end
+
+-- This method moves forward to the next content in the scene.
+function LNVL.Scene:moveForward()
+    self.opcodeIndex = self.opcodeIndex + 1
+end
+
+-- This method moves back to the previous content in the scene.
+function LNVL.Scene:moveBack()
+    self.opcodeIndex = self.opcodeIndex - 1
 end
 
 -- Return the class as a module.
