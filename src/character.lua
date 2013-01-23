@@ -86,6 +86,13 @@ function LNVL.Character:new(properties)
         error("Cannot create unnamed character")
     end
 
+    -- If we are in debugging mode then dump the character data to the
+    -- console so that we can verify everything looks correct.
+    if LNVL.Settings.DebugModeEnabled == true then
+        print("-- New Character --\n")
+        print(LNVL.Debug.tableToString(character, character.name))
+    end
+
     return character
 end
 
