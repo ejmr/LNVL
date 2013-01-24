@@ -10,6 +10,11 @@
 --
 -- applies to that 'rgb.txt' file.
 --
+-- That file gives the names of colors in varying cases; some use
+-- title-case and some are all lower-case.  When creating the table of
+-- colors we make each name title-case, e.g. the color name 'linen'
+-- becomes 'Linen'.
+--
 --]]
 
 -- Create the table to hold our colors.
@@ -36,6 +41,7 @@ local rgb_entry_regex = "(%d+)%s+(%d+)%s+(%d+)%s+(%w+)"
 
 for line in rgb_file:lines() do
     for r,g,b,name in string.gmatch(line, rgb_entry_regex) do
+        name = string.upper(name:sub(1, 1)) .. name:sub(2)
         LNVL.Color[name] = {r, g, b}
     end
 end
