@@ -10,6 +10,11 @@
 --
 -- applies to that 'rgb.txt' file.
 --
+-- That file gives the names of colors in varying cases; some use
+-- title-case and some are all lower-case.  When creating the table of
+-- colors we make each name title-case, e.g. the color name 'linen'
+-- becomes 'Linen'.
+--
 --]]
 
 -- Create the table to hold our colors.
@@ -36,6 +41,7 @@ local rgb_entry_regex = "(%d+)%s+(%d+)%s+(%d+)%s+(%w+)"
 
 for line in rgb_file:lines() do
     for r,g,b,name in string.gmatch(line, rgb_entry_regex) do
+        name = string.upper(name:sub(1, 1)) .. name:sub(2)
         LNVL.Color[name] = {r, g, b}
     end
 end
@@ -76,6 +82,14 @@ function LNVL.Color.fromHex(color_hex)
 
     -- We should never get here.
     error(string.format("Could not parse the color string %s", color_hex))
+end
+
+-- Provide a way to convert colors to strings for debugging purposes.
+LNVL.Color.__tostring = function (color)
+    return string.format("Color {R=%d G=%d B=%g}",
+                         color[1],
+                         color[2],
+                         color[3])
 end
 
 -- Return our table as a module.
