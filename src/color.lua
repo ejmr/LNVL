@@ -84,5 +84,13 @@ function LNVL.Color.fromHex(color_hex)
     error(string.format("Could not parse the color string %s", color_hex))
 end
 
+-- Provide a way to convert colors to strings for debugging purposes.
+LNVL.Color.__tostring = function (color)
+    return string.format("Color {R=%d G=%d B=%g}",
+                         color[1],
+                         color[2],
+                         color[3])
+end
+
 -- Return our table as a module.
 return LNVL.Color
