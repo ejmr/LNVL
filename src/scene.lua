@@ -188,13 +188,25 @@ function LNVL.Scene:drawCurrentContent()
     -- instruction because there is none for that opcode.
     if opcode.name == "no-op" then return end
 
-    local instruction = LNVL.Instruction.getForOpcode(opcode.name)
+    local function executeInstructionForOpcode(opcode)
+        local instruction = LNVL.Instruction.getForOpcode(opcode.name)
 
-    -- Make sure the opcode has access to the Scene so that the
-    -- instruction we invoke next can draw things to Scene if
-    -- necessary.
-    opcode.arguments.scene = self
-    instruction(opcode.arguments)
+        -- Make sure the opcode has access to the Scene so that the
+        -- instruction we invoke next can draw things to Scene if
+        -- necessary.
+        opcode.arguments.scene = self
+        instruction(opcode.arguments)
+    end
+
+    -- We have to check to see whether or not we have a single opcode
+    -- or an array of opcodes.
+    if getmetatable(opcode) == LNVL.Opcode then
+        executeInstructionForOpcode(opcode)
+    else
+        for _,op in ipairs(opcode) do
+            executeInstructionForOpcode(op)
+        end
+    end
 end
 
 -- This method draws the scene and is the method intended for use
