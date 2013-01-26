@@ -74,11 +74,9 @@ The function `LNVL.drawCurrentContent()` adds the aforementioned
 provide their own `scene` property because LNVL will overrite its
 value when executing the related instruction.
 
-Programmers can display a list of the opcodes for a scene using the
-`LNVL.Debug.printSceneOpcodes()` method.  If the global property
-`LNVL.Settings.DebugModeEnabled` is true then LNVL will call this
-method on `LNVL.currentScene` any time its value changes, making it
-easy to see the opcodes for all scenes in a given script.
+If the global property `LNVL.Settings.DebugModeEnabled` is true then
+LNVL will print the list of opcodes for each scene when the engine
+creates it.
 
 
 How Opcodes and Instructions Interact
