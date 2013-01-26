@@ -161,6 +161,12 @@ LNVL.Opcode.Processor["say"] = returnOpcode
 LNVL.Opcode.Processor["change-scene"] = returnOpcode
 LNVL.Opcode.Processor["no-op"] = returnOpcode
 
+-- This method processes an opcode by running it through the
+-- appropriate function above, returning the modified version.
+function LNVL.Opcode:process()
+    return LNVL.Opcode.Processor[self.name](self)
+end
+
 -- If LNVL is running in debugging mode then make sure that every
 -- valid opcode has an associated processor function, because without
 -- one we will not be able to include those opcodes in scenes.  That
