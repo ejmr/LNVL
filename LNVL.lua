@@ -15,7 +15,7 @@ LNVL = {}
 
 -- This property represents the current Scene in use.  We should
 -- rarely change the value of this property directly.  Instead the
--- changeToScene() function is the preferred way to change this.
+-- Scene:changeTo() method is the preferred way to change this.
 LNVL.currentScene = nil
 
 -- Because all of the code in the 'src/' directory adds to the LNVL
