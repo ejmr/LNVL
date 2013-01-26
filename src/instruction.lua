@@ -1,12 +1,12 @@
 --[[
-    --
-    -- This file implements the instruction engine portion of LNVL.  See
-    -- the document
-    --
-    --     docs/Instructions.md
-    --
-    -- for details about this system and its design.
-    --
+--
+-- This file implements the instruction engine portion of LNVL.  See
+-- the document
+--
+--     docs/Instructions.md
+--
+-- for details about this system and its design.
+--
 --]]
 
 -- Create our LNVL.Instruction class.

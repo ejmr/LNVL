@@ -1,11 +1,11 @@
 --[[
-    --
-    -- This file implements the LNVL.Opcode class.  See the document
-    --
-    --     docs/Instructions.md
-    --
-    -- for detailed information on opcodes and how we use them in LNVL.
-    --
+--
+-- This file implements the LNVL.Opcode class.  See the document
+--
+--     docs/Instructions.md
+--
+-- for detailed information on opcodes and how we use them in LNVL.
+--
 --]]
 
 -- Create the LNVL.Opcode class.
