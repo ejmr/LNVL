@@ -57,25 +57,18 @@ function LNVL.Scene:new(properties)
         end
     end
 
-    -- The rest of the 'properties' we turn into opcodes by first
-    -- looping through them and creating the appropriate LNVL.Opcode
-    -- objects for each.
+    -- The rest of the 'properties' we turn into opcodes.  We loop
+    -- through each remaining property and call a method on it which
+    -- will return either a single LNVL.Opcode object or an array of
+    -- LNVL.Opcode objects.  In either case we insert the result
+    -- directly into the 'opcodes' table.  Those arrays of opcodes
+    -- represent opcodes that we will later execute simultaneously.
 
     local opcodes = {}
 
     for _,content in ipairs(properties) do
         local new_opcode = self:createOpcodeFromContent(content)
-
-        -- The new opcode will always be a table.  But if its
-        -- metatable is not LNVL.Opcode then that means we have an
-        -- array of opcodes we need to insert individually.
-        if getmetatable(new_opcode) == LNVL.Opcode then
-            table.insert(opcodes, new_opcode)
-        else
-            for _,op in ipairs(new_opcode) do
-                table.insert(opcodes, op)
-            end
-        end
+        table.insert(opcodes, new_opcode)
     end
 
     -- opcodes: The list of opcodes for the scene, created above.
@@ -118,9 +111,7 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- a collection on LNVL.Opcode objects.  We loop through these
     -- calling createOpcodeFromContent() recursively on each,
     -- collecting the results into a table.  We then return that back
-    -- to the LNVL.Scene constructor which will flatten that table of
-    -- opcodes out into individual entries in its list of opcodes for
-    -- the scene.
+    -- to the LNVL.Scene constructor.
     --
     -- The loop below deals with the second scenario.  Code in the
     -- rest of the function handles the first.
