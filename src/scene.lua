@@ -173,10 +173,12 @@ function LNVL.Scene:drawEssentialElements()
     self:drawContainer()
 end
 
--- Renders the current content to screen.  This function returns no
--- value because instructions return no arguments.  We must take care
--- to always call drawEssentialElements() before this; the draw()
--- method takes care of that for us.
+-- Renders the current content to screen.  By 'current content' we
+-- mean the current opcode, or list of opcodes; we convert these into
+-- instructions and execute those to render the content.  This
+-- function returns no value because instructions return no arguments.
+-- We must take care to always call drawEssentialElements() before
+-- this; the draw() method takes care of that for us.
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
 
