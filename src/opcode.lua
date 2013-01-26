@@ -84,12 +84,11 @@ LNVL.Opcode.Processor = {}
 LNVL.Opcode.Processor["monologue"] = function (opcode)
     local say_opcodes = {}
     for _,content in ipairs(opcode.arguments.content) do
-        table.insert(say_opcodes,
-                     LNVL.Opcode:new(
-                         "say",
-                         { content=content,
-                           character=opcode.arguments.character
-                         }))
+        local opcode = LNVL.Opcode:new("say",
+                                       { content=content,
+                                         character=opcode.arguments.character
+                                       })
+        table.insert(say_opcodes, opcode:process())
     end
     return say_opcodes
 end
