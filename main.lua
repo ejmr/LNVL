@@ -18,8 +18,7 @@ function love.load(arguments)
     love.graphics.setBackgroundColor(0, 0, 0)
 
     if #arguments > 1 then
-        assert(loadfile(arguments[2]))()
-        LNVL.currentScene = START
+        LNVL.loadScript(arguments[2])
     end
 end
 
