@@ -133,8 +133,7 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- Processor the content and return the results for the scene to
     -- save in its list of opcodes.  This handles the first of the two
     -- possible scenarios describe in the longer comment above.
-    local processor = LNVL.Opcode.Processor[content.name]
-    return processor(content)
+    return content:process()
 end
 
 -- This method sets the background image.  It accepts a path to the
