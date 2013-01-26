@@ -33,6 +33,18 @@ wish to extend or expand the engine.  If you have the programs
 create nice HTML versions of all of the documents.
 
 
+Examples
+--------
+
+The `examples` directory has scripts that demonstrate and test
+different features of LNVL.  However, they currently will not run
+because most of them rely on images which are not included in the
+repository.  These images are currently assets borrowed from another
+game project in development, but eventually they will be part of the
+LNVL source.  My apologies until then for the inconvenience in being
+unable to run any of the examples.
+
+
 Copyright and License
 ---------------------
 
