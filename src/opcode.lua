@@ -162,12 +162,19 @@ end
 -- as-is without any further processing.
 LNVL.Opcode.Processor["say"] = function (opcode)
     if opcode.arguments["character"] ~= nil then
-        local draw_opcode =
-            LNVL.Opcode:new("draw-character", { character=opcode.arguments.character })
-        return { draw_opcode:process(), opcode }
-    else
-        return opcode
+        local character = opcode.arguments.character
+        -- If the character has no current image then we should not
+        -- create a 'draw-character' opcode because there is nothing
+        -- to draw.  So in that case we fall back on simply returning
+        -- the original opcode at the end of the function.
+        if character.images[character.currentImage] ~= nil then
+            local draw_opcode =
+                LNVL.Opcode:new("draw-character", { character=character })
+            return { draw_opcode:process(), opcode }
+        end
     end
+
+    return opcode
 end
 
 -- The following opcodes require no additional processing after their
