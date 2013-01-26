@@ -34,5 +34,15 @@ LNVL.ClampedArray = require("src.clamped-array")
 LNVL.Character = require("src.character")
 LNVL.Scene = require("src.scene")
 
+-- This function loads an external LNVL script, i.e. one defining
+-- scenes and story content.  The argument is the path to the file;
+-- the function assumes the caller has already ensured the file exists
+-- and will crash with an error if the file is not found.  The script
+-- must define the 'START' scene.  The function returns no value.
+function LNVL.loadScript(filename)
+    assert(loadfile(filename))()
+    LNVL.currentScene = START
+end
+
 -- Return the LNVL module.
 return LNVL
