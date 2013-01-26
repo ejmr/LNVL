@@ -107,6 +107,10 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- If the content is a string then all we only need to create a
     -- simple 'say' opcode, because that means the content is a line
     -- of dialog being spoken without any character involved.
+    -- Normally we call the process() method of all opcodes first, but
+    -- we only need to do this for 'say' opcodes when the optional
+    -- 'character' data is present, which is never the case in this
+    -- situation.  So we can safely skip the method call.
     if contentType == "string" then
         return LNVL.Opcode:new("say", {content=content})
     end
