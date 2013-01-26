@@ -1,9 +1,9 @@
 --[[
-    --
-    -- This file implements characters in LNVL.  Characters represent
-    -- actors in scenes and are typically the medium through which most
-    -- dialog will be shown.
-    --
+--
+-- This file implements characters in LNVL.  Characters represent
+-- actors in scenes and are typically the medium through which most
+-- dialog will be shown.
+--
 --]]
 
 -- Create the LNVL.Character class.

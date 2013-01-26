@@ -1,8 +1,8 @@
 --[[
-    --
-    -- This file implements scenes in LNVL.  Developers do all work with
-    -- scenes through Scene objects, a class that this file defines.
-    --
+--
+-- This file implements scenes in LNVL.  Developers do all work with
+-- scenes through Scene objects, a class that this file defines.
+--
 --]]
 
 -- Create the LNVL.Scene class.
@@ -57,24 +57,31 @@ function LNVL.Scene:new(properties)
         end
     end
 
-    -- The rest of the 'properties' we turn into opcodes by first
-    -- looping through them and creating the appropriate LNVL.Opcode
-    -- objects for each.
+    -- The rest of the 'properties' we turn into opcodes.  We loop
+    -- through each remaining property and call a method on it which
+    -- will return either a single LNVL.Opcode object or an array of
+    -- LNVL.Opcode objects.  In either case we insert the result
+    -- directly into the 'opcodes' table.  Those arrays of opcodes
+    -- represent opcodes that we will later execute simultaneously.
 
     local opcodes = {}
 
     for _,content in ipairs(properties) do
         local new_opcode = self:createOpcodeFromContent(content)
-
-        -- The new opcode will always be a table.  But if its
-        -- metatable is not LNVL.Opcode then that means we have an
-        -- array of opcodes we need to insert individually.
+        -- The opcode above may be a single LNVL.Opcode object or it
+        -- may be a table representing an array of them.  If it is the
+        -- latter then we must check to see if the table has the
+        -- '__flatten' property and if it is true.  The commentary for
+        -- the LNVL.Opcode.Processor table explains the purpose of
+        -- this property.
         if getmetatable(new_opcode) == LNVL.Opcode then
             table.insert(opcodes, new_opcode)
-        else
+        elseif rawget(new_opcode, "__flatten") == true then
             for _,op in ipairs(new_opcode) do
                 table.insert(opcodes, op)
             end
+        else
+            table.insert(opcodes, new_opcode)
         end
     end
 
@@ -100,6 +107,10 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- If the content is a string then all we only need to create a
     -- simple 'say' opcode, because that means the content is a line
     -- of dialog being spoken without any character involved.
+    -- Normally we call the process() method of all opcodes first, but
+    -- we only need to do this for 'say' opcodes when the optional
+    -- 'character' data is present, which is never the case in this
+    -- situation.  So we can safely skip the method call.
     if contentType == "string" then
         return LNVL.Opcode:new("say", {content=content})
     end
@@ -107,43 +118,19 @@ function LNVL.Scene:createOpcodeFromContent(content)
     -- If the content is not a string then it must be a table.
     assert(contentType == "table", "Unknown content type in Scene")
 
-    -- We now know our content is a table.  However, that can mean one
-    -- of two things:
-    --
-    -- 1. If the metatable is LNVL.Opcode then the table represents an
-    -- opcode and we return that after running it through the
-    -- appropriate 'processor function'.
-    --
-    -- 2. If there is no metatable then we assume the table represents
-    -- a collection on LNVL.Opcode objects.  We loop through these
-    -- calling createOpcodeFromContent() recursively on each,
-    -- collecting the results into a table.  We then return that back
-    -- to the LNVL.Scene constructor which will flatten that table of
-    -- opcodes out into individual entries in its list of opcodes for
-    -- the scene.
-    --
-    -- The loop below deals with the second scenario.  Code in the
-    -- rest of the function handles the first.
+    -- If the content is not an LNVL.Opcode then it must be a table of
+    -- them, so we process each opcode in the table and then return
+    -- all of them as a group.
     if getmetatable(content) ~= LNVL.Opcode then
-        local opcodes = {}
-        for _,opcode in ipairs(content) do
-            local processed_opcode = self:createOpcodeFromContent(opcode)
-            if processed_opcode ~= nil then
-                table.insert(opcodes, processed_opcode)
-            end
+        for index,opcode in ipairs(content) do
+            content[index] = opcode:process()
         end
-        return opcodes
+        return content
     end
 
-    -- At this point we know that 'content' is an opcode so its
-    -- metatable must be LNVL.Opcode.
-    assert(getmetatable(content) == LNVL.Opcode, "Unknown content type in Scene")
-
-    -- Processor the content and return the results for the scene to
-    -- save in its list of opcodes.  This handles the first of the two
-    -- possible scenarios describe in the longer comment above.
-    local processor = LNVL.Opcode.Processor[content.name]
-    return processor(content)
+    -- Otherwise we process the individual opcode and return the
+    -- results for the scene to save.
+    return content:process()
 end
 
 -- This method sets the background image.  It accepts a path to the
@@ -186,10 +173,12 @@ function LNVL.Scene:drawEssentialElements()
     self:drawContainer()
 end
 
--- Renders the current content to screen.  This function returns no
--- value because instructions return no arguments.  We must take care
--- to always call drawEssentialElements() before this; the draw()
--- method takes care of that for us.
+-- Renders the current content to screen.  By 'current content' we
+-- mean the current opcode, or list of opcodes; we convert these into
+-- instructions and execute those to render the content.  This
+-- function returns no value because instructions return no arguments.
+-- We must take care to always call drawEssentialElements() before
+-- this; the draw() method takes care of that for us.
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
 
@@ -197,13 +186,25 @@ function LNVL.Scene:drawCurrentContent()
     -- instruction because there is none for that opcode.
     if opcode.name == "no-op" then return end
 
-    local instruction = LNVL.Instruction.getForOpcode(opcode.name)
+    local function executeInstructionForOpcode(opcode)
+        local instruction = LNVL.Instruction.getForOpcode(opcode.name)
 
-    -- Make sure the opcode has access to the Scene so that the
-    -- instruction we invoke next can draw things to Scene if
-    -- necessary.
-    opcode.arguments.scene = self
-    instruction(opcode.arguments)
+        -- Make sure the opcode has access to the Scene so that the
+        -- instruction we invoke next can draw things to Scene if
+        -- necessary.
+        opcode.arguments.scene = self
+        instruction(opcode.arguments)
+    end
+
+    -- We have to check to see whether or not we have a single opcode
+    -- or an array of opcodes.
+    if getmetatable(opcode) == LNVL.Opcode then
+        executeInstructionForOpcode(opcode)
+    else
+        for _,op in ipairs(opcode) do
+            executeInstructionForOpcode(op)
+        end
+    end
 end
 
 -- This method draws the scene and is the method intended for use

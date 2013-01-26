@@ -1,11 +1,11 @@
 --[[
-    --
-    -- This file implements the LNVL.Opcode class.  See the document
-    --
-    --     docs/Instructions.md
-    --
-    -- for detailed information on opcodes and how we use them in LNVL.
-    --
+--
+-- This file implements the LNVL.Opcode class.  See the document
+--
+--     docs/Instructions.md
+--
+-- for detailed information on opcodes and how we use them in LNVL.
+--
 --]]
 
 -- Create the LNVL.Opcode class.
@@ -73,6 +73,16 @@ end
 -- instance of LNVL.Opcode and then return either the modified object,
 -- or a new array of opcodes.
 --
+-- If the processor functions returns a table of opcodes then that
+-- table may have the '__flatten' property.  If it exists it must have
+-- a boolean value.  If true that tells the engine to flatten that
+-- list of opcodes, treating them as individual opcodes for conversion
+-- instead of keeping them together as a group.  This is meant to be
+-- the exception and not the rule; therefore every processor that
+-- needs the engine to flatten its list of opcodes must explicitly
+-- request it by setting this property on the table of opcodes it
+-- creates and returns.
+--
 -- It is a fatal error for any processor function to *not* return an
 -- opcode or a table of opcodes.
 LNVL.Opcode.Processor = {}
@@ -84,13 +94,13 @@ LNVL.Opcode.Processor = {}
 LNVL.Opcode.Processor["monologue"] = function (opcode)
     local say_opcodes = {}
     for _,content in ipairs(opcode.arguments.content) do
-        table.insert(say_opcodes,
-                     LNVL.Opcode:new(
-                         "say",
-                         { content=content,
-                           character=opcode.arguments.character
-                         }))
+        local opcode = LNVL.Opcode:new("say",
+                                       { content=content,
+                                         character=opcode.arguments.character
+                                       })
+        table.insert(say_opcodes, opcode:process())
     end
+    rawset(say_opcodes, "__flatten", true)
     return say_opcodes
 end
 
@@ -154,12 +164,41 @@ LNVL.Opcode.Processor["set-character-image"] = function (opcode)
     return opcode
 end
 
+-- Processor for opcode 'say'
+--
+-- For this opcode we need to see if the optional 'character' argument
+-- is present.  If so then we need to also return a 'draw-character'
+-- opcode so that the engine renders the character avatar along with
+-- their dialog.  If there is no character we can return the opcode
+-- as-is without any further processing.
+LNVL.Opcode.Processor["say"] = function (opcode)
+    if opcode.arguments["character"] ~= nil then
+        local character = opcode.arguments.character
+        -- If the character has no current image then we should not
+        -- create a 'draw-character' opcode because there is nothing
+        -- to draw.  So in that case we fall back on simply returning
+        -- the original opcode at the end of the function.
+        if character.images[character.currentImage] ~= nil then
+            local draw_opcode =
+                LNVL.Opcode:new("draw-character", { character=character })
+            return { draw_opcode:process(), opcode }
+        end
+    end
+
+    return opcode
+end
+
 -- The following opcodes require no additional processing after their
 -- creation and so they have no-op's for their processor functions.
 local returnOpcode = function (opcode) return opcode end
-LNVL.Opcode.Processor["say"] = returnOpcode
 LNVL.Opcode.Processor["change-scene"] = returnOpcode
 LNVL.Opcode.Processor["no-op"] = returnOpcode
+
+-- This method processes an opcode by running it through the
+-- appropriate function above, returning the modified version.
+function LNVL.Opcode:process()
+    return LNVL.Opcode.Processor[self.name](self)
+end
 
 -- If LNVL is running in debugging mode then make sure that every
 -- valid opcode has an associated processor function, because without

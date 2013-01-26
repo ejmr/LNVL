@@ -185,7 +185,9 @@ methods of `LNVL.Character` objects create this opcode in order to
 compile dialog for a particular scene.
 
 1. `character`: *(Optional)* An instance of `LNVL.Character` who is
-speaking the line.
+speaking the line.  If present then the engine will also create a
+`draw-character` opcode which will result in two instructions later:
+`draw-image` followed immediately by `say`.
 
 2. `content`: A string representing the line of dialog.
 
