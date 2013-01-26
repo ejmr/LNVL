@@ -115,13 +115,21 @@ function LNVL.Scene:createOpcodeFromContent(content)
         return LNVL.Opcode:new("say", {content=content})
     end
 
-    -- If the content is not a string then it must be a table and must
-    -- be an LNVL.Opcode object.
+    -- If the content is not a string then it must be a table.
     assert(contentType == "table", "Unknown content type in Scene")
-    assert(getmetatable(content) == LNVL.Opcode, "Unknown content type in Scene")
 
-    -- Process the content and return the results for the scene to
-    -- save in its list of opcodes.
+    -- If the content is not an LNVL.Opcode then it must be a table of
+    -- them, so we process each opcode in the table and then return
+    -- all of them as a group.
+    if getmetatable(content) ~= LNVL.Opcode then
+        for index,opcode in ipairs(content) do
+            content[index] = opcode:process()
+        end
+        return content
+    end
+
+    -- Otherwise we process the individual opcode and return the
+    -- results for the scene to save.
     return content:process()
 end
 
