@@ -92,6 +92,13 @@ function LNVL.Scene:new(properties)
     -- current opcode we should process in the scene.
     scene.opcodeIndex = 1
 
+    -- If LNVL is in debugging mode then display the opcodes for the
+    -- scene so we can make sure everything looks right.
+    if LNVL.Settings.DebugModeEnabled == true then
+        print("-- New Scene --\n")
+        LNVL.Debug.printSceneOpcodes(scene)
+    end
+
     return scene
 end
 
