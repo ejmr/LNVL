@@ -100,9 +100,19 @@ end
 -- that scene to the console.  This is useful for ensuring that the
 -- opcodes we expect to exist are there and in the correct order.
 function LNVL.Debug.printSceneOpcodes(scene)
-    for index,opcode in ipairs(scene.opcodes) do
-        print(string.format("[%i] %s\n", index, tostring(opcode)))
+    local function printOpcodeTable(opcodes)
+        for index,opcode in ipairs(opcodes) do
+            if getmetatable(opcode) == nil then
+                print(string.format("[%i] Group = {\n", index))
+                printOpcodeTable(opcode)
+                print(string.format("} (Closing Group %i)\n", index))
+            else
+                print(string.format("[%i] %s\n", index, tostring(opcode)))
+            end
+        end
     end
+
+    printOpcodeTable(scene.opcodes)
 end
 
 -- If debugging mode is enabled then we add a metatable to the LNVL
