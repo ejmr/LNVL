@@ -154,10 +154,26 @@ LNVL.Opcode.Processor["set-character-image"] = function (opcode)
     return opcode
 end
 
+-- Processor for opcode 'say'
+--
+-- For this opcode we need to see if the optional 'character' argument
+-- is present.  If so then we need to also return a 'draw-character'
+-- opcode so that the engine renders the character avatar along with
+-- their dialog.  If there is no character we can return the opcode
+-- as-is without any further processing.
+LNVL.Opcode.Processor["say"] = function (opcode)
+    if opcode.arguments["character"] ~= nil then
+        local draw_opcode =
+            LNVL.Opcode:new("draw-character", { character=opcode.arguments.character })
+        return { draw_opcode:process(), opcode }
+    else
+        return opcode
+    end
+end
+
 -- The following opcodes require no additional processing after their
 -- creation and so they have no-op's for their processor functions.
 local returnOpcode = function (opcode) return opcode end
-LNVL.Opcode.Processor["say"] = returnOpcode
 LNVL.Opcode.Processor["change-scene"] = returnOpcode
 LNVL.Opcode.Processor["no-op"] = returnOpcode
 
