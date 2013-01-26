@@ -68,7 +68,21 @@ function LNVL.Scene:new(properties)
 
     for _,content in ipairs(properties) do
         local new_opcode = self:createOpcodeFromContent(content)
-        table.insert(opcodes, new_opcode)
+        -- The opcode above may be a single LNVL.Opcode object or it
+        -- may be a table representing an array of them.  If it is the
+        -- latter then we must check to see if the table has the
+        -- '__flatten' property and if it is true.  The commentary for
+        -- the LNVL.Opcode.Processor table explains the purpose of
+        -- this property.
+        if getmetatable(new_opcode) == LNVL.Opcode then
+            table.insert(opcodes, new_opcode)
+        elseif rawget(new_opcode, "__flatten") == true then
+            for _,op in ipairs(new_opcode) do
+                table.insert(opcodes, op)
+            end
+        else
+            table.insert(opcodes, new_opcode)
+        end
     end
 
     -- opcodes: The list of opcodes for the scene, created above.
@@ -97,42 +111,13 @@ function LNVL.Scene:createOpcodeFromContent(content)
         return LNVL.Opcode:new("say", {content=content})
     end
 
-    -- If the content is not a string then it must be a table.
+    -- If the content is not a string then it must be a table and must
+    -- be an LNVL.Opcode object.
     assert(contentType == "table", "Unknown content type in Scene")
-
-    -- We now know our content is a table.  However, that can mean one
-    -- of two things:
-    --
-    -- 1. If the metatable is LNVL.Opcode then the table represents an
-    -- opcode and we return that after running it through the
-    -- appropriate 'processor function'.
-    --
-    -- 2. If there is no metatable then we assume the table represents
-    -- a collection on LNVL.Opcode objects.  We loop through these
-    -- calling createOpcodeFromContent() recursively on each,
-    -- collecting the results into a table.  We then return that back
-    -- to the LNVL.Scene constructor.
-    --
-    -- The loop below deals with the second scenario.  Code in the
-    -- rest of the function handles the first.
-    if getmetatable(content) ~= LNVL.Opcode then
-        local opcodes = {}
-        for _,chunk in ipairs(content) do
-            local opcode = self:createOpcodeFromContent(chunk)
-            if opcode ~= nil then
-                table.insert(opcodes, opcode)
-            end
-        end
-        return opcodes
-    end
-
-    -- At this point we know that 'content' is an opcode so its
-    -- metatable must be LNVL.Opcode.
     assert(getmetatable(content) == LNVL.Opcode, "Unknown content type in Scene")
 
-    -- Processor the content and return the results for the scene to
-    -- save in its list of opcodes.  This handles the first of the two
-    -- possible scenarios describe in the longer comment above.
+    -- Process the content and return the results for the scene to
+    -- save in its list of opcodes.
     return content:process()
 end
 

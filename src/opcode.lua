@@ -73,6 +73,16 @@ end
 -- instance of LNVL.Opcode and then return either the modified object,
 -- or a new array of opcodes.
 --
+-- If the processor functions returns a table of opcodes then that
+-- table may have the '__flatten' property.  If it exists it must have
+-- a boolean value.  If true that tells the engine to flatten that
+-- list of opcodes, treating them as individual opcodes for conversion
+-- instead of keeping them together as a group.  This is meant to be
+-- the exception and not the rule; therefore every processor that
+-- needs the engine to flatten its list of opcodes must explicitly
+-- request it by setting this property on the table of opcodes it
+-- creates and returns.
+--
 -- It is a fatal error for any processor function to *not* return an
 -- opcode or a table of opcodes.
 LNVL.Opcode.Processor = {}
@@ -90,6 +100,7 @@ LNVL.Opcode.Processor["monologue"] = function (opcode)
                                        })
         table.insert(say_opcodes, opcode:process())
     end
+    rawset(say_opcodes, "__flatten", true)
     return say_opcodes
 end
 
