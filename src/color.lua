@@ -49,6 +49,16 @@ end
 -- When we finish parsing we need to close our file.
 rgb_file:close()
 
+-- Add a sentinel value for representing transparency in the code.
+-- This color has an integer for a value instead of an RGB table
+-- because we really do not care what the value is.  We only need a
+-- way to distinguish this color from all the rest, and using nil
+-- would cause problems in places like Scene and Character
+-- constructors.  Using a string would cause a problem with color
+-- properties on which we automatically call Color.fromHex() if they
+-- have a string value.
+LNVL.Color.Transparent = 0
+
 -- This method accepts a color as a string, in hexadecimal format, and
 -- returns a table with the corresponding RGB values.  The string can
 -- be in the following formats:
