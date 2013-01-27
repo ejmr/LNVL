@@ -89,7 +89,7 @@ LNVL.Instructions["say"] = LNVL.Instruction:new{
         -- the character's name.
         if arguments["character"] ~= nil then
             text = {
-                arguments.character.color,
+                arguments.character.textColor,
                 string.format("%s: %s",
                               arguments.character.name,
                               arguments.content)

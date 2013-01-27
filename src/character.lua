@@ -21,11 +21,11 @@ function LNVL.Character:new(properties)
     -- will signal an error, because every character must have a name.
     character.name = ""
 
-    -- color: The color that we use for lines this character speaks
-    -- during a scene.  We expect this to be a table of three integers
-    -- representing the red, green, and blue values of the colors,
-    -- with values in the 0--255 range.
-    character.color = {0, 0, 0}
+    -- textColor: The color that we use for lines this character
+    -- speaks during a scene.  We expect this to be a table of three
+    -- integers representing the red, green, and blue values of the
+    -- colors, with values in the 0--255 range.
+    character.textColor = {0, 0, 0}
 
     -- images: A hash of images for the character.  These are the
     -- sprites we display on screen when the character is speaking,
@@ -72,12 +72,12 @@ function LNVL.Character:new(properties)
         character.images[properties.image] = character.images.normal
     end
 
-    -- If the loop above set the 'color' property to a string then we
-    -- assume it now has a value like '#33cfaf', i.e. a hex color
+    -- If the loop above set the 'textColor' property to a string then
+    -- we assume it now has a value like '#33cfaf', i.e. a hex color
     -- string.  We need to convert that back into a table of RGB color
     -- values.
-    if type(character.color) == "string" then
-        character.color = LNVL.Color.fromHex(character.color)
+    if type(character.textColor) == "string" then
+        character.textColor = LNVL.Color.fromHex(character.textColor)
     end
 
     -- Make sure the character has a name, because we do not support
