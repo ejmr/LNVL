@@ -128,6 +128,7 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
     opcode.arguments.image =
         opcode.arguments.character.images[opcode.arguments.character.currentImage]
 
+    local image_width = opcode.arguments.image:getWidth()
     local image_height = opcode.arguments.image:getHeight()
     local vertical_position = LNVL.Settings.Scenes.Y - image_height - 10
 
@@ -144,19 +145,24 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
         opcode.arguments.character.position = opcode.arguments.position
     end
 
+    -- We interpret the 'position' property relative to location of
+    -- the scene's dialog container.  This way "Left" and "Right" mean
+    -- aligned with the left and right edges of the dialog box, and
+    -- "Center" means in the center of that.  In all three cases the
+    -- position will be just above that dialog box.
     if opcode.arguments.position == LNVL.Position.Center then
         opcode.arguments.location = {
-            LNVL.Settings.Screen.Center[1],
+            LNVL.Settings.Screen.Center[1] - image_width / 2,
             vertical_position,
         }
     elseif opcode.arguments.position == LNVL.Position.Right then
         opcode.arguments.location = {
-            LNVL.Settings.Screen.Width - 200,
+            LNVL.Settings.Scenes.Width - image_width + LNVL.Settings.Scenes.X,
             vertical_position,
         }
     elseif opcode.arguments.position == LNVL.Position.Left then
         opcode.arguments.location = {
-            200,
+            LNVL.Settings.Scenes.X,
             vertical_position,
         }
     end

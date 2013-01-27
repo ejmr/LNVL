@@ -56,10 +56,8 @@ function LNVL.Character:new(properties)
 
     -- position: This property has one of the LNVL.Position.*
     -- constants as its value.  It indicates where on the screen the
-    -- character's images should appear by default.  Characters will
-    -- appear on the left side of the screen unless a script overrides
-    -- this value.
-    character.position = LNVL.Position.Left
+    -- character's images should appear by default.
+    character.position = LNVL.Settings.Characters.DefaultPosition
 
     -- Overwrite any default property values above with ones given to
     -- the constructor.

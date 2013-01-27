@@ -24,9 +24,9 @@ LNVL.currentScene = nil
 -- order, so insertions or changes to this list must be careful.
 
 LNVL.Color = require("src.color")
+LNVL.Position = require("src.position")
 LNVL.Settings = require("src.settings")
 LNVL.Debug = require("src.debug")
-LNVL.Position = require("src.position")
 LNVL.Graphics = require("src.graphics")
 LNVL.Opcode = require("src.opcode")
 LNVL.Instruction = require("src.instruction")
