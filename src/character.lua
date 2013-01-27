@@ -42,6 +42,11 @@ function LNVL.Character:new(properties)
     -- character.
     character.currentImage = "normal"
 
+    -- borderColor: The color of the border we draw around the
+    -- character image whenever it appears on screen.  If this is nil
+    -- then we draw no border.
+    character.borderColor = nil
+
     -- position: This property has one of the LNVL.Position.*
     -- constants as its value.  It indicates where on the screen the
     -- character's images should appear by default.  Characters will
@@ -72,12 +77,15 @@ function LNVL.Character:new(properties)
         character.images[properties.image] = character.images.normal
     end
 
-    -- If the loop above set the 'textColor' property to a string then
-    -- we assume it now has a value like '#33cfaf', i.e. a hex color
-    -- string.  We need to convert that back into a table of RGB color
-    -- values.
+    -- The for-loop above may set the color-related properties to
+    -- strings.  If so then we assume they now have a value like
+    -- '#33cfaf', i.e. a hex color string.  We need to convert that
+    -- back into a table of RGB color values.
     if type(character.textColor) == "string" then
         character.textColor = LNVL.Color.fromHex(character.textColor)
+    end
+    if type(character.borderColor) == "string" then
+        character.borderColor = LNVL.Color.fromHex(character.borderColor)
     end
 
     -- Make sure the character has a name, because we do not support
