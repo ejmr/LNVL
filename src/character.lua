@@ -45,7 +45,7 @@ function LNVL.Character:new(properties)
     -- borderColor: The color of the border we draw around the
     -- character image whenever it appears on screen.  If this is nil
     -- then we draw no border.
-    character.borderColor = nil
+    character.borderColor = LNVL.Color.Transparent
 
     -- position: This property has one of the LNVL.Position.*
     -- constants as its value.  It indicates where on the screen the
