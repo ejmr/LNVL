@@ -76,5 +76,23 @@ LNVL.Settings.Scenes.DefaultFont = love.graphics.newFont(24)
 
 
 
+-- -- CHARACTER SETTINGS ---------------------------------------------
+
+LNVL.Settings.Characters = {}
+
+-- These two settings control the borders around character images.  By
+-- default LNVL does not draw borders around characters.  But if you
+-- are using rectangular character sprites then you may want simple,
+-- solid-color borders for decoration, similar to how the dialog box
+-- in scenes may have a border.
+--
+-- You must change both of these defaults before LNVL will draw a
+-- border around character images, either by changing them here or for
+-- individual characters in scripts.
+LNVL.Settings.Characters.BorderColor = LNVL.Color.Transparent
+LNVL.Settings.Characters.BorderSize = 0
+
+
+
 -- Return the table of settings as the module.
 return LNVL.Settings
