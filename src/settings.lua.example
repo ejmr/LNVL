@@ -80,6 +80,9 @@ LNVL.Settings.Scenes.DefaultFont = love.graphics.newFont(24)
 
 LNVL.Settings.Characters = {}
 
+-- All dialog from characters will use this color by default.
+LNVL.Settings.Characters.TextColor = LNVL.Color.Black
+
 -- These two settings control the borders around character images.  By
 -- default LNVL does not draw borders around characters.  But if you
 -- are using rectangular character sprites then you may want simple,

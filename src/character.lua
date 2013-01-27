@@ -24,8 +24,9 @@ function LNVL.Character:new(properties)
     -- textColor: The color that we use for lines this character
     -- speaks during a scene.  We expect this to be a table of three
     -- integers representing the red, green, and blue values of the
-    -- colors, with values in the 0--255 range.
-    character.textColor = {0, 0, 0}
+    -- colors, with values in the 0--255 range.  It may also be a
+    -- named color from the LNVL.Color table.
+    character.textColor = LNVL.Settings.Characters.TextColor
 
     -- images: A hash of images for the character.  These are the
     -- sprites we display on screen when the character is speaking,
