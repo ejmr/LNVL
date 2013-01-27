@@ -104,8 +104,10 @@ scene and its dialog you can change its background color like so:
 
 The file `src/rgb.txt` names every color you can use; although the
 `Color` module always uses title-case names, so the file lists
-‘gray50’ but in scripts you write `LNVL.Color.Gray50`.  Or instead of
-names you can use [short-hand hexadecimal notation][color-hex]:
+‘gray50’ but in scripts you write `LNVL.Color.Gray50`.  If you want
+transparency you can use `LNVL.Color.Transparent` for any color.
+
+Instead of names you can use [short-hand hexadecimal notation][color-hex]:
 
     START.backgroundColor = LNVL.Color.fromHex("#088008")
 
