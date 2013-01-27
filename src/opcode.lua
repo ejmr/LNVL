@@ -116,7 +116,11 @@ end
 -- instruction will know what to draw later.  In this case we want it
 -- to draw the current character image.
 LNVL.Opcode.Processor["draw-character"] = function (opcode)
-    local vertical_position = LNVL.Settings.Scenes.Y - 80
+    opcode.arguments.image =
+        opcode.arguments.character.images[opcode.arguments.character.currentImage]
+
+    local image_height = opcode.arguments.image:getHeight()
+    local vertical_position = LNVL.Settings.Scenes.Y - image_height - 10
 
     -- If the opcode was given no position we use the character's
     -- current position.  But if the opcode is given a position then
@@ -147,9 +151,6 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
             vertical_position,
         }
     end
-
-    opcode.arguments.image =
-        opcode.arguments.character.images[opcode.arguments.character.currentImage]
 
     return opcode
 end
