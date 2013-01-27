@@ -14,6 +14,11 @@ LNVL.Settings.__index = LNVL.Settings
 LNVL.Settings.DebugModeEnabled = true
 
 -- These settings control the height and width of the entire screen.
+-- If you are including LNVL as part of a larger game which already
+-- defines similar properties then you probably want to assign the
+-- corresponding settings from your game to these properties.  That
+-- way LNVL will automatically use the same screen dimensions as the
+-- rest of your game.
 LNVL.Settings.Screen = {}
 LNVL.Settings.Screen.Width = 800
 LNVL.Settings.Screen.Height = 600
