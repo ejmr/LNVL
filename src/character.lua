@@ -43,8 +43,8 @@ function LNVL.Character:new(properties)
     character.currentImage = "normal"
 
     -- borderColor: The color of the border we draw around the
-    -- character image whenever it appears on screen.  If this is nil
-    -- then we draw no border.
+    -- character image whenever it appears on screen.  By default
+    -- we use a transparent border, i.e. no border.
     character.borderColor = LNVL.Color.Transparent
 
     -- position: This property has one of the LNVL.Position.*
