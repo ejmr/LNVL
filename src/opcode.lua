@@ -156,12 +156,10 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
         }
     end
 
-    -- For now we use a hard-coded border width of three pixels until
-    -- we implement the logic to customize and control that value.
     if opcode.arguments.character.borderColor ~= LNVL.Color.Transparent then
         opcode.arguments.border = {
             opcode.arguments.character.borderColor,
-            3
+            opcode.arguments.character.borderWidth
         }
     end
 

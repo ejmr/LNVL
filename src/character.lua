@@ -47,6 +47,12 @@ function LNVL.Character:new(properties)
     -- we use a transparent border, i.e. no border.
     character.borderColor = LNVL.Color.Transparent
 
+    -- borderWidth: The width of the border, in pixels, to draw around
+    -- the character image.  If this is zero then we will still
+    -- technically draw a border, but it will have no width and thus
+    -- not actually appear on screen.
+    character.borderWidth = 0
+
     -- position: This property has one of the LNVL.Position.*
     -- constants as its value.  It indicates where on the screen the
     -- character's images should appear by default.  Characters will
