@@ -115,6 +115,10 @@ end
 -- We also need to add the 'image' property to the opcode so that the
 -- instruction will know what to draw later.  In this case we want it
 -- to draw the current character image.
+--
+-- If the character has a non-nil 'borderColor' property then we must
+-- also add the 'border' table to the arguments so that the
+-- 'draw-image' instruction will have that data later.
 LNVL.Opcode.Processor["draw-character"] = function (opcode)
     opcode.arguments.image =
         opcode.arguments.character.images[opcode.arguments.character.currentImage]
@@ -149,6 +153,15 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
         opcode.arguments.location = {
             200,
             vertical_position,
+        }
+    end
+
+    -- For now we use a hard-coded border width of three pixels until
+    -- we implement the logic to customize and control that value.
+    if opcode.arguments.character.borderColor ~= LNVL.Color.Transparent then
+        opcode.arguments.border = {
+            opcode.arguments.character.borderColor,
+            3
         }
     end
 
