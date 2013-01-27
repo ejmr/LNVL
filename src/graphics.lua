@@ -68,7 +68,7 @@ function LNVL.Graphics.drawText(font, color, text)
                 love.graphics.printf(element,
                                      LNVL.Settings.Scenes.X + 10,
                                      LNVL.Settings.Scenes.Y + 10,
-                                     LNVL.Settings.Scenes.Width - 10,
+                                     LNVL.Settings.Scenes.Width - 15,
                                      "left")
             elseif type(element) == "table" then
                 love.graphics.setColor(element)
