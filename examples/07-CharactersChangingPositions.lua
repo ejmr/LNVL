@@ -3,7 +3,7 @@
 
 Eric = LNVL.Character:new{
     name = "Eric",
-    color = "#333",
+    textColor = "#333",
     image = "examples/images/Eric-Normal.png",
     position = "Left",
 }

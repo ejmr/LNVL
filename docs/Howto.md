@@ -207,7 +207,7 @@ Every good story needs characters.  So LNVL provides a way to create
 characters and plug them into your tale.  Here is a simple example of
 a character:
 
-    Lobby = LNVL.Character:new{name="Lobby", color="#363"}
+    Lobby = LNVL.Character:new{name="Lobby", textColor="#363"}
 
 This creates the character `Lobby` and defines his name and color,
 i.e. the color of that character’s dialog on screen.
@@ -220,8 +220,8 @@ like in the example above, except you provide the character name
 before the string.  That tells LNVL which character is speaking that
 line.  For example, here is a short scene of two characters speaking:
 
-    Lobby = LNVL.Character:new{name="Lobby", color="#363"}
-    Eric = LNVL.Character:new{name="Eric", color="#66a"}
+    Lobby = LNVL.Character:new{name="Lobby", textColor="#363"}
+    Eric = LNVL.Character:new{name="Eric", textColor="#66a"}
 
     START = LNVL.Scene:new{
         Eric "Hello Lobby!",
@@ -268,7 +268,7 @@ like so:
 
     Lobby = LNVL.Character:new{
         name = "Lobby Jones",
-        color = "#363",
+        textColor = "#363",
         image = "images/Lobby-Default.png",
     }
 
@@ -317,7 +317,7 @@ create a character, like so:
 
     Lobby = LNVL.Character:new{
         name = "Lobby Jones",
-        color = "#363",
+        textColor = "#363",
         image = "images/Lobby-Default.png",
         position = "Right",
     }

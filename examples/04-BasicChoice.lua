@@ -2,9 +2,9 @@
 -- choice jumps the story to one of two possible scenes.  This example
 -- also demonstrates jumping to other scenes in general.
 
-Eric = LNVL.Character{name = "Eric", color = "#c8ffc8"}
-Jeff = LNVL.Character{name = "Jeff", color = "#c8c8ff"}
-Judge = LNVL.Character{name = "The Great Judgini", color = "#ffc8c8"}
+Eric = LNVL.Character{name = "Eric", textColor = "#c8ffc8"}
+Jeff = LNVL.Character{name = "Jeff", textColor = "#c8c8ff"}
+Judge = LNVL.Character{name = "The Great Judgini", textColor = "#ffc8c8"}
 
 START = LNVL.Scene{
     Jeff:says "Isn't this copyright infringement again?",

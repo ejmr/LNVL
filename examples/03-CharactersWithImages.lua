@@ -4,13 +4,13 @@
 
 Eric = LNVL.Character:new{
     name = "Eric",
-    color = "#c8ffc8",
+    textColor = "#c8ffc8",
     image = "examples/images/Eric-Normal.png",
 }
 
 Jeff = LNVL.Character:new{
     name = "Jeff",
-    color = "#c8c8ff",
+    textColor = "#c8c8ff",
     image = "examples/images/Jeff-Normal.png",
 }
 
