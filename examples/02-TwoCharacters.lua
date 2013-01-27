@@ -1,11 +1,11 @@
 -- This example script shows a basic conversation between two
 -- characters and shows the most simple way to create characters.  In
--- this example each Character has a 'name' and a 'color' that
+-- this example each Character has a 'name' and a 'textColor' that
 -- determines what his text looks like on screen.  Then we use those
 -- objects inside of the Scene to actually create conversation.
 
-Eric = LNVL.Character:new{name = "Eric", color = "#c8ffc8"}
-Jeff = LNVL.Character:new{name = "Jeff", color = "#c8c8ff"}
+Eric = LNVL.Character:new{name = "Eric", textColor = "#c8ffc8"}
+Jeff = LNVL.Character:new{name = "Jeff", textColor = "#c8c8ff"}
 
 START = LNVL.Scene:new{
     Jeff "Why did you use a copyrighted song for an example?",

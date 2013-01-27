@@ -21,11 +21,12 @@ function LNVL.Character:new(properties)
     -- will signal an error, because every character must have a name.
     character.name = ""
 
-    -- color: The color that we use for lines this character speaks
-    -- during a scene.  We expect this to be a table of three integers
-    -- representing the red, green, and blue values of the colors,
-    -- with values in the 0--255 range.
-    character.color = {0, 0, 0}
+    -- textColor: The color that we use for lines this character
+    -- speaks during a scene.  We expect this to be a table of three
+    -- integers representing the red, green, and blue values of the
+    -- colors, with values in the 0--255 range.  It may also be a
+    -- named color from the LNVL.Color table.
+    character.textColor = LNVL.Settings.Characters.TextColor
 
     -- images: A hash of images for the character.  These are the
     -- sprites we display on screen when the character is speaking,
@@ -41,6 +42,17 @@ function LNVL.Character:new(properties)
     -- string, naming the image we currently use to draw the
     -- character.
     character.currentImage = "normal"
+
+    -- borderColor: The color of the border we draw around the
+    -- character image whenever it appears on screen.  If the value is
+    -- LNVL.Color.Transparent then we will not draw a border.
+    character.borderColor = LNVL.Settings.Characters.BorderColor
+
+    -- borderWidth: The width of the border, in pixels, to draw around
+    -- the character image.  If this is zero then we will still
+    -- technically draw a border, but it will have no width and thus
+    -- not actually appear on screen.
+    character.borderWidth = LNVL.Settings.Characters.BorderSize
 
     -- position: This property has one of the LNVL.Position.*
     -- constants as its value.  It indicates where on the screen the
@@ -72,12 +84,15 @@ function LNVL.Character:new(properties)
         character.images[properties.image] = character.images.normal
     end
 
-    -- If the loop above set the 'color' property to a string then we
-    -- assume it now has a value like '#33cfaf', i.e. a hex color
-    -- string.  We need to convert that back into a table of RGB color
-    -- values.
-    if type(character.color) == "string" then
-        character.color = LNVL.Color.fromHex(character.color)
+    -- The for-loop above may set the color-related properties to
+    -- strings.  If so then we assume they now have a value like
+    -- '#33cfaf', i.e. a hex color string.  We need to convert that
+    -- back into a table of RGB color values.
+    if type(character.textColor) == "string" then
+        character.textColor = LNVL.Color.fromHex(character.textColor)
+    end
+    if type(character.borderColor) == "string" then
+        character.borderColor = LNVL.Color.fromHex(character.borderColor)
     end
 
     -- Make sure the character has a name, because we do not support

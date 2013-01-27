@@ -220,6 +220,12 @@ for its action function requires the following properties:
 2. `location`: An array of two elements representing the X and Y
 coordinates on screen where the engine will draw the image.
 
+3. `border`: *(Optional)* An array of two elements representing a
+solid-color border to draw around the image.  The first element must
+be the color, either a table of RGB values or a color from the
+`LNVL.Color` table.  The second element must be the width of the
+border in pixels.
+
 ### Say ###
 
 This instruction prints dialog to the screen.  The arguments table for
@@ -229,7 +235,7 @@ its action function requires the following properties:
 
 2. `character`: *(Optional)* A instance of an `LNVL.Character` who
 will speak the dialog.  If this argument is present the text will
-appear in the color defined by the `character.color` property.
+appear in the color defined by the `character.textColor` property.
 
 ### Set-Image ###
 

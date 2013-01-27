@@ -54,6 +54,11 @@ LNVL.Opcode.__tostring = function (opcode)
             if key == "location" then
                 output = output .. string.format("\tlocation: X = %d, Y = %d\n",
                                                  value[1], value[2])
+            -- Show the color and width of the 'border' property.
+            elseif key == "border" then
+                output = output .. string.format("\tborder: %s, Width = %d\n",
+                                                 tostring(value[1]),
+                                                 value[2])
             else
                 output = output .. string.format("\t%s: %s\n", key, value)
             end
@@ -115,8 +120,16 @@ end
 -- We also need to add the 'image' property to the opcode so that the
 -- instruction will know what to draw later.  In this case we want it
 -- to draw the current character image.
+--
+-- If the character has a non-nil 'borderColor' property then we must
+-- also add the 'border' table to the arguments so that the
+-- 'draw-image' instruction will have that data later.
 LNVL.Opcode.Processor["draw-character"] = function (opcode)
-    local vertical_position = LNVL.Settings.Scenes.Y - 80
+    opcode.arguments.image =
+        opcode.arguments.character.images[opcode.arguments.character.currentImage]
+
+    local image_height = opcode.arguments.image:getHeight()
+    local vertical_position = LNVL.Settings.Scenes.Y - image_height - 10
 
     -- If the opcode was given no position we use the character's
     -- current position.  But if the opcode is given a position then
@@ -148,8 +161,17 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
         }
     end
 
-    opcode.arguments.image =
-        opcode.arguments.character.images[opcode.arguments.character.currentImage]
+    if opcode.arguments.character.borderColor ~= LNVL.Color.Transparent then
+        opcode.arguments.border = {
+            opcode.arguments.character.borderColor,
+            opcode.arguments.character.borderWidth
+        }
+
+        -- We explicitly set the metatable for the first element of
+        -- the border, the color, so that debugging output takes
+        -- advantage of tostring() support for LNVL.Color objects.
+        setmetatable(opcode.arguments.border[1], LNVL.Color)
+    end
 
     return opcode
 end

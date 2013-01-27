@@ -89,7 +89,7 @@ LNVL.Instructions["say"] = LNVL.Instruction:new{
         -- the character's name.
         if arguments["character"] ~= nil then
             text = {
-                arguments.character.color,
+                arguments.character.textColor,
                 string.format("%s: %s",
                               arguments.character.name,
                               arguments.content)
@@ -119,6 +119,21 @@ LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
     name = "draw-image",
     action = function (arguments)
         love.graphics.setColorMode("replace")
+
+        -- If we have a border to draw then we must draw that first.
+        -- It will be a solid color shape larger than the image, and
+        -- then we will draw the image directly on top of that to
+        -- create the effect of a border.
+        if arguments["border"] ~= nil then
+            local border_size = arguments.border[2] * 2
+            love.graphics.setColor(arguments.border[1])
+            love.graphics.rectangle("fill",
+                                    arguments.location[1] - arguments.border[2],
+                                    arguments.location[2] - arguments.border[2],
+                                    arguments.image:getWidth() + border_size,
+                                    arguments.image:getHeight() + border_size)
+        end
+
         love.graphics.draw(arguments.image,
                            arguments.location[1],
                            arguments.location[2])
