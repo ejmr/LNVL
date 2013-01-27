@@ -8,10 +8,18 @@
 LNVL.Settings = {}
 LNVL.Settings.__index = LNVL.Settings
 
+
+
+-- -- DEBUGGING SETTINGS ---------------------------------------------
+
 -- This boolean setting enables or disables debugging mode.  When LNVL
 -- is in debugging mode it will print out various data to the console.
 -- Developers should set this to 'false' before releasing their games.
 LNVL.Settings.DebugModeEnabled = true
+
+
+
+-- -- SCREEN SIZE SETTINGS -------------------------------------------
 
 -- These settings control the height and width of the entire screen.
 -- If you are including LNVL as part of a larger game which already
@@ -32,6 +40,10 @@ LNVL.Settings.Screen.Center = {
     LNVL.Settings.Screen.Width / 2,
     LNVL.Settings.Screen.Height / 2,
 }
+
+
+
+-- -- SCENE SETTINGS -------------------------------------------------
 
 -- The default dimensions of Scene windows.  The X and Y values
 -- determine the default position where the window appears when not in
@@ -61,6 +73,8 @@ LNVL.Settings.Scenes.BorderSize = 5
 -- provides more information on fonts.  By default LNVL uses a simple,
 -- large font.
 LNVL.Settings.Scenes.DefaultFont = love.graphics.newFont(24)
+
+
 
 -- Return the table of settings as the module.
 return LNVL.Settings
