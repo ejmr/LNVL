@@ -235,7 +235,7 @@ its action function requires the following properties:
 
 2. `character`: *(Optional)* A instance of an `LNVL.Character` who
 will speak the dialog.  If this argument is present the text will
-appear in the color defined by the `character.color` property.
+appear in the color defined by the `character.textColor` property.
 
 ### Set-Image ###
 
