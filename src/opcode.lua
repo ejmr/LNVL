@@ -54,6 +54,11 @@ LNVL.Opcode.__tostring = function (opcode)
             if key == "location" then
                 output = output .. string.format("\tlocation: X = %d, Y = %d\n",
                                                  value[1], value[2])
+            -- Show the color and width of the 'border' property.
+            elseif key == "border" then
+                output = output .. string.format("\tborder: %s, Width = %d\n",
+                                                 tostring(value[1]),
+                                                 value[2])
             else
                 output = output .. string.format("\t%s: %s\n", key, value)
             end
@@ -161,6 +166,11 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
             opcode.arguments.character.borderColor,
             opcode.arguments.character.borderWidth
         }
+
+        -- We explicitly set the metatable for the first element of
+        -- the border, the color, so that debugging output takes
+        -- advantage of tostring() support for LNVL.Color objects.
+        setmetatable(opcode.arguments.border[1], LNVL.Color)
     end
 
     return opcode
