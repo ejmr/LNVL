@@ -100,7 +100,10 @@ respectively.  But to make this easier LNVL provides a `Color` module
 that has pre-defined names for colors.  For example, after creating a
 scene and its dialog you can change its background color like so:
 
-    START.backgroundColor = LNVL.Color.NavyBlue
+    START = LNVL.Scene:new{
+        backgroundColor = LNVL.Color.NavyBlue,
+        "Thus begins our tale...",
+    }
 
 The file `src/rgb.txt` names every color you can use; although the
 `Color` module always uses title-case names, so the file lists
@@ -109,17 +112,22 @@ transparency you can use `LNVL.Color.Transparent` for any color.
 
 Instead of names you can use [short-hand hexadecimal notation][color-hex]:
 
-    START.backgroundColor = LNVL.Color.fromHex("#088008")
+    START = LNVL.Scene:new{
+        backgroundColor = LNVL.Color.fromHex("#088008"),
+        "...",
+    }
 
 But sometimes you will not want a solid background color, because that
 can be bland.  So LNVL lets you use images for scene backgrounds.  You
-give a scene a background picture with the simple `setBackground`
-function, for example:
+give a background picture to a scene with by assigning `background`
+the name of an image file:
 
-    START:setBackground "examples/images/Sunny-Hill.jpg"
+    START = LNVL.Scene:new{
+        background = "examples/images/Sunny-Hill.jpg",
+        "...",
+    }
 
-**Note:** You must use a colon here.  `START.setBackground` is an
-error that will crash LNVL.
+Now LNVL will draw that image throughout the entire scene content.
 
 ### Fonts ###
 
