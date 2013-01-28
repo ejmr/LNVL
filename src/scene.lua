@@ -158,6 +158,21 @@ function LNVL.Scene:setBackground(filename)
     self.backgroundImage = love.graphics.newImage(filename)
 end
 
+-- This function changes the background of the current scene.  Note
+-- well that this is a function and not a method.  We intend to use
+-- this function inside of scripts, i.e. as an argument to the
+-- Scene:new() constructor, in order to change the background image of
+-- a scene dynamically.  So we cannot define this as a method because
+-- the scene with the background we want to change does not even exist
+-- when we will call this.  That is why the opcode we return has no
+-- reference to the current scene.  But since all opcodes get access
+-- to their containing scene later, the opcode will have access to the
+-- scene before we convert it into an instruction and execute it.
+function LNVL.Scene.changeBackgroundTo(filename)
+    return LNVL.Opcode:new("set-scene-image",
+                           {image=love.graphics.newImage(filename)})
+end
+
 -- This method sets the font for the scene.  It requires a filename to
 -- a font file (e.g. a TTF file) and a font size in pixels.  The
 -- method returns no value.

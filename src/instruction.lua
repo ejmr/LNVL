@@ -49,6 +49,7 @@ function LNVL.Instruction.getForOpcode(name)
         ["set-character-image"] = "set-image",
         ["draw-character"] = "draw-image",
         ["change-scene"] = "set-scene",
+        ["set-scene-image"] = "set-image",
     }
 
     return LNVL.Instructions[map[name]]
@@ -109,6 +110,9 @@ LNVL.Instructions["set-image"] = LNVL.Instruction:new{
         -- 'currentImage' to the new one in the instruction.
         if targetType == LNVL.Character then
             arguments.target.currentImage = arguments.image
+        -- If the target is a Scene we change its background image.
+        elseif targetType == LNVL.Scene then
+            arguments.target.backgroundImage = arguments.image
         else
             -- If we reach this point then it is an error.
             error(string.format("Cannot set-image for %s", targetType))

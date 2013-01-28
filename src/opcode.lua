@@ -20,6 +20,7 @@ LNVL.Opcode.ValidOpcodes = {
     ["draw-character"] = true,
     ["change-scene"] = true,
     ["no-op"] = true,
+    ["set-scene-image"] = true,
 }
 
 -- The opcode constructor, which requires two arguments: the name of
@@ -189,6 +190,16 @@ end
 -- instruction knows what to update.
 LNVL.Opcode.Processor["set-character-image"] = function (opcode)
     opcode.arguments.target = opcode.arguments.character
+    return opcode
+end
+
+-- Processor for opcode 'set-scene-image'
+--
+-- For this opcode we only need to set the 'target' property to the
+-- scene containing the opcode so that the 'set-image' instruction
+-- later knows what scene to affect.
+LNVL.Opcode.Processor["set-scene-image"] = function (opcode)
+    opcode.arguments.target = opcode.arguments.scene
     return opcode
 end
 
