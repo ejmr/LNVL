@@ -5,6 +5,15 @@
 
 START = LNVL.Scene:new{
     "What a nice day!",
+    LNVL.Scene.changeTo("SPACE"),
 }
 
 START:setBackground "examples/images/Sunny-Hill.jpg"
+
+-- This scene shows how we can also define the background image as the
+-- first part of the Scene data, before any content.
+
+SPACE = LNVL.Scene:new{
+    background = "examples/images/Celestial-Background.jpg",
+    "A nice day in space?",
+}
