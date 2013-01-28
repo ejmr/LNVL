@@ -279,12 +279,16 @@ end
 
 -- This method moves forward to the next content in the scene.
 function LNVL.Scene:moveForward()
-    self.opcodeIndex = self.opcodeIndex + 1
+    if self.opcodeIndex < #self.opcodes then
+        self.opcodeIndex = self.opcodeIndex + 1
+    end
 end
 
 -- This method moves back to the previous content in the scene.
 function LNVL.Scene:moveBack()
-    self.opcodeIndex = self.opcodeIndex - 1
+    if self.opcodeIndex > 1 then
+        self.opcodeIndex = self.opcodeIndex - 1
+    end
 end
 
 -- Return the class as a module.
