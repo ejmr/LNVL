@@ -14,6 +14,12 @@ function LNVL.Scene:new(properties)
     local scene = {}
     setmetatable(scene, LNVL.Scene)
 
+    -- name: The name of the scene as a string.  Currently we use this
+    -- only to assist debugging since it allows us to assign a name
+    -- that will appear for that scene in console output.  Therefore
+    -- the name is optional and defaults to an empty string.
+    scene.name = ""
+
     -- backgroundColor: The color that fills the background container
     -- of the scene when we draw it.
     scene.backgroundColor = {255, 255, 255}
