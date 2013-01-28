@@ -35,14 +35,19 @@ function LNVL.Scene:new(properties)
 
     -- background: This is a string that is a path to an image file
     -- that is the background for the scene.  It is optional and thus
-    -- is nil by default.  The method setBackground() will change this
-    -- property and the 'backgroundImage' property below.
-    scene.background = nil
+    -- is an empty string by default.  The setBackground() method can
+    -- later change this value and the 'backgroundImage' property
+    -- described below.
+    scene.background = ""
 
-    -- backgroundImage: If the above 'background' property is not nil
-    -- then this property is a LÖVE Image object loaded from the path
-    -- of the 'background' property.  Since it is optional it is also
-    -- nil by default.
+    -- backgroundImage: If the above 'background' property is not an
+    -- empty string then this property will be a LÖVE Image object
+    -- loaded from the path of the 'background' property.  Since
+    -- 'background' is optional this property is nil by default, and
+    -- since it is nil that means the constructor cannot change this
+    -- property's value.  That means we can make sure only
+    -- setBackground() modifies this, to help narrow state-changing
+    -- code for the sake of debugging.
     scene.backgroundImage = nil
 
     -- Apply any properties passed in as arguments that replace any
@@ -55,6 +60,13 @@ function LNVL.Scene:new(properties)
             rawset(scene, name, value)
             table.remove(properties, name)
         end
+    end
+
+    -- If the for-loop above assign a string to 'background' then we
+    -- assume it is a filepath to an image and try to load that image
+    -- as the scene background.
+    if #scene.background > 0 then
+        scene:setBackground(scene.background)
     end
 
     -- The rest of the 'properties' we turn into opcodes.  We loop
