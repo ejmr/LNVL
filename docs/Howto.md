@@ -90,18 +90,19 @@ line using the `..` operator.  For example:
 
 ### Backgrounds ###
 
-By default a scene has a black background.  There are two ways you can
-change this.
+By default a scene has a black background with a white background for
+the dialog container.  But you can change these.
 
-The first way is to set the `backgroundColor` property of the scene.
-You must assign the property a list of three or four numbers,
-representing the red, green, blue, and (optional) alpha channels,
-respectively.  But to make this easier LNVL provides a `Color` module
-that has pre-defined names for colors.  For example, after creating a
-scene and its dialog you can change its background color like so:
+To change the dialog box color you can to set the `boxBackgroundColor`
+property of the scene.  You must assign the property a list of three
+or four numbers, representing the red, green, blue, and (optional)
+alpha channels, respectively.  But to make this easier LNVL provides a
+`Color` module that has pre-defined names for colors.  For example,
+after creating a scene and its dialog you can change its background
+color like so:
 
     START = LNVL.Scene:new{
-        backgroundColor = LNVL.Color.NavyBlue,
+        boxBackgroundColor = LNVL.Color.NavyBlue,
         "Thus begins our tale...",
     }
 
@@ -113,14 +114,13 @@ transparency you can use `LNVL.Color.Transparent` for any color.
 Instead of names you can use [short-hand hexadecimal notation][color-hex]:
 
     START = LNVL.Scene:new{
-        backgroundColor = LNVL.Color.fromHex("#088008"),
+        boxBackgroundColor = LNVL.Color.fromHex("#088008"),
         "...",
     }
 
-But sometimes you will not want a solid background color, because that
-can be bland.  So LNVL lets you use images for scene backgrounds.  You
-give a background picture to a scene with by assigning `background`
-the name of an image file:
+As for the black background around the dialog box, LNVL lets you use
+images for that part of the scene.  You give a background picture to a
+scene with by assigning `background` the name of an image file:
 
     START = LNVL.Scene:new{
         background = "examples/images/Sunny-Hill.jpg",

@@ -20,9 +20,9 @@ function LNVL.Scene:new(properties)
     -- the name is optional and defaults to an empty string.
     scene.name = ""
 
-    -- backgroundColor: The color that fills the background container
-    -- of the scene when we draw it.
-    scene.backgroundColor = {255, 255, 255}
+    -- boxBackgroundColor: The color that fills the background
+    -- container of the scene when we draw it.
+    scene.boxBackgroundColor = {255, 255, 255}
 
     -- borderColor: The color of the border around the scene
     -- container.  If this is set to nil then there will be no border.
@@ -204,7 +204,7 @@ end
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
     LNVL.Graphics.drawContainer{
-        backgroundColor=self.backgroundColor,
+        backgroundColor=self.boxBackgroundColor,
         borderColor=self.borderColor }
 end
 
