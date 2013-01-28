@@ -199,6 +199,16 @@ screen.
 
 2. `image`: The new [image][3] to use for the character.
 
+### Set-Scene-Image ###
+
+The `set-scene-image` opcode creates a `set-image` instruction that
+will change the background image of a scene.
+
+1. `scene`: The engine assigns the new image to this scene, an
+instance of an `LNVL.Scene` object.
+
+2. `image`: The new [background image][3] to use for the scene.
+
 
 List of Instructions
 --------------------
