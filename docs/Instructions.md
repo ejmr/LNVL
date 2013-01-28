@@ -204,10 +204,13 @@ screen.
 The `set-scene-image` opcode creates a `set-image` instruction that
 will change the background image of a scene.
 
-1. `scene`: The engine assigns the new image to this scene, an
-instance of an `LNVL.Scene` object.
+1. `image`: The new [background image][3] to use for the scene.
 
-2. `image`: The new [background image][3] to use for the scene.
+**Note:** This opcode logically requires an `LNVL.Scene` object to
+modify but that is not part of the arguments.  The source-code
+comments for `LNVL.Opcode.Processor["set-scene-image"]` explain in
+detail why the opcode does not have a `scene` argument and how it gets
+information about the scene later.
 
 
 List of Instructions

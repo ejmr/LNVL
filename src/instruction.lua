@@ -106,12 +106,17 @@ LNVL.Instructions["set-image"] = LNVL.Instruction:new{
     action = function (arguments)
         local targetType = getmetatable(arguments.target)
 
-        -- If the target is a Character then we change their
-        -- 'currentImage' to the new one in the instruction.
         if targetType == LNVL.Character then
+            -- If the target is a Character then we change their
+            -- 'currentImage' to the new one in the instruction.
             arguments.target.currentImage = arguments.image
-        -- If the target is a Scene we change its background image.
         elseif targetType == LNVL.Scene then
+            -- If the target is a Scene we change its background
+            -- image.  However, first we need to assign the 'scene'
+            -- parameter of the argument to the 'target'.  The
+            -- commentary for LNVL.Opcode.Processor["set-scene-image"]
+            -- explains why we must do this here.
+            arguments.target = arguments.scene
             arguments.target.backgroundImage = arguments.image
         else
             -- If we reach this point then it is an error.
