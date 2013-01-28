@@ -113,6 +113,7 @@ function LNVL.Scene:new(properties)
     -- scene so we can make sure everything looks right.
     if LNVL.Settings.DebugModeEnabled == true then
         print("-- New Scene --\n")
+        print(tostring(scene), "\n")
         LNVL.Debug.printSceneOpcodes(scene)
     end
 
