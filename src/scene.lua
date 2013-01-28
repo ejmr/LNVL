@@ -119,6 +119,20 @@ function LNVL.Scene:new(properties)
     return scene
 end
 
+-- This metatable function converts a Scene to a string.  This helps
+-- us with debugging.  There is one situation where we can have an
+-- empty table that has LNVL.Scene for its metatable: the processor
+-- function for the 'set-scene-image' opcode.  It documents why.  But
+-- because of that possibility we cannot assume the 'scene' parameter
+-- in this function has a 'name' property or any other properties.
+LNVL.Scene.__tostring = function (scene)
+    if scene["name"] ~= nil and #scene.name > 0 then
+        return string.format("<Scene: \"%s\">", scene.name)
+    else
+        return "<Scene: Unnamed>"
+    end
+end
+
 -- We use this method to process the contents given to Scene objects
 -- and turn them into the appropriate opcodes.  The method accepts one
 -- argument, which may be anything that can be a valid element of the
