@@ -14,6 +14,12 @@ function LNVL.Scene:new(properties)
     local scene = {}
     setmetatable(scene, LNVL.Scene)
 
+    -- name: The name of the scene as a string.  Currently we use this
+    -- only to assist debugging since it allows us to assign a name
+    -- that will appear for that scene in console output.  Therefore
+    -- the name is optional and defaults to an empty string.
+    scene.name = ""
+
     -- backgroundColor: The color that fills the background container
     -- of the scene when we draw it.
     scene.backgroundColor = {255, 255, 255}
@@ -107,10 +113,25 @@ function LNVL.Scene:new(properties)
     -- scene so we can make sure everything looks right.
     if LNVL.Settings.DebugModeEnabled == true then
         print("-- New Scene --\n")
+        print(tostring(scene), "\n")
         LNVL.Debug.printSceneOpcodes(scene)
     end
 
     return scene
+end
+
+-- This metatable function converts a Scene to a string.  This helps
+-- us with debugging.  There is one situation where we can have an
+-- empty table that has LNVL.Scene for its metatable: the processor
+-- function for the 'set-scene-image' opcode.  It documents why.  But
+-- because of that possibility we cannot assume the 'scene' parameter
+-- in this function has a 'name' property or any other properties.
+LNVL.Scene.__tostring = function (scene)
+    if scene["name"] ~= nil and #scene.name > 0 then
+        return string.format("<Scene: \"%s\">", scene.name)
+    else
+        return "<Scene: Unnamed>"
+    end
 end
 
 -- We use this method to process the contents given to Scene objects
