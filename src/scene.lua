@@ -58,7 +58,6 @@ function LNVL.Scene:new(properties)
     for name,value in pairs(properties) do
         if rawget(scene, name) ~= nil then
             rawset(scene, name, value)
-            table.remove(properties, name)
         end
     end
 
