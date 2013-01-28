@@ -20,6 +20,7 @@ LNVL.Opcode.ValidOpcodes = {
     ["draw-character"] = true,
     ["change-scene"] = true,
     ["no-op"] = true,
+    ["set-scene-image"] = true,
 }
 
 -- The opcode constructor, which requires two arguments: the name of
@@ -189,6 +190,35 @@ end
 -- instruction knows what to update.
 LNVL.Opcode.Processor["set-character-image"] = function (opcode)
     opcode.arguments.target = opcode.arguments.character
+    return opcode
+end
+
+-- Processor for opcode 'set-scene-image'
+--
+-- For this opcode we need to set the 'target' property to the scene
+-- containing the opcode so that the 'set-image' instruction later
+-- knows what scene to affect.  However, this is not so simple.
+-- Here is the problem:
+--
+-- We create and process all opcodes in a scene *before* the
+-- constructor for that Scene object finishes execution.  So here we
+-- cannot give the opcode access to the scene because at this point we
+-- have not even finished creating the scene.  All opcodes get access
+-- to the Scene object containing them later, after the Scene:new()
+-- constructor finishes.  But in this specific situation we need the
+-- scene *now*, and we have no way to get it.
+--
+-- To deal with this problem we defer the assignment of the 'target'
+-- in the opcode.  The 'set-image' instruction will look at the
+-- metatable for 'target' to figure out what image to affect.  What we
+-- will do then is assign a temporary, empty table to 'target' that
+-- has LNVL.Scene for its metatable.  That way the 'set-image'
+-- instruction can later determine that it is dealing with a scene,
+-- and by then we will have access to the Scene object to actually
+-- modify it.
+LNVL.Opcode.Processor["set-scene-image"] = function (opcode)
+    opcode.arguments.target = {}
+    setmetatable(opcode.arguments.target, LNVL.Scene)
     return opcode
 end
 
