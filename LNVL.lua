@@ -40,7 +40,7 @@ LNVL.Scene = require("src.scene")
 -- and will crash with an error if the file is not found.  The script
 -- must define the 'START' scene.  The function returns no value.
 function LNVL.loadScript(filename)
-    assert(loadfile(filename))()
+    love.filesystem.load(filename)()
     LNVL.currentScene = START
 end
 
