@@ -9,5 +9,28 @@
 LNVL.Drawable = {}
 LNVL.Drawable.__index = LNVL.Drawable
 
+-- Our constructor.
+function LNVL.Drawable:new(properties)
+    local drawable = {}
+    setmetatable(drawable, LNVL.Drawable)
+
+    -- image: The actual image to render when we draw this object.
+    -- This property must be an Image object from LÖVE, e.g. the
+    -- result of love.graphics.newImage().
+    drawable.image = nil
+
+    -- location: An array of two integers representing the X and Y
+    -- screen coordinates where we will draw this object.
+    drawable.location = {0, 0}
+
+    -- Apply any properties given to the constructor, possibly
+    -- replacing the default values above.
+    for name,value in pairs(properties) do
+        rawset(drawable, name, value)
+    end
+
+    return drawable
+end
+
 -- Return the class as the module.
 return LNVL.Drawable
