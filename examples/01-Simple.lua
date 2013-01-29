@@ -6,6 +6,7 @@
 -- chorus and verse parts used are in the comments next to the text.
 
 START = LNVL.Scene:new{
+    textColor = LNVL.Color.Gray50,
     "休まずにKING 働くよKING",            -- Without resting, our King, Always working, our King
     "人の庭に全て足りるまで",              -- Until this garden for humans has all it needs
     "たんと吹け風よ ダントツに爽快に",      -- A great wind blows, refreshing all
