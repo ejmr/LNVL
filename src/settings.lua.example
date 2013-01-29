@@ -67,6 +67,12 @@ LNVL.Settings.Scenes.Y = (LNVL.Settings.Screen.Height / 2) - 50
 -- of that border in pixels.
 LNVL.Settings.Scenes.BorderSize = 5
 
+-- All dialog in scenes will use this color by default.  However, if a
+-- character is speaking dialog then the text color for that character
+-- will override this color.  So this default color mainly affects
+-- narration in a scene that is not associated with any character.
+LNVL.Settings.Scenes.TextColor = LNVL.Color.Gray25
+
 -- This setting controls the default font for all scenes.  Its value
 -- must be a Font object from the LÖVE engine.  The documentation at
 --

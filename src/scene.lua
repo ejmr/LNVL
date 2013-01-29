@@ -29,7 +29,7 @@ function LNVL.Scene:new(properties)
     scene.borderColor = {120, 120, 120}
 
     -- textColor: The color we use when drawing text.
-    scene.textColor = {0, 0, 0}
+    scene.textColor = LNVL.Settings.Scenes.TextColor
 
     -- font: The default font for the dialog.
     scene.font = LNVL.Settings.Scenes.DefaultFont
