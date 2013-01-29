@@ -143,9 +143,13 @@ LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
                                     arguments.image:getHeight() + border_size)
         end
 
-        love.graphics.draw(arguments.image,
-                           arguments.location[1],
-                           arguments.location[2])
+        if getmetatable(arguments.image) == LNVL.Drawable then
+            arguments.image:draw()
+        else
+            love.graphics.draw(arguments.image,
+                               arguments.location[1],
+                               arguments.location[2])
+        end
     end }
 
 LNVL.Instructions["set-scene"] = LNVL.Instruction:new{

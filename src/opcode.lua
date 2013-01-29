@@ -152,17 +152,17 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
     -- "Center" means in the center of that.  In all three cases the
     -- position will be just above that dialog box.
     if opcode.arguments.position == LNVL.Position.Center then
-        opcode.arguments.location = {
+        opcode.arguments.image.location = {
             LNVL.Settings.Screen.Center[1] - image_width / 2,
             vertical_position,
         }
     elseif opcode.arguments.position == LNVL.Position.Right then
-        opcode.arguments.location = {
+        opcode.arguments.image.location = {
             LNVL.Settings.Scenes.Width - image_width + LNVL.Settings.Scenes.X,
             vertical_position,
         }
     elseif opcode.arguments.position == LNVL.Position.Left then
-        opcode.arguments.location = {
+        opcode.arguments.image.location = {
             LNVL.Settings.Scenes.X,
             vertical_position,
         }
