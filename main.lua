@@ -4,7 +4,9 @@
 -- LNVL except debugging, since we ship out LNVL as a library for
 -- other programs to use and not really an executable on its own.
 --
--- It reads a script filename from the command-line and loads that.
+-- It reads an optional script filename from the command-line and
+-- loads that.  If none is given then it loads a simple example.
+--
 -- The enter and backspace keys move back and forth through the text.
 --
 --]]
@@ -17,6 +19,8 @@ function love.load(arguments)
 
     if #arguments > 1 then
         LNVL.loadScript(arguments[2])
+    else
+        LNVL.loadScript("examples/02-TwoCharacters.lua")
     end
 end
 
