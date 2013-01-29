@@ -28,8 +28,8 @@ function LNVL.Scene:new(properties)
     -- container.  If this is set to nil then there will be no border.
     scene.borderColor = {120, 120, 120}
 
-    -- foregroundColor: The color we use when drawing text.
-    scene.foregroundColor = {0, 0, 0}
+    -- textColor: The color we use when drawing text.
+    scene.textColor = LNVL.Settings.Scenes.TextColor
 
     -- font: The default font for the dialog.
     scene.font = LNVL.Settings.Scenes.DefaultFont
@@ -212,7 +212,7 @@ end
 -- the container each time, erasing the current text on screen.  This
 -- method returns no value.
 function LNVL.Scene:drawText(text)
-    LNVL.Graphics.drawText(self.font, self.foregroundColor, text)
+    LNVL.Graphics.drawText(self.font, self.textColor, text)
 end
 
 -- This method draws the parts of a scene that we want on screen
