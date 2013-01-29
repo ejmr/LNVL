@@ -32,6 +32,19 @@ function LNVL.Drawable:new(properties)
     return drawable
 end
 
+-- This function provides a string representation of a Drawable that
+-- we can use in debugging output.
+LNVL.Drawable.__tostring = function (drawable)
+    if drawable.image == nil then
+        return "<Drawable: No Image>"
+    else
+        return string.format("<Drawable: %s at %d, %d>",
+                             tostring(drawable.image),
+                             drawable.location[1],
+                             drawable.location[2])
+    end
+end
+
 -- This method will render the Drawable to screen, appearing at the
 -- coordinates in the 'location' property.
 function LNVL.Drawable:draw()
