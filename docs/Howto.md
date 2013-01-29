@@ -157,6 +157,22 @@ size of sixteen pixels.  This will only affect the `START` scene;
 every other scene will continue to use the global default font
 discussed above.
 
+LNVL also lets you change the font color for scenes.  Every scene uses
+the color from `LNVL.Settings.Scenes.TextColor` by default.  You can
+change that value to control the default text color for all scenes.
+You can change the color for individual scenes by naming the color
+when you create the scene, like so:
+
+    START = LNVL.Scene:new{
+        textColor = LNVL.Color.Peach,
+        "This narration will be in peach.",
+        "It will override the default setting.",
+    }
+
+Later on you will see how scenes can have characters who speak dialog.
+Those characters can have individual colors for their speech.  Colors
+for characters *always* take precedence over colors for scenes.
+
 ### Changing Scenes ###
 
 Cramming an entire story into one scene would create a mess.  You
