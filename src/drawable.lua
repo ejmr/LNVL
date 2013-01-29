@@ -32,5 +32,12 @@ function LNVL.Drawable:new(properties)
     return drawable
 end
 
+-- This method will render the Drawable to screen, appearing at the
+-- coordinates in the 'location' property.
+function LNVL.Drawable:draw()
+    love.graphics.setColorMode("replace")
+    love.graphics.draw(self.image, self.location[1], self.location[2])
+end
+
 -- Return the class as the module.
 return LNVL.Drawable
