@@ -112,15 +112,12 @@ end
 
 -- Processor for opcode 'draw-character'
 --
--- For this opcode we need to convert the 'position' data into the
--- appropriate 'location' data expected by the 'draw-image'
--- instruction which the opcode will become.  The 'position' property
--- is optional.  If it does not exist then we will use the default
--- position of the 'character' property that the opcode requires.
---
--- We also need to add the 'image' property to the opcode so that the
--- instruction will know what to draw later.  In this case we want it
--- to draw the current character image.
+-- For this opcode we need to set the 'image' property to the currentt
+-- character image.  And we need to call the setPosition() method of
+-- that image with the 'position' property of the opcode arguments.
+-- The 'position' argument is optional though.  If it does not exist
+-- then we will use the default position of the 'character' property
+-- that the opcode requires.
 --
 -- If the character has a non-nil 'borderColor' property then we must
 -- also add the 'border' table to the arguments so that the
@@ -128,10 +125,6 @@ end
 LNVL.Opcode.Processor["draw-character"] = function (opcode)
     opcode.arguments.image =
         opcode.arguments.character.images[opcode.arguments.character.currentImage]
-
-    local image_width = opcode.arguments.image:getWidth()
-    local image_height = opcode.arguments.image:getHeight()
-    local vertical_position = LNVL.Settings.Scenes.Y - image_height - 10
 
     -- If the opcode was given no position we use the character's
     -- current position.  But if the opcode is given a position then
@@ -146,27 +139,7 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
         opcode.arguments.character.position = opcode.arguments.position
     end
 
-    -- We interpret the 'position' property relative to location of
-    -- the scene's dialog container.  This way "Left" and "Right" mean
-    -- aligned with the left and right edges of the dialog box, and
-    -- "Center" means in the center of that.  In all three cases the
-    -- position will be just above that dialog box.
-    if opcode.arguments.position == LNVL.Position.Center then
-        opcode.arguments.image.location = {
-            LNVL.Settings.Screen.Center[1] - image_width / 2,
-            vertical_position,
-        }
-    elseif opcode.arguments.position == LNVL.Position.Right then
-        opcode.arguments.image.location = {
-            LNVL.Settings.Scenes.Width - image_width + LNVL.Settings.Scenes.X,
-            vertical_position,
-        }
-    elseif opcode.arguments.position == LNVL.Position.Left then
-        opcode.arguments.image.location = {
-            LNVL.Settings.Scenes.X,
-            vertical_position,
-        }
-    end
+    opcode.arguments.image:setPosition(opcode.arguments.position)
 
     if opcode.arguments.character.borderColor ~= LNVL.Color.Transparent then
         opcode.arguments.border = {
