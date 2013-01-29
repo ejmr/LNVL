@@ -24,7 +24,10 @@ LNVL.Color.__index = LNVL.Color
 -- Our handle to the 'rgb.txt' file.  Even though the text file is in
 -- the same directory as this module we load the module from the
 -- parent directory, and so our path to 'rgb.txt' must reflect that.
-local rgb_file = io.open("src/rgb.txt", "r")
+local rgb_file = love.filesystem.newFile("src/rgb.txt")
+
+-- We only need to read the file.
+rgb_file:open("r")
 
 -- The first line of the file contains some metadata that we do not
 -- need, so we read one line to throw it away.
