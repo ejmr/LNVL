@@ -52,5 +52,9 @@ function LNVL.Drawable:draw()
     love.graphics.draw(self.image, self.location[1], self.location[2])
 end
 
+-- Provide access to the width and height of the Drawable image.
+function LNVL.Drawable:getWidth() return self.image:getWidth() end
+function LNVL.Drawable:getHeight() return self.image:getHeight() end
+
 -- Return the class as the module.
 return LNVL.Drawable
