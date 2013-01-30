@@ -6,12 +6,14 @@ Eric = LNVL.Character:new{
     name = "Eric",
     textColor = "#c8ffc8",
     image = "examples/images/Eric-Normal.png",
+    position = "Left",
 }
 
 Jeff = LNVL.Character:new{
     name = "Jeff",
     textColor = "#c8c8ff",
     image = "examples/images/Jeff-Normal.png",
+    position = "Right",
 }
 
 START = LNVL.Scene:new{

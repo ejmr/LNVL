@@ -30,12 +30,11 @@ function LNVL.Character:new(properties)
 
     -- images: A hash of images for the character.  These are the
     -- sprites we display on screen when the character is speaking,
-    -- for example.  All of the values in the table are Image objects,
-    -- i.e. created by love.graphics.newImage().  The keys are strings
-    -- which are pathnames to the image files.  However, the table
-    -- also has one key named 'normal'; this key points to the
-    -- default image for the character, the one we intend to use the
-    -- most often.
+    -- for example.  All of the values in the table are Drawable
+    -- objects.  The keys are strings which are pathnames to the image
+    -- files.  However, the table also has one key named 'normal';
+    -- this key points to the default image for the character, the one
+    -- we intend to use the most often.
     character.images = { normal = nil }
 
     -- currentImage: A key for the 'images' table above, i.e. a
@@ -78,7 +77,7 @@ function LNVL.Character:new(properties)
     -- this is the image file we want to use for the normal character
     -- image, so we need to check for it.
     if properties["image"] ~= nil then
-        character.images.normal = love.graphics.newImage(properties.image)
+        character.images.normal = LNVL.Drawable:new{image=love.graphics.newImage(properties.image)}
         character.images[properties.image] = character.images.normal
     end
 
@@ -168,7 +167,7 @@ end
 -- image and then draw it to the screen.
 function LNVL.Character:becomes(filename)
     if self.images[filename] == nil then
-        self.images[filename] = love.graphics.newImage(filename)
+        self.images[filename] = LNVL.Drawable:new{image=love.graphics.newImage(filename)}
     end
 
     local opcodes = {

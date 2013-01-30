@@ -228,7 +228,8 @@ may have.
 This instruction renders an image to the screen.  The arguments table
 for its action function requires the following properties:
 
-1. `image`: The image to display.  This must be [an Image object][3].
+1. `image`: The image to display.  This must be [an Image object][3]
+or an `LNVL.Drawable` object.
 
 2. `location`: An array of two elements representing the X and Y
 coordinates on screen where the engine will draw the image.
@@ -237,7 +238,8 @@ coordinates on screen where the engine will draw the image.
 solid-color border to draw around the image.  The first element must
 be the color, either a table of RGB values or a color from the
 `LNVL.Color` table.  The second element must be the width of the
-border in pixels.
+border in pixels.  LNVL will only draw the border if `image` is an
+`LNVL.Drawable` object.
 
 ### Say ###
 
