@@ -129,18 +129,15 @@ LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
     action = function (arguments)
         love.graphics.setColorMode("replace")
 
-        -- If we have a border to draw then we must draw that first.
-        -- It will be a solid color shape larger than the image, and
-        -- then we will draw the image directly on top of that to
-        -- create the effect of a border.
+        -- If we have arguments for a border then we assign those to
+        -- the relevant properties of the image, assuming it is a
+        -- Drawable object.  That way the call to image:draw() will
+        -- include the border.
         if arguments["border"] ~= nil then
-            local border_size = arguments.border[2] * 2
-            love.graphics.setColor(arguments.border[1])
-            love.graphics.rectangle("fill",
-                                    arguments.location[1] - arguments.border[2],
-                                    arguments.location[2] - arguments.border[2],
-                                    arguments.image:getWidth() + border_size,
-                                    arguments.image:getHeight() + border_size)
+            if getmetatable(arguments.image) == LNVL.Drawable then
+                arguments.image.borderColor = arguments.border[1]
+                arguments.image.borderSize = arguments.border[2]
+            end
         end
 
         if getmetatable(arguments.image) == LNVL.Drawable then
