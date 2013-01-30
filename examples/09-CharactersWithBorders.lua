@@ -6,7 +6,7 @@ Eric = LNVL.Character:new{
     name = "Eric",
     textColor = LNVL.Color.SlateBlue,
     borderColor = LNVL.Color.NavyBlue,
-    borderWidth = 5,
+    borderSize = 5,
     image = "examples/images/Eric-Normal.png",
 }
 

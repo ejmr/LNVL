@@ -57,7 +57,7 @@ LNVL.Opcode.__tostring = function (opcode)
                                                  value[1], value[2])
             -- Show the color and width of the 'border' property.
             elseif key == "border" then
-                output = output .. string.format("\tborder: %s, Width = %d\n",
+                output = output .. string.format("\tborder: %s, Size = %d\n",
                                                  tostring(value[1]),
                                                  value[2])
             else
@@ -144,7 +144,7 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
     if opcode.arguments.character.borderColor ~= LNVL.Color.Transparent then
         opcode.arguments.border = {
             opcode.arguments.character.borderColor,
-            opcode.arguments.character.borderWidth
+            opcode.arguments.character.borderSize,
         }
 
         -- We explicitly set the metatable for the first element of
