@@ -23,9 +23,17 @@ LNVL.Position.__index = LNVL.Position
 -- then dynamically create the LNVL.Position properties from that.
 
 LNVL.Position.ValidPositions = {
+    "BottomCenter",
     "Center",
+    "TopCenter",
+
+    "BottomRight",
     "Right",
+    "TopRight",
+
+    "BottomLeft",
     "Left",
+    "TopLeft",
 }
 
 for _,name in ipairs(LNVL.Position.ValidPositions) do
