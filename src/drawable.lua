@@ -33,6 +33,17 @@ function LNVL.Drawable:new(properties)
     -- property into location coordinates.
     drawable.position = nil
 
+    -- borderColor: The color of the border we place around the
+    -- Drawable.  If the color is LNVL.Color.Transparent, which is the
+    -- default, then we will not draw any border.
+    drawable.borderColor = LNVL.Color.Transparent
+
+    -- borderSize: The size of the border in pixels.  By default this
+    -- is zero because normally we do not put borders around
+    -- Drawables.  In order to have a border a Drawable object must
+    -- change this property and 'borderColor' above.
+    drawable.borderSize = 0
+
     -- Apply any properties given to the constructor, possibly
     -- replacing the default values above.
     for name,value in pairs(properties) do
@@ -98,9 +109,23 @@ function LNVL.Drawable:setPosition(position)
 end
 
 -- This method will render the Drawable to screen, appearing at the
--- coordinates in the 'location' property.
+-- coordinates in the 'location' property.  Depending on the values of
+-- the 'borderColor' and 'borderSize' properties we may also add a
+-- border around the Drawable.  See the commentary for those
+-- properties in the Drawable:new() constructor for what types of
+-- values they must have in order to make a border appear.
 function LNVL.Drawable:draw()
     love.graphics.setColorMode("replace")
+
+    if self.borderColor ~= LNVL.Color.Transparent and self.borderSize > 0 then
+        love.graphics.setColor(self.borderColor)
+        love.graphics.rectangle("fill",
+                                self.location[1] - self.borderSize,
+                                self.location[2] - self.borderSize,
+                                self:getWidth() + self.borderSize * 2,
+                                self:getHeight() + self.borderSize * 2)
+    end
+
     love.graphics.draw(self.image, self.location[1], self.location[2])
 end
 
