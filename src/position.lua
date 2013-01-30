@@ -18,6 +18,22 @@ LNVL.Position.__index = LNVL.Position
 -- these properties are arbitrary; all that truly matters is that they
 -- are distinct from each other.
 --
+-- The position values are relative to the screen in this way:
+--
+--     +----------------------------------------------------------+
+--     | TopLeft               TopCenter                 TopRight |
+--     |                                                          |
+--     |                                                          |
+--     |                                                          |
+--     |                                                          |
+--     | Left                   Center                      Right |
+--     |                                                          |
+--     |                                                          |
+--     |                                                          |
+--     |                                                          |
+--     | BottomLeft          BottomCenter             BottomRight |
+--     +----------------------------------------------------------+
+--
 -- To make it easier to add positions in the future, i.e. to cut down
 -- on code, we define of all the positions as a list of strings and
 -- then dynamically create the LNVL.Position properties from that.
