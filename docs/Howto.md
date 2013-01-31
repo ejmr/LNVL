@@ -351,12 +351,18 @@ create a character, like so:
 This is the same as the character definition from earlier but with one
 addition: the new `position` property.  The string `"Right"` tells
 LNVL that it should draw Lobby’s image on the right side of the screen
-instead of the usual left.  There are three acceptable values for
+instead of the usual left.  These are the acceptable values for
 `position`:
 
 1. `"Left"`
 2. `"Center"`
 3. `"Right"`
+4. `"TopLeft"`
+5. `"TopCenter"`
+6. `"TopRight"`
+7. `"BottomLeft"`
+8. `"BottomCenter"`
+9. `"BottomRight"`
 
 They do not provide pixel-perfect control over the position.  Instead
 LNVL decides what is best for ‘Right’, for example, based on settings
