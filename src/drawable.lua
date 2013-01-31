@@ -65,8 +65,13 @@ LNVL.Drawable.__tostring = function (drawable)
     if drawable.image == nil then
         return "<Drawable: No Image>"
     else
-        return string.format("<Drawable: %s at %d, %d>",
+        local position
+        if drawable["position"] ~= nil then
+            position = tostring(drawable.position) .. ", "
+        end
+        return string.format("<Drawable: %s at %s%d, %d>",
                              tostring(drawable.image),
+                             position,
                              drawable.location[1],
                              drawable.location[2])
     end
