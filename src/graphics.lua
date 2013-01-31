@@ -15,7 +15,8 @@ LNVL.Graphics.__index = LNVL.Graphics
 -- arguments:
 --
 -- 1. 'backgroundColor': The background color of the container.  This
---    must be a value acceptable to love.graphics.setColor().
+--    must be a value acceptable to love.graphics.setColor() or the
+--    value LNVL.Color.Transparent.
 --
 -- 2. 'borderColor': (Optional) the color of the container border.
 --
@@ -23,6 +24,12 @@ LNVL.Graphics.__index = LNVL.Graphics
 function LNVL.Graphics.drawContainer(arguments)
     assert(arguments["backgroundColor"] ~= nil,
            "Cannot draw a container without a background color.")
+
+    -- If the container is using a transparent background we can bail
+    -- now and have full transparency by simply drawing nothing.
+    if arguments.backgroundColor == LNVL.Color.Transparent then
+        return
+    end
 
     -- Do we need to draw a border?  If so make it a rectangle that is
     -- a little bigger than the normal sizes so that when we draw the
