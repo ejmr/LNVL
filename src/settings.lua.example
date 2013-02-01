@@ -104,14 +104,11 @@ LNVL.Settings.Characters.BorderColor = LNVL.Color.Transparent
 LNVL.Settings.Characters.BorderSize = 0
 
 -- This setting determines where character images appear on screen.
--- It must have one of three values:
---
---     1. LNVL.Position.Left
---     2. LNVL.Position.Center
---     3. LNVL.Position.Right
+-- See the 'docs/Howto.md' file or the source code for LNVL.Position
+-- for a list of acceptable values.
 --
 -- Individual characters in scripts can change this using the isAt()
--- function, described in the 'docs/Howto.md' file.
+-- function, described in the same Howto document mentioned above.
 LNVL.Settings.Characters.DefaultPosition = LNVL.Position.Left
 
 
