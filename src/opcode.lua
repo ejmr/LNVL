@@ -184,7 +184,7 @@ end
 -- To deal with this problem we defer the assignment of the 'target'
 -- in the opcode.  The 'set-image' instruction will look at the
 -- metatable for 'target' to figure out what image to affect.  What we
--- will do then is assign a temporary, empty table to 'target' that
+-- will do here is assign a temporary, empty table to 'target' that
 -- has LNVL.Scene for its metatable.  That way the 'set-image'
 -- instruction can later determine that it is dealing with a scene,
 -- and by then we will have access to the Scene object to actually
