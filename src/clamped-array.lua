@@ -9,11 +9,11 @@
 --     foo[2] = 4
 --     foo[3] = nil
 --
--- So the values of 'foo' are {10, 4}' now.  ClampedArrays do not
--- allow indexes less than one; so the index zero is discarded.  Their
--- length also stops at the first nil value *if and only if* there are
--- no more nil values after that.  So here the length of the
--- ClampedArray is two, but if we added
+-- So the values of the 'foo' array are now '{ [1] = 10, [2] = 4 }'.
+-- ClampedArrays do not allow indexes less than one; so the index zero
+-- is discarded.  Their length also stops at the first nil value *if
+-- and only if* there are no more nil values after that.  So here the
+-- length of the ClampedArray is two, but if we added
 --
 --     foo[4] = 40
 --
