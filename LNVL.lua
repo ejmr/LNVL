@@ -23,15 +23,40 @@ LNVL.currentScene = nil
 -- LNVL table above.  We must require() each module in a specific
 -- order, so insertions or changes to this list must be careful.
 
+-- First we must load any modules that define global values we may use
+-- in the Settings module.
 LNVL.Color = require("src.color")
 LNVL.Position = require("src.position")
+
+-- Next we need to load Settings as soon as possible so that other
+-- modules can draw default values from there.
 LNVL.Settings = require("src.settings")
+
+-- We want to load Debug after Settings and before other modules so
+-- that they can have special behavior if debug mode is enabled, which
+-- the Settings module controls.
 LNVL.Debug = require("src.debug")
+
+-- Then we should load the Graphics module so that the rest have
+-- access to primitive rendering functions.
 LNVL.Graphics = require("src.graphics")
-LNVL.Drawable = require("src.drawable")
+
+-- Then we load the ClampedArray module to make it accesible to
+-- classes which define properties using that type.
+LNVL.ClampedArray = require("src.clamped-array")
+
+-- Next come the Opcode and Instruction modules, in that order, since
+-- the remaining modules may generate opcodes.  And since opcodes
+-- create instructions we load them in that sequence.
 LNVL.Opcode = require("src.opcode")
 LNVL.Instruction = require("src.instruction")
-LNVL.ClampedArray = require("src.clamped-array")
+
+-- Next comes the Drawable module, which classes below may use for
+-- certain properties.
+LNVL.Drawable = require("src.drawable")
+
+-- The order of the remaining modules can come in any order as they do
+-- not depend on each other.
 LNVL.Character = require("src.character")
 LNVL.Scene = require("src.scene")
 
