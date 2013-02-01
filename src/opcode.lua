@@ -71,13 +71,13 @@ LNVL.Opcode.__tostring = function (opcode)
 end
 
 -- The following table contains all of the 'processor functions' for
--- opcodes.  Each key in the table the name of an opcode as a string;
--- these are the same keys which appear in the table of valid opcodes
--- defined above.  The value for each entry is function which accepts
--- one argument: an LNVL.Opcode object.  The processor function will
--- add any extra data or modify any existing data for that particular
--- instance of LNVL.Opcode and then return either the modified object,
--- or a new array of opcodes.
+-- opcodes.  Each key in the table is the name of an opcode as a
+-- string; these are the same keys which appear in the table of valid
+-- opcodes defined above.  The value for each entry is function which
+-- accepts one argument: an LNVL.Opcode object.  The processor
+-- function will add any extra data or modify any existing data for
+-- that particular instance of LNVL.Opcode and then return either the
+-- modified object, or a new array of opcodes.
 --
 -- If the processor functions returns a table of opcodes then that
 -- table may have the '__flatten' property.  If it exists it must have
