@@ -208,9 +208,8 @@ function LNVL.Scene:drawContainer()
         borderColor=self.borderColor }
 end
 
--- This method draws text within the scene's container.  It will clear
--- the container each time, erasing the current text on screen.  This
--- method returns no value.
+-- This method draws text within the scene's container.  This method
+-- returns no value.
 function LNVL.Scene:drawText(text)
     LNVL.Graphics.drawText(self.font, self.textColor, text)
 end
