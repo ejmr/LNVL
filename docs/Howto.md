@@ -389,6 +389,33 @@ to calm everyone down.  Look at popular visual novels for ideas about
 how you can convey feelings in a story through the use of character
 portrait positioning.
 
+### Character Fonts ###
+
+Individual characters can use different fonts in the same way you can
+assign a different font for an individual scene.  To make a character
+use a specific font you define the `font` property of that character,
+like so:
+
+    Lobby = LNVL.Character:new{
+        name = "Lobby Jones",
+        font = "path/to/font-for-lobby.ttf",
+    }
+
+This will cause the character to use that specific font.  By default
+the font size will be twelve pixels.  But you can also change that:
+
+    Lobby = LNVL.Character:new{
+        name = "Lobby Jones",
+        font = {"path/to/font-for-lobby.ttf", 16},
+    }
+
+Now LNVL will render the font at a size of sixteen pixels.  Note how
+`{}` braces surround the name and size.  LNVL will stop with an error
+if you omit those braces.  Furthermore, if you define a character to
+use a specific font that will *always* take precedence over the fonts
+for any scene.  If LNVL has to choose between the font of a character
+and the font of a scene, it will choose the character every time.
+
 
 
 [lua]: http://www.lua.org/
