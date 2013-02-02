@@ -16,5 +16,11 @@ SOURCES += examples/
     zip --quiet --recurse-paths --compression-method store --update %o %f \
 |> $(ENGINE)
 
-# Create a TAGS file for use with GNU Emacs.
-: | TAGS |> ^ Creating TAGS^ ctags-exuberant -Re --languages=lua |> TAGS
+# Create a TAGS file for use with GNU Emacs.  This also creates
+# entries for opcode processor functions and the functions
+# implementing each instruction.
+: | TAGS \
+|> ^ Creating TAGS^ ctags-exuberant -Re --languages=lua \
+    --regex-lua="/LNVL\.Opcode\.Processor\[\"([a-z-]+)\"\]/Opcode.\1/" \
+    --regex-lua="/LNVL\.Instructions\[\"([a-z-]+)\"\]/Instruction.\1/" \
+|> TAGS
