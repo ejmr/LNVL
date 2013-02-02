@@ -83,21 +83,24 @@ LNVL.Instructions = {}
 LNVL.Instructions["say"] = LNVL.Instruction:new{
     name = "say",
     action = function (arguments)
-        local text = arguments.content
-
-        -- If the text is spoken by a character then we can
-        -- add additional formatting to the output, such as
-        -- the character's name.
         if arguments["character"] ~= nil then
-            text = {
+            -- If the text is spoken by a character then we can add
+            -- additional formatting to the output, such as the
+            -- character's name and font if present.
+            local text = {
                 arguments.character.textColor,
                 string.format("%s: %s",
                               arguments.character.name,
                               arguments.content)
             }
-        end
 
-        arguments.scene:drawText(text)
+            -- The font may be a nil value but that is ok since the
+            -- second argument to Scene:drawText() is optional.
+            arguments.scene:drawText(text, arguments.character.font)
+        else
+            -- Plain narration without a Character.
+            arguments.scene:drawText(arguments.content)
+        end
     end }
 
 

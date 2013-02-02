@@ -28,6 +28,14 @@ function LNVL.Character:new(properties)
     -- named color from the LNVL.Color table.
     character.textColor = LNVL.Settings.Characters.TextColor
 
+    -- font: This is a Font object representing the font we should use
+    -- for all of this character's dialog.  By default this is nil and
+    -- the character will use whatever font is defined for the scenes
+    -- in which the character appears.  Later on in the constructor we
+    -- check for a potential 'font' element in 'properties' and, if it
+    -- exists, assign the appropriate object to this.
+    character.font = nil
+
     -- images: A hash of images for the character.  These are the
     -- sprites we display on screen when the character is speaking,
     -- for example.  All of the values in the table are Drawable
@@ -63,6 +71,20 @@ function LNVL.Character:new(properties)
     for name,value in pairs(properties) do
         if rawget(character, name) ~= nil then
             rawset(character, name, value)
+        end
+    end
+
+    -- If the constructor received a 'font' property then we need to
+    -- handle that.  The property may either be a string or an array.
+    -- If it is a string then we treat that as the font name.  If it
+    -- is an array then the first element is the font name as a string
+    -- and the second (optional) element is the size in pixels as an
+    -- integer.
+    if properties["font"] ~= nil then
+        if type(properties.font) == "string" then
+            character.font = love.graphics.newFont(properties.font)
+        elseif type(properties.font) == "table" then
+            character.font = love.graphics.newFont(unpack(properties.font))
         end
     end
 
