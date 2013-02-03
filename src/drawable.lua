@@ -113,7 +113,7 @@ function LNVL.Drawable:setPosition(position)
     }
 
     location_for_position["TopCenter"] = {
-        location_for_position["Center"],
+        location_for_position["Center"][1],
         0
     }
 
@@ -128,7 +128,7 @@ function LNVL.Drawable:setPosition(position)
     }
 
     location_for_position["BottomCenter"] = {
-        location_for_position["Center"],
+        location_for_position["Center"][1],
         LNVL.Settings.Screen.Height - image_height - 10
     }
 
