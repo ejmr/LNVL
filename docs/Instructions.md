@@ -226,12 +226,12 @@ may have.
 ### Draw-Image ###
 
 This instruction renders an image to the screen.  The arguments table
-for its action function requires the following properties:
+for its action function accepts the following properties:
 
 1. `image`: The image to display.  This must be [an Image object][3]
 or an `LNVL.Drawable` object.
 
-2. `location`: An array of two elements representing the X and Y
+2. `location`: *(Optional)* An array of two elements representing the X and Y
 coordinates on screen where the engine will draw the image.
 
 3. `border`: *(Optional)* An array of two elements representing a
@@ -240,6 +240,15 @@ be the color, either a table of RGB values or a color from the
 `LNVL.Color` table.  The second element must be the width of the
 border in pixels.  LNVL will only draw the border if `image` is an
 `LNVL.Drawable` object.
+
+4. `position`: *(Optional)* A constant from the `LNVL.Position` table
+indicating the relative position on screen where the image should
+appear.  LNVL only uses this value if `image` is an `LNVL.Drawable`
+object.
+
+**Note:** The instruction must receive either `location` or
+`position`.  If the instruction receives both then `location` always
+takes precedence.
 
 ### Say ###
 
