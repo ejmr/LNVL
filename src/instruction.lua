@@ -141,6 +141,10 @@ LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
         end
 
         if getmetatable(arguments.image) == LNVL.Drawable then
+            if arguments["position"] ~= nil then
+                arguments.image:setPosition(arguments.position)
+            end
+
             arguments.image:draw()
         else
             love.graphics.draw(arguments.image,

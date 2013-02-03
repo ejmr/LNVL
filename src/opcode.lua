@@ -139,8 +139,6 @@ LNVL.Opcode.Processor["draw-character"] = function (opcode)
         opcode.arguments.character.position = opcode.arguments.position
     end
 
-    opcode.arguments.image:setPosition(opcode.arguments.position)
-
     if opcode.arguments.character.borderColor ~= LNVL.Color.Transparent then
         opcode.arguments.border = {
             opcode.arguments.character.borderColor,
