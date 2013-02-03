@@ -65,8 +65,13 @@ LNVL.Drawable.__tostring = function (drawable)
     if drawable.image == nil then
         return "<Drawable: No Image>"
     else
-        return string.format("<Drawable: %s at %d, %d>",
+        local position
+        if drawable["position"] ~= nil then
+            position = tostring(drawable.position) .. ", "
+        end
+        return string.format("<Drawable: %s at %s%d, %d>",
                              tostring(drawable.image),
+                             position,
                              drawable.location[1],
                              drawable.location[2])
     end
@@ -76,36 +81,68 @@ end
 -- and uses that to set the 'location' coordinates of the Drawable.
 -- It lets us describe the location of a Drawable in terms of a
 -- position relative to the screen instead of in absolute coordinates.
+--
+-- See the documentation for the LNVL.Position class for details about
+-- the meaning of the possible position values and where they cause
+-- Drawables to appear on screen.
 function LNVL.Drawable:setPosition(position)
     self.position = position
 
-    -- We interpret the 'position' property relative to location of
-    -- the scene's dialog container, based on the global settings for
-    -- scenes.  This way "Left" and "Right" mean aligned with the left
-    -- and right edges of the dialog box, and "Center" means in the
-    -- center of that.  In all three cases the position will be just
-    -- above that dialog box.
-
     local image_width = self.image:getWidth()
     local image_height = self.image:getHeight()
-    local vertical_position = LNVL.Settings.Scenes.Y - image_height - 10
 
-    if self.position == LNVL.Position.Center then
-        self.location = {
-            LNVL.Settings.Screen.Center[1] - image_width / 2,
-            vertical_position,
-        }
-    elseif self.position == LNVL.Position.Right then
-        self.location = {
-            LNVL.Settings.Scenes.Width - image_width + LNVL.Settings.Scenes.X,
-            vertical_position,
-        }
-    elseif self.position == LNVL.Position.Left then
-        self.location = {
-            LNVL.Settings.Scenes.X,
-            vertical_position,
-        }
-    end
+    -- This lookup table contains X and Y coordinates for all of the
+    -- various values of position, augmented for the dimensions of the
+    -- Drawable image.  We can assign the values from this table
+    -- directly to the 'location' of the Drawable and be done.
+    local location_for_position = {}
+
+    location_for_position["Center"] = {
+        LNVL.Settings.Screen.Center[1] - image_width / 2,
+        LNVL.Settings.Scenes.Y - image_height - 10
+    }
+
+    location_for_position["Right"] = {
+        LNVL.Settings.Scenes.Width - image_width + LNVL.Settings.Scenes.X,
+        location_for_position["Center"][2]
+    }
+
+    location_for_position["Left"] = {
+        LNVL.Settings.Scenes.X,
+        location_for_position["Center"][2]
+    }
+
+    location_for_position["TopCenter"] = {
+        location_for_position["Center"][1],
+        0
+    }
+
+    location_for_position["TopRight"] = {
+        LNVL.Settings.Scenes.Width - image_width + LNVL.Settings.Scenes.X,
+        0
+    }
+
+    location_for_position["TopLeft"] = {
+        LNVL.Settings.Scenes.X,
+        0
+    }
+
+    location_for_position["BottomCenter"] = {
+        location_for_position["Center"][1],
+        LNVL.Settings.Screen.Height - image_height - 10
+    }
+
+    location_for_position["BottomRight"] = {
+        LNVL.Settings.Scenes.Width - image_width + LNVL.Settings.Scenes.X,
+        LNVL.Settings.Screen.Height - image_height - 10
+    }
+
+    location_for_position["BottomLeft"] = {
+        LNVL.Settings.Scenes.X,
+        LNVL.Settings.Screen.Height - image_height - 10
+    }
+
+    self.location = location_for_position[self.position]
 end
 
 -- This method will render the Drawable to screen, appearing at the
