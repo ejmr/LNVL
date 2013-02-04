@@ -44,8 +44,8 @@ values are the objects themselves.
 Opcodes and Their Role
 ----------------------
 
-LNVL does not *directly* build a list of instructions to execute.
-Instead it creates a list of ‘opcodes’.  Each opcode contains the
+LNVL does not directly build a list of instructions to execute.
+Instead it creates a list of *opcodes.*  Each opcode contains the
 information LNVL needs to determine which instruction to run and how
 to run it.  This extra step of indirection in the process allows LNVL
 to pass additional information to instructions more easily.
