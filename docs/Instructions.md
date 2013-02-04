@@ -139,7 +139,9 @@ arguments as well as the instruction(s) the opcode generates.
 The `change-scene` opcode tells LNVL to switch to a different scene,
 i.e. another `LNVL.Scene` object.
 
-This opcode takes no arguments.
+1. `name`: The name of the scene the engine should change to.  This
+must be a string naming an `LNVL.Scene` object accessible in global
+scope, i.e. from the `_G` table.
 
 ### Draw-Character ###
 
