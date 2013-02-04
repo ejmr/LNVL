@@ -69,7 +69,7 @@ instructions dictate the contents of this table, so they will vary
 from opcode to opcode.  This property may be `nil`, e.g. the `no-op`
 opcode has no arguments table.
 
-The function `LNVL.drawCurrentContent()` adds the aforementioned
+The method `LNVL.Scene:drawCurrentContent()` adds the aforementioned
 `scene` property to `arguments`.  Because of this, opcodes *must not*
 provide their own `scene` property because LNVL will overrite its
 value when executing the related instruction.
