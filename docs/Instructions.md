@@ -199,7 +199,8 @@ screen.
 
 1. `character`: An instance of `LNVL.Character` to draw.
 
-2. `image`: The new [image][3] to use for the character.
+2. `image`: The new image to use for the character, which must be an
+`LNVL.Drawable` object.
 
 ### Set-Scene-Image ###
 
@@ -272,7 +273,8 @@ function requires the following properties:
 1. `target`: The object whose image will change.  Currently the engine
 supports only `LNVL.Character` objects as valid targets.
 
-2. `image`: The new image to use.  This must be [an Image object][3].
+2. `image`: The new image to use.  This must be [an `Image` object][3]
+or an `LNVL.Drawable` object.
 
 ### Set-Scene ###
 
