@@ -297,5 +297,12 @@ function LNVL.Scene:moveBack()
     end
 end
 
+-- This constant is an alias for the 'no-op' opcode.  We can use it in
+-- scripts to represent pauses in scenes, places where there is no
+-- dialog but the player must press a key to continue.  We could
+-- accomplish the same thing by using empty strings, but this constant
+-- improves readability.
+LNVL.Scene.Pause = LNVL.Opcode:new("no-op")
+
 -- Return the class as a module.
 return LNVL.Scene
