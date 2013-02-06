@@ -88,6 +88,13 @@ line using the `..` operator.  For example:
         "But now this is our last line of dialog."
     }
 
+LNVL will display every string of dialog to the player, even if that
+string is empty.  Nothing will appear on screen but the player will
+have to press a key to continue.  If you want to use that effect for a
+dramatic pause, for example, then your script will be more readable by
+using the `LNVL.Scene.Pause` constant.  It is the equivalent of
+writing `""` in a scene but it makes the intentional pause explicit.
+
 ### Backgrounds ###
 
 By default a scene has a black background with a white background for
