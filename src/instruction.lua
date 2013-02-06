@@ -38,23 +38,6 @@ function LNVL.Instruction:new(properties)
     return instruction
 end
 
--- This function takes the name of an LNVL.Opcode as a string and
--- returns the LNVL.Instruction to execute for that opcode.  We need
--- this function because there is not a one-to-one mapping between
--- opcodes and instructions.
-function LNVL.Instruction.getForOpcode(name)
-    local map = {
-        ["monologue"] = "say",
-        ["say"] = "say",
-        ["set-character-image"] = "set-image",
-        ["draw-character"] = "draw-image",
-        ["change-scene"] = "set-scene",
-        ["set-scene-image"] = "set-image",
-    }
-
-    return LNVL.Instructions[map[name]]
-end
-
 -- A simple tostring() method for debugging purposes, which does
 -- nothing but returns the name of the instruction.
 LNVL.Instruction.__tostring = function (instruction)
@@ -164,6 +147,19 @@ LNVL.Instructions["set-scene"] = LNVL.Instruction:new{
                "Cannot load scene " .. arguments.name)
         LNVL.currentScene = scene
     end }
+
+-- This table has the names of opcodes for strings and maps them to
+-- the names of the instructions we execute for each opcode.  Note
+-- that there is not a one-to-one mapping between opcodes and
+-- instructions; different opcodes may become the same instruction.
+LNVL.Instruction.forOpcode = {
+    ["monologue"] = LNVL.Instructions["say"],
+    ["say"] = LNVL.Instructions["say"],
+    ["set-character-image"] = LNVL.Instructions["set-image"],
+    ["draw-character"] = LNVL.Instructions["draw-image"],
+    ["change-scene"] = LNVL.Instructions["set-scene"],
+    ["set-scene-image"] = LNVL.Instructions["set-image"],
+}
 
 -- If LNVL is running in debugging mode then make sure that every
 -- instruction we list as valid has a match LNVL.Instruction object
