@@ -164,10 +164,20 @@ LNVL.Instruction.forOpcode = {
 -- If LNVL is running in debugging mode then make sure that every
 -- instruction we list as valid has a match LNVL.Instruction object
 -- that implements it.
+--
+-- We also make sure that every opcode has a matching instruction.
 if LNVL.Settings.DebugModeEnabled == true then
     for name,_ in pairs(LNVL.Instruction.ValidInstructions) do
         if LNVL.Instructions[name] == nil then
             error("No implementation for the instruction " .. name)
+        end
+    end
+
+    for name,_ in pairs(LNVL.Opcode.ValidOpcodes) do
+        if LNVL.Instruction.forOpcode[name] == nil
+            or getmetatable(LNVL.Instruction.forOpcode[name]) ~= LNVL.Instruction
+        then
+            error("No instruction implementation for the opcode " .. name)
         end
     end
 end
