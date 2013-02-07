@@ -253,6 +253,13 @@ object.
 `position`.  If the instruction receives both then `location` always
 takes precedence.
 
+### No-Op ###
+
+This instruction is a no-op, i.e. no operation.  It does nothing.
+LNVL never generates this instruction.  However, it must exist because
+every opcode must have a corresponding instruction, in this case the
+`no-op` opcode.
+
 ### Say ###
 
 This instruction prints dialog to the screen.  The arguments table for

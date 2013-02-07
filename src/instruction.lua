@@ -19,6 +19,7 @@ LNVL.Instruction.ValidInstructions = {
     ["set-image"] = true,
     ["draw-image"] = true,
     ["set-scene"] = true,
+    ["no-op"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
@@ -148,6 +149,11 @@ LNVL.Instructions["set-scene"] = LNVL.Instruction:new{
         LNVL.currentScene = scene
     end }
 
+LNVL.Instructions["no-op"] = LNVL.Instruction:new{
+    name = "no-op",
+    action = function (arguments) end
+}
+
 -- This table has the names of opcodes for strings and maps them to
 -- the names of the instructions we execute for each opcode.  Note
 -- that there is not a one-to-one mapping between opcodes and
@@ -159,6 +165,7 @@ LNVL.Instruction.forOpcode = {
     ["draw-character"] = LNVL.Instructions["draw-image"],
     ["change-scene"] = LNVL.Instructions["set-scene"],
     ["set-scene-image"] = LNVL.Instructions["set-image"],
+    ["no-op"] = LNVL.Instructions["no-op"],
 }
 
 -- If LNVL is running in debugging mode then make sure that every
