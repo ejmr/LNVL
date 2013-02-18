@@ -60,8 +60,8 @@ end
 -- The values are the LNVL.Instruction objects themselves.
 --
 -- All of the individual instructions defined below are described in
--- detail by the HTML document referenced at the top of this file.
--- None of the instruction action functions return values.
+-- detail by the document referenced at the top of this file.  None of
+-- the instruction action functions return values.
 LNVL.Instructions = {}
 
 LNVL.Instructions["say"] = LNVL.Instruction:new{
