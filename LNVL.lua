@@ -59,6 +59,7 @@ LNVL.Drawable = require("src.drawable")
 -- not depend on each other.
 LNVL.Character = require("src.character")
 LNVL.Scene = require("src.scene")
+LNVL.Menu = require("src.menu")
 
 -- This function loads an external LNVL script, i.e. one defining
 -- scenes and story content.  The argument is the path to the file;
