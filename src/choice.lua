@@ -36,5 +36,10 @@ function LNVL.MenuChoice:new(properties)
     return choice
 end
 
+-- Convert a MenuChoice object to a string for debugging purposes.
+LNVL.MenuChoice.__tostring = function (choice)
+    return string.format("<MenuChoice: %q>", choice.label)
+end
+
 -- Return the class as the module.
 return LNVL.MenuChoice
