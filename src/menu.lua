@@ -10,6 +10,9 @@
 LNVL.Menu = {}
 LNVL.Menu.__index = LNVL.Menu
 
+-- Load the LNVL.MenuChoice class so that we can use it.
+require("src.choice")
+
 -- Our constructor for the LNVL.Menu class.  It accepts a table of
 -- properties to set, assigns those to the new Menu object, and
 -- returns it.
