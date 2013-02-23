@@ -49,6 +49,9 @@ function LNVL.Menu:new(properties)
     -- We raise an error for any table that does not meet these
     -- criteria, although the MenuChoice class performs some of this
     -- error-checking for us.
+
+    local choices = {}
+
     for _,value in pairs(properties) do
         assert(type(value) == "table" and #value >= 2,
               "Invalid data for a menu choice.")
@@ -63,9 +66,14 @@ function LNVL.Menu:new(properties)
             action = value[2]
         end
 
-        table.insert(menu.choices,
+        table.insert(choices,
                     LNVL.MenuChoice:new{ label=value[1], action=action })
     end
+
+    -- Finally assign the collected array of 'choices' to the menu,
+    -- but we make it a clamped array so that we cannot accidentally
+    -- access any elements out of bounds.
+    menu.choices = LNVL.ClampedArray(choices)
 
     return menu
 end
