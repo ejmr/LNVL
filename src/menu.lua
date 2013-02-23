@@ -24,6 +24,15 @@ function LNVL.Menu:new(properties)
     -- Each element is an LNVL.MenuChoice object.
     menu.choices = {}
 
+    -- currentChoiceIndex: An integer representing the currently
+    -- selected choice, or nil if there is no selected choice.  In
+    -- this context 'selected' does not mean that the player has
+    -- confirmed that he wants to make the given choice.  'Selected'
+    -- only tells us what choice is currently under consideration,
+    -- e.g.  what choice the mouse cursor is hovering over at the
+    -- current moment.
+    menu.currentChoiceIndex = nil
+
     -- Overwrite any default property values above with ones given to
     -- the constructor.
     for name,value in pairs(properties) do
