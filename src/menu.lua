@@ -33,17 +33,9 @@ function LNVL.Menu:new(properties)
     -- current moment.
     menu.currentChoiceIndex = nil
 
-    -- Overwrite any default property values above with ones given to
-    -- the constructor.
-    for name,value in pairs(properties) do
-        if rawget(menu, name) ~= nil then
-            rawset(menu, name, value)
-        end
-    end
-
-    -- We treat the remaining entries in 'properties' as an array of
-    -- tables, which we turn into choices.  Each table must be an
-    -- array with two elements:
+    -- We treat the entries in 'properties' as an array of tables,
+    -- which we turn into choices.  Each table must be an array with
+    -- two elements:
     --
     -- 1. The label for the choice as a string.
     --
