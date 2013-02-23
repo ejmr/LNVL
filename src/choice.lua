@@ -25,8 +25,12 @@ function LNVL.MenuChoice:new(properties)
     -- action: The action to execute when the user selects this
     -- choice.  This must be a function that accepts one argument, the
     -- LNVL.Scene object representing the scene containing the menu
-    -- where this choice appears.  LNVL expects no return value from
-    -- this function.
+    -- where this choice appears.  If the function returns any values
+    -- then it must return either an individual LNVL.Opcode object or
+    -- an array of those objects.  LNVL will process those opcodes
+    -- immediately, per the LNVL.Opcode:process() method.  If the
+    -- function returns no values then LNVL assumes we only execute
+    -- the action for its side-effects.
     choice.action = properties["action"]
 
     -- Make sure the choice has the required properties.
