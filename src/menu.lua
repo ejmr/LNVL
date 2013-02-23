@@ -38,10 +38,13 @@ function LNVL.Menu:new(properties)
     --
     -- 1. The label for the choice as a string.
     --
-    -- 2. The action to perform for that choice, as a function.  See
-    -- the documentation for the LNVL.MenuChoice:new() method,
-    -- specifically for the 'action' property, for more details about
-    -- this function.
+    -- 2. The action to perform for that choice, as a function.  But
+    -- we also allow strings here.  If the value is a string then we
+    -- treat that as the name of a scene and assign the action an
+    -- anonymous function which returns an opcode to switch to that
+    -- scene later.  See the documentation for the LNVL.MenuChoice
+    -- constructor, specifically for the 'action' property, for more
+    -- details about this function.
     --
     -- We raise an error for any table that does not meet these
     -- criteria, although the MenuChoice class performs some of this
@@ -49,8 +52,19 @@ function LNVL.Menu:new(properties)
     for _,value in pairs(properties) do
         assert(type(value) == "table" and #value >= 2,
               "Invalid data for a menu choice.")
+
+        local action
+
+        if type(value[2]) == "string" then
+            action = function (scene)
+                return LNVL.Opcode:new("change-scene", value[2])
+            end
+        else
+            action = value[2]
+        end
+
         table.insert(menu.choices,
-                    LNVL.MenuChoice:new{ label=value[1], action=value[2] })
+                    LNVL.MenuChoice:new{ label=value[1], action=action })
     end
 
     return menu
