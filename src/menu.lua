@@ -79,5 +79,30 @@ function LNVL.Menu:new(properties)
     return menu
 end
 
+-- These two methods move forward and backward through the available
+-- menu choices.  They will return an integer, the index of the newly
+-- selected choice.  That way callers can use that information to
+-- update the display of a menu on screen, for example.
+
+function LNVL.Menu:moveForward()
+    if self.currentChoiceIndex == nil then
+        self.currentChoiceIndex = 1
+    elseif self.currentChoiceIndex < #self.choices then
+        self.currentChoiceIndex = self.currentChoiceIndex + 1
+    end
+
+    return self.currentChoiceIndex
+end
+
+function LNVL.Menu:moveBack()
+    if self.currentChoiceIndex == nil then
+        self.currentChoiceIndex = #self.coiches
+    elseif self.currentChoiceIndex > 1 then
+        self.currentChoiceIndex = self.currentChoiceIndex - 1
+    end
+
+    return self.currentChoiceIndex
+end
+
 -- Return the class as the module.
 return LNVL.Menu
