@@ -430,6 +430,72 @@ for any scene.  If LNVL has to choose between the font of a character
 and the font of a scene, it will choose the character every time.
 
 
+Settings
+--------
+
+### Ways to Change Them ###
+
+Previous examples change settings in a variety of ways.  You can
+change global settings by editing the values in the `src/settings.lua`
+file.  Or you can change settings for individual scenes or characters
+by providing those values when you create them, for example:
+
+    Lobby = LNVL.Character:new{
+        name = "Lobby Jones",
+        textColor = LNVL.Color.Blue,
+    }
+
+This overrides the default text color for characters, giving this
+specific characer his own unique color for all of his dialog.
+
+There is another way to change global settings: in dialog scripts
+themselves.  Since each dialog script is actually Lua code you can
+change the values for global settings inside of those scripts.  For
+example:
+
+    -- This example script demonstrates how we can change some global
+    -- settings in the script itself, without modifying the
+    -- 'src/settings.lua' file.
+
+    -- Explicitly disable debugging mode.
+    LNVL.Settings.DebugModeEnabled = false
+
+    -- Change global settings for all scenes.
+    LNVL.Settings.Scenes.TextColor = LNVL.Color.Blue
+    LNVL.Settings.Scenes.BorderSize = 0
+
+    -- Use two scenes to make sure the changes above affect all scenes.
+
+    START = LNVL.Scene:new{
+        "This text should appear in blue.",
+        LNVL.Scene.changeTo("END"),
+    }
+
+    END = LNVL.Scene:new{
+        "With no border around the dialog box.",
+    }
+
+This example changes three global settings by modifying values that
+the `src/settings.lua` file defines.  The changes have the intended
+effect because LNVL does not use settings like `Scenes.TextColor`
+until you create a scene.  That means there is a window of time in
+dialog scripts where you are free to modify global settings relating
+to scenes, characters, and other story objects before you create any
+of those objects.
+
+One benefit to this approach is that it allows you to change global
+settings only for one script.  Imagine that you are using LNVL to
+present multiple stories.  You may want different global settings for
+those stories (i.e. scripts).  Changing the values in
+`src/settings.lua` would affect every story.  You could change the
+appropriate settings for each individual scene, character, etc., but
+that becomes tedious and repetitive.  A convenient middle-ground is to
+change the global settings as needed in each script.  This way you can
+modify the colors for every scene in a single story without causing
+changes for any other independent stories using the same installation
+of LNVL.
+
+
 
 [lua]: http://www.lua.org/
 [dsl]: http://en.wikipedia.org/wiki/Domain_specific_language
