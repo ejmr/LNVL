@@ -57,8 +57,12 @@ LNVL.Drawable = require("src.drawable")
 
 -- The order of the remaining modules can come in any order as they do
 -- not depend on each other.
+--
+-- Note that we load the LNVL.MenuChoice class inside of the LNVL.Menu
+-- code, so it does not appear in the list below.
 LNVL.Character = require("src.character")
 LNVL.Scene = require("src.scene")
+LNVL.Menu = require("src.menu")
 
 -- This function loads an external LNVL script, i.e. one defining
 -- scenes and story content.  The argument is the path to the file;
