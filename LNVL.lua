@@ -13,7 +13,7 @@
 -- and data.
 LNVL = {}
 
--- We sandbox all dialog scripts we load via LNVL.loadScript() in
+-- We sandbox all dialog scripts we load via LNVL.LoadScript() in
 -- their own environment so that global variables in those scripts
 -- cannot clobber existing global variables in any game using LNVL or
 -- in LNVL itself.  This table represents that environment.
@@ -48,7 +48,7 @@ end
 
 -- This property represents the current Scene in use.  We should
 -- rarely change the value of this property directly.  Instead the
--- LNVL.loadScript() function and Scene:changeTo() method are the
+-- LNVL.LoadScript() function and Scene:changeTo() method are the
 -- preferred ways to change changes.
 LNVL.CurrentScene = nil
 
@@ -103,7 +103,7 @@ LNVL.Menu = require("src.menu")
 -- the function assumes the caller has already ensured the file exists
 -- and will crash with an error if the file is not found.  The script
 -- must define the 'START' scene.  The function returns no value.
-function LNVL.loadScript(filename)
+function LNVL.LoadScript(filename)
     local script = love.filesystem.load(filename)
     assert(script, "Could not load script " .. filename)
     setfenv(script, LNVL.ScriptEnvironment)
