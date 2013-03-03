@@ -85,7 +85,13 @@ function LNVL.loadScript(filename)
     local script = love.filesystem.load(filename)
     assert(script, "Could not load script " .. filename)
     setfenv(script, LNVL.ScriptEnvironment)
-    pcall(script)
+
+    if LNVL.Settings.DebugModeEnabled == true then
+        script()
+    else
+        pcall(script)
+    end
+
     LNVL.CurrentScene = LNVL.ScriptEnvironment["START"]
 end
 
