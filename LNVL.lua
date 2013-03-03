@@ -46,6 +46,17 @@ function LNVL.CreateConstructorAlias(name, class)
     end
 end
 
+-- This function creates a function alias, i.e. a function we can use
+-- in scripts as a short-cut for a more verbose function defined
+-- within LNVL.  The first argument must be the alias we want to
+-- create, as a string, and the second argument a reference to the
+-- actual function to call.  This function returns no value.
+function LNVL.CreateFunctionAlias(name, implementation)
+    LNVL.ScriptEnvironment[name] = function (...)
+        return implementation(...)
+    end
+end
+
 -- This property represents the current Scene in use.  We should
 -- rarely change the value of this property directly.  Instead the
 -- LNVL.LoadScript() function and Scene:changeTo() method are the
