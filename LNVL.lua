@@ -101,8 +101,8 @@ LNVL.Menu = require("src.menu")
 -- This function loads an external LNVL script, i.e. one defining
 -- scenes and story content.  The argument is the path to the file;
 -- the function assumes the caller has already ensured the file exists
--- and will crash with an error if the file is not found.  The script
--- must define the 'START' scene.  The function returns no value.
+-- and will crash with an error if the file is not found.  The
+-- function returns no value.
 function LNVL.LoadScript(filename)
     local script = love.filesystem.load(filename)
     assert(script, "Could not load script " .. filename)
@@ -114,7 +114,12 @@ function LNVL.LoadScript(filename)
         pcall(script)
     end
 
-    LNVL.CurrentScene = LNVL.ScriptEnvironment["START"]
+    -- We always treat 'START' as the initial scene in any story so we
+    -- should update the current scene if the 'START' scene exists.
+    if LNVL.ScriptEnvironment["START"] ~= nil then
+        LNVL.CurrentScene = LNVL.ScriptEnvironment["START"]
+        assert(getmetatable(LNVL.CurrentScene) == LNVL.Scene)
+    end
 end
 
 -- Return the LNVL module.
