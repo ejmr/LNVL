@@ -120,6 +120,9 @@ function LNVL.Scene:new(properties)
     return scene
 end
 
+-- Create an alias for the constructor for use in dialog scripts.
+LNVL.CreateConstructorAlias("Scene", LNVL.Scene)
+
 -- This metatable function converts a Scene to a string.  This helps
 -- us with debugging.  There is one situation where we can have an
 -- empty table that has LNVL.Scene for its metatable: the processor

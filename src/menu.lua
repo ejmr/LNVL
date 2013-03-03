@@ -79,6 +79,9 @@ function LNVL.Menu:new(properties)
     return menu
 end
 
+-- Create an alias for the constructor for use in dialog scripts.
+LNVL.CreateConstructorAlias("Menu", LNVL.Menu)
+
 -- These two methods move forward and backward through the available
 -- menu choices.  They will return an integer, the index of the newly
 -- selected choice.  That way callers can use that information to
