@@ -312,7 +312,7 @@ end
 -- dialog but the player must press a key to continue.  We could
 -- accomplish the same thing by using empty strings, but this constant
 -- improves readability.
-LNVL.Scene.Pause = LNVL.Opcode:new("no-op")
+LNVL.ScriptEnvironment["Pause"] = LNVL.Opcode:new("no-op")
 
 -- Return the class as a module.
 return LNVL.Scene
