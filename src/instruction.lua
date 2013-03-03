@@ -143,7 +143,7 @@ LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
 LNVL.Instructions["set-scene"] = LNVL.Instruction:new{
     name = "set-scene",
     action = function (arguments)
-        local scene = _G[arguments.name]
+        local scene = LNVL.ScriptEnvironment[arguments.name]
         assert(scene ~= nil and getmetatable(scene) == LNVL.Scene,
                "Cannot load scene " .. arguments.name)
         LNVL.CurrentScene = scene
