@@ -109,19 +109,19 @@ after creating a scene and its dialog you can change its background
 color like so:
 
     START = Scene{
-        boxBackgroundColor = LNVL.Color.NavyBlue,
+        boxBackgroundColor = Color.NavyBlue,
         "Thus begins our tale...",
     }
 
 The file `src/rgb.txt` names every color you can use; although the
 `Color` module always uses title-case names, so the file lists
-‘gray50’ but in scripts you write `LNVL.Color.Gray50`.  If you want
-transparency you can use `LNVL.Color.Transparent` for any color.
+‘gray50’ but in scripts you write `Color.Gray50`.  If you want
+transparency you can use `Color.Transparent` for any color.
 
 Instead of names you can use [short-hand hexadecimal notation][color-hex]:
 
     START = Scene{
-        boxBackgroundColor = LNVL.Color.fromHex("#088008"),
+        boxBackgroundColor = Color.fromHex("#088008"),
         "...",
     }
 
@@ -171,7 +171,7 @@ You can change the color for individual scenes by naming the color
 when you create the scene, like so:
 
     START = Scene{
-        textColor = LNVL.Color.Peach,
+        textColor = Color.Peach,
         "This narration will be in peach.",
         "It will override the default setting.",
     }
@@ -442,7 +442,7 @@ by providing those values when you create them, for example:
 
     Lobby = Character{
         name = "Lobby Jones",
-        textColor = LNVL.Color.Blue,
+        textColor = Color.Blue,
     }
 
 This overrides the default text color for characters, giving this
@@ -461,7 +461,7 @@ example:
     LNVL.Settings.DebugModeEnabled = false
 
     -- Change global settings for all scenes.
-    LNVL.Settings.Scenes.TextColor = LNVL.Color.Blue
+    LNVL.Settings.Scenes.TextColor = Color.Blue
     LNVL.Settings.Scenes.BorderSize = 0
 
     -- Use two scenes to make sure the changes above affect all scenes.

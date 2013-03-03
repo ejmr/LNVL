@@ -9,7 +9,7 @@ Eric = Character{
 
 START = Scene{
     name = "Position Test",
-    boxBackgroundColor = LNVL.Color.Transparent,
+    boxBackgroundColor = Color.Transparent,
     Eric:isAt "Left",
     LNVL.Scene.Pause,
     Eric:isAt "Center",
