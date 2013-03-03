@@ -105,5 +105,9 @@ LNVL.Color.__tostring = function (color)
                          color[3])
 end
 
+-- Allow dialog scripts to access this module by writing (for example)
+-- 'Color.NavyBlue' instead of 'LNVL.Color.NavyBlue'.
+LNVL.ScriptEnvironment["Color"] = LNVL.Color
+
 -- Return our table as a module.
 return LNVL.Color

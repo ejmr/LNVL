@@ -197,6 +197,10 @@ function LNVL.Scene.changeBackgroundTo(filename)
                            {image=love.graphics.newImage(filename)})
 end
 
+-- Create a ChangeSceneBackgroundTo() alias for scripts to use in
+-- place of the LNVL.Scene.changeBackgroundTo() function above.
+LNVL.CreateFunctionAlias("ChangeSceneBackgroundTo", LNVL.Scene.changeBackgroundTo)
+
 -- This method sets the font for the scene.  It requires a filename to
 -- a font file (e.g. a TTF file) and a font size in pixels.  The
 -- method returns no value.
@@ -285,6 +289,9 @@ end
 function LNVL.Scene.changeTo(name)
     return LNVL.Opcode:new("change-scene", {name=name})
 end
+
+-- Create the ChangeToScene() alias for LNVL.Scene.changeTo().
+LNVL.CreateFunctionAlias("ChangeToScene", LNVL.Scene.changeTo)
 
 -- This method moves forward to the next content in the scene.
 function LNVL.Scene:moveForward()

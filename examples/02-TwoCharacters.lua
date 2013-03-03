@@ -8,8 +8,8 @@ Eric = Character{name = "Eric", textColor = "#c8ffc8"}
 Jeff = Character{name = "Jeff", textColor = "#c8c8ff"}
 
 START = Scene{
-    boxBackgroundColor = LNVL.Color.DeepSkyBlue4,
-    borderColor = LNVL.Color.White,
+    boxBackgroundColor = Color.DeepSkyBlue4,
+    borderColor = Color.White,
     Jeff "Why did you use a copyrighted song for an example?",
     Eric "Oh come on, who is going to sue us?",
     Jeff "Susumu Hirawhat's-his-name?  You know, the author?",

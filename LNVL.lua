@@ -24,10 +24,10 @@ LNVL = {}
 -- characters, or do anything meaningful.
 LNVL.ScriptEnvironment = { ["LNVL"] = LNVL }
 
--- This function creates a function alias in the script environment.
--- These aliases allow us to write more terse, readable code in dialog
--- scripts by providing shortcuts for common LNVL constructors we use.
--- For example, by calling
+-- This function creates a constructor alias in the script
+-- environment.  These aliases allow us to write more terse, readable
+-- code in dialog scripts by providing shortcuts for common LNVL
+-- constructors we use.  For example, by calling
 --
 --     LNVL.CreateConstructorAlias("Scene", LNVL.Scene)
 --
@@ -43,6 +43,17 @@ LNVL.ScriptEnvironment = { ["LNVL"] = LNVL }
 function LNVL.CreateConstructorAlias(name, class)
     LNVL.ScriptEnvironment[name] = function (...)
         return class:new(...)
+    end
+end
+
+-- This function creates a function alias, i.e. a function we can use
+-- in scripts as a short-cut for a more verbose function defined
+-- within LNVL.  The first argument must be the alias we want to
+-- create, as a string, and the second argument a reference to the
+-- actual function to call.  This function returns no value.
+function LNVL.CreateFunctionAlias(name, implementation)
+    LNVL.ScriptEnvironment[name] = function (...)
+        return implementation(...)
     end
 end
 

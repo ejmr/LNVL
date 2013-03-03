@@ -4,8 +4,8 @@
 
 Eric = Character{
     name = "Eric",
-    textColor = LNVL.Color.SlateBlue,
-    borderColor = LNVL.Color.NavyBlue,
+    textColor = Color.SlateBlue,
+    borderColor = Color.NavyBlue,
     borderSize = 5,
     image = "examples/images/Eric-Normal.png",
 }
