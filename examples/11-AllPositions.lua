@@ -2,12 +2,12 @@
 -- screen, moving a character image around to ensure it appears in the
 -- proper place for each one.
 
-Eric = LNVL.Character:new{
+Eric = Character{
     name = "Eric",
     image = "examples/images/Eric-Normal.png",
 }
 
-START = LNVL.Scene:new{
+START = Scene{
     name = "Position Test",
     boxBackgroundColor = LNVL.Color.Transparent,
     Eric:isAt "Left",

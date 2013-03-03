@@ -3,10 +3,10 @@
 -- dialog into a 'monologue' so that we do not have to repeat the
 -- character name over and over.
 
-Eric = LNVL.Character:new{name="Eric", textColor="#3a3"}
-Jeff = LNVL.Character:new{name="Jeff", textColor="#a33"}
+Eric = Character{name="Eric", textColor="#3a3"}
+Jeff = Character{name="Jeff", textColor="#a33"}
 
-START = LNVL.Scene:new{
+START = Scene{
     Eric:monologue{
         "Now that we're out of jail, no hard feelings.",
         "Right?",
