@@ -1,13 +1,13 @@
 -- This example script demonstrates how to change scenes.
 
-START = LNVL.Scene:new{
+START = Scene{
     "This is the start of our story.",
     "Spoiler alert: it is extremely boring.",
     "But we do have...",
     LNVL.Scene.changeTo("FIELD"),
 }
 
-FIELD = LNVL.Scene:new{
+FIELD = Scene{
     "...a field background!",
 }
 

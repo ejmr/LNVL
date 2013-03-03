@@ -13,10 +13,44 @@
 -- and data.
 LNVL = {}
 
+-- We sandbox all dialog scripts we load via LNVL.LoadScript() in
+-- their own environment so that global variables in those scripts
+-- cannot clobber existing global variables in any game using LNVL or
+-- in LNVL itself.  This table represents that environment.
+--
+-- We explicitly define the 'LNVL' key so that scripts can access the
+-- LNVL table.  Without that key the scripts could not call any LNVL
+-- functions and that would make it impossible to define scripts,
+-- characters, or do anything meaningful.
+LNVL.ScriptEnvironment = { ["LNVL"] = LNVL }
+
+-- This function creates a function alias in the script environment.
+-- These aliases allow us to write more terse, readable code in dialog
+-- scripts by providing shortcuts for common LNVL constructors we use.
+-- For example, by calling
+--
+--     LNVL.CreateConstructorAlias("Scene", LNVL.Scene)
+--
+-- we can define scenes in our scripts by simply writing 'FOO =
+-- Scene{...}' instead of 'FOO = LNVL.Scene:new{...}'.
+--
+-- This function expects the name of the alias to create as the first
+-- argument, a string, and a reference to the class to instantiate as
+-- the second argument.  The function expects the class to have a
+-- new() method for a constructor.
+--
+-- The function returns nothing.
+function LNVL.CreateConstructorAlias(name, class)
+    LNVL.ScriptEnvironment[name] = function (...)
+        return class:new(...)
+    end
+end
+
 -- This property represents the current Scene in use.  We should
 -- rarely change the value of this property directly.  Instead the
--- Scene:changeTo() method is the preferred way to change this.
-LNVL.currentScene = nil
+-- LNVL.LoadScript() function and Scene:changeTo() method are the
+-- preferred ways to change changes.
+LNVL.CurrentScene = nil
 
 -- Because all of the code in the 'src/' directory adds to the LNVL
 -- table these require() statements must come after we declare the
@@ -67,11 +101,25 @@ LNVL.Menu = require("src.menu")
 -- This function loads an external LNVL script, i.e. one defining
 -- scenes and story content.  The argument is the path to the file;
 -- the function assumes the caller has already ensured the file exists
--- and will crash with an error if the file is not found.  The script
--- must define the 'START' scene.  The function returns no value.
-function LNVL.loadScript(filename)
-    love.filesystem.load(filename)()
-    LNVL.currentScene = START
+-- and will crash with an error if the file is not found.  The
+-- function returns no value.
+function LNVL.LoadScript(filename)
+    local script = love.filesystem.load(filename)
+    assert(script, "Could not load script " .. filename)
+    setfenv(script, LNVL.ScriptEnvironment)
+
+    if LNVL.Settings.DebugModeEnabled == true then
+        script()
+    else
+        pcall(script)
+    end
+
+    -- We always treat 'START' as the initial scene in any story so we
+    -- should update the current scene if the 'START' scene exists.
+    if LNVL.ScriptEnvironment["START"] ~= nil then
+        LNVL.CurrentScene = LNVL.ScriptEnvironment["START"]
+        assert(getmetatable(LNVL.CurrentScene) == LNVL.Scene)
+    end
 end
 
 -- Return the LNVL module.

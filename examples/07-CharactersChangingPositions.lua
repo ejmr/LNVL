@@ -1,14 +1,14 @@
 -- This example script tests the engine with regard to setting
 -- character positions and then changing them within a scene.
 
-Eric = LNVL.Character:new{
+Eric = Character{
     name = "Eric",
     textColor = "#333",
     image = "examples/images/Eric-Normal.png",
     position = "Left",
 }
 
-START = LNVL.Scene:new{
+START = Scene{
     Eric "So I am starting out on the left.  Time to move.",
     Eric:isAt "Center",
     Eric "Halfway to the right side now.  Almost there!",

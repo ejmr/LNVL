@@ -18,20 +18,20 @@ function love.load(arguments)
     love.graphics.setBackgroundColor(0, 0, 0)
 
     if #arguments > 1 then
-        LNVL.loadScript(arguments[2])
+        LNVL.LoadScript(arguments[2])
     else
-        LNVL.loadScript("examples/02-TwoCharacters.lua")
+        LNVL.LoadScript("examples/02-TwoCharacters.lua")
     end
 end
 
 function love.keypressed(key)
     if key == "return" then
-        LNVL.currentScene:moveForward()
+        LNVL.CurrentScene:moveForward()
     elseif key == "backspace" then
-        LNVL.currentScene:moveBack()
+        LNVL.CurrentScene:moveBack()
     end
 end
 
 function love.draw()
-    LNVL.currentScene:draw()
+    LNVL.CurrentScene:draw()
 end

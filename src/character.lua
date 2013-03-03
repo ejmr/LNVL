@@ -130,6 +130,9 @@ function LNVL.Character:new(properties)
     return character
 end
 
+-- Create an alias for the constructor for use in dialog scripts.
+LNVL.CreateConstructorAlias("Character", LNVL.Character)
+
 -- This is the method that characters use to speak in scripts.  It
 -- accepts a string of text as an argument and returns a 'say' opcode
 -- binding that line of text with the current Character object.  We do
