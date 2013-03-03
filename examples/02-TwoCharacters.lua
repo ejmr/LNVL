@@ -4,10 +4,10 @@
 -- determines what his text looks like on screen.  Then we use those
 -- objects inside of the Scene to actually create conversation.
 
-Eric = Character{name = "Eric", textColor = "#c8ffc8"}
-Jeff = Character{name = "Jeff", textColor = "#c8c8ff"}
+Eric = Character {name = "Eric", textColor = "#c8ffc8"}
+Jeff = Character {name = "Jeff", textColor = "#c8c8ff"}
 
-START = Scene{
+START = Scene {
     boxBackgroundColor = Color.DeepSkyBlue4,
     borderColor = Color.White,
     Jeff "Why did you use a copyrighted song for an example?",

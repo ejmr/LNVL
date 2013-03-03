@@ -2,12 +2,12 @@
 -- screen, moving a character image around to ensure it appears in the
 -- proper place for each one.
 
-Eric = Character{
+Eric = Character {
     name = "Eric",
     image = "examples/images/Eric-Normal.png",
 }
 
-START = Scene{
+START = Scene {
     name = "Position Test",
     boxBackgroundColor = Color.Transparent,
     Eric:isAt "Left",

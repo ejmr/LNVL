@@ -29,9 +29,9 @@ editor.  But the scripts use their own special language.  This
 language provides ways for you to do all of the things listed above.
 Here is a simple example:
 
-    Lobby = Character{name="Lobby Jones", image="images/Lobby.png"}
+    Lobby = Character {name="Lobby Jones", image="images/Lobby.png"}
 
-    START = Scene{
+    START = Scene {
         Lobby "Hello everyone!",
         Lobby "My name is Lobby Jones.",
         Lobby "And this is my short introduction.",
@@ -63,7 +63,7 @@ things take place inside of a scene.  That means you cannot do
 anything without first creating a scene.  Here is the most basic
 example:
 
-    START = Scene{}
+    START = Scene {}
 
 The name for this new scene is `START`, which is a special name.  Any
 non-trivial story using LNVL will contain multiple scenes, but there
@@ -79,7 +79,7 @@ strings separated with commas as different lines of dialog.  However,
 you can concatenate strings too long to fit comfortably on a single
 line using the `..` operator.  For example:
 
-    START = Scene{
+    START = Scene {
         "Hello world!",
         "This is our second line of narration.",
         "And this is the third but even though it spans " ..
@@ -108,7 +108,7 @@ alpha channels, respectively.  But to make this easier LNVL provides a
 after creating a scene and its dialog you can change its background
 color like so:
 
-    START = Scene{
+    START = Scene {
         boxBackgroundColor = Color.NavyBlue,
         "Thus begins our tale...",
     }
@@ -120,7 +120,7 @@ transparency you can use `Color.Transparent` for any color.
 
 Instead of names you can use [short-hand hexadecimal notation][color-hex]:
 
-    START = Scene{
+    START = Scene {
         boxBackgroundColor = Color.fromHex("#088008"),
         "...",
     }
@@ -129,7 +129,7 @@ As for the black background around the dialog box, LNVL lets you use
 images for that part of the scene.  You give a background picture to a
 scene with by assigning `background` the name of an image file:
 
-    START = Scene{
+    START = Scene {
         background = "examples/images/Sunny-Hill.jpg",
         "...",
     }
@@ -170,7 +170,7 @@ change that value to control the default text color for all scenes.
 You can change the color for individual scenes by naming the color
 when you create the scene, like so:
 
-    START = Scene{
+    START = Scene {
         textColor = Color.Peach,
         "This narration will be in peach.",
         "It will override the default setting.",
@@ -188,11 +188,11 @@ put a story together by breaking it down into scenes just as you would
 if you were writing a play.  You can create as many scenes as you want
 by assigning them to names of your choice.  For example:
 
-    START = Scene{…}
+    START = Scene {...}
 
-    MIDDLE = Scene{…}
+    MIDDLE = Scene {...}
 
-    END = Scene{…}
+    END = Scene {...}
 
 This example code creates three scenes.  Remember that every LNVL
 script must have the `START` screen.  But the rest of the names are
@@ -205,14 +205,14 @@ In the example above LNVL would not know how to progress from `START`
 to the `MIDDLE` scene.  You can connect the two using the
 `ChangeToScene()` function.  Here is an example:
 
-    START = Scene{
+    START = Scene {
         "And so our story begins...",
         "Except I really have nothing to say as a narrator.",
         "Oh well.  Let's move along!",
         ChangeToScene "MIDDLE",
     }
 
-    MIDDLE = Scene{
+    MIDDLE = Scene {
         "Now then...",
 
         -- Just pretend an actual story is here and save me the effort
@@ -240,7 +240,7 @@ Every good story needs characters.  So LNVL provides a way to create
 characters and plug them into your tale.  Here is a simple example of
 a character:
 
-    Lobby = Character{name="Lobby", textColor="#363"}
+    Lobby = Character {name="Lobby", textColor="#363"}
 
 This creates the character `Lobby` and defines his name and color,
 i.e. the color of that character’s dialog on screen.
@@ -253,10 +253,10 @@ like in the example above, except you provide the character name
 before the string.  That tells LNVL which character is speaking that
 line.  For example, here is a short scene of two characters speaking:
 
-    Lobby = Character{name="Lobby", textColor="#363"}
-    Eric = Character{name="Eric", textColor="#66a"}
+    Lobby = Character {name="Lobby", textColor="#363"}
+    Eric = Character {name="Eric", textColor="#66a"}
 
-    START = Scene{
+    START = Scene {
         Eric "Hello Lobby!",
         Lobby "Eh?  What?  What time is this?",
         Eric "Are you alright Lobby?",
@@ -270,7 +270,7 @@ could copy the character name each time, but LNVL provides a way for
 you to avoid that repetition: by writing a *monologue.*  Here is an
 example:
 
-    START = Scene{
+    START = Scene {
         Eric:monologue {
             "Look Lobby, we need to talk.",
             "You have a problem.",
@@ -299,7 +299,7 @@ changes in a character’s emotion through art, for example.
 To use images with a character you must first provide a default image,
 like so:
 
-    Lobby = Character{
+    Lobby = Character {
         name = "Lobby Jones",
         textColor = "#363",
         image = "images/Lobby-Default.png",
@@ -316,7 +316,7 @@ surprised, excited, saddened—like that.  That is why you use the
 `becomes` function of characters in scripts to change their images.
 Here is an example:
 
-    START = Scene{
+    START = Scene {
         Lobby "So I thought about what you said and...",
         Lobby:becomes("images/Lobby-crying.png"),
         Lobby "...I realize I need help.",
@@ -348,7 +348,7 @@ Character images appear on the left side on the screen by default.
 The first way you can change this is to specify the position when you
 create a character, like so:
 
-    Lobby = Character{
+    Lobby = Character {
         name = "Lobby Jones",
         textColor = "#363",
         image = "images/Lobby-Default.png",
@@ -383,7 +383,7 @@ argument.  But unlike the `position` property, `isAt` allows you to
 change the position of a character dynamically in the middle of the
 scene.  For example:
 
-    START = Scene{
+    START = Scene {
         Lobby "Want to see how fast I can run?",
         Lobby:isAt "Center",
         Lobby "Ok---hold on, I'm getting there.",
@@ -409,7 +409,7 @@ assign a different font for an individual scene.  To make a character
 use a specific font you define the `font` property of that character,
 like so:
 
-    Lobby = Character{
+    Lobby = Character {
         name = "Lobby Jones",
         font = "path/to/font-for-lobby.ttf",
     }
@@ -417,7 +417,7 @@ like so:
 This will cause the character to use that specific font.  By default
 the font size will be twelve pixels.  But you can also change that:
 
-    Lobby = Character{
+    Lobby = Character {
         name = "Lobby Jones",
         font = {"path/to/font-for-lobby.ttf", 16},
     }
@@ -440,7 +440,7 @@ change global settings by editing the values in the `src/settings.lua`
 file.  Or you can change settings for individual scenes or characters
 by providing those values when you create them, for example:
 
-    Lobby = Character{
+    Lobby = Character {
         name = "Lobby Jones",
         textColor = Color.Blue,
     }
@@ -466,12 +466,12 @@ example:
 
     -- Use two scenes to make sure the changes above affect all scenes.
 
-    START = Scene{
+    START = Scene {
         "This text should appear in blue.",
         ChangeToScene "END",
     }
 
-    END = Scene{
+    END = Scene {
         "With no border around the dialog box.",
     }
 

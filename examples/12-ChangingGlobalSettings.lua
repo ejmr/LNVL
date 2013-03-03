@@ -11,11 +11,11 @@ LNVL.Settings.Scenes.BorderSize = 0
 
 -- Use two scenes to make sure the changes above affect all scenes.
 
-START = Scene{
+START = Scene {
     "This text should appear in blue.",
     ChangeToScene "END",
 }
 
-END = Scene{
+END = Scene {
     "With no border around the dialog box.",
 }

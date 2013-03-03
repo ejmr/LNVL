@@ -2,21 +2,21 @@
 -- also change images during conversation, which can be used as a
 -- dramatic effect.  Or annoy the player.  Whatever, it's your game.
 
-Eric = Character{
+Eric = Character {
     name = "Eric",
     textColor = "#c8ffc8",
     image = "examples/images/Eric-Normal.png",
     position = "Left",
 }
 
-Jeff = Character{
+Jeff = Character {
     name = "Jeff",
     textColor = "#c8c8ff",
     image = "examples/images/Jeff-Normal.png",
     position = "Right",
 }
 
-START = Scene{
+START = Scene {
     Jeff:says "Hey guess what genius?  We're being sued.  Hard.",
     Eric:says "By who?",
     Jeff:says "Sushimiya Hirasawa.  Because you copied his lyrics.",

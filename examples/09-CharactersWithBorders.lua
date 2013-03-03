@@ -2,7 +2,7 @@
 -- it muses about the possible greatness of LNVL and my own amazing,
 -- sordid ego.
 
-Eric = Character{
+Eric = Character {
     name = "Eric",
     textColor = Color.SlateBlue,
     borderColor = Color.NavyBlue,
@@ -10,7 +10,7 @@ Eric = Character{
     image = "examples/images/Eric-Normal.png",
 }
 
-START = Scene{
+START = Scene {
     Eric "I wonder if someone will use this engine for any eroge.",
     Eric "I would take that as a compliment.",
     Eric "\"I don't see your code powering erotic adult visual novels!\"",

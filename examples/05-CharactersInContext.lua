@@ -3,11 +3,11 @@
 -- dialog into a 'monologue' so that we do not have to repeat the
 -- character name over and over.
 
-Eric = Character{name="Eric", textColor="#3a3"}
-Jeff = Character{name="Jeff", textColor="#a33"}
+Eric = Character {name="Eric", textColor="#3a3"}
+Jeff = Character {name="Jeff", textColor="#a33"}
 
-START = Scene{
-    Eric:monologue{
+START = Scene {
+    Eric:monologue {
         "Now that we're out of jail, no hard feelings.",
         "Right?",
         "...",
