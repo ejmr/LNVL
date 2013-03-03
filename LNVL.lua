@@ -70,8 +70,12 @@ LNVL.Menu = require("src.menu")
 -- and will crash with an error if the file is not found.  The script
 -- must define the 'START' scene.  The function returns no value.
 function LNVL.loadScript(filename)
-    love.filesystem.load(filename)()
-    LNVL.currentScene = START
+    local scriptEnvironment = { ["LNVL"] = LNVL }
+    local script = love.filesystem.load(filename)
+    assert(script, "Could not load script " .. filename)
+    setfenv(script, scriptEnvironment)
+    pcall(script)
+    LNVL.currentScene = scriptEnvironment.START
 end
 
 -- Return the LNVL module.
