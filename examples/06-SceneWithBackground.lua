@@ -5,7 +5,7 @@
 
 START = Scene{
     "What a nice day!",
-    LNVL.Scene.changeTo("SPACE"),
+    ChangeToScene "SPACE",
 }
 
 START:setBackground "examples/images/Sunny-Hill.jpg"
