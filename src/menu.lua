@@ -74,7 +74,7 @@ function LNVL.Menu:new(properties)
     -- Finally assign the collected array of 'choices' to the menu,
     -- but we make it a clamped array so that we cannot accidentally
     -- access any elements out of bounds.
-    menu.choices = LNVL.ClampedArray(choices)
+    menu.choices = LNVL.ClampedArray:new(choices)
 
     return menu
 end
