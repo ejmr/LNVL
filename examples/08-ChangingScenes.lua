@@ -4,7 +4,7 @@ START = Scene{
     "This is the start of our story.",
     "Spoiler alert: it is extremely boring.",
     "But we do have...",
-    changeToScene "FIELD",
+    ChangeToScene "FIELD",
 }
 
 FIELD = Scene{

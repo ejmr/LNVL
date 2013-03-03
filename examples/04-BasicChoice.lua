@@ -24,7 +24,7 @@ NOT_GUILTY = Scene{
     Eric "Not guilty, your Honor.",
     Judge "Denied!  It's opposite day!",
     Jeff "Wait, what the...",
-    changeToScene "THE_TRUTH",
+    ChangeToScene "THE_TRUTH",
 }
 
 THE_TRUTH = Scene{
@@ -35,7 +35,7 @@ THE_TRUTH = Scene{
     Eric "Oh cool, do we get a visit from Richard Crenna?",
     Judge "No.  He died in 2003, remember?",
     Eric "Oh yeah...",
-    changeToScene "END",
+    ChangeToScene "END",
 }
 
 END = Scene{

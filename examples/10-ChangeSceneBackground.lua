@@ -5,6 +5,6 @@ START = Scene{
     name = "Background Changing Test",
     background = "examples/images/Celestial-Background.jpg",
     "I am seriously over-engineering all of this.",
-    changeSceneBackgroundTo "examples/images/Sunny-Hill.jpg",
+    ChangeSceneBackgroundTo "examples/images/Sunny-Hill.jpg",
     "Seriously.  I am.",
 }
