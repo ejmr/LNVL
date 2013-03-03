@@ -28,7 +28,7 @@ LNVL.ScriptEnvironment = { ["LNVL"] = LNVL }
 -- rarely change the value of this property directly.  Instead the
 -- LNVL.loadScript() function and Scene:changeTo() method are the
 -- preferred ways to change changes.
-LNVL.currentScene = nil
+LNVL.CurrentScene = nil
 
 -- Because all of the code in the 'src/' directory adds to the LNVL
 -- table these require() statements must come after we declare the
@@ -86,7 +86,7 @@ function LNVL.loadScript(filename)
     assert(script, "Could not load script " .. filename)
     setfenv(script, LNVL.ScriptEnvironment)
     pcall(script)
-    LNVL.currentScene = LNVL.ScriptEnvironment["START"]
+    LNVL.CurrentScene = LNVL.ScriptEnvironment["START"]
 end
 
 -- Return the LNVL module.

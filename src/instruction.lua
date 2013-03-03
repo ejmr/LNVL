@@ -146,7 +146,7 @@ LNVL.Instructions["set-scene"] = LNVL.Instruction:new{
         local scene = _G[arguments.name]
         assert(scene ~= nil and getmetatable(scene) == LNVL.Scene,
                "Cannot load scene " .. arguments.name)
-        LNVL.currentScene = scene
+        LNVL.CurrentScene = scene
     end }
 
 LNVL.Instructions["no-op"] = LNVL.Instruction:new{

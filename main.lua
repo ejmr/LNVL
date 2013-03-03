@@ -26,12 +26,12 @@ end
 
 function love.keypressed(key)
     if key == "return" then
-        LNVL.currentScene:moveForward()
+        LNVL.CurrentScene:moveForward()
     elseif key == "backspace" then
-        LNVL.currentScene:moveBack()
+        LNVL.CurrentScene:moveBack()
     end
 end
 
 function love.draw()
-    LNVL.currentScene:draw()
+    LNVL.CurrentScene:draw()
 end
