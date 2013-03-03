@@ -69,7 +69,7 @@ The name for this new scene is `START`, which is a special name.  Any
 non-trivial story using LNVL will contain multiple scenes, but there
 must always be an initial scene.  `START` is that initial scene, the
 one LNVL always expects to exist because that is the first one it
-displays.  That means every LNVL script *must* define the `START`
+displays.  That means every LNVL story *must* define the `START`
 scene.
 
 The example scene is empty though.  You can add narration to the scene
