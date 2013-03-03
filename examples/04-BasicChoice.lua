@@ -24,7 +24,7 @@ NOT_GUILTY = Scene{
     Eric "Not guilty, your Honor.",
     Judge "Denied!  It's opposite day!",
     Jeff "Wait, what the...",
-    LNVL.Scene.changeTo("THE_TRUTH"),
+    changeToScene "THE_TRUTH",
 }
 
 THE_TRUTH = Scene{
@@ -35,7 +35,7 @@ THE_TRUTH = Scene{
     Eric "Oh cool, do we get a visit from Richard Crenna?",
     Judge "No.  He died in 2003, remember?",
     Eric "Oh yeah...",
-    LNVL.Scene.changeTo("END"),
+    changeToScene "END",
 }
 
 END = Scene{

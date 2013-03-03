@@ -203,13 +203,13 @@ suggested convention.
 Creating scenes, however, does nothing to connect them to one another.
 In the example above LNVL would not know how to progress from `START`
 to the `MIDDLE` scene.  You can connect the two using the
-`LNVL.Scene.changeTo()` function.  Here is an example:
+`changeToScene()` function.  Here is an example:
 
     START = Scene{
         "And so our story begins...",
         "Except I really have nothing to say as a narrator.",
         "Oh well.  Let's move along!",
-        LNVL.Scene.changeTo("MIDDLE"),
+        changeToScene "MIDDLE",
     }
 
     MIDDLE = Scene{
@@ -221,16 +221,16 @@ to the `MIDDLE` scene.  You can connect the two using the
     }
 
 The important line here is the final part of the `START` scene:
-`LNVL.Scene.changeTo("MIDDLE")`.  This tells LNVL to transition to the
+`changeToScene "MIDDLE"`.  This tells LNVL to transition to the
 `MIDDLE` scene once it reaches the end of `START`.  Notice the name of
 the scene is in quotes; this is a requirement.  If you omit the quotes
 then LNVL will crash with an error.
 
 You can place additional dialog or anything else after a line using
-`changeTo()` but there is no good reason to do so.  LNVL will not
+`changeToScene()` but there is no good reason to do so.  LNVL will not
 display any dialog or do anything else in a scene once it is told to
-switch to another scene.  So that means `changeTo()` is best placed as
-the final part of a scene.
+switch to another scene.  So that means `changeToScene()` is best
+placed as the final part of a scene.
 
 
 Characters
@@ -468,7 +468,7 @@ example:
 
     START = Scene{
         "This text should appear in blue.",
-        LNVL.Scene.changeTo("END"),
+        changeToScene "END",
     }
 
     END = Scene{

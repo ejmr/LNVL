@@ -286,6 +286,9 @@ function LNVL.Scene.changeTo(name)
     return LNVL.Opcode:new("change-scene", {name=name})
 end
 
+-- Create the changeToScene() alias for LNVL.Scene.changeTo().
+LNVL.CreateFunctionAlias("changeToScene", LNVL.Scene.changeTo)
+
 -- This method moves forward to the next content in the scene.
 function LNVL.Scene:moveForward()
     if self.opcodeIndex < #self.opcodes then

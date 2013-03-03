@@ -13,7 +13,7 @@ LNVL.Settings.Scenes.BorderSize = 0
 
 START = Scene{
     "This text should appear in blue.",
-    LNVL.Scene.changeTo("END"),
+    changeToScene "END",
 }
 
 END = Scene{
