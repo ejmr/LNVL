@@ -215,6 +215,12 @@ function LNVL.Character:draw()
     self.images[self.currentImage]:draw()
 end
 
+-- This method removes a character from a scene by creating an opcode
+-- that deactivates the character.
+function LNVL.Character:leavesTheScene()
+    return LNVL.Opcode:new("deactivate-character", {character=self})
+end
+
 -- This function converts a Character object into a string for
 -- debugging purposes.
 LNVL.Character.__tostring = function (character)

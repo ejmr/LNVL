@@ -166,6 +166,7 @@ LNVL.Instruction.ForOpcode = {
     ["change-scene"] = LNVL.Instructions["set-scene"],
     ["set-scene-image"] = LNVL.Instructions["set-image"],
     ["no-op"] = LNVL.Instructions["no-op"],
+    ["deactivate-character"] = LNVL.Instructions["no-op"],
 }
 
 -- If LNVL is running in debugging mode then make sure that every

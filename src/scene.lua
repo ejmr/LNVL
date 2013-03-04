@@ -278,6 +278,15 @@ function LNVL.Scene:drawCurrentContent()
     -- instruction because there is none for that opcode.
     if opcode.name == "no-op" then return end
 
+    -- If the opcode is 'deactivate-character' we need to remove a
+    -- character from the scene's list of active characters.  And
+    -- since that opcode is a no-op we can immediately return from the
+    -- function without wasting time doing anything else.
+    if opcode.name == "deactivate-character" then
+        self.activeCharacters[opcode.arguments.character.name] = nil
+        return
+    end
+
     local function executeInstructionForOpcode(opcode)
         local instruction = LNVL.Instruction.ForOpcode[opcode.name]
 

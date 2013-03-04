@@ -143,6 +143,14 @@ i.e. another `LNVL.Scene` object.
 must be a string naming an `LNVL.Scene` object accessible in global
 scope, i.e. from the `_G` table.
 
+### Deactivate-Character ###
+
+The `deactivate-character` opcode tells LNVL to no longer draw a
+character to the screen.
+
+1. `character`: An instance of `LNVL.Character` representing the
+character to deactivate.
+
 ### Draw-Character ###
 
 The `draw-character` opcode renders a character to screen.  The opcode

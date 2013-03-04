@@ -21,6 +21,7 @@ LNVL.Opcode.ValidOpcodes = {
     ["change-scene"] = true,
     ["no-op"] = true,
     ["set-scene-image"] = true,
+    ["deactivate-character"] = true,
 }
 
 -- The opcode constructor, which requires two arguments: the name of
@@ -222,6 +223,7 @@ end
 local returnOpcode = function (opcode) return opcode end
 LNVL.Opcode.Processor["change-scene"] = returnOpcode
 LNVL.Opcode.Processor["no-op"] = returnOpcode
+LNVL.Opcode.Processor["deactivate-character"] = returnOpcode
 
 -- This method processes an opcode by running it through the
 -- appropriate function above, returning the modified version.
