@@ -208,8 +208,12 @@ end
 -- we make sure the position of the image matches the position of the
 -- character.  The method returns nothing.
 function LNVL.Character:draw()
-    self.images[self.currentImage]:setPosition(self.position)
-    self.images[self.currentImage]:draw()
+    local image = self.images[self.currentImage]
+
+    if image ~= nil then
+        image:setPosition(self.position)
+        image:draw()
+    end
 end
 
 -- This method removes a character from a scene by creating an opcode
