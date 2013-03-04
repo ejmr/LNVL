@@ -188,19 +188,14 @@ end
 -- for future reference; and if we have already loaded that image once
 -- we just use that table without reloading the image file.
 --
--- The method returns two opcodes telling the engine to set the new
--- image and then draw it to the screen.
+-- The method returns an opcode telling the engine to use the new
+-- character image.
 function LNVL.Character:becomes(filename)
     if self.images[filename] == nil then
         self.images[filename] = LNVL.Drawable:new{image=love.graphics.newImage(filename)}
     end
 
-    local opcodes = {
-        LNVL.Opcode:new("set-character-image", {character=self, image=filename}),
-        LNVL.Opcode:new("draw-character", {character=self}),
-    }
-
-    return opcodes
+    return LNVL.Opcode:new("set-character-image", {character=self, image=filename})
 end
 
 -- This method is a short-cut for character:becomes("normal"),
