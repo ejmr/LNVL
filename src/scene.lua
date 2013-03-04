@@ -256,12 +256,21 @@ function LNVL.Scene:drawEssentialElements()
     self:drawContainer()
 end
 
+-- This table contains a list of opcodes that trigger an addition to
+-- the scene's list of active characters.
+local characterActivatingOpcodes = {
+    ["say"] = true,
+    ["monologue"] = true,
+    ["set-character-image"] = true,
+    ["draw-character"] = true,
+}
+
 -- Renders the current content to screen.  By 'current content' we
 -- mean the current opcode, or list of opcodes; we convert these into
 -- instructions and execute those to render the content.  This
 -- function returns no value because instructions return no arguments.
 -- We must take care to always call drawEssentialElements() before
--- this; the draw() method takes care of that for us.
+-- this, which the draw() method takes care of for us.
 function LNVL.Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
 
@@ -271,6 +280,16 @@ function LNVL.Scene:drawCurrentContent()
 
     local function executeInstructionForOpcode(opcode)
         local instruction = LNVL.Instruction.ForOpcode[opcode.name]
+
+        -- If the opcode arguments have a 'character' property and this is
+        -- an opcode that activates a character then we must update the
+        -- list of active characters for this scene.
+        if characterActivatingOpcodes[opcode.name] == true then
+            if opcode.arguments["character"] ~= nil then
+                local character = opcode.arguments.character
+                self.activeCharacters[character.name] = character
+            end
+        end
 
         -- Make sure the opcode has access to the Scene so that the
         -- instruction we invoke next can draw things to Scene if
