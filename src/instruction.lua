@@ -158,7 +158,7 @@ LNVL.Instructions["no-op"] = LNVL.Instruction:new{
 -- the names of the instructions we execute for each opcode.  Note
 -- that there is not a one-to-one mapping between opcodes and
 -- instructions; different opcodes may become the same instruction.
-LNVL.Instruction.forOpcode = {
+LNVL.Instruction.ForOpcode = {
     ["monologue"] = LNVL.Instructions["say"],
     ["say"] = LNVL.Instructions["say"],
     ["set-character-image"] = LNVL.Instructions["set-image"],
@@ -181,8 +181,8 @@ if LNVL.Settings.DebugModeEnabled == true then
     end
 
     for name,_ in pairs(LNVL.Opcode.ValidOpcodes) do
-        if LNVL.Instruction.forOpcode[name] == nil
-            or getmetatable(LNVL.Instruction.forOpcode[name]) ~= LNVL.Instruction
+        if LNVL.Instruction.ForOpcode[name] == nil
+            or getmetatable(LNVL.Instruction.ForOpcode[name]) ~= LNVL.Instruction
         then
             error("No instruction implementation for the opcode " .. name)
         end

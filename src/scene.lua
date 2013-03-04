@@ -254,7 +254,7 @@ function LNVL.Scene:drawCurrentContent()
     if opcode.name == "no-op" then return end
 
     local function executeInstructionForOpcode(opcode)
-        local instruction = LNVL.Instruction.forOpcode[opcode.name]
+        local instruction = LNVL.Instruction.ForOpcode[opcode.name]
 
         -- Make sure the opcode has access to the Scene so that the
         -- instruction we invoke next can draw things to Scene if
