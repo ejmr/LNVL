@@ -21,7 +21,7 @@ LNVL.Graphics.__index = LNVL.Graphics
 -- 2. 'borderColor': (Optional) the color of the container border.
 --
 -- The function returns no value.
-function LNVL.Graphics.drawContainer(arguments)
+function LNVL.Graphics.DrawContainer(arguments)
     assert(arguments["backgroundColor"] ~= nil,
            "Cannot draw a container without a background color.")
 
@@ -60,9 +60,9 @@ end
 -- through its contents like an array; if the element is a string then
 -- we print that text, and if it is a table then we set the foreground
 -- color to that, under the assumption the table has three numeric
--- values, i.e. RGB values.  Users should use drawContainer() above to
+-- values, i.e. RGB values.  Users should use DrawContainer() above to
 -- clear it before drawing text.  The function returns no value.
-function LNVL.Graphics.drawText(font, color, text)
+function LNVL.Graphics.DrawText(font, color, text)
     love.graphics.setColorMode("modulate")
     love.graphics.setFont(font)
 

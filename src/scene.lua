@@ -210,14 +210,14 @@ end
 
 -- This method draws the container or border of the scene.
 function LNVL.Scene:drawContainer()
-    LNVL.Graphics.drawContainer{
+    LNVL.Graphics.DrawContainer{
         backgroundColor=self.boxBackgroundColor,
         borderColor=self.borderColor }
 end
 
 -- This method draws text within the scene's container.  The 'text'
 -- argument can be anything acceptable as the third argument of the
--- LNVL.Graphics.drawText() function; see its documentation for
+-- LNVL.Graphics.DrawText() function; see its documentation for
 -- details.  The 'font' argument is optional; if provided the scene
 -- will use that font for the text, and if not provided it will use
 -- the 'font' property of the Scene object itself.
@@ -225,7 +225,7 @@ end
 -- This method returns no value.
 function LNVL.Scene:drawText(text, font)
     local font = font or self.font
-    LNVL.Graphics.drawText(font, self.textColor, text)
+    LNVL.Graphics.DrawText(font, self.textColor, text)
 end
 
 -- This method draws the parts of a scene that we want on screen
