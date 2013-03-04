@@ -67,6 +67,18 @@ function LNVL.Scene:new(properties)
         end
     end
 
+    -- activeCharacters: This is a table of all of the active
+    -- characters in the scene.  Each time we render the contents of
+    -- the scene we also render all active characters.  An individual
+    -- Character object has all of the data to know where it should
+    -- appear on screen, so all the scene must do is tell each
+    -- character to draw itself.
+    --
+    -- Each key in this table is the name of a character, as a string.
+    -- The corresponding value is the Character object that represents
+    -- the character named by the key.
+    self.activeCharacters = {}
+
     -- If the for-loop above assign a string to 'background' then we
     -- assume it is a filepath to an image and try to load that image
     -- as the scene background.
@@ -229,12 +241,16 @@ function LNVL.Scene:drawText(text, font)
 end
 
 -- This method draws the parts of a scene that we want on screen
--- everytime we render a scene, such as its background color/image and
--- dialog container.
+-- everytime we render a scene, such as its background color or image,
+-- dialog container, active characters, and so on.
 function LNVL.Scene:drawEssentialElements()
     if self.backgroundImage ~= nil then
         love.graphics.setColorMode("replace")
         love.graphics.draw(self.backgroundImage, 0, 0)
+    end
+
+    for name,character in pairs(self.activeCharacters) do
+        character:draw()
     end
 
     self:drawContainer()
