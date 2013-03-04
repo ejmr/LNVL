@@ -171,11 +171,10 @@ end
 -- This method changes the position of a character, which primarily
 -- affects where we draw his image.  The argument is a string which
 -- must be a valid key for the LNVL.Position table.  The method
--- returns a 'draw-character' opcode under the assumption that we want
--- to render the character in his new position now that we moved him.
+-- returns a 'move-character' opcode.
 function LNVL.Character:isAt(place)
     return LNVL.Opcode:new(
-        "draw-character",
+        "move-character",
         {
             character=self,
             position=LNVL.Position[place]
@@ -188,25 +187,39 @@ end
 -- for future reference; and if we have already loaded that image once
 -- we just use that table without reloading the image file.
 --
--- The method returns two opcodes telling the engine to set the new
--- image and then draw it to the screen.
+-- The method returns an opcode telling the engine to use the new
+-- character image.
 function LNVL.Character:becomes(filename)
     if self.images[filename] == nil then
         self.images[filename] = LNVL.Drawable:new{image=love.graphics.newImage(filename)}
     end
 
-    local opcodes = {
-        LNVL.Opcode:new("set-character-image", {character=self, image=filename}),
-        LNVL.Opcode:new("draw-character", {character=self}),
-    }
-
-    return opcodes
+    return LNVL.Opcode:new("set-character-image", {character=self, image=filename})
 end
 
 -- This method is a short-cut for character:becomes("normal"),
 -- i.e. changing back to their default image.
 function LNVL.Character:becomesNormal()
     return self:becomes("normal")
+end
+
+-- This method draws the character to the screen, drawing whichever
+-- image the 'currentImage' property names.  Before drawing the image
+-- we make sure the position of the image matches the position of the
+-- character.  The method returns nothing.
+function LNVL.Character:draw()
+    local image = self.images[self.currentImage]
+
+    if image ~= nil then
+        image:setPosition(self.position)
+        image:draw()
+    end
+end
+
+-- This method removes a character from a scene by creating an opcode
+-- that deactivates the character.
+function LNVL.Character:leavesTheScene()
+    return LNVL.Opcode:new("deactivate-character", {character=self})
 end
 
 -- This function converts a Character object into a string for

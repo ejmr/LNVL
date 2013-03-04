@@ -402,6 +402,35 @@ to calm everyone down.  Look at popular visual novels for ideas about
 how you can convey feelings in a story through the use of character
 portrait positioning.
 
+### Removing Characters ###
+
+Imagine a scene where two characters are talking but in the middle of
+the conversation one character leaves.  LNVL will draw the characters
+on screen if it thinks they are actively participating in the scene.
+That means to make LNVL stop drawing a character you must tell it when
+that character leaves the scene.  This is exactly what
+`leavesTheScene()` does.  For example:
+
+    START = Scene {
+        Lobby "Capital day to you good sir!",
+        Eric "Oh, hello Lobby.",
+        Lobby "'Lobby'?  That is Mr. Jones to you.  Mr. Jones!",
+        Eric "Wow, you need to calm down.",
+        Eric "Actually, forget this.  I'm leaving.",
+        Eric:leavesTheScene(),
+
+        -- Now 'Eric' no longer appears on screen.
+
+        Lobby "Wait.  I said wait you scallywag!  Halt!",
+        Lobby "The nerve...",
+    }
+
+A character who leaves a scene will return and begin to appear on
+screen again if you make that character speak, or change the
+character’s image via `becomes` or position via `isAt`.  And remember,
+`leavesTheScene()` must have the pair of parentheses after it.  If you
+forget the parentheses then LNVL will not recognize the command.
+
 ### Character Fonts ###
 
 Individual characters can use different fonts in the same way you can
