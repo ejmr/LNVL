@@ -17,7 +17,7 @@ LNVL.Opcode.ValidOpcodes = {
     ["monologue"] = true,
     ["say"] = true,
     ["set-character-image"] = true,
-    ["draw-character"] = true,
+    ["move-character"] = true,
     ["change-scene"] = true,
     ["no-op"] = true,
     ["set-scene-image"] = true,
@@ -111,47 +111,14 @@ LNVL.Opcode.Processor["monologue"] = function (opcode)
     return say_opcodes
 end
 
--- Processor for opcode 'draw-character'
+-- Processor for opcode 'move-character'
 --
--- For this opcode we need to set the 'image' property to the currentt
--- character image.  And we need to call the setPosition() method of
--- that image with the 'position' property of the opcode arguments.
--- The 'position' argument is optional though.  If it does not exist
--- then we will use the default position of the 'character' property
--- that the opcode requires.
---
--- If the character has a non-nil 'borderColor' property then we must
--- also add the 'border' table to the arguments so that the
--- 'draw-image' instruction will have that data later.
-LNVL.Opcode.Processor["draw-character"] = function (opcode)
-    opcode.arguments.image =
-        opcode.arguments.character.images[opcode.arguments.character.currentImage]
-
-    -- If the opcode was given no position we use the character's
-    -- current position.  But if the opcode is given a position then
-    -- we assign that new one to the character, otherwise the new
-    -- position will only be in effect for this one opcode which is
-    -- not what we want, e.g. calling Character:isAt() would move a
-    -- character for one render and then reset their position instead
-    -- of moving them permanently until the next isAt() or movement.
-    if opcode.arguments["position"] == nil then
-        opcode.arguments.position = opcode.arguments.character.position
-    else
-        opcode.arguments.character.position = opcode.arguments.position
-    end
-
-    if opcode.arguments.character.borderColor ~= LNVL.Color.Transparent then
-        opcode.arguments.border = {
-            opcode.arguments.character.borderColor,
-            opcode.arguments.character.borderSize,
-        }
-
-        -- We explicitly set the metatable for the first element of
-        -- the border, the color, so that debugging output takes
-        -- advantage of tostring() support for LNVL.Color objects.
-        setmetatable(opcode.arguments.border[1], LNVL.Color)
-    end
-
+-- For this opcode we expect a 'character' argument with an
+-- LNVL.Character object.  We need to set the 'position' property of
+-- the Character object to value of the 'position' property in the
+-- opcode arguments.
+LNVL.Opcode.Processor["move-character"] = function (opcode)
+    opcode.arguments.character.position = opcode.arguments.position
     return opcode
 end
 
@@ -194,36 +161,13 @@ LNVL.Opcode.Processor["set-scene-image"] = function (opcode)
     return opcode
 end
 
--- Processor for opcode 'say'
---
--- For this opcode we need to see if the optional 'character' argument
--- is present.  If so then we need to also return a 'draw-character'
--- opcode so that the engine renders the character avatar along with
--- their dialog.  If there is no character we can return the opcode
--- as-is without any further processing.
-LNVL.Opcode.Processor["say"] = function (opcode)
-    if opcode.arguments["character"] ~= nil then
-        local character = opcode.arguments.character
-        -- If the character has no current image then we should not
-        -- create a 'draw-character' opcode because there is nothing
-        -- to draw.  So in that case we fall back on simply returning
-        -- the original opcode at the end of the function.
-        if character.images[character.currentImage] ~= nil then
-            local draw_opcode =
-                LNVL.Opcode:new("draw-character", { character=character })
-            return { draw_opcode:process(), opcode }
-        end
-    end
-
-    return opcode
-end
-
 -- The following opcodes require no additional processing after their
 -- creation and so they have no-op's for their processor functions.
 local returnOpcode = function (opcode) return opcode end
 LNVL.Opcode.Processor["change-scene"] = returnOpcode
 LNVL.Opcode.Processor["no-op"] = returnOpcode
 LNVL.Opcode.Processor["deactivate-character"] = returnOpcode
+LNVL.Opcode.Processor["say"] = returnOpcode
 
 -- This method processes an opcode by running it through the
 -- appropriate function above, returning the modified version.

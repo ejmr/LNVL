@@ -262,7 +262,7 @@ local characterActivatingOpcodes = {
     ["say"] = true,
     ["monologue"] = true,
     ["set-character-image"] = true,
-    ["draw-character"] = true,
+    ["move-character"] = true,
 }
 
 -- Renders the current content to screen.  By 'current content' we

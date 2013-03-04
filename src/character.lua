@@ -171,11 +171,10 @@ end
 -- This method changes the position of a character, which primarily
 -- affects where we draw his image.  The argument is a string which
 -- must be a valid key for the LNVL.Position table.  The method
--- returns a 'draw-character' opcode under the assumption that we want
--- to render the character in his new position now that we moved him.
+-- returns a 'move-character' opcode.
 function LNVL.Character:isAt(place)
     return LNVL.Opcode:new(
-        "draw-character",
+        "move-character",
         {
             character=self,
             position=LNVL.Position[place]
@@ -205,8 +204,11 @@ function LNVL.Character:becomesNormal()
 end
 
 -- This method draws the character to the screen, drawing whichever
--- image the 'currentImage' property names.  It returns nothing.
+-- image the 'currentImage' property names.  Before drawing the image
+-- we make sure the position of the image matches the position of the
+-- character.  The method returns nothing.
 function LNVL.Character:draw()
+    self.images[self.currentImage]:setPosition(self.position)
     self.images[self.currentImage]:draw()
 end
 

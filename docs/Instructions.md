@@ -151,18 +151,6 @@ character to the screen.
 1. `character`: An instance of `LNVL.Character` representing the
 character to deactivate.
 
-### Draw-Character ###
-
-The `draw-character` opcode renders a character to screen.  The opcode
-provides information to the `draw-image` instruction, telling it what
-image to draw and where.
-
-1. `character`: An instance of `LNVL.Character` to draw.
-
-2. `position`: *(Optional)* One of the `LNVL.Position.*` constants
-indicating where on screen the character should appear,
-e.g. `LNVL.Position.Right`.
-
 ### Monologue ###
 
 The `monologue` opcode expands into multiple `say` opcodes, used by
@@ -173,6 +161,16 @@ dialog by a single character at once.
 monologue.
 
 2. `content`: An array of strings representing lines of dialog.
+
+### Move-Character ###
+
+The `move-character` opcode changes the position of a character, as in
+changing where it appears on the screen.
+
+1. `character`: An instance of `LNVL.Character` which we move.
+
+2. `position`: One of the `LNVL.Position.*` constants indicating where
+on screen the character should appear, e.g. `LNVL.Position.Right`.
 
 ### No-Op ###
 
@@ -195,9 +193,7 @@ compile dialog for a particular scene.
 1. `content`: A string representing the line of dialog.
 
 2. `character`: *(Optional)* An instance of `LNVL.Character` who is
-speaking the line.  If present then the engine will also create a
-`draw-character` opcode which will result in two instructions later:
-`draw-image` followed immediately by `say`.
+speaking the line.
 
 ### Set-Character-Image ###
 
