@@ -119,6 +119,14 @@ function LNVL.LoadScript(filename)
     assert(script, "Could not load script " .. filename)
     setfenv(script, LNVL.ScriptEnvironment)
 
+    -- The variable 'script' is a chunk reperesenting the code from
+    -- the file we loaded.  In other words, 'script' is a function we
+    -- can execute to run the code from that file.  If we are using
+    -- debug mode then we call script() like a regular function.  This
+    -- will cause LNVL to crash if the code in that chunk causes any
+    -- errors.  If we are running in debug mode that is what we want.
+    -- But if we are not using debug mode then we execute the chunck
+    -- in a protected mode and silently ignore any errors.
     if LNVL.Settings.DebugModeEnabled == true then
         script()
     else
