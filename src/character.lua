@@ -209,6 +209,12 @@ function LNVL.Character:becomesNormal()
     return self:becomes("normal")
 end
 
+-- This method draws the character to the screen, drawing whichever
+-- image the 'currentImage' property names.  It returns nothing.
+function LNVL.Character:draw()
+    self.images[self.currentImage]:draw()
+end
+
 -- This function converts a Character object into a string for
 -- debugging purposes.
 LNVL.Character.__tostring = function (character)
