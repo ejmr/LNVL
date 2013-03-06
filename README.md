@@ -60,7 +60,7 @@ However, one file, `src/rgb.txt`, comes from the
 Special Thanks
 --------------
 
-* The code for `LNVL.Debug.tableToString()` uses the work of
+* The code for `LNVL.Debug.TableToString()` uses the work of
   [Julio Manuel Fernandez-Diaz](http://lua-users.org/wiki/TableSerialization).
 
 

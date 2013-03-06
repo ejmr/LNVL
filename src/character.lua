@@ -124,7 +124,7 @@ function LNVL.Character:new(properties)
     -- console so that we can verify everything looks correct.
     if LNVL.Settings.DebugModeEnabled == true then
         print("-- New Character --\n")
-        print(LNVL.Debug.tableToString(character, character.name))
+        print(LNVL.Debug.TableToString(character, character.name))
     end
 
     return character

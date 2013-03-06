@@ -25,7 +25,7 @@ LNVL.Debug.__index = LNVL.Debug
 --
 -- We have modified it only slightly to conform to the style of the
 -- LNVL codebase.
-function LNVL.Debug.tableToString(table, name, indent)
+function LNVL.Debug.TableToString(table, name, indent)
     local cart
     local autoref
 
@@ -99,7 +99,7 @@ end
 -- This function takes an LNVL.Scene object and prints every opcode of
 -- that scene to the console.  This is useful for ensuring that the
 -- opcodes we expect to exist are there and in the correct order.
-function LNVL.Debug.printSceneOpcodes(scene)
+function LNVL.Debug.PrintSceneOpcodes(scene)
     local function printOpcodeTable(opcodes)
         for index,opcode in ipairs(opcodes) do
             if getmetatable(opcode) == nil then
