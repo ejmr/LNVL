@@ -6,22 +6,22 @@
 --
 --]]
 
--- Create the LNVL.Menu class.
-LNVL.Menu = {}
-LNVL.Menu.__index = LNVL.Menu
+-- Create the Menu class.
+local Menu = {}
+Menu.__index = Menu
 
--- Load the LNVL.MenuChoice class so that we can use it.
-require("src.choice")
+-- Load the MenuChoice class so that we can use it.
+LNVL.MenuChoice = require("src.choice")
 
 -- Our constructor for the LNVL.Menu class.  It accepts a table of
 -- properties to set, assigns those to the new Menu object, and
 -- returns it.
-function LNVL.Menu:new(properties)
+function Menu:new(properties)
     local menu = {}
-    setmetatable(menu, LNVL.Menu)
+    setmetatable(menu, Menu)
 
     -- choices: An array of all of the choices available in this menu.
-    -- Each element is an LNVL.MenuChoice object.
+    -- Each element is an MenuChoice object.
     menu.choices = {}
 
     -- currentChoiceIndex: An integer representing the currently
@@ -80,14 +80,14 @@ function LNVL.Menu:new(properties)
 end
 
 -- Create an alias for the constructor for use in dialog scripts.
-LNVL.CreateConstructorAlias("Menu", LNVL.Menu)
+LNVL.CreateConstructorAlias("Menu", Menu)
 
 -- These two methods move forward and backward through the available
 -- menu choices.  They will return an integer, the index of the newly
 -- selected choice.  That way callers can use that information to
 -- update the display of a menu on screen, for example.
 
-function LNVL.Menu:moveForward()
+function Menu:moveForward()
     if self.currentChoiceIndex == nil then
         self.currentChoiceIndex = 1
     elseif self.currentChoiceIndex < #self.choices then
@@ -97,7 +97,7 @@ function LNVL.Menu:moveForward()
     return self.currentChoiceIndex
 end
 
-function LNVL.Menu:moveBack()
+function Menu:moveBack()
     if self.currentChoiceIndex == nil then
         self.currentChoiceIndex = #self.coiches
     elseif self.currentChoiceIndex > 1 then
@@ -108,4 +108,4 @@ function LNVL.Menu:moveBack()
 end
 
 -- Return the class as the module.
-return LNVL.Menu
+return Menu

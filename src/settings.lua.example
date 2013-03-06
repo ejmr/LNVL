@@ -5,8 +5,8 @@
 --]]
 
 -- Our table of settings.
-LNVL.Settings = {}
-LNVL.Settings.__index = LNVL.Settings
+local Settings = {}
+Settings.__index = Settings
 
 
 
@@ -15,13 +15,13 @@ LNVL.Settings.__index = LNVL.Settings
 -- This boolean setting enables or disables debugging mode.  When LNVL
 -- is in debugging mode it will print out various data to the console.
 -- Developers should set this to 'false' before releasing their games.
-LNVL.Settings.DebugModeEnabled = true
+Settings.DebugModeEnabled = true
 
 
 
 -- -- SCREEN SIZE SETTINGS -------------------------------------------
 
-LNVL.Settings.Screen = {}
+Settings.Screen = {}
 
 -- These settings control the height and width of the entire screen.
 -- If you are including LNVL as part of a larger game which already
@@ -29,49 +29,49 @@ LNVL.Settings.Screen = {}
 -- corresponding settings from your game to these properties.  That
 -- way LNVL will automatically use the same screen dimensions as the
 -- rest of your game.
-LNVL.Settings.Screen.Width = 800
-LNVL.Settings.Screen.Height = 600
-LNVL.Settings.Screen.Fullscreen = false
+Settings.Screen.Width = 800
+Settings.Screen.Height = 600
+Settings.Screen.Fullscreen = false
 
 -- An array of two elements, i.e. XY-coordinates, representing the
 -- center point in the screen.  This position is calculated
 -- dynamically from the screen settings above and should not need any
 -- manual modification.
-LNVL.Settings.Screen.Center = {
-    LNVL.Settings.Screen.Width / 2,
-    LNVL.Settings.Screen.Height / 2,
+Settings.Screen.Center = {
+    Settings.Screen.Width / 2,
+    Settings.Screen.Height / 2,
 }
 
 
 
 -- -- SCENE SETTINGS -------------------------------------------------
 
-LNVL.Settings.Scenes = {}
+Settings.Scenes = {}
 
 -- The default dimensions of Scene windows.  The X and Y values
 -- determine the default position where the window appears when not in
 -- fullscreen mode.
 do
-    local ratio = LNVL.Settings.Screen.Width / 10
-    LNVL.Settings.Scenes.Width = LNVL.Settings.Screen.Width - (ratio * 2)
+    local ratio = Settings.Screen.Width / 10
+    Settings.Scenes.Width = Settings.Screen.Width - (ratio * 2)
 end
 do
-    local ratio = LNVL.Settings.Screen.Height / 10
-    LNVL.Settings.Scenes.Height = LNVL.Settings.Screen.Height - (ratio * 5)
+    local ratio = Settings.Screen.Height / 10
+    Settings.Scenes.Height = Settings.Screen.Height - (ratio * 5)
 end
-LNVL.Settings.Scenes.X = (LNVL.Settings.Screen.Width / 10)
-LNVL.Settings.Scenes.Y = (LNVL.Settings.Screen.Height / 2) - 50
+Settings.Scenes.X = (Settings.Screen.Width / 10)
+Settings.Scenes.Y = (Settings.Screen.Height / 2) - 50
 
 -- A scene container, i.e. the rectangle where dialog appears, may
 -- have an optional border around it.  This value represents the width
 -- of that border in pixels.
-LNVL.Settings.Scenes.BorderSize = 5
+Settings.Scenes.BorderSize = 5
 
 -- All dialog in scenes will use this color by default.  However, if a
 -- character is speaking dialog then the text color for that character
 -- will override this color.  So this default color mainly affects
 -- narration in a scene that is not associated with any character.
-LNVL.Settings.Scenes.TextColor = LNVL.Color.Gray25
+Settings.Scenes.TextColor = LNVL.Color.Gray25
 
 -- This setting controls the default font for all scenes.  Its value
 -- must be a Font object from the LÖVE engine.  The documentation at
@@ -80,16 +80,16 @@ LNVL.Settings.Scenes.TextColor = LNVL.Color.Gray25
 --
 -- provides more information on fonts.  By default LNVL uses a simple,
 -- large font.
-LNVL.Settings.Scenes.DefaultFont = love.graphics.newFont(24)
+Settings.Scenes.DefaultFont = love.graphics.newFont(24)
 
 
 
 -- -- CHARACTER SETTINGS ---------------------------------------------
 
-LNVL.Settings.Characters = {}
+Settings.Characters = {}
 
 -- All dialog from characters will use this color by default.
-LNVL.Settings.Characters.TextColor = LNVL.Color.Black
+Settings.Characters.TextColor = LNVL.Color.Black
 
 -- These two settings control the borders around character images.  By
 -- default LNVL does not draw borders around characters.  But if you
@@ -100,8 +100,8 @@ LNVL.Settings.Characters.TextColor = LNVL.Color.Black
 -- You must change both of these defaults before LNVL will draw a
 -- border around character images, either by changing them here or for
 -- individual characters in scripts.
-LNVL.Settings.Characters.BorderColor = LNVL.Color.Transparent
-LNVL.Settings.Characters.BorderSize = 0
+Settings.Characters.BorderColor = LNVL.Color.Transparent
+Settings.Characters.BorderSize = 0
 
 -- This setting determines where character images appear on screen.
 -- See the 'docs/Howto.md' file or the source code for LNVL.Position
@@ -109,9 +109,9 @@ LNVL.Settings.Characters.BorderSize = 0
 --
 -- Individual characters in scripts can change this using the isAt()
 -- function, described in the same Howto document mentioned above.
-LNVL.Settings.Characters.DefaultPosition = LNVL.Position.Left
+Settings.Characters.DefaultPosition = LNVL.Position.Left
 
 
 
 -- Return the table of settings as the module.
-return LNVL.Settings
+return Settings

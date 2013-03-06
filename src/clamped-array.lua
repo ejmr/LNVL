@@ -21,13 +21,13 @@
 --
 --]]
 
-LNVL.ClampedArray = {}
+local ClampedArray = {}
 
 -- The constructor, which can take an array of arguments, which we
 -- assume are numbers but do not enforce.
-function LNVL.ClampedArray:new(values)
+function ClampedArray:new(values)
     local self = {}
-    setmetatable(self, LNVL.ClampedArray)
+    setmetatable(self, ClampedArray)
 
     -- __first_nil_index: This hidden property is an integer that
     -- indicates the first index in the array's contents that is nil
@@ -52,7 +52,7 @@ end
 -- a nil value.  That is assuming the key is a number.  If the key is
 -- not a number then we assume the user is accessing a property by
 -- name and simply return that.
-LNVL.ClampedArray.__index = function (table, key)
+ClampedArray.__index = function (table, key)
     if type(key) == "number" then
         if key < 1 then
             key = 1
@@ -66,7 +66,7 @@ end
 
 -- The __newindex() metatable function takes care to properly update
 -- the array's __first_nil_index property when the key is a number.
-LNVL.ClampedArray.__newindex = function (table, key, value)
+ClampedArray.__newindex = function (table, key, value)
     if type(key) == "number" then
         if value == nil and key < table.__first_nil_index then
             table.__first_nil_index = key
@@ -81,9 +81,9 @@ end
 -- The __len() metatable function returns the length up to the first
 -- nil array element.  That nil element is not included as part of the
 -- length, e.g. the array {10, 20, nil} has a length of two.
-LNVL.ClampedArray.__len = function (table)
+ClampedArray.__len = function (table)
     return table.__first_nil_index
 end
 
 -- Return the class as a module.
-return LNVL.ClampedArray
+return ClampedArray

@@ -5,14 +5,14 @@
 --
 --]]
 
--- Create the LNVL.Scene class.
-LNVL.Scene = {}
-LNVL.Scene.__index = LNVL.Scene
+-- Create the Scene class.
+local Scene = {}
+Scene.__index = Scene
 
 -- Our constructor.
-function LNVL.Scene:new(properties)
+function Scene:new(properties)
     local scene = {}
-    setmetatable(scene, LNVL.Scene)
+    setmetatable(scene, Scene)
 
     -- name: The name of the scene as a string.  Currently we use this
     -- only to assist debugging since it allows us to assign a name
@@ -133,7 +133,7 @@ function LNVL.Scene:new(properties)
 end
 
 -- Create an alias for the constructor for use in dialog scripts.
-LNVL.CreateConstructorAlias("Scene", LNVL.Scene)
+LNVL.CreateConstructorAlias("Scene", Scene)
 
 -- This metatable function converts a Scene to a string.  This helps
 -- us with debugging.  There is one situation where we can have an
@@ -141,7 +141,7 @@ LNVL.CreateConstructorAlias("Scene", LNVL.Scene)
 -- function for the 'set-scene-image' opcode.  It documents why.  But
 -- because of that possibility we cannot assume the 'scene' parameter
 -- in this function has a 'name' property or any other properties.
-LNVL.Scene.__tostring = function (scene)
+Scene.__tostring = function (scene)
     if scene["name"] ~= nil and #scene.name > 0 then
         return string.format("<Scene: \"%s\">", scene.name)
     else
@@ -155,7 +155,7 @@ end
 -- 'properties' argument to Scene:new().  The method returns an
 -- appropriate LNVL.Opcode object based on the argument.  It may also
 -- return an array of LNVL.Opcode objects.
-function LNVL.Scene:createOpcodeFromContent(content)
+function Scene:createOpcodeFromContent(content)
     local contentType = type(content)
 
     -- If the content is a string then all we only need to create a
@@ -189,7 +189,7 @@ end
 
 -- This method sets the background image.  It accepts a path to the
 -- file for the image.  It returns nothing.
-function LNVL.Scene:setBackground(filename)
+function Scene:setBackground(filename)
     self.background = filename
     self.backgroundImage = love.graphics.newImage(filename)
 end
@@ -204,24 +204,24 @@ end
 -- reference to the current scene.  But since all opcodes get access
 -- to their containing scene later, the opcode will have access to the
 -- scene before we convert it into an instruction and execute it.
-function LNVL.Scene.changeBackgroundTo(filename)
+function Scene.changeBackgroundTo(filename)
     return LNVL.Opcode:new("set-scene-image",
                            {image=love.graphics.newImage(filename)})
 end
 
 -- Create a ChangeSceneBackgroundTo() alias for scripts to use in
--- place of the LNVL.Scene.changeBackgroundTo() function above.
-LNVL.CreateFunctionAlias("ChangeSceneBackgroundTo", LNVL.Scene.changeBackgroundTo)
+-- place of the Scene.changeBackgroundTo() function above.
+LNVL.CreateFunctionAlias("ChangeSceneBackgroundTo", Scene.changeBackgroundTo)
 
 -- This method sets the font for the scene.  It requires a filename to
 -- a font file (e.g. a TTF file) and a font size in pixels.  The
 -- method returns no value.
-function LNVL.Scene:setFont(filename, size)
+function Scene:setFont(filename, size)
     self.font = love.graphics.newFont(filename, size)
 end
 
 -- This method draws the container or border of the scene.
-function LNVL.Scene:drawContainer()
+function Scene:drawContainer()
     LNVL.Graphics.DrawContainer{
         backgroundColor=self.boxBackgroundColor,
         borderColor=self.borderColor }
@@ -235,7 +235,7 @@ end
 -- the 'font' property of the Scene object itself.
 --
 -- This method returns no value.
-function LNVL.Scene:drawText(text, font)
+function Scene:drawText(text, font)
     local font = font or self.font
     LNVL.Graphics.DrawText(font, self.textColor, text)
 end
@@ -243,7 +243,7 @@ end
 -- This method draws the parts of a scene that we want on screen
 -- everytime we render a scene, such as its background color or image,
 -- dialog container, active characters, and so on.
-function LNVL.Scene:drawEssentialElements()
+function Scene:drawEssentialElements()
     if self.backgroundImage ~= nil then
         love.graphics.setColorMode("replace")
         love.graphics.draw(self.backgroundImage, 0, 0)
@@ -271,7 +271,7 @@ local characterActivatingOpcodes = {
 -- function returns no value because instructions return no arguments.
 -- We must take care to always call drawEssentialElements() before
 -- this, which the draw() method takes care of for us.
-function LNVL.Scene:drawCurrentContent()
+function Scene:drawCurrentContent()
     local opcode = self.opcodes[self.opcodeIndex]
 
     -- If the opcode is a no-op then we do not need to invoke any
@@ -320,7 +320,7 @@ end
 
 -- This method draws the scene and is the method intended for use
 -- outside of LNVL, e.g. inside of the love.draw() function.
-function LNVL.Scene:draw()
+function Scene:draw()
     self:drawEssentialElements()
     self:drawCurrentContent()
 end
@@ -330,22 +330,22 @@ end
 -- LNVL.currentScene later on.  This is not a method because we intend
 -- to use it in the parameters for the constructor of an LNVL.Scene
 -- object, and at that time we have no object to use.
-function LNVL.Scene.changeTo(name)
+function Scene.changeTo(name)
     return LNVL.Opcode:new("change-scene", {name=name})
 end
 
--- Create the ChangeToScene() alias for LNVL.Scene.changeTo().
-LNVL.CreateFunctionAlias("ChangeToScene", LNVL.Scene.changeTo)
+-- Create the ChangeToScene() alias for Scene.changeTo().
+LNVL.CreateFunctionAlias("ChangeToScene", Scene.changeTo)
 
 -- This method moves forward to the next content in the scene.
-function LNVL.Scene:moveForward()
+function Scene:moveForward()
     if self.opcodeIndex < #self.opcodes then
         self.opcodeIndex = self.opcodeIndex + 1
     end
 end
 
 -- This method moves back to the previous content in the scene.
-function LNVL.Scene:moveBack()
+function Scene:moveBack()
     if self.opcodeIndex > 1 then
         self.opcodeIndex = self.opcodeIndex - 1
     end
@@ -359,4 +359,4 @@ end
 LNVL.ScriptEnvironment["Pause"] = LNVL.Opcode:new("no-op")
 
 -- Return the class as a module.
-return LNVL.Scene
+return Scene

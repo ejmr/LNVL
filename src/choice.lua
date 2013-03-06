@@ -9,14 +9,14 @@
 --
 --]]
 
--- Create the LNVL.MenuChoice class.
-LNVL.MenuChoice = {}
-LNVL.MenuChoice.__index = LNVL.MenuChoice
+-- Create the MenuChoice class.
+local MenuChoice = {}
+MenuChoice.__index = MenuChoice
 
 -- Our constructor for the class.
-function LNVL.MenuChoice:new(properties)
+function MenuChoice:new(properties)
     local choice = {}
-    setmetatable(choice, LNVL.MenuChoice)
+    setmetatable(choice, MenuChoice)
 
     -- label: A string representing the label for this choice, i.e.
     -- the text a user would see when presented with this choice.
@@ -41,9 +41,9 @@ function LNVL.MenuChoice:new(properties)
 end
 
 -- Convert a MenuChoice object to a string for debugging purposes.
-LNVL.MenuChoice.__tostring = function (choice)
+MenuChoice.__tostring = function (choice)
     return string.format("<MenuChoice: %q>", choice.label)
 end
 
 -- Return the class as the module.
-return LNVL.MenuChoice
+return MenuChoice

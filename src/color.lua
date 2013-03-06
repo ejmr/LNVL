@@ -18,8 +18,8 @@
 --]]
 
 -- Create the table to hold our colors.
-LNVL.Color = {}
-LNVL.Color.__index = LNVL.Color
+local Color = {}
+Color.__index = Color
 
 -- Our handle to the 'rgb.txt' file.  Even though the text file is in
 -- the same directory as this module we load the module from the
@@ -45,7 +45,7 @@ local rgb_entry_regex = "(%d+)%s+(%d+)%s+(%d+)%s+(%w+)"
 for line in rgb_file:lines() do
     for r,g,b,name in string.gmatch(line, rgb_entry_regex) do
         name = string.upper(name:sub(1, 1)) .. name:sub(2)
-        LNVL.Color[name] = {r, g, b}
+        Color[name] = {r, g, b}
     end
 end
 
@@ -60,7 +60,7 @@ rgb_file:close()
 -- constructors.  Using a string would cause a problem with color
 -- properties on which we automatically call Color.FromHex() if they
 -- have a string value.
-LNVL.Color.Transparent = 0
+Color.Transparent = 0
 
 -- This method accepts a color as a string, in hexadecimal format, and
 -- returns a table with the corresponding RGB values.  The string can
@@ -73,7 +73,7 @@ LNVL.Color.Transparent = 0
 -- treat 'faf' as if it were 'ffaaff'.  The string may optionally
 -- begin with the '#' character, so strings like '#ffaaff' are also
 -- acceptable.
-function LNVL.Color.FromHex(color_hex)
+function Color.FromHex(color_hex)
     local long_regex = "#?(%x%x)(%x%x)(%x%x)"
     local short_regex = "#?(%x)(%x)(%x)"
 
@@ -98,7 +98,7 @@ function LNVL.Color.FromHex(color_hex)
 end
 
 -- Provide a way to convert colors to strings for debugging purposes.
-LNVL.Color.__tostring = function (color)
+Color.__tostring = function (color)
     return string.format("Color {R=%d G=%d B=%g}",
                          color[1],
                          color[2],
@@ -107,7 +107,7 @@ end
 
 -- Allow dialog scripts to access this module by writing (for example)
 -- 'Color.NavyBlue' instead of 'LNVL.Color.NavyBlue'.
-LNVL.ScriptEnvironment["Color"] = LNVL.Color
+LNVL.ScriptEnvironment["Color"] = Color
 
 -- Return our table as a module.
-return LNVL.Color
+return Color

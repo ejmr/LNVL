@@ -5,14 +5,14 @@
 --
 --]]
 
--- Create the LNVL.Drawable class.
-LNVL.Drawable = {}
-LNVL.Drawable.__index = LNVL.Drawable
+-- Create the Drawable class.
+local Drawable = {}
+Drawable.__index = Drawable
 
 -- Our constructor.
-function LNVL.Drawable:new(properties)
+function Drawable:new(properties)
     local drawable = {}
-    setmetatable(drawable, LNVL.Drawable)
+    setmetatable(drawable, Drawable)
 
     -- image: The actual image to render when we draw this object.
     -- This property must be an Image object from LÖVE, e.g. the
@@ -61,7 +61,7 @@ end
 
 -- This function provides a string representation of a Drawable that
 -- we can use in debugging output.
-LNVL.Drawable.__tostring = function (drawable)
+Drawable.__tostring = function (drawable)
     if drawable.image == nil then
         return "<Drawable: No Image>"
     else
@@ -85,7 +85,7 @@ end
 -- See the documentation for the LNVL.Position class for details about
 -- the meaning of the possible position values and where they cause
 -- Drawables to appear on screen.
-function LNVL.Drawable:setPosition(position)
+function Drawable:setPosition(position)
     self.position = position
 
     local image_width = self.image:getWidth()
@@ -151,7 +151,7 @@ end
 -- border around the Drawable.  See the commentary for those
 -- properties in the Drawable:new() constructor for what types of
 -- values they must have in order to make a border appear.
-function LNVL.Drawable:draw()
+function Drawable:draw()
     love.graphics.setColorMode("replace")
 
     if self.borderColor ~= LNVL.Color.Transparent and self.borderSize > 0 then
@@ -167,8 +167,8 @@ function LNVL.Drawable:draw()
 end
 
 -- Provide access to the width and height of the Drawable image.
-function LNVL.Drawable:getWidth() return self.image:getWidth() end
-function LNVL.Drawable:getHeight() return self.image:getHeight() end
+function Drawable:getWidth() return self.image:getWidth() end
+function Drawable:getHeight() return self.image:getHeight() end
 
 -- Return the class as the module.
-return LNVL.Drawable
+return Drawable

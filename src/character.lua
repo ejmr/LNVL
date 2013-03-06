@@ -6,14 +6,14 @@
 --
 --]]
 
--- Create the LNVL.Character class.
-LNVL.Character = {}
-LNVL.Character.__index = LNVL.Character
+-- Create the Character class.
+local Character = {}
+Character.__index = Character
 
 -- The constructor for characters.
-function LNVL.Character:new(properties)
+function Character:new(properties)
     local character = {}
-    setmetatable(character, LNVL.Character)
+    setmetatable(character, Character)
 
     -- name: The name of the character as a string.  Right now we set
     -- it as an empty string because the loop later through
@@ -131,7 +131,7 @@ function LNVL.Character:new(properties)
 end
 
 -- Create an alias for the constructor for use in dialog scripts.
-LNVL.CreateConstructorAlias("Character", LNVL.Character)
+LNVL.CreateConstructorAlias("Character", Character)
 
 -- This is the method that characters use to speak in scripts.  It
 -- accepts a string of text as an argument and returns a 'say' opcode
@@ -144,7 +144,7 @@ LNVL.CreateConstructorAlias("Character", LNVL.Character)
 -- e.g. here the text to speak.  So the only way to get that is to
 -- attach the two and then return the entire object so we will have
 -- access to them later.
-function LNVL.Character:says(text)
+function Character:says(text)
     return LNVL.Opcode:new("say", {content=text, character=self})
 end
 
@@ -153,14 +153,14 @@ end
 -- scripts can provide monologues without having to repeat the
 -- character object over and over.  The function returns a 'monologue'
 -- opcode with the dialog and character attached.
-function LNVL.Character:monologue(lines)
+function Character:monologue(lines)
     return LNVL.Opcode:new("monologue", {content=lines, character=self})
 end
 
 -- If we call a Character object as a function then we treat that as a
 -- short-cut for calling the says() method.  This can make dialog
 -- scripts more readable.
-LNVL.Character.__call = function (f, ...)
+Character.__call = function (f, ...)
     if type(f) == "function" then
         return f(...)
     else
@@ -172,7 +172,7 @@ end
 -- affects where we draw his image.  The argument is a string which
 -- must be a valid key for the LNVL.Position table.  The method
 -- returns a 'move-character' opcode.
-function LNVL.Character:isAt(place)
+function Character:isAt(place)
     return LNVL.Opcode:new(
         "move-character",
         {
@@ -189,7 +189,7 @@ end
 --
 -- The method returns an opcode telling the engine to use the new
 -- character image.
-function LNVL.Character:becomes(filename)
+function Character:becomes(filename)
     if self.images[filename] == nil then
         self.images[filename] = LNVL.Drawable:new{image=love.graphics.newImage(filename)}
     end
@@ -199,7 +199,7 @@ end
 
 -- This method is a short-cut for character:becomes("normal"),
 -- i.e. changing back to their default image.
-function LNVL.Character:becomesNormal()
+function Character:becomesNormal()
     return self:becomes("normal")
 end
 
@@ -207,7 +207,7 @@ end
 -- image the 'currentImage' property names.  Before drawing the image
 -- we make sure the position of the image matches the position of the
 -- character.  The method returns nothing.
-function LNVL.Character:draw()
+function Character:draw()
     local image = self.images[self.currentImage]
 
     if image ~= nil then
@@ -218,15 +218,15 @@ end
 
 -- This method removes a character from a scene by creating an opcode
 -- that deactivates the character.
-function LNVL.Character:leavesTheScene()
+function Character:leavesTheScene()
     return LNVL.Opcode:new("deactivate-character", {character=self})
 end
 
 -- This function converts a Character object into a string for
 -- debugging purposes.
-LNVL.Character.__tostring = function (character)
+Character.__tostring = function (character)
     return character.name
 end
 
 -- Return the class as a module.
-return LNVL.Character
+return Character

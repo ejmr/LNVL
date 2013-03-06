@@ -6,9 +6,9 @@
 --
 --]]
 
--- Create the LNVL.Position table.
-LNVL.Position = {}
-LNVL.Position.__index = LNVL.Position
+-- Create the Position table.
+local Position = {}
+Position.__index = Position
 
 -- These positions specify the general area an object should appear
 -- but do not give any exact location.  It is up to the object given
@@ -38,7 +38,7 @@ LNVL.Position.__index = LNVL.Position
 -- on code, we define of all the positions as a list of strings and
 -- then dynamically create the LNVL.Position properties from that.
 
-LNVL.Position.ValidPositions = {
+Position.ValidPositions = {
     "BottomCenter",
     "Center",
     "TopCenter",
@@ -52,9 +52,9 @@ LNVL.Position.ValidPositions = {
     "TopLeft",
 }
 
-for _,name in ipairs(LNVL.Position.ValidPositions) do
-    LNVL.Position[name] = name
+for _,name in ipairs(Position.ValidPositions) do
+    Position[name] = name
 end
 
 -- Return the table as the module.
-return LNVL.Position
+return Position

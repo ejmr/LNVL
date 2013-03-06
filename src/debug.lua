@@ -4,9 +4,9 @@
 --
 --]]
 
--- Create the LNVL.Debug class.
-LNVL.Debug = {}
-LNVL.Debug.__index = LNVL.Debug
+-- Create the Debug class.
+local Debug = {}
+Debug.__index = Debug
 
 -- This function takes a table and returns a string representing that
 -- table in a pretty-printed format.  The string is also valid Lua
@@ -25,7 +25,7 @@ LNVL.Debug.__index = LNVL.Debug
 --
 -- We have modified it only slightly to conform to the style of the
 -- LNVL codebase.
-function LNVL.Debug.TableToString(table, name, indent)
+function Debug.TableToString(table, name, indent)
     local cart
     local autoref
 
@@ -99,7 +99,7 @@ end
 -- This function takes an LNVL.Scene object and prints every opcode of
 -- that scene to the console.  This is useful for ensuring that the
 -- opcodes we expect to exist are there and in the correct order.
-function LNVL.Debug.PrintSceneOpcodes(scene)
+function Debug.PrintSceneOpcodes(scene)
     local function printOpcodeTable(opcodes)
         for index,opcode in ipairs(opcodes) do
             if getmetatable(opcode) == nil then
@@ -116,4 +116,4 @@ function LNVL.Debug.PrintSceneOpcodes(scene)
 end
 
 -- Return the class as the module.
-return LNVL.Debug
+return Debug

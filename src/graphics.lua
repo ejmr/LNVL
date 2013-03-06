@@ -6,9 +6,9 @@
 --
 --]]
 
--- Create the LNVL.Graphics class.
-LNVL.Graphics = {}
-LNVL.Graphics.__index = LNVL.Graphics
+-- Create the Graphics class.
+local Graphics = {}
+Graphics.__index = Graphics
 
 -- This function draws a 'container', a rectangle that presumably we
 -- will use to contain dialog.  The function accepts two keyword
@@ -21,7 +21,7 @@ LNVL.Graphics.__index = LNVL.Graphics
 -- 2. 'borderColor': (Optional) the color of the container border.
 --
 -- The function returns no value.
-function LNVL.Graphics.DrawContainer(arguments)
+function Graphics.DrawContainer(arguments)
     assert(arguments["backgroundColor"] ~= nil,
            "Cannot draw a container without a background color.")
 
@@ -62,7 +62,7 @@ end
 -- color to that, under the assumption the table has three numeric
 -- values, i.e. RGB values.  Users should use DrawContainer() above to
 -- clear it before drawing text.  The function returns no value.
-function LNVL.Graphics.DrawText(font, color, text)
+function Graphics.DrawText(font, color, text)
     love.graphics.setColorMode("modulate")
     love.graphics.setFont(font)
 
@@ -94,4 +94,4 @@ function LNVL.Graphics.DrawText(font, color, text)
 end
 
 -- Return the class as the module.
-return LNVL.Graphics
+return Graphics

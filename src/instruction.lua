@@ -9,12 +9,12 @@
 --
 --]]
 
--- Create our LNVL.Instruction class.
-LNVL.Instruction = {}
-LNVL.Instruction.__index = LNVL.Instruction
+-- Create our Instruction class.
+local Instruction = {}
+Instruction.__index = Instruction
 
 -- This is a list of all the valid instructions.
-LNVL.Instruction.ValidInstructions = {
+Instruction.ValidInstructions = {
     ["say"] = true,
     ["set-image"] = true,
     ["draw-image"] = true,
@@ -24,10 +24,10 @@ LNVL.Instruction.ValidInstructions = {
 
 -- Our constructor.  It requires a table with two properties, named
 -- and defined in comments within the constructor.
-function LNVL.Instruction:new(properties)
+function Instruction:new(properties)
     local instruction = {}
-    setmetatable(instruction, LNVL.Instruction)
-    assert(LNVL.Instruction.ValidInstructions[properties.name] ~= nil,
+    setmetatable(instruction, Instruction)
+    assert(Instruction.ValidInstructions[properties.name] ~= nil,
            string.format("Unknown instruction %s", properties.name))
 
     -- name: The name of the instruction as a string.
@@ -41,13 +41,13 @@ end
 
 -- A simple tostring() method for debugging purposes, which does
 -- nothing but returns the name of the instruction.
-LNVL.Instruction.__tostring = function (instruction)
+Instruction.__tostring = function (instruction)
     return string.format("<Instruction %s>", instruction.name)
 end
 
 -- We define a __call() metatable method as a shortcut for executing
 -- the 'action' function of an instruction.
-LNVL.Instruction.__call = function (f, ...)
+Instruction.__call = function (f, ...)
     if type(f) == "function" then
         return f(...)
     else
@@ -57,14 +57,14 @@ end
 
 -- This table contains all of the instructions in the LNVL engine.
 -- The keys for the table are strings, the names of the instructions.
--- The values are the LNVL.Instruction objects themselves.
+-- The values are the Instruction objects themselves.
 --
 -- All of the individual instructions defined below are described in
 -- detail by the document referenced at the top of this file.  None of
 -- the instruction action functions return values.
 LNVL.Instructions = {}
 
-LNVL.Instructions["say"] = LNVL.Instruction:new{
+LNVL.Instructions["say"] = Instruction:new{
     name = "say",
     action = function (arguments)
         if arguments["character"] ~= nil then
@@ -88,7 +88,7 @@ LNVL.Instructions["say"] = LNVL.Instruction:new{
     end }
 
 
-LNVL.Instructions["set-image"] = LNVL.Instruction:new{
+LNVL.Instructions["set-image"] = Instruction:new{
     name = "set-image",
     action = function (arguments)
         local targetType = getmetatable(arguments.target)
@@ -111,7 +111,7 @@ LNVL.Instructions["set-image"] = LNVL.Instruction:new{
         end
     end }
 
-LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
+LNVL.Instructions["draw-image"] = Instruction:new{
     name = "draw-image",
     action = function (arguments)
         love.graphics.setColorMode("replace")
@@ -140,7 +140,7 @@ LNVL.Instructions["draw-image"] = LNVL.Instruction:new{
         end
     end }
 
-LNVL.Instructions["set-scene"] = LNVL.Instruction:new{
+LNVL.Instructions["set-scene"] = Instruction:new{
     name = "set-scene",
     action = function (arguments)
         local scene = LNVL.ScriptEnvironment[arguments.name]
@@ -149,7 +149,7 @@ LNVL.Instructions["set-scene"] = LNVL.Instruction:new{
         LNVL.CurrentScene = scene
     end }
 
-LNVL.Instructions["no-op"] = LNVL.Instruction:new{
+LNVL.Instructions["no-op"] = Instruction:new{
     name = "no-op",
     action = function (arguments) end
 }
@@ -158,7 +158,7 @@ LNVL.Instructions["no-op"] = LNVL.Instruction:new{
 -- the names of the instructions we execute for each opcode.  Note
 -- that there is not a one-to-one mapping between opcodes and
 -- instructions; different opcodes may become the same instruction.
-LNVL.Instruction.ForOpcode = {
+Instruction.ForOpcode = {
     ["monologue"] = LNVL.Instructions["say"],
     ["say"] = LNVL.Instructions["say"],
     ["set-character-image"] = LNVL.Instructions["set-image"],
@@ -170,20 +170,20 @@ LNVL.Instruction.ForOpcode = {
 }
 
 -- If LNVL is running in debugging mode then make sure that every
--- instruction we list as valid has a match LNVL.Instruction object
+-- instruction we list as valid has a match Instruction object
 -- that implements it.
 --
 -- We also make sure that every opcode has a matching instruction.
 if LNVL.Settings.DebugModeEnabled == true then
-    for name,_ in pairs(LNVL.Instruction.ValidInstructions) do
+    for name,_ in pairs(Instruction.ValidInstructions) do
         if LNVL.Instructions[name] == nil then
             error("No implementation for the instruction " .. name)
         end
     end
 
     for name,_ in pairs(LNVL.Opcode.ValidOpcodes) do
-        if LNVL.Instruction.ForOpcode[name] == nil
-            or getmetatable(LNVL.Instruction.ForOpcode[name]) ~= LNVL.Instruction
+        if Instruction.ForOpcode[name] == nil
+            or getmetatable(Instruction.ForOpcode[name]) ~= Instruction
         then
             error("No instruction implementation for the opcode " .. name)
         end
@@ -191,4 +191,4 @@ if LNVL.Settings.DebugModeEnabled == true then
 end
 
 -- Return our class as a module.
-return LNVL.Instruction
+return Instruction
