@@ -17,21 +17,21 @@ Jeff = Character {
 }
 
 START = Scene {
-    Jeff:says "Hey guess what genius?  We're being sued.  Hard.",
-    Eric:says "By who?",
-    Jeff:says "Sushimiya Hirasawa.  Because you copied his lyrics.",
-    Eric:says "Oh my God could you please at least get his name right.",
-    Eric:says "Let me see that anyways...",
+    Jeff "Hey guess what genius?  We're being sued.  Hard.",
+    Eric "By who?",
+    Jeff "Sushimiya Hirasawa.  Because you copied his lyrics.",
+    Eric "Oh my God could you please at least get his name right.",
+    Eric "Let me see that anyways...",
     Eric:becomes("examples/images/Eric-Surprised.png"),
-    Eric:says "Holy Hell, this is for one-hundred million yen in damages!",
-    Eric:says "What is that?  Like, fifty dollars?!  We don't have that!",
+    Eric "Holy Hell, this is for one-hundred million yen in damages!",
+    Eric "What is that?  Like, fifty dollars?!  We don't have that!",
     Jeff:becomes("examples/images/Jeff-Facepalm.png"),
-    Jeff:says "I wanted to make just one game before you got us sued into the ground.",
+    Jeff "I wanted to make just one game before you got us sued into the ground.",
     Eric:becomesNormal(),
-    Eric:says "Time for Plan-B.",
+    Eric "Time for Plan-B.",
     Jeff:becomesNormal(),
-    Jeff:says "Flee America?",
-    Eric:says "Exactly.  Throw a dart at a map of South America and let's just go.",
+    Jeff "Flee America?",
+    Eric "Exactly.  Throw a dart at a map of South America and let's just go.",
 }
 
 -- Twice the scene calls the becomeNormal() method on the characters.
