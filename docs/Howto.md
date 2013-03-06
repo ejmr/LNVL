@@ -121,7 +121,7 @@ transparency you can use `Color.Transparent` for any color.
 Instead of names you can use [short-hand hexadecimal notation][color-hex]:
 
     START = Scene {
-        boxBackgroundColor = Color.fromHex("#088008"),
+        boxBackgroundColor = Color.FromHex("#088008"),
         "...",
     }
 

@@ -108,10 +108,10 @@ function LNVL.Character:new(properties)
     -- '#33cfaf', i.e. a hex color string.  We need to convert that
     -- back into a table of RGB color values.
     if type(character.textColor) == "string" then
-        character.textColor = LNVL.Color.fromHex(character.textColor)
+        character.textColor = LNVL.Color.FromHex(character.textColor)
     end
     if type(character.borderColor) == "string" then
-        character.borderColor = LNVL.Color.fromHex(character.borderColor)
+        character.borderColor = LNVL.Color.FromHex(character.borderColor)
     end
 
     -- Make sure the character has a name, because we do not support

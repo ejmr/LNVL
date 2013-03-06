@@ -58,7 +58,7 @@ rgb_file:close()
 -- way to distinguish this color from all the rest, and using nil
 -- would cause problems in places like Scene and Character
 -- constructors.  Using a string would cause a problem with color
--- properties on which we automatically call Color.fromHex() if they
+-- properties on which we automatically call Color.FromHex() if they
 -- have a string value.
 LNVL.Color.Transparent = 0
 
@@ -73,7 +73,7 @@ LNVL.Color.Transparent = 0
 -- treat 'faf' as if it were 'ffaaff'.  The string may optionally
 -- begin with the '#' character, so strings like '#ffaaff' are also
 -- acceptable.
-function LNVL.Color.fromHex(color_hex)
+function LNVL.Color.FromHex(color_hex)
     local long_regex = "#?(%x%x)(%x%x)(%x%x)"
     local short_regex = "#?(%x)(%x)(%x)"
 
