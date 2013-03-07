@@ -77,7 +77,16 @@ function Scene:new(properties)
     -- Each key in this table is the name of a character, as a string.
     -- The corresponding value is the Character object that represents
     -- the character named by the key.
+    --
+    -- This table has weak values.  If the only reference to a
+    -- specific Character object is the one which remains in this
+    -- table then Lua will garbage-collect it.  Because we create each
+    -- Character outside of scenes the only time this table will have
+    -- the only remaining reference is when we actively start
+    -- destroying those external references to completely get rid of
+    -- that character.
     self.activeCharacters = {}
+    setmetatable(self.activeCharacters, { __mode = "v" })
 
     -- If the for-loop above assign a string to 'background' then we
     -- assume it is a filepath to an image and try to load that image
