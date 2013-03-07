@@ -64,7 +64,7 @@ end
 -- the instruction action functions return values.
 LNVL.Instructions = {}
 
-LNVL.Instructions["say"] = Instruction:new{
+LNVL.Instructions["say"] = Instruction:new {
     name = "say",
     action = function (arguments)
         if arguments["character"] ~= nil then
@@ -88,7 +88,7 @@ LNVL.Instructions["say"] = Instruction:new{
     end }
 
 
-LNVL.Instructions["set-image"] = Instruction:new{
+LNVL.Instructions["set-image"] = Instruction:new {
     name = "set-image",
     action = function (arguments)
         local targetType = getmetatable(arguments.target)
@@ -111,7 +111,7 @@ LNVL.Instructions["set-image"] = Instruction:new{
         end
     end }
 
-LNVL.Instructions["draw-image"] = Instruction:new{
+LNVL.Instructions["draw-image"] = Instruction:new {
     name = "draw-image",
     action = function (arguments)
         love.graphics.setColorMode("replace")
@@ -140,7 +140,7 @@ LNVL.Instructions["draw-image"] = Instruction:new{
         end
     end }
 
-LNVL.Instructions["set-scene"] = Instruction:new{
+LNVL.Instructions["set-scene"] = Instruction:new {
     name = "set-scene",
     action = function (arguments)
         local scene = LNVL.ScriptEnvironment[arguments.name]
@@ -149,7 +149,7 @@ LNVL.Instructions["set-scene"] = Instruction:new{
         LNVL.CurrentScene = scene
     end }
 
-LNVL.Instructions["no-op"] = Instruction:new{
+LNVL.Instructions["no-op"] = Instruction:new {
     name = "no-op",
     action = function (arguments) end
 }
