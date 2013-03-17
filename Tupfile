@@ -21,6 +21,6 @@ SOURCES += examples/
 # implementing each instruction.
 : | TAGS \
 |> ^ Creating TAGS^ ctags-exuberant -Re --languages=lua \
-    --regex-lua="/Opcode\.Processor\[\"([a-z-]+)\"\]/Opcode.\1/" \
-    --regex-lua="/LNVL\.Instructions\[\"([a-z-]+)\"\]/Instruction.\1/" \
+    --regex-lua="/Opcode\.Processor\[\"([a-z-]+)\"\].+/Opcode.\1/" \
+    --regex-lua="/LNVL\.Instructions\[\"([a-z-]+)\"\].+/Instruction.\1/" \
 |> TAGS
