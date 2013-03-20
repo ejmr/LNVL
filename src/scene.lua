@@ -245,7 +245,7 @@ function Scene:drawEssentialElements()
         love.graphics.draw(self.backgroundImage, 0, 0)
     end
 
-    for name,character in pairs(self.activeCharacters) do
+    for _,character in pairs(self.activeCharacters) do
         character:draw()
     end
 
