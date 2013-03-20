@@ -112,9 +112,7 @@ function Scene:new(properties)
         -- '__flatten' property and if it is true.  The commentary for
         -- the LNVL.Opcode.Processor table explains the purpose of
         -- this property.
-        if getmetatable(new_opcode) == LNVL.Opcode then
-            table.insert(opcodes, new_opcode)
-        elseif rawget(new_opcode, "__flatten") == true then
+        if rawget(new_opcode, "__flatten") == true then
             for _,op in ipairs(new_opcode) do
                 table.insert(opcodes, op)
             end
