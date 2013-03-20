@@ -51,46 +51,41 @@ function Graphics.DrawContainer(arguments)
                             LNVL.Settings.Scenes.Height)
 end
 
--- This function draws text to the screen.  The first argument must be
--- a Font object from LÖVE.  The second argument is the default color
--- for the text, i.e. a table of RGB values.  The third argument can
--- be either a string or a table.  If it is a string then we render
--- the text using the current foreground color, which must be set
--- before calling this function.  If it is a table then we iterate
--- through its contents like an array; if the element is a string then
--- we print that text, and if it is a table then we set the foreground
--- color to that, under the assumption the table has three numeric
--- values, i.e. RGB values.  Users should use DrawContainer() above to
--- clear it before drawing text.  The function returns no value.
-function Graphics.DrawText(font, color, text)
-    love.graphics.setColorMode("modulate")
-    love.graphics.setFont(font)
-
-    -- We use this function to iterate through the 'text' argument if
-    -- it happens to be a table, handling the string and table
-    -- elements appropriately.
-    local process =
-        function (element)
-            if type(element) == "string" then
-                love.graphics.printf(element,
-                                     LNVL.Settings.Scenes.X + 10,
-                                     LNVL.Settings.Scenes.Y + 10,
-                                     LNVL.Settings.Scenes.Width - 15,
-                                     "left")
-            elseif type(element) == "table" then
-                love.graphics.setColor(element)
-            end
+-- This function draws text to the screen.  It accepts one argument, a
+-- table of content.  The elements in that table can be any of these:
+--
+-- 1. A Font object.  LNVL will use this font for all of the content
+-- that follows.
+--
+-- 2. A Color object.  Remaining content will use this foreground
+-- color, particularly useful for text.
+--
+-- 3. A string of text to render.
+--
+-- That means each element in the content table must either be a
+-- string or another table.  This function loops through the content
+-- and performs the actions above for each element.  Usually we want
+-- to call DrawContainer() first to clear the container on screen,
+-- because that is where we commonly place text.  This function
+-- returns no value.
+function Graphics.DrawText(content)
+    for _,element in ipairs(content) do
+        if type(element) == "string" then
+            love.graphics.setColorMode("modulate")
+            love.graphics.printf(
+                element,
+                LNVL.Settings.Scenes.X + 10,
+                LNVL.Settings.Scenes.Y + 10,
+                LNVL.Settings.Scenes.Width - 15,
+                "left")
+        elseif getmetatable(element) == LNVL.Color then
+            love.graphics.setColor(element)
+        elseif element:typeOf("Font") == true then
+            love.graphics.setFont(element)
+        else
+            error("Cannot draw text content " .. tostring(element))
         end
-
-    -- If the 'text' argument is just a string then make a simple
-    -- array with the Scene foreground color as the first element and
-    -- the string as the second.  That way we can assume 'text' is
-    -- always an array and process it using one loop below.
-    if type(text) == "string" then
-        text = { color, text }
     end
-
-    for _,element in ipairs(text) do process(element) end
 end
 
 -- Return the class as the module.
