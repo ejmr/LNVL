@@ -76,6 +76,7 @@ Color.Transparent = 0
 function Color.FromHex(color_hex)
     local long_regex = "#?(%x%x)(%x%x)(%x%x)"
     local short_regex = "#?(%x)(%x)(%x)"
+    local color = {}
 
     -- We can decide which regular expression to use based on the
     -- string length.  The short format '#fff' can be no longer than
@@ -85,16 +86,19 @@ function Color.FromHex(color_hex)
             red = string.rep(red, 2)
             green = string.rep(green, 2)
             blue = string.rep(blue, 2)
-            return { tonumber(red, 16), tonumber(blue, 16), tonumber(green, 16) }
+            color = { tonumber(red, 16), tonumber(blue, 16), tonumber(green, 16) }
+        end
+    elseif string.len(color_hex) <= 7 then
+        for red,green,blue in string.gmatch(color_hex, long_regex) do
+            color = { tonumber(red, 16), tonumber(blue, 16), tonumber(green, 16) }
         end
     else
-        for red,green,blue in string.gmatch(color_hex, long_regex) do
-            return { tonumber(red, 16), tonumber(blue, 16), tonumber(green, 16) }
-        end
+        -- We should never get here.
+        error(string.format("Could not parse the color string %s", color_hex))
     end
 
-    -- We should never get here.
-    error(string.format("Could not parse the color string %s", color_hex))
+    setmetatable(color, Color)
+    return color
 end
 
 -- Provide a way to convert colors to strings for debugging purposes.
