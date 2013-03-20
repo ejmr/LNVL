@@ -236,19 +236,6 @@ function Scene:drawContainer()
         borderColor=self.borderColor }
 end
 
--- This method draws text within the scene's container.  The 'text'
--- argument can be anything acceptable as the third argument of the
--- LNVL.Graphics.DrawText() function; see its documentation for
--- details.  The 'font' argument is optional; if provided the scene
--- will use that font for the text, and if not provided it will use
--- the 'font' property of the Scene object itself.
---
--- This method returns no value.
-function Scene:drawText(text, font)
-    local font = font or self.font
-    LNVL.Graphics.DrawText(font, self.textColor, text)
-end
-
 -- This method draws the parts of a scene that we want on screen
 -- everytime we render a scene, such as its background color or image,
 -- dialog container, active characters, and so on.
@@ -258,7 +245,7 @@ function Scene:drawEssentialElements()
         love.graphics.draw(self.backgroundImage, 0, 0)
     end
 
-    for name,character in pairs(self.activeCharacters) do
+    for _,character in pairs(self.activeCharacters) do
         character:draw()
     end
 
