@@ -160,12 +160,8 @@ end
 -- If we call a Character object as a function then we treat that as a
 -- short-cut for calling the says() method.  This can make dialog
 -- scripts more readable.
-Character.__call = function (f, ...)
-    if type(f) == "function" then
-        return f(...)
-    else
-        return f:says(...)
-    end
+Character.__call = function (character, ...)
+    return character:says(...)
 end
 
 -- This method changes the position of a character, which primarily
