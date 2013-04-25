@@ -14,12 +14,26 @@ Installation and Configuration
 
 In order to use LNVL you first need to unzip it wherever you intend to
 use that engine, i.e. where you will use `require("LNVL")` in your
-code.  LNVL uses the [Tup build system][tup]; if you have Tup
-installed you can run the command `tup upd` to build the engine.  If
-you do not have Tup then all you need to do is copy one file.  Within
-the `src` directory is the `src/settings.lua.example` file; create a
-copy of that file named `src/settings.lua`, and read through it to
-see how you can configure LNVL.
+code.  You must also initialize LNVL, providing (if necessary) the
+path to the LNVL module.  For example:
+
+```lua
+local LNVL = require("LNVL")
+LNVL.Initialize("game.src.LNVL")
+```
+
+This example assumes that LNVL is in the `./game/src/LNVL/` directory
+from the root of the game incorporating the engine.  The documentation
+at the beginning of the `LNVL.lua` file explains this process in more
+detail, as does the commentary for the function `LNVL.Initialize()`,
+which is in that same file.
+
+LNVL uses the [Tup build system][tup]; if you have Tup installed you
+can run the command `tup upd` to build the engine.  If you do not have
+Tup then all you need to do is copy one file.  Within the `src`
+directory is the `src/settings.lua.example` file; create a copy of
+that file named `src/settings.lua`, and read through it to see how you
+can configure LNVL.
 
 
 Documentation
