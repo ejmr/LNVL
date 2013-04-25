@@ -24,7 +24,7 @@ Color.__index = Color
 -- Our handle to the 'rgb.txt' file.  Even though the text file is in
 -- the same directory as this module we load the module from the
 -- parent directory, and so our path to 'rgb.txt' must reflect that.
-local rgb_file = love.filesystem.newFile(LNVL.PathPrefix .. "src/rgb.txt")
+local rgb_file = love.filesystem.newFile(string.format("%s/src/rgb.txt", LNVL.PathPrefix))
 
 -- We only need to read the file.
 rgb_file:open("r")

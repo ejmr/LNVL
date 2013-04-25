@@ -85,14 +85,10 @@ LNVL.CurrentScene = nil
 --
 -- The 'prefix' argument must not end in a period.
 function LNVL.Initialize(prefix)
-    if prefix ~= nil then
-        LNVL.PathPrefix = string.format("%s.", prefix)
-    else
-        LNVL.PathPrefix = ""
-    end
+    LNVL.PathPrefix = prefix or ""
 
     local loadModule = function (name, path)
-        LNVL[name] = require(LNVL.PathPrefix .. path)
+        LNVL[name] = require(string.format("%s.%s", LNVL.PathPrefix, path))
     end
 
     -- Because all of the code in the 'src/' directory adds to the LNVL
