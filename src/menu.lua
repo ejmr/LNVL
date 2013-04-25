@@ -11,7 +11,7 @@ local Menu = {}
 Menu.__index = Menu
 
 -- Load the MenuChoice class so that we can use it.
-LNVL.MenuChoice = require("src.choice")
+LNVL.MenuChoice = require(string.format("%s.src.choice", LNVL.PathPrefix))
 
 -- Our constructor for the LNVL.Menu class.  It accepts a table of
 -- properties to set, assigns those to the new Menu object, and
