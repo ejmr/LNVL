@@ -3,6 +3,19 @@
 -- LNVL: The LÖVE Visual Novel Engine
 --
 -- This is the only module your game must import in order to use LNVL.
+-- Since the intent of LNVL is to act as a sub-module for a larger
+-- game it cannot make assumptions about the paths to use in require()
+-- statements below.  Often a prefix will need to appear in each of
+-- those statements.  For that reason it is a two-step process to use
+-- LNVL, for example:
+--
+--     local LNVL = require "LNVL"
+--     LNVL.Initialize("prefix.to.LNVL.src")
+--
+-- Note well that the argument to Initialize does not end with a
+-- period.  It is acceptable for the argument to be an empty string or
+-- nil as well, if no path prefix is necessary.
+--
 -- See the file README.md for more information and links to the
 -- official website with documentation.  See the file LICENSE for
 -- information on the license for LNVL.
@@ -63,51 +76,71 @@ end
 -- preferred ways to change changes.
 LNVL.CurrentScene = nil
 
--- Because all of the code in the 'src/' directory adds to the LNVL
--- table these require() statements must come after we declare the
--- LNVL table above.  We must require() each module in a specific
--- order, so insertions or changes to this list must be careful.
-
--- First we must load any modules that define global values we may use
--- in the Settings module.
-LNVL.Color = require("src.color")
-LNVL.Position = require("src.position")
-
--- Next we need to load Settings as soon as possible so that other
--- modules can draw default values from there.
-LNVL.Settings = require("src.settings")
-
--- We want to load Debug after Settings and before other modules so
--- that they can have special behavior if debug mode is enabled, which
--- the Settings module controls.
-LNVL.Debug = require("src.debug")
-
--- Then we should load the Graphics module so that the rest have
--- access to primitive rendering functions.
-LNVL.Graphics = require("src.graphics")
-
--- Then we load the ClampedArray module to make it accesible to
--- classes which define properties using that type.
-LNVL.ClampedArray = require("src.clamped-array")
-
--- Next come the Opcode and Instruction modules, in that order, since
--- the remaining modules may generate opcodes.  And since opcodes
--- create instructions we load them in that sequence.
-LNVL.Opcode = require("src.opcode")
-LNVL.Instruction = require("src.instruction")
-
--- Next comes the Drawable module, which classes below may use for
--- certain properties.
-LNVL.Drawable = require("src.drawable")
-
--- The order of the remaining modules can come in any order as they do
--- not depend on each other.
+-- This function loads all of the LNVL sub-modules, initializing the
+-- engine.  The argument, if given, must be a string that will be
+-- treated a prefix to the paths for all require() statements we use
+-- to load those sub-modules.  The function also assigns the argument
+-- value to 'LNVL.PathPrefix' so that sub-modules may use it for any
+-- path operations.
 --
--- Note that we load the LNVL.MenuChoice class inside of the LNVL.Menu
--- code, so it does not appear in the list below.
-LNVL.Character = require("src.character")
-LNVL.Scene = require("src.scene")
-LNVL.Menu = require("src.menu")
+-- The 'prefix' argument must not end in a period.
+function LNVL.Initialize(prefix)
+    if prefix ~= nil then
+        LNVL.PathPrefix = string.format("%s.", prefix)
+    else
+        LNVL.PathPrefix = ""
+    end
+
+    local loadModule = function (name, path)
+        LNVL[name] = require(LNVL.PathPrefix .. path)
+    end
+
+    -- Because all of the code in the 'src/' directory adds to the LNVL
+    -- table these require() statements must come after we declare the
+    -- LNVL table above.  We must require() each module in a specific
+    -- order, so insertions or changes to this list must be careful.
+
+    -- First we must load any modules that define global values we may use
+    -- in the Settings module.
+    loadModule("Color", "src.color")
+    loadModule("Position", "src.position")
+
+    -- Next we need to load Settings as soon as possible so that other
+    -- modules can draw default values from there.
+    loadModule("Settings", "src.settings")
+
+    -- We want to load Debug after Settings and before other modules so
+    -- that they can have special behavior if debug mode is enabled, which
+    -- the Settings module controls.
+    loadModule("Debug", "src.debug")
+
+    -- Then we should load the Graphics module so that the rest have
+    -- access to primitive rendering functions.
+    loadModule("Graphics", "src.graphics")
+
+    -- Then we load the ClampedArray module to make it accesible to
+    -- classes which define properties using that type.
+    loadModule("ClampedArray", "src.clamped-array")
+
+    -- Next come the Opcode and Instruction modules, in that order, since
+    -- the remaining modules may generate opcodes.  And since opcodes
+    -- create instructions we load them in that sequence.
+    loadModule("Opcode", "src.opcode")
+    loadModule("Instruction", "src.instruction")
+
+    -- Next comes the Drawable module, which classes below may use for
+    -- certain properties.
+    loadModule("Drawable", "src.drawable")
+
+    -- The order of the remaining modules can come in any order as they do
+    -- not depend on each other.
+    --
+    -- Note that we load the LNVL.MenuChoice class inside of the LNVL.Menu
+    -- code, so it does not appear in the list below.
+    loadModule("Character", "src.character")
+    loadModule("Scene", "src.scene")
+    loadModule("Menu", "src.menu")
+end
 
 -- This function loads an external LNVL script, i.e. one defining
 -- scenes and story content.  The argument is the path to the file;
