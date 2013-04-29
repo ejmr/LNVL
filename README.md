@@ -28,12 +28,9 @@ at the beginning of the `LNVL.lua` file explains this process in more
 detail, as does the commentary for the function `LNVL.Initialize()`,
 which is in that same file.
 
-LNVL uses the [Tup build system][tup]; if you have Tup installed you
-can run the command `tup upd` to build the engine.  If you do not have
-Tup then all you need to do is copy one file.  Within the `src`
-directory is the `src/settings.lua.example` file; create a copy of
-that file named `src/settings.lua`, and read through it to see how you
-can configure LNVL.
+Within the `src` directory is the `src/settings.lua.example` file.
+Create a copy of that file named `src/settings.lua`, and read through
+it to see how you can configure LNVL.
 
 
 Documentation
@@ -42,9 +39,7 @@ Documentation
 The `docs` directory contains documentation for LNVL.  Users who want
 to write stories with LNVL will want to read the `Howto.md` document.
 The rest of the documentation is useful to computer programmers who
-wish to extend or expand the engine.  If you have the programs
-[Tup][tup] and [Pandoc][pandoc] you can run the command `tup upd` to
-create nice HTML versions of all of the documents.
+wish to extend or expand the engine.
 
 
 Examples
@@ -84,6 +79,5 @@ Special Thanks
 [renpy]: http://www.renpy.org/
 [xfree86]: http://www.xfree86.org/
 [xlicense]: http://www.xfree86.org/legal/licenses.html
-[tup]: http://gittup.org/tup/
 [pandoc]: http://johnmacfarlane.net/pandoc/
 [gpl]: http://www.gnu.org/copyleft/gpl.html
