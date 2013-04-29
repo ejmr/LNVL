@@ -1,4 +1,0 @@
-# Create the settings.lua file from the example settings file.
-: settings.lua.example \
-|> ^ Creating settings^ if [ ! -e %B ]; then cp %f %B; fi \
-|> %B
