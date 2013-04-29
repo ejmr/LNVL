@@ -29,8 +29,12 @@ detail, as does the commentary for the function `LNVL.Initialize()`,
 which is in that same file.
 
 Within the `src` directory is the `src/settings.lua.example` file.
-Create a copy of that file named `src/settings.lua`, and read through
-it to see how you can configure LNVL.
+Read through it to see how you can configure LNVL.  However, *do not*
+edit that file directly.  LNVL expects to find a `src/settings.lua`
+file, which is not part of the repository so that each installation
+can have their own configuration.  If you have [GNU Make][] then you
+can create this file by running `make settings` from the project’s
+top-level directory.
 
 
 Documentation
@@ -39,7 +43,9 @@ Documentation
 The `docs` directory contains documentation for LNVL.  Users who want
 to write stories with LNVL will want to read the `Howto.md` document.
 The rest of the documentation is useful to computer programmers who
-wish to extend or expand the engine.
+wish to extend or expand the engine.  If you have the [Pandoc][]
+program then you can create HTML versions of these documents for
+(arguably) easier browsing by running the `make docs` command.
 
 
 Examples
@@ -81,3 +87,4 @@ Special Thanks
 [xlicense]: http://www.xfree86.org/legal/licenses.html
 [pandoc]: http://johnmacfarlane.net/pandoc/
 [gpl]: http://www.gnu.org/copyleft/gpl.html
+[gnu make]: https://www.gnu.org/software/make/
