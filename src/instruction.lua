@@ -67,7 +67,6 @@ LNVL.Instructions = {}
 LNVL.Instructions["say"] = Instruction:new {
     name = "say",
     action = function (arguments)
-        local text = arguments.content
         local font = arguments.scene.font
 
         if arguments["character"] ~= nil then
@@ -81,7 +80,7 @@ LNVL.Instructions["say"] = Instruction:new {
                               arguments.character.name,
                               arguments.content) }
         else
-            LNVL.Graphics.DrawText{font, text}
+            LNVL.Graphics.DrawText{font, arguments.content}
         end
     end }
 
