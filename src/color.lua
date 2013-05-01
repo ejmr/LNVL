@@ -46,6 +46,7 @@ for line in rgb_file:lines() do
     for r,g,b,name in string.gmatch(line, rgb_entry_regex) do
         name = string.upper(name:sub(1, 1)) .. name:sub(2)
         Color[name] = {r, g, b}
+        setmetatable(Color[name], Color)
     end
 end
 
