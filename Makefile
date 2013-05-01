@@ -58,7 +58,7 @@ settings :
 		cp "src/settings.lua.example" "src/settings.lua"; \
 	fi
 
-SOURCES = "*.lua" "src/" "examples/"
+SOURCES = "main.lua" "LNVL.lua" "src/" "examples/"
 ARCHIVE = "lnvl.love"
 
 archive :
