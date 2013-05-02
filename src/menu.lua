@@ -110,7 +110,7 @@ end
 
 function Menu:moveBack()
     if self.currentChoiceIndex == nil then
-        self.currentChoiceIndex = #self.coiches
+        self.currentChoiceIndex = #self.choices
     elseif self.currentChoiceIndex > 1 then
         self.currentChoiceIndex = self.currentChoiceIndex - 1
     end
