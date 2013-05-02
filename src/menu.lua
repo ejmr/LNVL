@@ -118,5 +118,13 @@ function Menu:moveBack()
     return self.currentChoiceIndex
 end
 
+-- This method returns the 'action' function for the currently
+-- selected choice on this menu.  This method assumes the Menu object
+-- has a valid index for its table of choices.  If not then it is
+-- likely this will crash LNVL.
+function Menu:getCurrentChoiceAction()
+    return self.choices[self.currentChoiceIndex].action
+end
+
 -- Return the class as the module.
 return Menu
