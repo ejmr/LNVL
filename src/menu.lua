@@ -21,7 +21,7 @@ function Menu:new(properties)
     setmetatable(menu, Menu)
 
     -- choices: An array of all of the choices available in this menu.
-    -- Each element is an MenuChoice object.
+    -- Each element is a MenuChoice object.
     menu.choices = {}
 
     -- currentChoiceIndex: An integer representing the currently
