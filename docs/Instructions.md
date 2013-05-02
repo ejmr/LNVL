@@ -312,8 +312,9 @@ value of the global `LNVL.CurrentScene` variable.
 
 This instruction shows the player a menu and waits until he selects
 one of its choices.  LNVL will [resume][4] the coroutine
-`LNVL.Handlers.MenuHandler()`, passing it no arguments.  That function
-must return one value: a string naming the menu choice selected by the
+`LNVL.Settings.Handlers.Menu`, passing it one argument: the
+`LNVL.Menu` object representing the current menu.  That function must
+return one value: a string naming the menu choice selected by the
 player, i.e. a valid key for the `LNVL.Menu.choices` table of the menu
 that results in the execution of this instruction in the first place.
 
