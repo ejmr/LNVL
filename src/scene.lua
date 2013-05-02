@@ -95,6 +95,14 @@ function Scene:new(properties)
         scene:setBackground(scene.background)
     end
 
+    -- menus: Some scenes may contain menus that present choices to
+    -- the player.  This table contains a list of all menus in the
+    -- scene.  The keys are the names of the menus as strings
+    -- (i.e. their 'name' property) and the values are the Menu
+    -- objects themselves.  The loop below which converts scene
+    -- content into opcodes is responsible for populating this table.
+    scene.menus = {}
+
     -- The rest of the 'properties' we turn into opcodes.  We loop
     -- through each remaining property and call a method on it which
     -- will return either a single LNVL.Opcode object or an array of
@@ -118,6 +126,13 @@ function Scene:new(properties)
             end
         else
             table.insert(opcodes, new_opcode)
+
+            -- If the opcode relates to the creation of a menu then we
+            -- want to store a reference to that menu in the scene for
+            -- future use.
+            if new_opcode.name == "add-menu" then
+                scene.menus[new_opcode.arguments.menu.name] = new_opcode.arguments.menu
+            end
         end
     end
 
