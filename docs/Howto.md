@@ -525,6 +525,103 @@ changes for any other independent stories using the same installation
 of LNVL.
 
 
+Menus
+-----
+
+**Note:** This section of the document assumes the reader is
+  comfortable with [Lua][] programming.
+
+**Note:** This part of the engine is currently under heavy development
+  and the system described below may change suddenly.
+
+Centuries of literature demonstrate that you can have an engrossing
+story that is entirely linear in its progression.  However, this is
+not common in [visual novels][nvl].  The genre often presents stories
+with branches, places where the player can select from a set of
+choices with results that affect the development of the story moving
+forward.  A common method to present these choices is through the use
+of *menus.*
+
+LNVL provides support for menus.  Script authors can use menus to
+allow their story to branch into different scenes based on the
+player’s choice.  Or authors can execute [Lua][] code based on what
+menu choice a player selects, providing a way to implement more
+complexity in stories (e.g. keeping track of variables based on a
+series of choices).
+
+### Adding Menus to Scenes ###
+
+We begin with an example:
+
+    START = Scene {
+        Judge "I have reviewed the evidence.  How do you plead?",
+        Menu {
+            {"Not Guilty", "NOT_GUILTY"},
+            {"Obviously Guilty", "THE_TRUTH"}
+        },
+    }
+    
+    NOT_GUILTY = Scene {
+        -- ...
+    }
+    
+    THE_TRUTH = Scene {
+        -- ...
+    }
+
+You create menus using the syntax `Menu { … }`, which is intentionally
+similar to how you create scenes and characters.  Within those braces
+is a list of choices, each wrapped in their own set of braces.  Each
+choice has two parts:
+
+1. A label, which is a string that the player will see for that
+   choice.  For example, in the script above the player would see the
+   text ‘Not Guilty’ and ‘Obviously Guilty’ for the two choices.
+
+2. An action to perform if the user selects that choice.  If an action
+   is a string then LNVL assumes it is the name of a scene; if the
+   user selects that menu choice then LNVL will transition to that
+   scene (e.g. in the script above).  An action can also be an
+   anonymous function of Lua code.  (**Note:** Support for this is
+   currently under so much change that we intentionally omit
+   documentation because anything we write now could become invalid.)
+
+### Displaying Menus ###
+
+LNVL does not assume how it should render menus.  Each game will want
+to draw menus and handle player input in their own way, based on their
+design, aesthetics, and so forth.  So LNVL provides a hook for games
+to control how to handle menus by using Lua [coroutines][].  LNVL
+calls these *handlers,* coroutines meant to handle LNVL-related logic
+outside of the scope of LNVL itself.
+
+The settings file contains all of the handlers.  For example, it has
+this for menus:
+
+    -- When the player reaches a menu within a scene, LNVL will invoke
+    -- this coroutine with one argument: the LNVL.Menu object representing
+    -- that menu.  See the documentation for that module about the
+    -- properties and methods available from that class.  LNVL expects the
+    -- coroutine to return the player's choice from the menu, i.e. a
+    -- string.  For example, developers can use this handler to control
+    -- the user interface for how menus appear and interact in their game.
+    --
+    -- The dummy handler below automatically returns the first choice from
+    -- the menu without ever asking the player for input.
+    Settings.Handlers.Menu = coroutine.create(
+        function (menu)
+            return next(menu)
+        end
+    )
+
+The documentation for the handler explains its purpose and what it
+does, which is effectively a no-op.  LNVL expects games to redefine
+this function with something more appropriate for their game.  The
+file `src/menu.lua` contains all of the code and commentary for the
+`LNVL.Menu` class the function mentions, i.e. the individual menus in
+scenes.
+
+
 
 [lua]: http://www.lua.org/
 [dsl]: http://en.wikipedia.org/wiki/Domain_specific_language
@@ -532,3 +629,4 @@ of LNVL.
 [love-font]: https://love2d.org/wiki/Font
 [love-files]: https://love2d.org/wiki/love.filesystem
 [nvl]: http://en.wikipedia.org/wiki/Visual_novel
+[coroutines]: http://www.lua.org/manual/5.1/manual.html#2.11

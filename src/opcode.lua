@@ -22,6 +22,7 @@ Opcode.ValidOpcodes = {
     ["no-op"] = true,
     ["set-scene-image"] = true,
     ["deactivate-character"] = true,
+    ["add-menu"] = true,
 }
 
 -- The opcode constructor, which requires two arguments: the name of
@@ -168,6 +169,7 @@ Opcode.Processor["change-scene"] = returnOpcode
 Opcode.Processor["no-op"] = returnOpcode
 Opcode.Processor["deactivate-character"] = returnOpcode
 Opcode.Processor["say"] = returnOpcode
+Opcode.Processor["add-menu"] = returnOpcode
 
 -- This method processes an opcode by running it through the
 -- appropriate function above, returning the modified version.

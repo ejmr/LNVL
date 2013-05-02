@@ -20,6 +20,7 @@ Instruction.ValidInstructions = {
     ["draw-image"] = true,
     ["set-scene"] = true,
     ["no-op"] = true,
+    ["show-menu"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
@@ -151,6 +152,20 @@ LNVL.Instructions["no-op"] = Instruction:new {
     action = function (arguments) end
 }
 
+LNVL.Instructions["show-menu"] = Instruction:new {
+    name = "show-menu",
+    action = function (arguments)
+        local executed, choice = coroutine.resume(
+            LNVL.Settings.Handlers.Menu,
+            arguments.menu
+        )
+
+        if executed == true then
+            arguments.menu.currentChoiceIndex = choice
+        end
+    end
+}
+
 -- This table has the names of opcodes for strings and maps them to
 -- the names of the instructions we execute for each opcode.  Note
 -- that there is not a one-to-one mapping between opcodes and
@@ -164,6 +179,7 @@ Instruction.ForOpcode = {
     ["no-op"] = LNVL.Instructions["no-op"],
     ["deactivate-character"] = LNVL.Instructions["no-op"],
     ["move-character"] = LNVL.Instructions["no-op"],
+    ["add-menu"] = LNVL.Instructions["show-menu"],
 }
 
 -- If LNVL is running in debugging mode then make sure that every

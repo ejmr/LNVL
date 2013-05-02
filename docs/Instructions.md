@@ -134,6 +134,16 @@ within the engine code.  When the engine processes each opcode it
 gives the opcode a table of arguments.  The entries below list those
 arguments as well as the instruction(s) the opcode generates.
 
+### Add-Menu ###
+
+The `add-menu` opcode tells LNVL to insert an `LNVL.Menu` object into
+the current part of the scene.  When the engine encounters the
+corresponding object it will yield to a ‘menu handler’, a
+[Lua coroutine][4] that will `yield` the player’s menu choice.
+
+1. `menu`: A reference to the `LNVL.Menu` object responsible for the
+   creation of the opcode.
+
 ### Change-Scene ###
 
 The `change-scene` opcode tells LNVL to switch to a different scene,
@@ -161,6 +171,7 @@ dialog by a single character at once.
 monologue.
 
 2. `content`: An array of strings representing lines of dialog.
+
 
 ### Move-Character ###
 
@@ -297,8 +308,24 @@ scene.  The instruction looks for an `LNVL.Scene` object with this
 name in the global scope, i.e. inside of `_G`.  That scene becomes the
 value of the global `LNVL.CurrentScene` variable.
 
+### Show-Menu ###
+
+This instruction shows the player a menu and waits until he selects
+one of its choices.  LNVL will [resume][4] the coroutine
+`LNVL.Settings.Handlers.Menu`, passing it one argument: the
+`LNVL.Menu` object representing the current menu.  That function must
+return one value: a string naming the menu choice selected by the
+player, i.e. a valid key for the `LNVL.Menu.choices` table of the menu
+that results in the execution of this instruction in the first place.
+
+LNVL provides a dummy handler for this purpose, but gamers should
+create their own so that they can handle input and the display of
+graphics in ways more fitting for their particular game.  The
+`src/settings.lua` file is the place to assign custom handlers.
+
 
 
 [1]: http://www.lua.org/manual/5.1/manual.html#2.5.7
 [2]: http://www.lua.org/manual/5.1/manual.html#2.8
 [3]: https://love2d.org/wiki/Image
+[4]: http://www.lua.org/manual/5.1/manual.html#5.2
