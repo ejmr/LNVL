@@ -115,12 +115,16 @@ Settings.Characters.DefaultPosition = LNVL.Position.Left
 
 -- -- HANDLERS -------------------------------------------------------
 
--- In LNVL a 'handler' is a Lua coroutine that the engine expects the
--- game using LNVL to provide.  LNVL uses these handlers to provide
--- hooks into the engine to help customize its behavior.
+-- In LNVL a 'handler' is a Lua function or coroutine that the engine
+-- expects the game using LNVL to provide.  The comments for each
+-- clearly indicate whether LNVL expects a plain function or a
+-- coroutine.  LNVL uses these handlers to provide hooks into the
+-- engine to help customize its behavior.
 
 Settings.Handlers = {}
 
+-- MENU HANDLER: Coroutine
+--
 -- When the player reaches a menu within a scene, LNVL will invoke
 -- this coroutine with one argument: the LNVL.Menu object representing
 -- that menu.  See the documentation for that module about the
