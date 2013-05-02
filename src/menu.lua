@@ -88,6 +88,11 @@ end
 -- Create an alias for the constructor for use in dialog scripts.
 LNVL.CreateConstructorAlias("Menu", Menu)
 
+-- This metatable function converts a Menu object to a string.
+Menu.__tostring = function (menu)
+    return menu.name
+end
+
 -- These two methods move forward and backward through the available
 -- menu choices.  They will return an integer, the index of the newly
 -- selected choice.  That way callers can use that information to
