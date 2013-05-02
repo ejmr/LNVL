@@ -20,6 +20,12 @@ function Menu:new(properties)
     local menu = {}
     setmetatable(menu, Menu)
 
+    -- name: A string with the name of the menu.  Currently we use
+    -- this only for debugging purposes.  If not provided by the
+    -- 'properties' argument then we will set this to a default value
+    -- with the memory address of the table representing the menu.
+    menu.name = string.format("Unnamed Menu %s", tostring(menu))
+
     -- choices: An array of all of the choices available in this menu.
     -- Each element is a MenuChoice object.
     menu.choices = {}
