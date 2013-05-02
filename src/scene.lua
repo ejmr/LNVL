@@ -179,9 +179,18 @@ function Scene:createOpcodeFromContent(content)
     -- If the content is not a string then it must be a table.
     assert(contentType == "table", "Unknown content type in Scene")
 
-    -- If the content is not an LNVL.Opcode then it must be a table of
-    -- them, so we process each opcode in the table and then return
-    -- all of them as a group.
+    -- If the content is an LNVL.Menu then we must create an opcode
+    -- for it.  Normally functions we call as part of arguments to the
+    -- Scene constructor return opcodes, but the constructor for the
+    -- Menu class does not.  So we must create the appropriate opcode
+    -- manually here.
+    if getmetatable(content) == LNVL.Menu then
+        return LNVL.Opcode:new("add-menu", {menu=content})
+    end
+
+    -- By now if, the content is not an LNVL.Opcode then it must be a
+    -- table of opcodes, so we process each in the table and then
+    -- return all of them as a group.
     if getmetatable(content) ~= LNVL.Opcode then
         for index,opcode in ipairs(content) do
             content[index] = opcode:process()
