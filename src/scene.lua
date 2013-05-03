@@ -308,6 +308,24 @@ local characterActivatingOpcodes = {
     ["move-character"] = true,
 }
 
+-- This method updates the list of active characters based on
+-- the current opcode.
+function Scene:refreshActiveCharacters()
+    local function refresh(scene, opcode)
+        local character = opcode.arguments["character"]
+
+        if character == nil then return end
+
+        if opcode.name == "deactivate-character" then
+            self.activeCharacters[character.name] = nil
+        elseif characterActivatingOpcodes[opcode.name] == true then
+            self.activeCharacters[character.name] = character
+        end
+    end
+
+    self:mapOpcodeFunction(refresh)
+end
+
 -- Renders the current content to screen.  By 'current content' we
 -- mean the current opcode, or list of opcodes; we convert these into
 -- instructions and execute those to render the content.  This
@@ -321,27 +339,8 @@ function Scene:drawCurrentContent()
     -- instruction because there is none for that opcode.
     if opcode.name == "no-op" then return end
 
-    -- If the opcode is 'deactivate-character' we need to remove a
-    -- character from the scene's list of active characters.  And
-    -- since that opcode is a no-op we can immediately return from the
-    -- function without wasting time doing anything else.
-    if opcode.name == "deactivate-character" then
-        self.activeCharacters[opcode.arguments.character.name] = nil
-        return
-    end
-
     local function executeInstructionForOpcode(opcode)
         local instruction = LNVL.Instruction.ForOpcode[opcode.name]
-
-        -- If the opcode arguments have a 'character' property and this is
-        -- an opcode that activates a character then we must update the
-        -- list of active characters for this scene.
-        if characterActivatingOpcodes[opcode.name] == true then
-            if opcode.arguments["character"] ~= nil then
-                local character = opcode.arguments.character
-                self.activeCharacters[character.name] = character
-            end
-        end
 
         -- Make sure the opcode has access to the Scene so that the
         -- instruction we invoke next can draw things to Scene if
