@@ -120,8 +120,39 @@ Settings.Characters.DefaultPosition = LNVL.Position.Left
 -- clearly indicate whether LNVL expects a plain function or a
 -- coroutine.  LNVL uses these handlers to provide hooks into the
 -- engine to help customize its behavior.
+--
+-- Some handlers have 'nil' values because we cannot assign their
+-- default values until after loading other modules, which does not
+-- happen until after LNVL finishing loading this Settings module.  So
+-- we defer the assignment of those handlers until later.  For
+-- example, we cannot assign the default handlers for Drawable until
+-- after we load everything from the 'drawable.lua' file, which will
+-- not happen until we are done with this file.  So we delay those
+-- assignments as noted below.
 
 Settings.Handlers = {}
+
+-- CHARACTER HANDLER: Function
+--
+-- Characters in visual novels often have avatars, images associated
+-- with them.  LNVL allows dialog scripts to indicate what a character
+-- image should be, when and if it should change, what it should
+-- change into, et cetera.
+--
+-- The engine has a built-in way of drawing these character images to
+-- the screen.  However, some games may wish to customize this
+-- rendering process, for example, to more easily fit in with a custom
+-- user-interface.  The handler below provides a hook into that
+-- character rendering.  Whenever LNVL needs to draw a character to
+-- the screen it will call the function below with one argument: the
+-- Character object.  See the documentation for the Character:new()
+-- constructor for a detailed list of all of the properties that
+-- belong to the class, and see the 'character.lua' file in general
+-- for the default implementation of character rendering to see one
+-- way it can work
+--
+-- LNVL ignores the return value of this function.
+Settings.Handlers.Character = nil
 
 -- MENU HANDLER: Coroutine
 --
@@ -150,14 +181,8 @@ Settings.Handlers.Menu = coroutine.create(
 --
 -- The handler is a table that must provide two functions.  They are
 -- responsible for changing the position of a Drawable on screen, and
--- for performing the actual rendering.
---
--- These have 'nil' values because we cannot assign their default
--- values until after loading the Drawable module, which does not
--- happen until after LNVL finishing loading this Settings module.  So
--- we defer the assignment of the handlers until later.  See the code
--- in 'drawable.lua' for the default handlers, which may help better
--- convey what games can do with these hooks.
+-- for performing the actual rendering.  The default handlers are
+-- in the 'drawable.lua' file.
 --
 -- LNVL ignores the return values of all functions in this table.
 Settings.Handlers.Drawable = {
