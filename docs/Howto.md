@@ -582,9 +582,9 @@ choice has two parts:
    is a string then LNVL assumes it is the name of a scene; if the
    user selects that menu choice then LNVL will transition to that
    scene (e.g. in the script above).  An action can also be an
-   anonymous function of Lua code.  (**Note:** Support for this is
+   anonymous function of Lua code.  **Note:** Support for this is
    currently under so much change that we intentionally omit
-   documentation because anything we write now could become invalid.)
+   documentation because anything we write now could become invalid.
 
 ### Displaying Menus ###
 
@@ -592,8 +592,8 @@ LNVL does not assume how it should render menus.  Each game will want
 to draw menus and handle player input in their own way, based on their
 design, aesthetics, and so forth.  So LNVL provides a hook for games
 to control how to handle menus by using Lua [coroutines][].  LNVL
-calls these *handlers,* coroutines meant to handle LNVL-related logic
-outside of the scope of LNVL itself.
+calls these *handlers,* functions and coroutines meant to handle
+LNVL-related logic outside of the scope of LNVL itself.
 
 The settings file contains all of the handlers.  For example, it has
 this for menus:

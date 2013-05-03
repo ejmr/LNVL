@@ -275,6 +275,20 @@ LNVL never generates this instruction.  However, it must exist because
 every opcode must have a corresponding instruction, in this case the
 `no-op` opcode.
 
+### Set-Position ###
+
+This instruction changes the position of a target object, affecting
+where it appears on screen.  The engine does not explicitly prevent
+the creation of this instruction for target objects which it cannot
+draw to the screen.  However, generating this instruction for such
+objects serves no useful purpose.
+
+1. `target`: The object whose position will change.  This object must
+   have a `position` property that allows `LNVL.Position` objects for
+   its value.
+
+2. `position`: The new position as an `LNVL.Position` object.
+
 ### Say ###
 
 This instruction prints dialog to the screen.  The arguments table for
@@ -318,9 +332,9 @@ return one value: a string naming the menu choice selected by the
 player, i.e. a valid key for the `LNVL.Menu.choices` table of the menu
 that results in the execution of this instruction in the first place.
 
-LNVL provides a dummy handler for this purpose, but gamers should
-create their own so that they can handle input and the display of
-graphics in ways more fitting for their particular game.  The
+LNVL provides a dummy handler for this purpose, but game developers
+should create their own so that they can handle input and the display
+of graphics in ways more fitting for their particular game.  The
 `src/settings.lua` file is the place to assign custom handlers.
 
 

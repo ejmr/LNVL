@@ -115,12 +115,16 @@ Settings.Characters.DefaultPosition = LNVL.Position.Left
 
 -- -- HANDLERS -------------------------------------------------------
 
--- In LNVL a 'handler' is a Lua coroutine that the engine expects the
--- game using LNVL to provide.  LNVL uses these handlers to provide
--- hooks into the engine to help customize its behavior.
+-- In LNVL a 'handler' is a Lua function or coroutine that the engine
+-- expects the game using LNVL to provide.  The comments for each
+-- clearly indicate whether LNVL expects a plain function or a
+-- coroutine.  LNVL uses these handlers to provide hooks into the
+-- engine to help customize its behavior.
 
 Settings.Handlers = {}
 
+-- MENU HANDLER: Coroutine
+--
 -- When the player reaches a menu within a scene, LNVL will invoke
 -- this coroutine with one argument: the LNVL.Menu object representing
 -- that menu.  See the documentation for that module about the
@@ -136,6 +140,50 @@ Settings.Handlers.Menu = coroutine.create(
         return next(menu)
     end
 )
+
+-- DRAWABLE HANDLER: Table of Functions
+--
+-- LNVL represents images such as characters via LNVL.Drawable
+-- objects.  This handler is responsible for rendering all of those to
+-- the screen.  It provides a hook for games to control exactly how
+-- and where those objects appear.
+--
+-- The handler is a table that must provide two functions.  They are
+-- responsible for changing the position of a Drawable on screen, and
+-- for performing the actual rendering.
+--
+-- These have 'nil' values because we cannot assign their default
+-- values until after loading the Drawable module, which does not
+-- happen until after LNVL finishing loading this Settings module.  So
+-- we defer the assignment of the handlers until later.  See the code
+-- in 'drawable.lua' for the default handlers, which may help better
+-- convey what games can do with these hooks.
+--
+-- LNVL ignores the return values of all functions in this table.
+Settings.Handlers.Drawable = {
+    -- The draw() function recieves one argument: the LNVL.Drawable object
+    -- to render onto the screen.
+    ["draw"] = nil,
+    
+    -- The setPosition() function receives two arguments: the
+    -- LNVL.Drawable object that is receiving a new position, and an
+    -- LNVL.Position object representing that position.  This second
+    -- argument is where the engine recommends drawing the object.
+    -- For example, dialog scripts can dictate that a character move
+    -- to the right of the screen; in that situation LNVL would invoke
+    -- this handler with a Position object representing that
+    -- direction.  See the comments in the 'position.lua' file for
+    -- more details about possible positions.
+    --
+    -- To repeat, this argument is a suggestion.  It will never be
+    -- exact X--Y screen coordinates, only a relative position such as
+    -- 'Center' or 'TopLeft'.  Ideally games should use the position in
+    -- combination with the dimensions of the Drawable object to determine
+    -- the best place to render the image.  Note that a Drawable object
+    -- does have exact coordinates; see the 'drawable,lua' source code for
+    -- more information about its properties.
+    ["set-position"] = nil,
+}
 
 
 

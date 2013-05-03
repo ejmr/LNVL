@@ -46,7 +46,7 @@ end
 
 -- This function converts Opcode objects to strings intended for
 -- debugging purposes.
-Opcode.__tostring = function (opcode)
+local function formatOpcode(opcode)
     output = string.format("Opcode %q = {", opcode.name)
 
     if opcode.arguments ~= nil then
@@ -57,7 +57,7 @@ Opcode.__tostring = function (opcode)
             if key == "location" then
                 output = output .. string.format("\tlocation: X = %d, Y = %d\n",
                                                  value[1], value[2])
-            -- Show the color and width of the 'border' property.
+                -- Show the color and width of the 'border' property.
             elseif key == "border" then
                 output = output .. string.format("\tborder: %s, Size = %d\n",
                                                  tostring(value[1]),
@@ -70,6 +70,11 @@ Opcode.__tostring = function (opcode)
 
     output = output .. "}"
     return output
+end
+
+-- Convert an Opcode object to a string.
+Opcode.__tostring = function (opcode)
+    return formatOpcode(opcode)
 end
 
 -- The following table contains all of the 'processor functions' for
@@ -115,11 +120,12 @@ end
 -- Processor for opcode 'move-character'
 --
 -- For this opcode we expect a 'character' argument with an
--- LNVL.Character object.  We need to set the 'position' property of
--- the Character object to value of the 'position' property in the
--- opcode arguments.
+-- LNVL.Character object.  We need to set the 'target' property of the
+-- opcode arguments to that Character so that the 'set-position'
+-- instruction (which this opcode becomes) will know where to apply
+-- the new position.
 Opcode.Processor["move-character"] = function (opcode)
-    opcode.arguments.character.position = opcode.arguments.position
+    opcode.arguments.target = opcode.arguments.character
     return opcode
 end
 

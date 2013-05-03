@@ -21,6 +21,7 @@ Instruction.ValidInstructions = {
     ["set-scene"] = true,
     ["no-op"] = true,
     ["show-menu"] = true,
+    ["set-position"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
@@ -166,6 +167,13 @@ LNVL.Instructions["show-menu"] = Instruction:new {
     end
 }
 
+LNVL.Instructions["set-position"] = Instruction:new {
+    name = "set-position",
+    action = function (arguments)
+        arguments.target.position = arguments.position
+    end
+}
+
 -- This table has the names of opcodes for strings and maps them to
 -- the names of the instructions we execute for each opcode.  Note
 -- that there is not a one-to-one mapping between opcodes and
@@ -178,7 +186,7 @@ Instruction.ForOpcode = {
     ["set-scene-image"] = LNVL.Instructions["set-image"],
     ["no-op"] = LNVL.Instructions["no-op"],
     ["deactivate-character"] = LNVL.Instructions["no-op"],
-    ["move-character"] = LNVL.Instructions["no-op"],
+    ["move-character"] = LNVL.Instructions["set-position"],
     ["add-menu"] = LNVL.Instructions["show-menu"],
 }
 

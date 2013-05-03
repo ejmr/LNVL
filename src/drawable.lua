@@ -1,7 +1,26 @@
 --[[
 --
 -- This class represents drawable objects in LNVL.  These are objects
--- that we render to the screen, such as character avatars.
+-- that we render to the screen, such as character avatars.  The most
+-- important public API methods of the class are:
+--
+-- 1. draw()
+-- 2. setPosition()
+-- 3. setLocation()
+--
+-- The first two methods defer to handlers that games can customize.
+-- See the documentation for 'LNVL.Settings.Handlers.Drawable' for
+-- more information.
+--
+-- The Drawable class makes a strict distinction between the terms
+-- 'position' and 'location', as seen in the methods above.  The word
+-- 'position' always refers to an instance of the LNVL.Position class.
+-- The word 'location' always refers to an array of two numbers
+-- representing X--Y screen coordinates, e.g.  acceptable values for
+-- the love.graphics.point() function.  While the distinction in
+-- terminology is admittedly arbitrary and potentially confusing,
+-- there are absolutely no exceptions to their usage in this module or
+-- any other part of LNVL code or documentation.
 --
 --]]
 
@@ -19,7 +38,7 @@ function Drawable:new(properties)
     -- result of love.graphics.newImage().
     drawable.image = nil
 
-    -- location: An array of two integers representing the X and Y
+    -- location: An array of two numbers representing the X and Y
     -- screen coordinates where we will draw this object.
     drawable.location = {0, 0}
 
@@ -77,6 +96,16 @@ Drawable.__tostring = function (drawable)
     end
 end
 
+-- This method forcibly sets the location of a Drawable with a new
+-- pair of X--Y screen coordinates.  Both arguments must be numbers.
+function Drawable:setLocation(x, y)
+    self.location = {x, y}
+end
+
+-- This table contains the functions that we use as the default handlers
+-- to satisfy the requirements of 'LNVL.Settings.Handlers.Drawable'.
+Drawable.DefaultHandlers = {}
+
 -- This method accepts an LNVL.Position, e.g. LNVL.Position.Center,
 -- and uses that to set the 'location' coordinates of the Drawable.
 -- It lets us describe the location of a Drawable in terms of a
@@ -85,7 +114,7 @@ end
 -- See the documentation for the LNVL.Position class for details about
 -- the meaning of the possible position values and where they cause
 -- Drawables to appear on screen.
-function Drawable:setPosition(position)
+function Drawable.DefaultHandlers.setPosition(self, position)
     self.position = position
 
     local image_width = self.image:getWidth()
@@ -151,7 +180,7 @@ end
 -- border around the Drawable.  See the commentary for those
 -- properties in the Drawable:new() constructor for what types of
 -- values they must have in order to make a border appear.
-function Drawable:draw()
+function Drawable.DefaultHandlers.draw(self)
     love.graphics.setColorMode("replace")
 
     if self.borderColor ~= LNVL.Color.Transparent and self.borderSize > 0 then
@@ -164,6 +193,21 @@ function Drawable:draw()
     end
 
     love.graphics.draw(self.image, self.location[1], self.location[2])
+end
+
+-- Assign the default handlers above to the proper place so the engine
+-- can find them in the methods to follow.
+LNVL.Settings.Handlers.Drawable = {
+    ["draw"] = Drawable.DefaultHandlers.draw,
+    ["setPosition"] = Drawable.DefaultHandlers.setPosition,
+}
+
+-- Provide the public API methods that defer to the handlers above.
+function Drawable:draw()
+    LNVL.Settings.Handlers.Drawable["draw"](self)
+end
+function Drawable:setPosition(position)
+    LNVL.Settings.Handlers.Drawable["setPosition"](self, position)
 end
 
 -- Provide access to the width and height of the Drawable image.
