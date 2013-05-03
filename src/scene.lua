@@ -349,15 +349,7 @@ function Scene:drawCurrentContent()
         instruction(opcode.arguments)
     end
 
-    -- We have to check to see whether or not we have a single opcode
-    -- or an array of opcodes.
-    if getmetatable(opcode) == LNVL.Opcode then
-        executeInstructionForOpcode(opcode)
-    else
-        for _,op in ipairs(opcode) do
-            executeInstructionForOpcode(op)
-        end
-    end
+    self:mapOpcodeFunction(executeInstructionForOpcode)
 end
 
 -- This method draws the scene and is the method intended for use
