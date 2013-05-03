@@ -274,6 +274,31 @@ function Scene:drawEssentialElements()
     self:drawContainer()
 end
 
+-- This method takes a function of two arguments:
+--
+-- 1. The current Scene.
+--
+-- 2. The current Opcode.
+--
+-- The method will call that function with those arguments.  This is
+-- useful because our table of opcodes can itself contain tables of
+-- opcodes.  We use this method to recursively map functions to our
+-- table of opcodes, which is convenient in multiple situations.
+--
+-- The method returns no values and throws away any return values from
+-- its function argument.
+function Scene:mapOpcodeFunction(f)
+    local opcode = self.opcodes[self.opcodeIndex]
+
+    if getmetatable(opcode) == LNVL.Opcode then
+        f(self, opcode)
+    else
+        for _,op in opcode do
+            f(self, op)
+        end
+    end
+end
+
 -- This table contains a list of opcodes that trigger an addition to
 -- the scene's list of active characters.
 local characterActivatingOpcodes = {
