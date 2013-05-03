@@ -199,17 +199,28 @@ function Character:becomesNormal()
     return self:becomes("normal")
 end
 
--- This method draws the character to the screen, drawing whichever
+-- This function draws the character to the screen, drawing whichever
 -- image the 'currentImage' property names.  Before drawing the image
 -- we make sure the position of the image matches the position of the
--- character.  The method returns nothing.
-function Character:draw()
+-- character.  This is the default handler for drawing characters.
+-- See 'LNVL.Settings.Handlers.Character' for more details.
+function Character.DefaultHandler(self)
     local image = self.images[self.currentImage]
 
     if image ~= nil then
         image:setPosition(self.position)
         image:draw()
     end
+end
+
+-- Assign our default handler.
+LNVL.Settings.Handlers.Character = Character.DefaultHandler
+
+-- This method renders the character by invoking the appropriate
+-- handler function just in case a game wants to use custom behavior
+-- for rendering characters instead of LNVL's built-in process.
+function Character:draw()
+    LNVL.Settings.Handlers.Character(self)
 end
 
 -- This method removes a character from a scene by creating an opcode
