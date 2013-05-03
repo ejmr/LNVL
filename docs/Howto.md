@@ -582,9 +582,9 @@ choice has two parts:
    is a string then LNVL assumes it is the name of a scene; if the
    user selects that menu choice then LNVL will transition to that
    scene (e.g. in the script above).  An action can also be an
-   anonymous function of Lua code.  (**Note:** Support for this is
+   anonymous function of Lua code.  **Note:** Support for this is
    currently under so much change that we intentionally omit
-   documentation because anything we write now could become invalid.)
+   documentation because anything we write now could become invalid.
 
 ### Displaying Menus ###
 
