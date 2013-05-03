@@ -141,6 +141,36 @@ Settings.Handlers.Menu = coroutine.create(
     end
 )
 
+-- DRAWABLE HANDLER: Function
+--
+-- LNVL represents images such as characters via LNVL.Drawable
+-- objects.  This handle function is responsible for rendering all of
+-- those objects to the screen.  It provides a hook for games to
+-- control exactly how and where those objects appear.  The function
+-- recieves two arguments:
+--
+-- 1. The LNVL.Drawable object.
+--
+-- 2. An LNVL.Position object describing where the engine recommends
+-- drawing the object.  For example, dialog scripts can dictate that a
+-- character move to the right of the screen; in that situation LNVL
+-- would invoke this handler with a Position object representing that
+-- direction.  See the comments in the 'position.lua' file for more
+-- details about possible positions.
+--
+-- To repeat, the second argument is a suggestion.  It will never be
+-- exact X--Y screen coordinates, only a relative position such as
+-- 'Center' or 'TopLeft'.  Ideally games should use the position in
+-- combination with the dimensions of the Drawable object to determine
+-- the best place to render the image.  Note that a Drawable object
+-- does have exact coordinates; see the 'drawable,lua' source code for
+-- more information about its properties.
+--
+-- LNVL ignores any return values from this function.  The code for
+-- the default handler below is in the 'drawable.lua' file, and may
+-- help convey what the handler should (usually) do.
+Settings.Handlers.Drawable = LNVL.Drawable.DefaultHandler
+
 
 
 -- Return the table of settings as the module.
