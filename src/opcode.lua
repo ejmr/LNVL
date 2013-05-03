@@ -120,11 +120,12 @@ end
 -- Processor for opcode 'move-character'
 --
 -- For this opcode we expect a 'character' argument with an
--- LNVL.Character object.  We need to set the 'position' property of
--- the Character object to value of the 'position' property in the
--- opcode arguments.
+-- LNVL.Character object.  We need to set the 'target' property of the
+-- opcode arguments to that Character so that the 'set-position'
+-- instruction (which this opcode becomes) will know where to apply
+-- the new position.
 Opcode.Processor["move-character"] = function (opcode)
-    opcode.arguments.character.position = opcode.arguments.position
+    opcode.arguments.target = opcode.arguments.character
     return opcode
 end
 

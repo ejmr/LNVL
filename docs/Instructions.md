@@ -275,6 +275,20 @@ LNVL never generates this instruction.  However, it must exist because
 every opcode must have a corresponding instruction, in this case the
 `no-op` opcode.
 
+### Set-Position ###
+
+This instruction changes the position of a target object, affecting
+where it appears on screen.  The engine does not explicitly prevent
+the creation of this instruction for target objects which it cannot
+draw to the screen.  However, generating this instruction for such
+objects serves no useful purpose.
+
+1. `target`: The object whose position will change.  This object must
+   have a `position` property that allows `LNVL.Position` objects for
+   its value.
+
+2. `position`: The new position as an `LNVL.Position` object.
+
 ### Say ###
 
 This instruction prints dialog to the screen.  The arguments table for
