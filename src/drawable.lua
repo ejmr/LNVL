@@ -6,10 +6,21 @@
 --
 -- 1. draw()
 -- 2. setPosition()
+-- 3. setLocation()
 --
--- These methods defer to handlers that games can customize.  See the
--- documentation for 'LNVL.Settings.Handlers.Drawable' for more
--- information.
+-- The first two methods defer to handlers that games can customize.
+-- See the documentation for 'LNVL.Settings.Handlers.Drawable' for
+-- more information.
+--
+-- The Drawable class makes a strict distinction between the terms
+-- 'position' and 'location', as seen in the methods above.  The word
+-- 'position' always refers to an instance of the LNVL.Position class.
+-- The word 'location' always refers to an array of two numbers
+-- representing X--Y screen coordinates, e.g.  acceptable values for
+-- the love.graphics.point() function.  While the distinction in
+-- terminology is admittedly arbitrary and potentially confusing,
+-- there are absolutely no exceptions to their usage in this module or
+-- any other part of LNVL code or documentation.
 --
 --]]
 
@@ -27,7 +38,7 @@ function Drawable:new(properties)
     -- result of love.graphics.newImage().
     drawable.image = nil
 
-    -- location: An array of two integers representing the X and Y
+    -- location: An array of two numbers representing the X and Y
     -- screen coordinates where we will draw this object.
     drawable.location = {0, 0}
 
@@ -83,6 +94,12 @@ Drawable.__tostring = function (drawable)
                              drawable.location[1],
                              drawable.location[2])
     end
+end
+
+-- This method forcibly sets the location of a Drawable with a new
+-- pair of X--Y screen coordinates.  Both arguments must be numbers.
+function Drawable:setLocation(x, y)
+    self.location = {x, y}
 end
 
 -- This table contains the functions that we use as the default handlers
