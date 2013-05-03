@@ -38,7 +38,7 @@ Position.__index = Position
 -- on code, we define of all the positions as a list of strings and
 -- then dynamically create the LNVL.Position properties from that.
 
-Position.ValidPositions = {
+local ValidPositions = {
     "BottomCenter",
     "Center",
     "TopCenter",
@@ -52,7 +52,7 @@ Position.ValidPositions = {
     "TopLeft",
 }
 
-for _,name in ipairs(Position.ValidPositions) do
+for _,name in ipairs(ValidPositions) do
     Position[name] = name
 end
 
