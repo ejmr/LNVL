@@ -132,6 +132,26 @@ Settings.Characters.DefaultPosition = LNVL.Position.Left
 
 Settings.Handlers = {}
 
+-- SCENE HANDLER: Function
+--
+-- It is simple with LNVL to render the current scene by using some
+-- code such as:
+--
+--     function love.draw()
+--         -- Game specific logic...
+--         LNVL.CurrentScene:draw()
+--     end
+--
+-- However, some games may want finer control over exactly how LNVL
+-- draws those scenes.  This handler serves that purpose.  It is a
+-- function that accepts one argument: an LNVL.Scene object to draw.
+-- Developers should look at the 'scene.lua' file for information on
+-- all of the properties available in the Scene class and its methods,
+-- as well as the default implementation of the handler.
+--
+-- LNVL ignores any return values from this function.
+Settings.Handlers.Scene = nil
+
 -- CHARACTER HANDLER: Function
 --
 -- Characters in visual novels often have avatars, images associated

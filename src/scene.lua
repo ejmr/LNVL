@@ -274,6 +274,31 @@ function Scene:drawEssentialElements()
     self:drawContainer()
 end
 
+-- This method takes a function of two arguments:
+--
+-- 1. The current Scene.
+--
+-- 2. The current Opcode.
+--
+-- The method will call that function with those arguments.  This is
+-- useful because our table of opcodes can itself contain tables of
+-- opcodes.  We use this method to recursively map functions to our
+-- table of opcodes, which is convenient in multiple situations.
+--
+-- The method returns no values and throws away any return values from
+-- its function argument.
+function Scene:mapOpcodeFunction(f)
+    local opcode = self.opcodes[self.opcodeIndex]
+
+    if getmetatable(opcode) == LNVL.Opcode then
+        f(self, opcode)
+    else
+        for _,op in opcode do
+            f(self, op)
+        end
+    end
+end
+
 -- This table contains a list of opcodes that trigger an addition to
 -- the scene's list of active characters.
 local characterActivatingOpcodes = {
@@ -283,64 +308,79 @@ local characterActivatingOpcodes = {
     ["move-character"] = true,
 }
 
--- Renders the current content to screen.  By 'current content' we
--- mean the current opcode, or list of opcodes; we convert these into
--- instructions and execute those to render the content.  This
--- function returns no value because instructions return no arguments.
--- We must take care to always call drawEssentialElements() before
--- this, which the draw() method takes care of for us.
-function Scene:drawCurrentContent()
-    local opcode = self.opcodes[self.opcodeIndex]
+-- This method updates the list of active characters based on
+-- the current opcode.
+function Scene:refreshActiveCharacters()
+    local function refresh(scene, opcode)
+        local character = opcode.arguments["character"]
 
-    -- If the opcode is a no-op then we do not need to invoke any
-    -- instruction because there is none for that opcode.
-    if opcode.name == "no-op" then return end
+        if character == nil then return end
 
-    -- If the opcode is 'deactivate-character' we need to remove a
-    -- character from the scene's list of active characters.  And
-    -- since that opcode is a no-op we can immediately return from the
-    -- function without wasting time doing anything else.
-    if opcode.name == "deactivate-character" then
-        self.activeCharacters[opcode.arguments.character.name] = nil
-        return
+        if opcode.name == "deactivate-character" then
+            self.activeCharacters[character.name] = nil
+        elseif characterActivatingOpcodes[opcode.name] == true then
+            self.activeCharacters[character.name] = character
+        end
     end
 
-    local function executeInstructionForOpcode(opcode)
-        local instruction = LNVL.Instruction.ForOpcode[opcode.name]
+    self:mapOpcodeFunction(refresh)
+end
 
-        -- If the opcode arguments have a 'character' property and this is
-        -- an opcode that activates a character then we must update the
-        -- list of active characters for this scene.
-        if characterActivatingOpcodes[opcode.name] == true then
-            if opcode.arguments["character"] ~= nil then
-                local character = opcode.arguments.character
-                self.activeCharacters[character.name] = character
-            end
+-- This method returns the instruction(s) for the current opcode.  It
+-- will always return a table of Instruction objects, even if the
+-- opcode generates only one instruction.
+function Scene:getCurrentInstructions()
+    local instructions = {}
+    local noops = {
+        ["no-op"] = true,
+        ["deactive-character"] = true,
+    }
+    
+    local function collectInstructions(scene, opcode)
+        if noops[opcode.name] ~= true then
+            table.insert(instructions, LNVL.Instruction.ForOpcode[opcode.name])
         end
+    end
+    
+    self:mapOpcodeFunction(collectInstructions)
+    
+    return instructions
+end
 
-        -- Make sure the opcode has access to the Scene so that the
-        -- instruction we invoke next can draw things to Scene if
-        -- necessary.
+-- This function draws a scene's current content to screen.  By
+-- 'current content' we mean the current opcode, or list of opcodes.
+-- We convert these into instructions and execute those to render the
+-- content.  This function returns no value because instructions
+-- return no arguments.  We take care to always call
+-- drawEssentialElements() first since that renders all of the active
+-- characters and handles other visual we consider essential to render
+-- each tick.
+--
+-- This function is the default implementation for the hook
+-- Settings.Handlers.Scene().  See the Settings module for more
+-- documentation on the handler.
+function Scene.DefaultHandler(self)
+    self:refreshActiveCharacters()
+    self:drawEssentialElements()
+
+    local opcode = self.opcodes[self.opcodeIndex]
+    
+    -- Make sure the opcode has access to the Scene so that the
+    -- instruction we invoke next can draw things to Scene if
+    -- necessary.
+    for _,instruction in ipairs(self:getCurrentInstructions()) do
         opcode.arguments.scene = self
         instruction(opcode.arguments)
     end
-
-    -- We have to check to see whether or not we have a single opcode
-    -- or an array of opcodes.
-    if getmetatable(opcode) == LNVL.Opcode then
-        executeInstructionForOpcode(opcode)
-    else
-        for _,op in ipairs(opcode) do
-            executeInstructionForOpcode(op)
-        end
-    end
 end
+
+-- Assign our default handler implementation.
+LNVL.Settings.Handlers.Scene = Scene.DefaultHandler
 
 -- This method draws the scene and is the method intended for use
 -- outside of LNVL, e.g. inside of the love.draw() function.
 function Scene:draw()
-    self:drawEssentialElements()
-    self:drawCurrentContent()
+    LNVL.Settings.Handlers.Scene(self)
 end
 
 -- This function takes the name of a scene as a string and returns a
