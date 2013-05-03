@@ -326,6 +326,27 @@ function Scene:refreshActiveCharacters()
     self:mapOpcodeFunction(refresh)
 end
 
+-- This method returns the instruction(s) for the current opcode.  It
+-- will always return a table of Instruction objects, even if the
+-- opcode generates only one instruction.
+function Scene:getCurrentInstructions()
+    local instructions = {}
+    local noops = {
+        ["no-op"] = true,
+        ["deactive-character"] = true,
+    }
+    
+    local function collectInstructions(scene, opcode)
+        if noops[opcode.name] ~= true then
+            table.insert(instructions, LNVL.Instruction.ForOpcode[opcode.name])
+        end
+    end
+    
+    self:mapOpcodeFunction(collectInstructions)
+    
+    return instructions
+end
+
 -- Renders the current content to screen.  By 'current content' we
 -- mean the current opcode, or list of opcodes; we convert these into
 -- instructions and execute those to render the content.  This
@@ -339,17 +360,13 @@ function Scene:drawCurrentContent()
     -- instruction because there is none for that opcode.
     if opcode.name == "no-op" then return end
 
-    local function executeInstructionForOpcode(opcode)
-        local instruction = LNVL.Instruction.ForOpcode[opcode.name]
-
-        -- Make sure the opcode has access to the Scene so that the
-        -- instruction we invoke next can draw things to Scene if
-        -- necessary.
+    -- Make sure the opcode has access to the Scene so that the
+    -- instruction we invoke next can draw things to Scene if
+    -- necessary.
+    for _,instruction in self:getCurrentInstructions() do
         opcode.arguments.scene = self
         instruction(opcode.arguments)
     end
-
-    self:mapOpcodeFunction(executeInstructionForOpcode)
 end
 
 -- This method draws the scene and is the method intended for use
