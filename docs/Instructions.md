@@ -318,9 +318,9 @@ return one value: a string naming the menu choice selected by the
 player, i.e. a valid key for the `LNVL.Menu.choices` table of the menu
 that results in the execution of this instruction in the first place.
 
-LNVL provides a dummy handler for this purpose, but gamers should
-create their own so that they can handle input and the display of
-graphics in ways more fitting for their particular game.  The
+LNVL provides a dummy handler for this purpose, but game developers
+should create their own so that they can handle input and the display
+of graphics in ways more fitting for their particular game.  The
 `src/settings.lua` file is the place to assign custom handlers.
 
 
