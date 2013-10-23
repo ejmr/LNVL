@@ -197,6 +197,7 @@ end
 
 -- Assign the default handlers above to the proper place so the engine
 -- can find them in the methods to follow.
+LNVL.Settings.Handlers = {}
 LNVL.Settings.Handlers.Drawable = {
     ["draw"] = Drawable.DefaultHandlers.draw,
     ["setPosition"] = Drawable.DefaultHandlers.setPosition,
