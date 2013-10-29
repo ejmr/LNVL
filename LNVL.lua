@@ -24,7 +24,7 @@
 
 -- This table is the global namespace for all LNVL classes, functions,
 -- and data.
-local LNVL = {}
+LNVL = {}
 
 -- We sandbox all dialog scripts we load via LNVL.LoadScript() in
 -- their own environment so that global variables in those scripts
