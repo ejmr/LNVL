@@ -254,19 +254,19 @@ character, like so:
 
     Lobby = Character {firstName="Lobby", lastName="Jones"}
 
-If you do not provide the `dialogName`, as in this example, then LNVL will
-default to using the `firstName` when showing the character name.  You
-can change the name LNVL shows by using `setName`.  Here is a list of
-the arguments it accepts, with example usages:
+If you do not provide the `dialogName`, as in this example, then LNVL
+will default to using the `firstName` when showing the character name.
+You can change the name LNVL shows by using `displayName`.  Here is a
+list of the arguments it accepts, with example usages:
 
-1. `Lobby:setName "firstName"`.  Will display `Lobby` in dialog.
+1. `Lobby:displayName "firstName"`.  Will display `Lobby` in dialog.
 
-2. `Lobby:setName "lastName"`.  Will display `Jones` in dialog.
+2. `Lobby:displayName "lastName"`.  Will display `Jones` in dialog.
 
-3. `Lobby:setName "fullName"`.  Will display `Lobby Jones`.  This
+3. `Lobby:displayName "fullName"`.  Will display `Lobby Jones`.  This
    option combines the first and last name, in that order.
 
-4. `Lobby:setName "default"`.  Will display the value of character’s
+4. `Lobby:displayName "default"`.  Will display the value of character’s
    `dialogName` property.
 
 You can change the name to display at any point during a scene.
