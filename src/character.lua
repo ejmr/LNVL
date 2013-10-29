@@ -21,6 +21,11 @@ function Character:new(properties)
     -- will signal an error, because every character must have a name.
     character.name = ""
 
+    -- firstName and lastName: These properties represent the full
+    -- name of the character.
+    character.firstName = ""
+    character.lastName = ""
+
     -- textColor: The color that we use for lines this character
     -- speaks during a scene.  We expect this to be a table of three
     -- integers representing the red, green, and blue values of the
