@@ -189,6 +189,14 @@ function Character:displayName(nameType)
     error(("Unacceptable character display name type: %s"):format(nameType))
 end
 
+-- Returns the character's full name.  This method is not meant for
+-- use inside of scenes.  Use the displayName() method to show a
+-- character's full name in dialog.  This method is for convenience
+-- for games that use LNVL.
+function Character:getFullName()
+    return ("%s %s"):format(self.firstName, self.lastName)
+end
+
 -- If we call a Character object as a function then we treat that as a
 -- short-cut for calling the says() method.  This can make dialog
 -- scripts more readable.
