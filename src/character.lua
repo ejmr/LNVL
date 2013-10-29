@@ -18,7 +18,8 @@ function Character:new(properties)
     -- name: The name of the character as a string.  Right now we set
     -- it as an empty string because the loop later through
     -- 'properties' should give it a value.  If it does not then we
-    -- will signal an error, because every character must have a name.
+    -- default to using 'firstName'.  If that has no value then we
+    -- signal an error because every character must have a name.
     character.name = ""
 
     -- firstName and lastName: These properties represent the full
@@ -120,9 +121,15 @@ function Character:new(properties)
     end
 
     -- Make sure the character has a name, because we do not support
-    -- unnamed characters.
+    -- unnamed characters.  First try using the first name as a
+    -- fallback name.
+    
     if character.name == nil or character.name == "" then
-        error("Cannot create unnamed character")
+        if character.firstName == nil or character.firstName == "" then
+            error("Cannot create unnamed character")
+        else
+            character.name = character.firstName
+        end
     end
 
     -- If we are in debugging mode then dump the character data to the
