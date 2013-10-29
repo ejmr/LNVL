@@ -3,9 +3,9 @@
 # This GNU Makefile performs the following operations:
 #
 # 1. It builds the HTML documentation from the Markdown files if the
-# program Pandoc[1] is available.
+# programs Pandoc[1] and generate-md[2] are available.
 #
-# 2. It creates a TAGS file for GNU Emacs if the ctags-exuberant[2]
+# 2. It creates a TAGS file for GNU Emacs if the ctags-exuberant[3]
 # program is available.
 #
 # 3. It creates the 'src/settings.lua' file from the example settings
@@ -35,7 +35,8 @@
 #
 #
 # [1]: http://johnmacfarlane.net/pandoc/
-# [2]: http://ctags.sourceforge.net/
+# [2]: http://mixu.net/markdown-styles/
+# [3]: http://ctags.sourceforge.net/
 #
 ######################################################################
 
