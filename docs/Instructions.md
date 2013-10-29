@@ -217,6 +217,23 @@ screen.
 2. `image`: The new image to use for the character, which must be an
 `LNVL.Drawable` object.
 
+### Set-Character-Name ###
+
+The `set-character-name` opcode creates a `set-name` instruction that
+will change what name LNVL displays for a given character.  Note that
+this does not change the actual name data, only the name which LNVL
+shows in dialog scenes, e.g. this opcode cannot change the `firstName`
+property of a character.
+
+1. `character`: The instance of `LNVL.Character` to modify.
+
+2. `name`: The name to display as a string, which must be one of four
+   possible values:
+       - `default`
+       - `firstName`
+       - `lastName`
+       - `fullName`
+
 ### Set-Scene-Image ###
 
 The `set-scene-image` opcode creates a `set-image` instruction that
@@ -274,6 +291,17 @@ This instruction is a no-op, i.e. no operation.  It does nothing.
 LNVL never generates this instruction.  However, it must exist because
 every opcode must have a corresponding instruction, in this case the
 `no-op` opcode.
+
+### Set-Name ###
+
+This instruction changes the name of a given target object.
+
+1. `target`: The object whose name is changed.  Currently the
+   instruction only accepts `LNVL.Character` objects for this.
+
+2. `name`: The name to use.  See the description of the `name`
+   parameter for the `set-character-name` opcode for further
+   information.
 
 ### Set-Position ###
 

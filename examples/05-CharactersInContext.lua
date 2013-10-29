@@ -3,8 +3,8 @@
 -- dialog into a 'monologue' so that we do not have to repeat the
 -- character name over and over.
 
-Eric = Character {name="Eric", textColor="#3a3"}
-Jeff = Character {name="Jeff", textColor="#a33"}
+Eric = Character {dialogName="Eric", textColor="#3a3"}
+Jeff = Character {dialogName="Jeff", textColor="#a33"}
 
 START = Scene {
     Eric:monologue {

@@ -317,9 +317,9 @@ function Scene:refreshActiveCharacters()
         if character == nil then return end
 
         if opcode.name == "deactivate-character" then
-            self.activeCharacters[character.name] = nil
+            self.activeCharacters[character.dialogName] = nil
         elseif characterActivatingOpcodes[opcode.name] == true then
-            self.activeCharacters[character.name] = character
+            self.activeCharacters[character.dialogName] = character
         end
     end
 

@@ -15,11 +15,18 @@ function Character:new(properties)
     local character = {}
     setmetatable(character, Character)
 
-    -- name: The name of the character as a string.  Right now we set
-    -- it as an empty string because the loop later through
-    -- 'properties' should give it a value.  If it does not then we
-    -- will signal an error, because every character must have a name.
-    character.name = ""
+    -- dialogName: The name of the character as a string that we
+    -- display in scene.  Right now we set it as an empty string
+    -- because the loop later through 'properties' should give it a
+    -- value.  If it does not then we default to using 'firstName'.
+    -- If that has no value then we signal an error because every
+    -- character must have a name.
+    character.dialogName = ""
+
+    -- firstName and lastName: These properties represent the full
+    -- name of the character.
+    character.firstName = ""
+    character.lastName = ""
 
     -- textColor: The color that we use for lines this character
     -- speaks during a scene.  We expect this to be a table of three
@@ -115,16 +122,22 @@ function Character:new(properties)
     end
 
     -- Make sure the character has a name, because we do not support
-    -- unnamed characters.
-    if character.name == nil or character.name == "" then
-        error("Cannot create unnamed character")
+    -- unnamed characters.  First try using the first name as a
+    -- fallback name.
+    
+    if character.dialogName == nil or character.dialogName == "" then
+        if character.firstName == nil or character.firstName == "" then
+            error("Cannot create unnamed character")
+        else
+            character.dialogName = character.firstName
+        end
     end
 
     -- If we are in debugging mode then dump the character data to the
     -- console so that we can verify everything looks correct.
     if LNVL.Settings.DebugModeEnabled == true then
         print("-- New Character --\n")
-        print(LNVL.Debug.TableToString(character, character.name))
+        print(LNVL.Debug.TableToString(character, character.dialogName))
     end
 
     return character
@@ -155,6 +168,25 @@ end
 -- opcode with the dialog and character attached.
 function Character:monologue(lines)
     return LNVL.Opcode:new("monologue", {content=lines, character=self})
+end
+
+-- A list of acceptable values for the parameter of the displayName()
+-- method below.
+local acceptableDisplayNameValues = {
+    ["default"] = true,
+    ["firstName"] = true,
+    ["lastName"] = true,
+    ["fullName"] = true,
+}
+
+-- This method changes the name which LNVL will display in dialog
+-- screens whenever the character speaks.
+function Character:displayName(nameType)
+    if acceptableDisplayNameValues[nameType] then
+        return LNVL.Opcode:new("set-character-name",
+                               {character=self, name=nameType})
+    end
+    error(("Unacceptable character display name type: %s"):format(nameType))
 end
 
 -- If we call a Character object as a function then we treat that as a
@@ -232,7 +264,7 @@ end
 -- This function converts a Character object into a string for
 -- debugging purposes.
 Character.__tostring = function (character)
-    return character.name
+    return character.dialogName
 end
 
 -- Return the class as a module.

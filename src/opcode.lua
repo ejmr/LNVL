@@ -23,6 +23,7 @@ Opcode.ValidOpcodes = {
     ["set-scene-image"] = true,
     ["deactivate-character"] = true,
     ["add-menu"] = true,
+    ["set-character-name"] = true,
 }
 
 -- The opcode constructor, which requires two arguments: the name of
@@ -135,6 +136,17 @@ end
 -- associated Character object so that the resulting 'set-image'
 -- instruction knows what to update.
 Opcode.Processor["set-character-image"] = function (opcode)
+    opcode.arguments.target = opcode.arguments.character
+    return opcode
+end
+
+-- Processor for opcode 'set-character-name'
+--
+-- For this opcode we only need to set the 'target' and 'name'.  The
+-- LNVL.Character method which generates this opcode will make sure
+-- that 'name' has an allowable value as described in the document
+-- referenced at the top of this file.
+Opcode.Processor["set-character-name"] = function (opcode)
     opcode.arguments.target = opcode.arguments.character
     return opcode
 end

@@ -3,7 +3,7 @@
 -- sordid ego.
 
 Eric = Character {
-    name = "Eric",
+    dialogName = "Eric",
     textColor = Color.SlateBlue,
     borderColor = Color.NavyBlue,
     borderSize = 5,

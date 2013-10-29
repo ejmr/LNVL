@@ -3,14 +3,14 @@
 -- dramatic effect.  Or annoy the player.  Whatever, it's your game.
 
 Eric = Character {
-    name = "Eric",
+    dialogName = "Eric",
     textColor = "#c8ffc8",
     image = "examples/images/Eric-Normal.png",
     position = "Left",
 }
 
 Jeff = Character {
-    name = "Jeff",
+    dialogName = "Jeff",
     textColor = "#c8c8ff",
     image = "examples/images/Jeff-Normal.png",
     position = "Right",
