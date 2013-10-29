@@ -3,21 +3,21 @@
 -- should stop drawing that character to the screen.
 
 Eric = Character {
-    name = "Eric",
+    dialogName = "Eric",
     textColor = Color.NavyBlue,
     image = "examples/images/Eric-Normal.png",
     position = "Left",
 }
 
 Jeff = Character {
-    name = "Jeff",
+    dialogName = "Jeff",
     textColor = Color.IndianRed4,
     image = "examples/images/Jeff-Normal.png",
     position = "Right",
 }
 
 START = Scene {
-    name = "Character Deactivation Test",
+    dialogName = "Character Deactivation Test",
     Eric "Why is our game not finished yet?",
     Jeff "Hey have you played the new Skyrim DLC?",
     Eric "Well no wonder our game isn't finished...",

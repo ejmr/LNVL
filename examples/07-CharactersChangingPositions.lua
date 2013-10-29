@@ -2,7 +2,7 @@
 -- character positions and then changing them within a scene.
 
 Eric = Character {
-    name = "Eric",
+    dialogName = "Eric",
     textColor = "#333",
     image = "examples/images/Eric-Normal.png",
     position = "Left",

@@ -1,11 +1,11 @@
 -- This example script shows a basic conversation between two
 -- characters and shows the most simple way to create characters.  In
--- this example each Character has a 'name' and a 'textColor' that
--- determines what his text looks like on screen.  Then we use those
--- objects inside of the Scene to actually create conversation.
+-- this example each Character has a 'dialogName' and a 'textColor'
+-- that determines what his text looks like on screen.  Then we use
+-- those objects inside of the Scene to actually create conversation.
 
-Eric = Character {name = "Eric", textColor = "#c8ffc8"}
-Jeff = Character {name = "Jeff", textColor = "#c8c8ff"}
+Eric = Character {dialogName = "Eric", textColor = "#c8ffc8"}
+Jeff = Character {dialogName = "Jeff", textColor = "#c8c8ff"}
 
 START = Scene {
     boxBackgroundColor = Color.DeepSkyBlue4,

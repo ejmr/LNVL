@@ -79,7 +79,7 @@ LNVL.Instructions["say"] = Instruction:new {
                 font,
                 arguments.character.textColor,
                 string.format("%s: %s",
-                              arguments.character.name,
+                              arguments.character.dialogName,
                               arguments.content) }
         else
             LNVL.Graphics.DrawText{font, arguments.content}

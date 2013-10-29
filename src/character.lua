@@ -15,12 +15,13 @@ function Character:new(properties)
     local character = {}
     setmetatable(character, Character)
 
-    -- name: The name of the character as a string.  Right now we set
-    -- it as an empty string because the loop later through
-    -- 'properties' should give it a value.  If it does not then we
-    -- default to using 'firstName'.  If that has no value then we
-    -- signal an error because every character must have a name.
-    character.name = ""
+    -- dialogName: The name of the character as a string that we
+    -- display in scene.  Right now we set it as an empty string
+    -- because the loop later through 'properties' should give it a
+    -- value.  If it does not then we default to using 'firstName'.
+    -- If that has no value then we signal an error because every
+    -- character must have a name.
+    character.dialogName = ""
 
     -- firstName and lastName: These properties represent the full
     -- name of the character.
@@ -124,11 +125,11 @@ function Character:new(properties)
     -- unnamed characters.  First try using the first name as a
     -- fallback name.
     
-    if character.name == nil or character.name == "" then
+    if character.dialogName == nil or character.dialogName == "" then
         if character.firstName == nil or character.firstName == "" then
             error("Cannot create unnamed character")
         else
-            character.name = character.firstName
+            character.dialogName = character.firstName
         end
     end
 
@@ -136,7 +137,7 @@ function Character:new(properties)
     -- console so that we can verify everything looks correct.
     if LNVL.Settings.DebugModeEnabled == true then
         print("-- New Character --\n")
-        print(LNVL.Debug.TableToString(character, character.name))
+        print(LNVL.Debug.TableToString(character, character.dialogName))
     end
 
     return character
@@ -244,7 +245,7 @@ end
 -- This function converts a Character object into a string for
 -- debugging purposes.
 Character.__tostring = function (character)
-    return character.name
+    return character.dialogName
 end
 
 -- Return the class as a module.

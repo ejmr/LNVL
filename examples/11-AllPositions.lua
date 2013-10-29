@@ -3,7 +3,7 @@
 -- proper place for each one.
 
 Eric = Character {
-    name = "Eric",
+    dialogName = "Eric",
     image = "examples/images/Eric-Normal.png",
 }
 

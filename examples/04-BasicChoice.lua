@@ -2,9 +2,9 @@
 -- choice jumps the story to one of two possible scenes.  This example
 -- also demonstrates jumping to other scenes in general.
 
-Eric = Character {name = "Eric", textColor = "#c8ffc8"}
-Jeff = Character {name = "Jeff", textColor = "#c8c8ff"}
-Judge = Character {name = "The Great Judgini", textColor = "#ffc8c8"}
+Eric = Character {dialogName = "Eric", textColor = "#c8ffc8"}
+Jeff = Character {dialogName = "Jeff", textColor = "#c8c8ff"}
+Judge = Character {dialogName = "The Great Judgini", textColor = "#ffc8c8"}
 
 START = Scene {
     Jeff "Isn't this copyright infringement again?",

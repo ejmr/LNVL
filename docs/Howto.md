@@ -29,7 +29,7 @@ editor.  But the scripts use their own special language.  This
 language provides ways for you to do all of the things listed above.
 Here is a simple example:
 
-    Lobby = Character {name="Lobby Jones", image="images/Lobby.png"}
+    Lobby = Character {dialogName="Lobby Jones", image="images/Lobby.png"}
 
     START = Scene {
         Lobby "Hello everyone!",
@@ -240,21 +240,21 @@ Every good story needs characters.  So LNVL provides a way to create
 characters and plug them into your tale.  Here is a simple example of
 a character:
 
-    Lobby = Character {name="Lobby", textColor="#363"}
+    Lobby = Character {dialogName="Lobby", textColor="#363"}
 
 This creates the character `Lobby` and defines his name and color,
 i.e. the color of that character’s dialog on screen.
 
 ### Character Names ###
 
-The example above defines the `name` property for the character.
+The example above defines the `dialogName` property for the character.
 However, sometimes you will want characters will full names.  LNVL
 supports this by allowing you to define the first and last name of a
 character, like so:
 
     Lobby = Character {firstName="Lobby", lastName="Jones"}
 
-If you do not provide the `name`, as in this example, then LNVL will
+If you do not provide the `dialogName`, as in this example, then LNVL will
 default to using the `firstName` when showing the character name.  You
 can change the name LNVL shows by using `setName`.  Here is a list of
 the arguments it accepts, with example usages:
@@ -267,7 +267,7 @@ the arguments it accepts, with example usages:
    option combines the first and last name, in that order.
 
 4. `Lobby:setName "default"`.  Will display the value of character’s
-   `name` property.
+   `dialogName` property.
 
 You can change the name to display at any point during a scene.
 
@@ -279,8 +279,8 @@ like in the example above, except you provide the character name
 before the string.  That tells LNVL which character is speaking that
 line.  For example, here is a short scene of two characters speaking:
 
-    Lobby = Character {name="Lobby", textColor="#363"}
-    Eric = Character {name="Eric", textColor="#66a"}
+    Lobby = Character {dialogName="Lobby", textColor="#363"}
+    Eric = Character {dialogName="Eric", textColor="#66a"}
 
     START = Scene {
         Eric "Hello Lobby!",
@@ -326,7 +326,7 @@ To use images with a character you must first provide a default image,
 like so:
 
     Lobby = Character {
-        name = "Lobby Jones",
+        dialogName = "Lobby Jones",
         textColor = "#363",
         image = "images/Lobby-Default.png",
     }
@@ -375,7 +375,7 @@ The first way you can change this is to specify the position when you
 create a character, like so:
 
     Lobby = Character {
-        name = "Lobby Jones",
+        dialogName = "Lobby Jones",
         textColor = "#363",
         image = "images/Lobby-Default.png",
         position = "Right",
@@ -465,7 +465,7 @@ use a specific font you define the `font` property of that character,
 like so:
 
     Lobby = Character {
-        name = "Lobby Jones",
+        dialogName = "Lobby Jones",
         font = "path/to/font-for-lobby.ttf",
     }
 
@@ -473,7 +473,7 @@ This will cause the character to use that specific font.  By default
 the font size will be twelve pixels.  But you can also change that:
 
     Lobby = Character {
-        name = "Lobby Jones",
+        dialogName = "Lobby Jones",
         font = {"path/to/font-for-lobby.ttf", 16},
     }
 
@@ -496,7 +496,7 @@ file.  Or you can change settings for individual scenes or characters
 by providing those values when you create them, for example:
 
     Lobby = Character {
-        name = "Lobby Jones",
+        dialogName = "Lobby Jones",
         textColor = Color.Blue,
     }
 
