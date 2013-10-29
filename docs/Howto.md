@@ -245,6 +245,32 @@ a character:
 This creates the character `Lobby` and defines his name and color,
 i.e. the color of that character’s dialog on screen.
 
+### Character Names ###
+
+The example above defines the `name` property for the character.
+However, sometimes you will want characters will full names.  LNVL
+supports this by allowing you to define the first and last name of a
+character, like so:
+
+    Lobby = Character {firstName="Lobby", lastName="Jones"}
+
+If you do not provide the `name`, as in this example, then LNVL will
+default to using the `firstName` when showing the character name.  You
+can change the name LNVL shows by using `setName`.  Here is a list of
+the arguments it accepts, with example usages:
+
+1. `Lobby:setName "firstName"`.  Will display `Lobby` in dialog.
+
+2. `Lobby:setName "lastName"`.  Will display `Jones` in dialog.
+
+3. `Lobby:setName "fullName"`.  Will display `Lobby Jones`.  This
+   option combines the first and last name, in that order.
+
+4. `Lobby:setName "default"`.  Will display the value of character’s
+   `name` property.
+
+You can change the name to display at any point during a scene.
+
 ### Speaking With Characters ###
 
 You use characters inside of scenes to specify who says which lines of
