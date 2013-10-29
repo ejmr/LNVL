@@ -170,6 +170,25 @@ function Character:monologue(lines)
     return LNVL.Opcode:new("monologue", {content=lines, character=self})
 end
 
+-- A list of acceptable values for the parameter of the displayName()
+-- method below.
+local acceptableDisplayNameValues = {
+    ["default"] = true,
+    ["firstName"] = true,
+    ["lastName"] = true,
+    ["fullName"] = true,
+}
+
+-- This method changes the name which LNVL will display in dialog
+-- screens whenever the character speaks.
+function Character:displayName(nameType)
+    if acceptableDisplayNameValues[nameType] then
+        return LNVL.Opcode:new("set-character-name",
+                               {character=self, name=nameType})
+    end
+    error(("Unacceptable character display name type: %s"):format(nameType))
+end
+
 -- If we call a Character object as a function then we treat that as a
 -- short-cut for calling the says() method.  This can make dialog
 -- scripts more readable.

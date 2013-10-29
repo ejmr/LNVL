@@ -22,6 +22,7 @@ Instruction.ValidInstructions = {
     ["no-op"] = true,
     ["show-menu"] = true,
     ["set-position"] = true,
+    ["set-name"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
@@ -86,6 +87,21 @@ LNVL.Instructions["say"] = Instruction:new {
         end
     end }
 
+LNVL.Instructions["set-name"] = Instruction:new {
+    name = "set-name",
+    action = function (arguments)
+        local character, name = arguments.target, arguments.name
+        assert(getmetatable(character) == LNVL.Character)
+        
+        if name == "default" then
+            character.dialogName = character.firstName
+        elseif name == "fullName" then
+            character.dialogName = ("%s %s"):format(character.firstName, character.lastName)
+        else
+            character.dialogName = character[name]
+        end
+    end
+}
 
 LNVL.Instructions["set-image"] = Instruction:new {
     name = "set-image",
@@ -182,6 +198,7 @@ Instruction.ForOpcode = {
     ["monologue"] = LNVL.Instructions["say"],
     ["say"] = LNVL.Instructions["say"],
     ["set-character-image"] = LNVL.Instructions["set-image"],
+    ["set-character-name"] = LNVL.Instructions["set-name"],
     ["change-scene"] = LNVL.Instructions["set-scene"],
     ["set-scene-image"] = LNVL.Instructions["set-image"],
     ["no-op"] = LNVL.Instructions["no-op"],
