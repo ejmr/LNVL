@@ -9,3 +9,5 @@ docs/html/*
 # Ignore the settings file the engine actually uses.  We only want Git
 # to track the example file.
 src/settings.lua
+
+TAGS

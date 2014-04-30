@@ -15,7 +15,7 @@ local LNVL = require("LNVL")
 LNVL.Initialize()
 
 function love.load(arguments)
-    love.graphics.setMode(LNVL.Settings.Screen.Width, LNVL.Settings.Screen.Height)
+    love.window.setMode(LNVL.Settings.Screen.Width, LNVL.Settings.Screen.Height)
     love.graphics.setBackgroundColor(0, 0, 0)
 
     if #arguments > 1 then

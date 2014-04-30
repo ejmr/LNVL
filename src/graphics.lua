@@ -71,7 +71,6 @@ end
 function Graphics.DrawText(content)
     for _,element in ipairs(content) do
         if type(element) == "string" then
-            love.graphics.setColorMode("modulate")
             love.graphics.printf(
                 element,
                 LNVL.Settings.Scenes.X + 10,
