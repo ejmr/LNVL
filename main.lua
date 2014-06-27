@@ -1,15 +1,15 @@
 --[[
---
--- The main file required by LÖVE.  We do not use this for anything in
--- LNVL except debugging, since we ship out LNVL as a library for
--- other programs to use and not really an executable on its own.
---
--- It reads an optional script filename from the command-line and
--- loads that.  If none is given then it loads a simple example.
---
--- The enter and backspace keys move back and forth through the text.
---
---]]
+
+ The main file required by LÖVE.  We do not use this for anything in
+ LNVL except debugging, since we ship out LNVL as a library for
+ other programs to use and not really an executable on its own.
+
+ It reads an optional script filename from the command-line and
+ loads that.  If none is given then it loads a simple example.
+
+ The enter and backspace keys move back and forth through the text.
+
+----]]
 
 local LNVL = require("LNVL")
 LNVL.Initialize()
