@@ -15,6 +15,6 @@ Ben = Character {
 START = Scene {
     Ben "Let me be a tsundere man.",
     Ben:changeTextColor(Color.Black),
-    Ben:changeFont("bloodcrow"),
+    Ben:changeFont("examples/fonts/bloodcrow", 16),
     Ben "Cocaine is really awesome.  I should do cocaine."
 }
