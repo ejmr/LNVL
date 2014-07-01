@@ -40,11 +40,13 @@
 #
 ######################################################################
 
-TARGETS = docs tags settings archive
+TARGETS = settings archive
 
-all : $(TARGETS)
+game : $(TARGETS)
 
-.PHONY : all $(TARGETS) clean
+all : $(TARGETS) docs tags
+
+.PHONY : all $(TARGETS) clean game
 
 docs :
 	cd ./docs/ && ./build-html.sh
