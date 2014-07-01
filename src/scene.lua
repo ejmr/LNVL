@@ -312,6 +312,8 @@ local characterActivatingOpcodes = {
 -- the current opcode.
 function Scene:refreshActiveCharacters()
     local function refresh(scene, opcode)
+        if opcode["arguments"] == nil then return end
+        
         local character = opcode.arguments["character"]
 
         if character == nil then return end
