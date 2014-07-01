@@ -24,6 +24,8 @@ Opcode.ValidOpcodes = {
     ["deactivate-character"] = true,
     ["add-menu"] = true,
     ["set-character-name"] = true,
+    ["set-character-text-color"] = true,
+    ["set-character-text-font"] = true,
 }
 
 -- The opcode constructor, which requires two arguments: the name of
@@ -147,6 +149,23 @@ end
 -- that 'name' has an allowable value as described in the document
 -- referenced at the top of this file.
 Opcode.Processor["set-character-name"] = function (opcode)
+    opcode.arguments.target = opcode.arguments.character
+    return opcode
+end
+
+-- Processor for opcode 'set-character-text-color'
+--
+-- This opcode changes the text color of the character.
+Opcode.Processor["set-character-text-color"] = function (opcode)
+    opcode.arguments.target = opcode.arguments.character
+    return opcode
+end
+
+-- Processor for opcode 'set-character-text-font'
+--
+-- This is similar to the opcode above, except we are changing the
+-- font instead of the text color.
+Opcode.Processor["set-character-text-font"] = function (opcode)
     opcode.arguments.target = opcode.arguments.character
     return opcode
 end
