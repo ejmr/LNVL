@@ -129,7 +129,7 @@ LNVL.Instructions["set-image"] = Instruction:new {
 LNVL.Instructions["draw-image"] = Instruction:new {
     name = "draw-image",
     action = function (arguments)
-        love.graphics.setColorMode("replace")
+        love.graphics.setColor(255, 255, 255)
 
         -- If we have arguments for a border then we assign those to
         -- the relevant properties of the image, assuming it is a

@@ -263,7 +263,7 @@ end
 -- dialog container, active characters, and so on.
 function Scene:drawEssentialElements()
     if self.backgroundImage ~= nil then
-        love.graphics.setColorMode("replace")
+        love.graphics.setColor(255, 255, 255)
         love.graphics.draw(self.backgroundImage, 0, 0)
     end
 
