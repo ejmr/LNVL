@@ -71,6 +71,7 @@ LNVL.Instructions["say"] = Instruction:new {
     name = "say",
     action = function (arguments)
         local font = arguments.scene.font
+        local textColor = arguments.scene.textColor or LNVL.Settings.Characters.TextColor
 
         if arguments["character"] ~= nil then
             -- If the text is spoken by a character then we can add
@@ -83,7 +84,7 @@ LNVL.Instructions["say"] = Instruction:new {
                               arguments.character.dialogName,
                               arguments.content) }
         else
-            LNVL.Graphics.DrawText{font, arguments.content}
+            LNVL.Graphics.DrawText{font, textColor, arguments.content}
         end
     end }
 
