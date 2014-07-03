@@ -10,4 +10,8 @@ docs/html/*
 # to track the example file.
 src/settings.lua
 
+# Ignore the TAGS file for GNU Emacs.
 TAGS
+
+# Ignore fonts we use for testing purposes.
+examples/fonts/*

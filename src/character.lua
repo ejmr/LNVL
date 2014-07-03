@@ -269,6 +269,18 @@ function Character:leavesTheScene()
     return LNVL.Opcode:new("deactivate-character", {character=self})
 end
 
+-- This method changes the color of the character's dialog.
+function Character:changeTextColor(color)
+    return LNVL.Opcode:new("set-character-text-color", {character=self, color=color})
+end
+
+-- This function changes the current font for the character.  The
+-- argument must be the name of the font *without* the suffix, which
+-- we assume is 'ttf'.  The size is in points.
+function Character:changeFont(font, size)
+    return LNVL.Opcode:new("set-character-text-font", {character=self, font=font, size=size})
+end
+
 -- This function converts a Character object into a string for
 -- debugging purposes.
 Character.__tostring = function (character)

@@ -23,6 +23,8 @@ Instruction.ValidInstructions = {
     ["show-menu"] = true,
     ["set-position"] = true,
     ["set-name"] = true,
+    ["set-color"] = true,
+    ["set-font"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
@@ -101,6 +103,23 @@ LNVL.Instructions["set-name"] = Instruction:new {
         else
             character.dialogName = character[name]
         end
+    end
+}
+
+LNVL.Instructions["set-color"] = Instruction:new {
+    name = "set-color",
+    action = function (arguments)
+        assert(getmetatable(arguments.target) == LNVL.Character)
+        arguments.target.textColor = arguments.color
+    end
+}
+
+LNVL.Instructions["set-font"] = Instruction:new {
+    name = "set-font",
+    action = function (arguments)
+        assert(getmetatable(arguments.target) == LNVL.Character)
+        arguments.target.font =
+            love.graphics.newFont(arguments.font .. ".ttf", arguments.size)
     end
 }
 
@@ -200,6 +219,8 @@ Instruction.ForOpcode = {
     ["say"] = LNVL.Instructions["say"],
     ["set-character-image"] = LNVL.Instructions["set-image"],
     ["set-character-name"] = LNVL.Instructions["set-name"],
+    ["set-character-text-color"] = LNVL.Instructions["set-color"],
+    ["set-character-text-font"] = LNVL.Instructions["set-font"],
     ["change-scene"] = LNVL.Instructions["set-scene"],
     ["set-scene-image"] = LNVL.Instructions["set-image"],
     ["no-op"] = LNVL.Instructions["no-op"],

@@ -234,6 +234,29 @@ property of a character.
        - `lastName`
        - `fullName`
 
+### Set-Character-Text-Color ###
+
+The `set-character-text-color` opcode creates a `set-color`
+instruction which will change the color used for a given character’s
+dialog.
+
+1. `character`: The instance of `LNVL.Character` to modify.
+
+2. `color`: The `LNVL.Color` to use for the text.
+
+### Set-Character-Text-Font ###
+
+The `set-character-text-font` opcode creates a `set-font` instruction
+that causes a character to use a different font for dialog.
+
+1. `character`: The instance of `LNVL.Character` to modify.
+
+2. `font`: This must be a path to a TrueType Font file.  However, LNVL
+   automatically appends the `.ttf` file extension, and so developers
+   should not add it themselves.
+
+3. `size`: The size of the font in points.
+
 ### Set-Scene-Image ###
 
 The `set-scene-image` opcode creates a `set-image` instruction that
@@ -363,7 +386,19 @@ that results in the execution of this instruction in the first place.
 LNVL provides a dummy handler for this purpose, but game developers
 should create their own so that they can handle input and the display
 of graphics in ways more fitting for their particular game.  The
-`src/settings.lua` file is the place to assign custom handlers.
+`src/settings.lua` file is the place to assign custom handlers.J
+
+### Set-Color ###
+
+This instruction changes the color of a target.  Currently the only
+usable targets are characters.  The instruction will change the
+foreground color of that character’s dialog.
+
+### Set-Font ###
+
+This instruction is similar to `set-color` except that it affects the
+font face and font size for a character.
+
 
 
 
