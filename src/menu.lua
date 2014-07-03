@@ -1,6 +1,6 @@
 --[[
 --
--- This file implements the LNVL.Menu class.  It provides dialog
+    -- This file implements the LNVL.Menu class.  It provides dialog
 -- scripts with a way of presenting a list of choices to the player,
 -- mapping those choices to different effects such as changing scenes.
 --
@@ -80,10 +80,8 @@ function Menu:new(properties)
                     LNVL.MenuChoice:new{ label=value[1], action=action })
     end
 
-    -- Finally assign the collected array of 'choices' to the menu,
-    -- but we make it a clamped array so that we cannot accidentally
-    -- access any elements out of bounds.
-    menu.choices = LNVL.ClampedArray:new(choices)
+    -- Finally assign the collected array of 'choices' to the menu.
+    menu.choices = choice
 
     return menu
 end

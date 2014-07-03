@@ -137,7 +137,7 @@ function Scene:new(properties)
     end
 
     -- opcodes: The list of opcodes for the scene, created above.
-    scene.opcodes = LNVL.ClampedArray:new(opcodes)
+    scene.opcodes = opcodes
 
     -- opcodeIndex: An index for the 'opcodes' list indicating the
     -- current opcode we should process in the scene.

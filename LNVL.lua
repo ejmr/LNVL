@@ -114,10 +114,6 @@ function LNVL.Initialize(prefix)
     -- access to primitive rendering functions.
     loadModule("Graphics", "src.graphics")
 
-    -- Then we load the ClampedArray module to make it accesible to
-    -- classes which define properties using that type.
-    loadModule("ClampedArray", "src.clamped-array")
-
     -- Next come the Opcode and Instruction modules, in that order, since
     -- the remaining modules may generate opcodes.  And since opcodes
     -- create instructions we load them in that sequence.
