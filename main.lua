@@ -27,7 +27,13 @@ end
 
 function love.keypressed(key)
     if key == "return" then
-        LNVL.CurrentScene:moveForward()
+        if Graphics.dialogProgress >= (#Graphics.currentConversationText - Graphics.displayLength)
+		and LNVL.CurrentScene.opcodeIndex < #LNVL.CurrentScene.opcodes then
+			Graphics.dialogProgress = 0
+			LNVL.CurrentScene:moveForward()
+		else
+			Graphics.dialogProgress = #Graphics.currentConversationText
+		end
     elseif key == "backspace" then
         LNVL.CurrentScene:moveBack()
     end
