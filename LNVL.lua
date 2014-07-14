@@ -152,6 +152,20 @@ function LNVL.Initialize(prefix)
     loadModule("Menu", "src.menu")
 end
 
+-- This function lets us advance through a dialog by pressing the 
+-- appropriate key declared in love.keypressed(). If the current dialog 
+-- has been fully displayed, it will move on to the next scene.
+-- Otherwise, it will fully display the current dialog.
+function LNVL.Advance()
+	if LNVL.Graphics.dialogProgress >= (#LNVL.Graphics.currentConversationText - LNVL.Graphics.displayLength)
+		and LNVL.CurrentScene.opcodeIndex < #LNVL.CurrentScene.opcodes then
+			LNVL.Graphics.dialogProgress = 0
+			LNVL.CurrentScene:moveForward()
+	else
+		LNVL.Graphics.dialogProgress = #LNVL.Graphics.currentConversationText
+	end
+end
+
 -- This function loads an external LNVL script, i.e. one defining
 -- scenes and story content.  The argument is the path to the file;
 -- the function assumes the caller has already ensured the file exists
