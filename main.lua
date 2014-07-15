@@ -16,7 +16,7 @@ LNVL.Initialize()
 
 function love.load(arguments)
     love.window.setMode(LNVL.Settings.Screen.Width, LNVL.Settings.Screen.Height)
-    love.graphics.setBackgroundColor(0, 0, 0)
+    love.graphics.setBackgroundColor(LNVL.Color.Black)
 
     if #arguments > 1 then
         LNVL.LoadScript(arguments[2])

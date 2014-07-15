@@ -36,7 +36,7 @@ rgb_file:read()
 -- Now we loop through every remaining line, parsing it into an entry
 -- for our table of colors.  Every line has this format:
 --
---     red gren blue    colorName
+--     red green blue    colorName
 --
 -- So that dictates the regular expression we use to match entries.
 

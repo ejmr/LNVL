@@ -22,11 +22,11 @@ function Scene:new(properties)
 
     -- boxBackgroundColor: The color that fills the background
     -- container of the scene when we draw it.
-    scene.boxBackgroundColor = {255, 255, 255}
-
+    scene.boxBackgroundColor = LNVL.Color.White
+    
     -- borderColor: The color of the border around the scene
     -- container.  If this is set to nil then there will be no border.
-    scene.borderColor = {120, 120, 120}
+    scene.borderColor = LNVL.Color.Gray47
 
     -- textColor: The color we use when drawing text.
     scene.textColor = LNVL.Settings.Scenes.TextColor
@@ -263,7 +263,7 @@ end
 -- dialog container, active characters, and so on.
 function Scene:drawEssentialElements()
     if self.backgroundImage ~= nil then
-        love.graphics.setColor(255, 255, 255)
+        love.graphics.setColor(LNVL.Color.White)
         love.graphics.draw(self.backgroundImage, 0, 0)
     end
 

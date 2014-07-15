@@ -181,7 +181,7 @@ end
 -- properties in the Drawable:new() constructor for what types of
 -- values they must have in order to make a border appear.
 function Drawable.DefaultHandlers.draw(self)
-    love.graphics.setColor(255, 255, 255)
+    love.graphics.setColor(LNVL.Color.White)
 
     if self.borderColor ~= LNVL.Color.Transparent and self.borderSize > 0 then
         love.graphics.setColor(self.borderColor)
