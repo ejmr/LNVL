@@ -190,13 +190,20 @@ LNVL.Instructions["no-op"] = Instruction:new {
 }
 
 LNVL.Instructions["show-menu"] = Instruction:new {
-    name = "show-menu",
-    action = function (arguments)
-        local executed, choice = coroutine.resume(
-            LNVL.Settings.Handlers.Menu,
-            arguments.menu
-        )
-
+		name = "show-menu",
+		action = function (arguments)
+		if LNVL.Settings.Handlers.Menu == nil or
+		coroutine.status(LNVL.Settings.Handlers.Menu) == "dead" then
+			LNVL.Settings.Handlers.Menu = coroutine.create(
+				function (menu)
+					return next(menu)
+				end
+			)
+		end
+		local executed, choice = coroutine.resume(
+			LNVL.Settings.Handlers.Menu,
+			arguments.menu
+		)
         if executed == true then
             arguments.menu.currentChoiceIndex = choice
         end
