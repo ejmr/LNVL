@@ -315,6 +315,17 @@ LNVL never generates this instruction.  However, it must exist because
 every opcode must have a corresponding instruction, in this case the
 `no-op` opcode.
 
+### Say ###
+
+This instruction prints dialog to the screen.  The arguments table for
+its action function requires the following properties:
+
+1. `content`: A string representing the dialog to say.
+
+2. `character`: *(Optional)* A instance of an `LNVL.Character` who
+will speak the dialog.  If this argument is present the text will
+appear in the color defined by the `character.textColor` property.
+
 ### Set-Name ###
 
 This instruction changes the name of a given target object.
@@ -339,17 +350,6 @@ objects serves no useful purpose.
    its value.
 
 2. `position`: The new position as an `LNVL.Position` object.
-
-### Say ###
-
-This instruction prints dialog to the screen.  The arguments table for
-its action function requires the following properties:
-
-1. `content`: A string representing the dialog to say.
-
-2. `character`: *(Optional)* A instance of an `LNVL.Character` who
-will speak the dialog.  If this argument is present the text will
-appear in the color defined by the `character.textColor` property.
 
 ### Set-Image ###
 
