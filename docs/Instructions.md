@@ -270,6 +270,17 @@ comments for `LNVL.Opcode.Processor["set-scene-image"]` explain in
 detail why the opcode does not have a `scene` argument and how it gets
 information about the scene later.
 
+### Think ###
+
+The `think` opcode is equivalent to `say` in terms of structure and
+behavior.  However, it generates a different instruction so that LNVL
+can render and handle character thoughts separately from speech.
+
+1. `content`: A string representing the character’s thoughts.
+
+2. `character`: An `LNVL.Character` object representing the character
+   who is thinking.
+
 
 List of Instructions
 --------------------
@@ -399,6 +410,17 @@ foreground color of that character’s dialog.
 This instruction is similar to `set-color` except that it affects the
 font face and font size for a character.
 
+
+### Think ###
+
+This instruction prints thoughts to the screen.  The arguments table
+for its action function requires the following properties:
+
+1. `content`: A string representing the character’s thoughts.  The
+text will appear in the color defined by the `character.textColor`
+property of the `character` described below.
+
+2. `character`: An instance of an `LNVL.Character` who is thinking.
 
 
 
