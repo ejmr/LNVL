@@ -306,6 +306,7 @@ local characterActivatingOpcodes = {
     ["monologue"] = true,
     ["set-character-image"] = true,
     ["move-character"] = true,
+    ["think"] = true,
 }
 
 -- This method updates the list of active characters based on
