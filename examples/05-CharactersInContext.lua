@@ -7,7 +7,7 @@ Eric = Character {dialogName="Eric", textColor="#3a3"}
 Jeff = Character {dialogName="Jeff", textColor="#a33"}
 
 START = Scene {
-    Eric:monologue {
+    Eric {
         "Now that we're out of jail, no hard feelings.",
         "Right?",
         "...",

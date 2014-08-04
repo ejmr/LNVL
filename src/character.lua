@@ -161,15 +161,6 @@ function Character:says(text)
     return LNVL.Opcode:new("say", {content=text, character=self})
 end
 
--- This method accepts a table of strings and treats all of them as
--- lines of dialog spoken by the character.  This is a way that
--- scripts can provide monologues without having to repeat the
--- character object over and over.  The function returns a 'monologue'
--- opcode with the dialog and character attached.
-function Character:monologue(lines)
-    return LNVL.Opcode:new("monologue", {content=lines, character=self})
-end
-
 -- A list of acceptable values for the parameter of the displayName()
 -- method below.
 local acceptableDisplayNameValues = {

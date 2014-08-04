@@ -161,18 +161,6 @@ character to the screen.
 1. `character`: An instance of `LNVL.Character` representing the
 character to deactivate.
 
-### Monologue ###
-
-The `monologue` opcode expands into multiple `say` opcodes, used by
-the `LNVL.Character:monologue()` method to present multiple lines of
-dialog by a single character at once.
-
-1. `character`: An instance of `LNVL.Character` who is speaking the
-monologue.
-
-2. `content`: An array of strings representing lines of dialog.
-
-
 ### Move-Character ###
 
 The `move-character` opcode changes the position of a character, as in
@@ -201,7 +189,8 @@ The `say` opcode generates a `say` instruction.  The commonly-used
 methods of `LNVL.Character` objects create this opcode in order to
 compile dialog for a particular scene.
 
-1. `content`: A string representing the line of dialog.
+1. `content`: A string representing the line of dialog or a table of
+strings representing multiple lines of dialog at once.
 
 2. `character`: *(Optional)* An instance of `LNVL.Character` who is
 speaking the line.

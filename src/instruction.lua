@@ -1,6 +1,6 @@
 --[[
 --
--- This file implements the instruction engine portion of LNVL.  See
+    -- This file implements the instruction engine portion of LNVL.  See
 -- the document
 --
 --     docs/Instructions.md
@@ -222,7 +222,6 @@ LNVL.Instructions["set-position"] = Instruction:new {
 -- that there is not a one-to-one mapping between opcodes and
 -- instructions; different opcodes may become the same instruction.
 Instruction.ForOpcode = {
-    ["monologue"] = LNVL.Instructions["say"],
     ["say"] = LNVL.Instructions["say"],
     ["set-character-image"] = LNVL.Instructions["set-image"],
     ["set-character-name"] = LNVL.Instructions["set-name"],

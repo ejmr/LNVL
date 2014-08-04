@@ -14,7 +14,6 @@ Opcode.__index = Opcode
 
 -- This contains all of the valid opcodes LNVL recognizes.
 Opcode.ValidOpcodes = {
-    ["monologue"] = true,
     ["say"] = true,
     ["set-character-image"] = true,
     ["move-character"] = true,
@@ -103,21 +102,30 @@ end
 -- opcode or a table of opcodes.
 Opcode.Processor = {}
 
--- Processor for opcode 'monologue'
+-- Processor for opcode 'say'
 --
--- We expand the opcode into an array of 'say' opcodes for each line
--- of dialog in the monologue.
-Opcode.Processor["monologue"] = function (opcode)
-    local say_opcodes = {}
-    for _,content in ipairs(opcode.arguments.content) do
-        local opcode = Opcode:new("say",
-                                       { content=content,
-                                         character=opcode.arguments.character
-                                       })
-        table.insert(say_opcodes, opcode:process())
+-- The value of 'opcode.arguments.content' may be either a string or a
+-- table of strings.  If it is a string then we can return the
+-- argument immediately, making that situation a no-op.  However, if
+-- the argument is a table of strings then we perform the same
+-- operation on each while collecting them into a list of 'say'
+-- opcodes we return.  That table must have the '__flatten' property
+-- or else the engine will not be able to show each line of speech
+-- separately.
+Opcode.Processor["say"] = function (opcode)
+    if type(opcode.arguments.content) == "string" then
+        return opcode
     end
-    rawset(say_opcodes, "__flatten", true)
-    return say_opcodes
+
+    local opcodeList = {}
+    for _,content in ipairs(opcode.arguments.content) do
+        table.insert(
+            opcodeList,
+            Opcode:new("say", { content = content,
+                                character = opcode.arguments.character }))
+    end
+    rawset(opcodeList, "__flatten", true)
+    return opcodeList
 end
 
 -- Processor for opcode 'move-character'
@@ -205,7 +213,6 @@ local returnOpcode = function (opcode) return opcode end
 Opcode.Processor["change-scene"] = returnOpcode
 Opcode.Processor["no-op"] = returnOpcode
 Opcode.Processor["deactivate-character"] = returnOpcode
-Opcode.Processor["say"] = returnOpcode
 Opcode.Processor["add-menu"] = returnOpcode
 
 -- This method processes an opcode by running it through the

@@ -297,7 +297,7 @@ you to avoid that repetition: by writing a *monologue.*  Here is an
 example:
 
     START = Scene {
-        Eric:monologue {
+        Eric {
             "Look Lobby, we need to talk.",
             "You have a problem.",
             "And it worries me.  It worries all your friends.",
@@ -308,7 +308,7 @@ example:
         Lobby "Eh, what?  Sorry.  I wasn't listening."
     }
 
-By using `Eric:monologue { … }` you can write multiple lines of dialog
+By using `Eric { … }` you can write multiple lines of dialog
 for that character without having to prefix every line with the
 character’s name.  But be careful to add the comma after the closing
 curly-brace in a monologue.  That is a common syntax error that will

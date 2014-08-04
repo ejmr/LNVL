@@ -1,6 +1,6 @@
 --[[
 --
--- This file implements scenes in LNVL.  Developers do all work with
+    -- This file implements scenes in LNVL.  Developers do all work with
 -- scenes through Scene objects, a class that this file defines.
 --
 --]]
@@ -303,7 +303,6 @@ end
 -- the scene's list of active characters.
 local characterActivatingOpcodes = {
     ["say"] = true,
-    ["monologue"] = true,
     ["set-character-image"] = true,
     ["move-character"] = true,
 }
