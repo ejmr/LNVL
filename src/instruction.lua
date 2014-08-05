@@ -224,6 +224,7 @@ LNVL.Instructions["set-position"] = Instruction:new {
 Instruction.ForOpcode = {
     ["monologue"] = LNVL.Instructions["say"],
     ["say"] = LNVL.Instructions["say"],
+    ["think"] = LNVL.Instructions["say"],
     ["set-character-image"] = LNVL.Instructions["set-image"],
     ["set-character-name"] = LNVL.Instructions["set-name"],
     ["set-character-text-color"] = LNVL.Instructions["set-color"],

@@ -170,6 +170,13 @@ function Character:monologue(lines)
     return LNVL.Opcode:new("monologue", {content=lines, character=self})
 end
 
+-- This method is similar to say() but represents what a character
+-- thinks and not what he or she says.  This method will accept either
+-- a string or a table of strings.
+function Character:thinks(thoughts)
+    return LNVL.Opcode:new("think", {content=thoughts, character=self})
+end
+
 -- A list of acceptable values for the parameter of the displayName()
 -- method below.
 local acceptableDisplayNameValues = {
