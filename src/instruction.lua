@@ -223,6 +223,7 @@ LNVL.Instructions["set-position"] = Instruction:new {
 -- instructions; different opcodes may become the same instruction.
 Instruction.ForOpcode = {
     ["say"] = LNVL.Instructions["say"],
+    ["think"] = LNVL.Instructions["say"],
     ["set-character-image"] = LNVL.Instructions["set-image"],
     ["set-character-name"] = LNVL.Instructions["set-name"],
     ["set-character-text-color"] = LNVL.Instructions["set-color"],

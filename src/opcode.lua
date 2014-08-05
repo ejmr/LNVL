@@ -15,6 +15,7 @@ Opcode.__index = Opcode
 -- This contains all of the valid opcodes LNVL recognizes.
 Opcode.ValidOpcodes = {
     ["say"] = true,
+    ["think"] = true,
     ["set-character-image"] = true,
     ["move-character"] = true,
     ["change-scene"] = true,
@@ -126,6 +127,28 @@ Opcode.Processor["say"] = function (opcode)
     end
     rawset(opcodeList, "__flatten", true)
     return opcodeList
+end
+
+-- Processor for opcode 'think'
+--
+-- This processor will return either a single opcode representing an
+-- individual though, or a table of opcodes representing many thoughts
+-- grouped together.  If the processor returns a table then it will
+-- have the '__flatten' property.
+Opcode.Processor["think"] = function (opcode)
+    if type(opcode.arguments.content) == "string" then
+        return opcode
+    end
+
+    local thoughtOpcodes = {}
+    for _,content in ipairs(opcode.arguments.content) do
+        table.insert(
+            thoughtOpcodes,
+            Opcode:new("think", { content = content,
+                                  character = opcode.arguments.character }))
+    end
+    rawset(thoughtOpcodes, "__flatten", true)
+    return thoughtOpcodes
 end
 
 -- Processor for opcode 'move-character'
