@@ -108,10 +108,10 @@ Opcode.Processor = {}
 -- The value of 'opcode.arguments.content' may be either a string or a
 -- table of strings.  If it is a string then we can return the
 -- argument immediately, making that situation a no-op.  However, if
--- the argument is a table of strings then we perform the same
--- operation on each while collecting them into a list of 'say'
--- opcodes we return.  That table must have the '__flatten' property
--- or else the engine will not be able to show each line of speech
+-- the argument is a table of strings then we create a 'say' opcode
+-- for each string while collection those opcodes into a list that we
+-- return.  That table will have the '__flatten' property because
+-- without it the engine will not be able to show each line of speech
 -- separately.
 Opcode.Processor["say"] = function (opcode)
     if type(opcode.arguments.content) == "string" then
