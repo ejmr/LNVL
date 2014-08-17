@@ -46,7 +46,7 @@ game : $(TARGETS)
 
 all : $(TARGETS) docs tags
 
-.PHONY : all $(TARGETS) clean game
+.PHONY : all $(TARGETS) clean game docs
 
 docs :
 	cd ./docs/ && ./build-html.sh
