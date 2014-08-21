@@ -67,9 +67,9 @@ end
 -- All of the individual instructions defined below are described in
 -- detail by the document referenced at the top of this file.  None of
 -- the instruction action functions return values.
-LNVL.Instructions = {}
+local Implementations = {}
 
-LNVL.Instructions["say"] = Instruction:new {
+Implementations["say"] = Instruction:new {
     name = "say",
     action = function (arguments)
         local font = arguments.scene.font
@@ -90,7 +90,7 @@ LNVL.Instructions["say"] = Instruction:new {
         end
     end }
 
-LNVL.Instructions["set-name"] = Instruction:new {
+Implementations["set-name"] = Instruction:new {
     name = "set-name",
     action = function (arguments)
         local character, name = arguments.target, arguments.name
@@ -106,7 +106,7 @@ LNVL.Instructions["set-name"] = Instruction:new {
     end
 }
 
-LNVL.Instructions["set-color"] = Instruction:new {
+Implementations["set-color"] = Instruction:new {
     name = "set-color",
     action = function (arguments)
         assert(getmetatable(arguments.target) == LNVL.Character)
@@ -114,7 +114,7 @@ LNVL.Instructions["set-color"] = Instruction:new {
     end
 }
 
-LNVL.Instructions["set-font"] = Instruction:new {
+Implementations["set-font"] = Instruction:new {
     name = "set-font",
     action = function (arguments)
         assert(getmetatable(arguments.target) == LNVL.Character)
@@ -123,7 +123,7 @@ LNVL.Instructions["set-font"] = Instruction:new {
     end
 }
 
-LNVL.Instructions["set-image"] = Instruction:new {
+Implementations["set-image"] = Instruction:new {
     name = "set-image",
     action = function (arguments)
         local targetType = getmetatable(arguments.target)
@@ -146,7 +146,7 @@ LNVL.Instructions["set-image"] = Instruction:new {
         end
     end }
 
-LNVL.Instructions["draw-image"] = Instruction:new {
+Implementations["draw-image"] = Instruction:new {
     name = "draw-image",
     action = function (arguments)
         love.graphics.setColor(LNVL.Color.White)
@@ -175,7 +175,7 @@ LNVL.Instructions["draw-image"] = Instruction:new {
         end
     end }
 
-LNVL.Instructions["set-scene"] = Instruction:new {
+Implementations["set-scene"] = Instruction:new {
     name = "set-scene",
     action = function (arguments)
         local scene = LNVL.ScriptEnvironment[arguments.name]
@@ -184,12 +184,12 @@ LNVL.Instructions["set-scene"] = Instruction:new {
         LNVL.CurrentScene = scene
     end }
 
-LNVL.Instructions["no-op"] = Instruction:new {
+Implementations["no-op"] = Instruction:new {
     name = "no-op",
     action = function (arguments) end
 }
 
-LNVL.Instructions["show-menu"] = Instruction:new {
+Implementations["show-menu"] = Instruction:new {
 		name = "show-menu",
 		action = function (arguments)
 		if LNVL.Settings.Handlers.Menu == nil or
@@ -210,7 +210,7 @@ LNVL.Instructions["show-menu"] = Instruction:new {
     end
 }
 
-LNVL.Instructions["set-position"] = Instruction:new {
+Implementations["set-position"] = Instruction:new {
     name = "set-position",
     action = function (arguments)
         arguments.target.position = arguments.position
@@ -222,18 +222,18 @@ LNVL.Instructions["set-position"] = Instruction:new {
 -- that there is not a one-to-one mapping between opcodes and
 -- instructions; different opcodes may become the same instruction.
 Instruction.ForOpcode = {
-    ["say"] = LNVL.Instructions["say"],
-    ["think"] = LNVL.Instructions["say"],
-    ["set-character-image"] = LNVL.Instructions["set-image"],
-    ["set-character-name"] = LNVL.Instructions["set-name"],
-    ["set-character-text-color"] = LNVL.Instructions["set-color"],
-    ["set-character-text-font"] = LNVL.Instructions["set-font"],
-    ["change-scene"] = LNVL.Instructions["set-scene"],
-    ["set-scene-image"] = LNVL.Instructions["set-image"],
-    ["no-op"] = LNVL.Instructions["no-op"],
-    ["deactivate-character"] = LNVL.Instructions["no-op"],
-    ["move-character"] = LNVL.Instructions["set-position"],
-    ["add-menu"] = LNVL.Instructions["show-menu"],
+    ["say"] = Implementations["say"],
+    ["think"] = Implementations["say"],
+    ["set-character-image"] = Implementations["set-image"],
+    ["set-character-name"] = Implementations["set-name"],
+    ["set-character-text-color"] = Implementations["set-color"],
+    ["set-character-text-font"] = Implementations["set-font"],
+    ["change-scene"] = Implementations["set-scene"],
+    ["set-scene-image"] = Implementations["set-image"],
+    ["no-op"] = Implementations["no-op"],
+    ["deactivate-character"] = Implementations["no-op"],
+    ["move-character"] = Implementations["set-position"],
+    ["add-menu"] = Implementations["show-menu"],
 }
 
 -- If LNVL is running in debugging mode then make sure that every
@@ -243,7 +243,7 @@ Instruction.ForOpcode = {
 -- We also make sure that every opcode has a matching instruction.
 if LNVL.Settings.DebugModeEnabled == true then
     for name,_ in pairs(Instruction.ValidInstructions) do
-        if LNVL.Instructions[name] == nil then
+        if Implementations[name] == nil then
             error("No implementation for the instruction " .. name)
         end
     end

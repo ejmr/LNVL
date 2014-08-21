@@ -36,9 +36,10 @@ functions are not expected to return anything.
 function of every instruction has a `scene` property representing the
 `LNVL.Scene` object containing the instruction.
 
-Every `LNVL.Instruction` object exists in the `LNVL.Instructions`
-table.  The keys are the names of the instructions as strings.  The
-values are the objects themselves.
+Every `LNVL.Instruction` object exists in the `Implementations` table,
+which is only accessible in the `src/instruction.lua` source file.
+The keys of that table are the names of the instructions as strings.
+The values are the objects themselves.
 
 
 Opcodes and Their Role
