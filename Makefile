@@ -54,7 +54,7 @@ docs :
 tags :
 	ctags-exuberant -Re --languages=lua \
 		--regex-lua="/Opcode\.Processor\[\"([a-z-]+)\"\].+/Opcode.\1/" \
-		--regex-lua="/LNVL\.Instructions\[\"([a-z-]+)\"\].+/Instruction.\1/"
+		--regex-lua="/Implementations\[\"([a-z-]+)\"\].+/Instruction.\1/"
 
 settings :
 	if [ ! -e "src/settings.lua" ]; then \
