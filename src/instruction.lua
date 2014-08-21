@@ -182,6 +182,7 @@ Implementations["set-scene"] = Instruction:new {
         assert(scene ~= nil and getmetatable(scene) == LNVL.Scene,
                "Cannot load scene " .. arguments.name)
         LNVL.CurrentScene = scene
+        LNVL.VisitedScenes[arguments.name] = true
     end }
 
 Implementations["no-op"] = Instruction:new {

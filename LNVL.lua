@@ -76,6 +76,16 @@ end
 -- preferred ways to change changes.
 LNVL.CurrentScene = nil
 
+-- This table is a map of all scenes we have visited.  That is, scenes
+-- for which the user has progressed through their content.  The keys
+-- are the names of the scenes that we've shown, and the value for
+-- each key is always 'true', allowing us to perform a simple look-up
+-- to determine if we have already shown a scene or not.
+--
+-- N.B. This table does not represent the order in which we displayed
+-- each scene.
+LNVL.VisitedScenes = {}
+
 -- This function loads all of the LNVL sub-modules, initializing the
 -- engine.  The argument, if given, must be a string that will be
 -- treated a prefix to the paths for all require() statements we use
