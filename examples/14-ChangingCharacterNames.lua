@@ -16,7 +16,6 @@ Jeff = Character {
 }
 
 START = Scene {
-    name = "Character Display Name Test",
     boxBackgroundColor = Color.DeepSkyBlue4,
     borderColor = Color.White,
 
