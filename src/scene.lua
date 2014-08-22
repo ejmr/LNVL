@@ -1,8 +1,8 @@
 --[[
---
-    -- This file implements scenes in LNVL.  Developers do all work with
--- scenes through Scene objects, a class that this file defines.
---
+
+This file implements scenes in LNVL.  Developers do all work with
+scenes through Scene objects, a class that this file defines.
+
 --]]
 
 -- Create the Scene class.
