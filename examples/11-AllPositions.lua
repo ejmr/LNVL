@@ -8,7 +8,6 @@ Eric = Character {
 }
 
 START = Scene {
-    name = "Position Test",
     boxBackgroundColor = Color.Transparent,
     Eric:isAt "Left",
     Pause,
