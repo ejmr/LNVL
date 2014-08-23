@@ -183,8 +183,14 @@ Implementations["set-scene"] = Instruction:new {
                "Cannot find scene with variable name " .. arguments.name)
         assert(getmetatable(scene) == LNVL.Scene,
                arguments.name .. " is a variable but not a Scene")
-        LNVL.CurrentScene = scene
+
+        -- Before we switch scenes we record that we have seen, or
+        -- more specifically about *about* to see, the new scene.  And
+        -- furthmore we record the name of the most recent scene.
         LNVL.VisitedScenes[arguments.name] = true
+        table.insert(LNVL.SceneHistory, arguments.name)
+        
+        LNVL.CurrentScene = scene
     end }
 
 Implementations["no-op"] = Instruction:new {

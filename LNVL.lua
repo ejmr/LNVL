@@ -86,6 +86,14 @@ LNVL.CurrentScene = nil
 -- each scene.
 LNVL.VisitedScenes = {}
 
+-- This table is a stack respresenting the exact order in which the
+-- player has traversed through the scenes.  Using various gameplay
+-- mechanics it may be possible to back up through old scenes, and see
+-- the implementation of the 'set-scene' instruction for details.
+--
+-- The keys are numeric indicates and the values are LNVL.Scene's.
+LNVL.SceneHistory = {}
+
 -- This function loads all of the LNVL sub-modules, initializing the
 -- engine.  The argument, if given, must be a string that will be
 -- treated a prefix to the paths for all require() statements we use
