@@ -71,12 +71,12 @@ end
 function Graphics.DrawText(content)
     for _,element in ipairs(content) do
         if type(element) == "string" then
-            love.graphics.printf(
-                element,
-                LNVL.Settings.Scenes.X + 10,
-                LNVL.Settings.Scenes.Y + 10,
-                LNVL.Settings.Scenes.Width - 15,
-                "left")
+                        Graphics.currentConversationText = element
+			Graphics.displayLength = 2
+			if displaySpeedLocal ~= nil then
+				Graphics.displaySpeed = displaySpeedLocal
+			end
+			Graphics.DrawAndUpdate(0)
         elseif getmetatable(element) == LNVL.Color then
             love.graphics.setColor(element)
         elseif element:typeOf("Font") == true then
@@ -85,6 +85,43 @@ function Graphics.DrawText(content)
             error("Cannot draw text content " .. tostring(element))
         end
     end
+end
+
+-- This function is meant to be called within love.update(dt). dt should
+-- first be initialized to 0 by a call in Graphics.DrawText. Basically,
+-- this function just calls the necessary functions to display text
+-- gradually on the screen.
+function Graphics.DrawAndUpdate(dt)
+	if Graphics.currentConversationText ~= "" then
+		updateDisplay(dt)
+		drawDialogGradually()
+	end
+end
+
+-- This function is used to update the message to display on the screen by
+-- a speed that should be equal to displaySpeed characters per second.
+function love.update(dt)
+	Graphics.DrawAndUpdate(dt)
+end
+
+-- This function updates the message displayed to the screen.
+function updateDisplay(dt)
+	if Graphics.displayLength <= #(Graphics.currentConversationText) then
+		Graphics.dialogProgress = Graphics.dialogProgress + Graphics.displaySpeed*dt
+		local displayLengthLocal = Graphics.displayLength + Graphics.dialogProgress
+		textToDraw = Graphics.currentConversationText:sub(1, math.floor(displayLengthLocal))
+	end
+end
+
+-- This function draws text gradually to the screen. 
+function drawDialogGradually()
+	assert(Graphics.displaySpeed ~= nil, "Display speed can't be nil.")
+	love.graphics.printf(
+		textToDraw,
+		LNVL.Settings.Scenes.X + 10,
+		LNVL.Settings.Scenes.Y + 10,
+		LNVL.Settings.Scenes.Width - 15,
+		"left")
 end
 
 -- Return the class as the module.
