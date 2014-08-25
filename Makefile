@@ -62,7 +62,7 @@ settings :
 	fi
 
 SOURCES = "main.lua" "LNVL.lua" "src/" "examples/"
-ARCHIVE = "lnvl.love"
+ARCHIVE = "LNVL.love"
 
 archive :
 	if [ -e "$(ARCHIVE)" ]; then rm "$(ARCHIVE)"; fi
