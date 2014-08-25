@@ -14,6 +14,11 @@ function Scene:new(properties)
     local scene = {}
     setmetatable(scene, Scene)
 
+    -- preconditions: A list of scene names (strings) which they
+    -- player must have visited in order to be able to access this
+    -- scene.
+    scene.preconditions = {}
+
     -- boxBackgroundColor: The color that fills the background
     -- container of the scene when we draw it.
     scene.boxBackgroundColor = LNVL.Color.White

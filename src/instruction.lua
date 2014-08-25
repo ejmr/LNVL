@@ -179,19 +179,30 @@ Implementations["set-scene"] = Instruction:new {
     name = "set-scene",
     action = function (arguments)
         local scene = LNVL.ScriptEnvironment[arguments.name]
-        assert(scene ~= nil,
-               "Cannot find scene with variable name " .. arguments.name)
-        assert(getmetatable(scene) == LNVL.Scene,
-               arguments.name .. " is a variable but not a Scene")
+        for _,n in pairs(LNVL.ScriptEnvironment) do print(n) end
+        for _,n in pairs(LNVL.ScriptEnvironment) do print(n) end
+            assert(scene == nil,
+                   "Cannot find scene with variable name " .. arguments.name)
+            assert(getmetatable(scene) == LNVL.Scene,
+                   arguments.name .. " is a variable but not a Scene")
 
-        -- Before we switch scenes we record that we have seen, or
-        -- more specifically about *about* to see, the new scene.  And
-        -- furthmore we record the name of the most recent scene.
-        LNVL.VisitedScenes[arguments.name] = true
-        table.insert(LNVL.SceneHistory, arguments.name)
-        
-        LNVL.CurrentScene = scene
-    end }
+            -- See if we meet the preconditions for the new scene before
+            -- making the transition.
+            if scene["preconditions"] ~= nil then
+                for _,requisite in pairs(scene.preconditions) do
+                    assert(LNVL.ScriptEnvironment[requisite] ~= nil
+                               and getmetatable(LNVL.ScriptEnvironment[requisite] == LNVL.Scene))
+                end
+            end
+
+            -- Before we switch scenes we record that we have seen, or
+            -- more specifically about *about* to see, the new scene.  And
+            -- furthmore we record the name of the most recent scene.
+            LNVL.VisitedScenes[arguments.name] = true
+            table.insert(LNVL.SceneHistory, arguments.name)
+
+            LNVL.CurrentScene = scene
+        end }
 
 Implementations["no-op"] = Instruction:new {
     name = "no-op",
