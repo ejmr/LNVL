@@ -70,7 +70,7 @@ archive :
 		--update "$(ARCHIVE)" $(SOURCES)
 
 clean :
-	rm lnvl.love
+	rm LNVL.love
 	rm TAGS
 	rm ./docs/html/*.html
 	rm ./src/settings.lua
