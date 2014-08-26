@@ -76,13 +76,15 @@ Implementations["say"] = Instruction:new {
         local textColor = arguments.scene.textColor or LNVL.Settings.Characters.TextColor
 
         if arguments["character"] ~= nil then
+			local displaySpeed = arguments.scene.speedTable[arguments.character.dialogName] or 
+			arguments.character.dialogSpeed
             -- If the text is spoken by a character then we can add
             -- additional formatting to the output, such as the
             -- character's name and font if present.
             LNVL.Graphics.DrawText {
                 font,
                 arguments.character.textColor,
-   				arguments.character.dialogSpeed,
+   				displaySpeed,
                 string.format("%s: %s",
                               arguments.character.dialogName,
                               arguments.content) }
