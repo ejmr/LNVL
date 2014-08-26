@@ -72,6 +72,10 @@ function Character:new(properties)
     -- constants as its value.  It indicates where on the screen the
     -- character's images should appear by default.
     character.position = LNVL.Settings.Characters.DefaultPosition
+    
+    -- dialogSpeed: This property represents the speed at which each
+    -- dialog from the character will be displayed.
+    character.dialogSpeed = LNVL.Graphics.displaySpeedDefault
 
     -- Overwrite any default property values above with ones given to
     -- the constructor.
