@@ -82,6 +82,7 @@ Implementations["say"] = Instruction:new {
             LNVL.Graphics.DrawText {
                 font,
                 arguments.character.textColor,
+   				arguments.character.dialogSpeed,
                 string.format("%s: %s",
                               arguments.character.dialogName,
                               arguments.content) }
