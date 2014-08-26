@@ -56,8 +56,10 @@ end
 Graphics.displayLength = 2
 -- The text we currently want to display.
 Graphics.currentConversationText = ""
--- The speed of the display.
-Graphics.displaySpeed = 55
+-- The default speed of the display.
+Graphics.displaySpeedDefault = 55
+-- The variable speed of the display.
+Graphics.displaySpeed = Graphics.displaySpeedDefault
 -- The number of characters being drawn to the screen after the first
 -- displayLength characters.
 Graphics.dialogProgress = 0
@@ -88,11 +90,15 @@ function Graphics.DrawText(content)
 				Graphics.displaySpeed = displaySpeedLocal
 			end
 			Graphics.DrawAndUpdate(0)
+		elseif type(element) == "number" then
+			if (element > 0) then
+				Graphics.displaySpeed = element
+			end
         elseif getmetatable(element) == LNVL.Color then
             love.graphics.setColor(element)
         elseif element:typeOf("Font") == true then
             love.graphics.setFont(element)
-        else
+		else
             error("Cannot draw text content " .. tostring(element))
         end
     end
