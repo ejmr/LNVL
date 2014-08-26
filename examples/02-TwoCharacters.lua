@@ -5,7 +5,7 @@
 -- those objects inside of the Scene to actually create conversation.
 
 Eric = Character {dialogName = "Eric", textColor = "#c8ffc8"}
-Jeff = Character {dialogName = "Jeff", textColor = "#c8c8ff"}
+Jeff = Character {dialogName = "Jeff", textColor = "#c8c8ff", dialogSpeed = 100}
 
 START = Scene {
     boxBackgroundColor = Color.DeepSkyBlue4,
