@@ -361,15 +361,35 @@ function Scene.DefaultHandler(self)
     self:refreshActiveCharacters()
     self:drawEssentialElements()
 
-    local opcode = self.opcodes[self.opcodeIndex]
-    
-    -- Make sure the opcode has access to the Scene so that the
-    -- instruction we invoke next can draw things to Scene if
-    -- necessary.
-    for _,instruction in ipairs(self:getCurrentInstructions()) do
-        opcode.arguments.scene = self
-        instruction(opcode.arguments)
+    local executeInstruction = function ()
+        local opcode = self.opcodes[self.opcodeIndex]
+
+        -- Make sure the opcode has access to the Scene so that the
+        -- instruction we invoke next can draw things to Scene if
+        -- necessary.
+        for _,instruction in ipairs(self:getCurrentInstructions()) do
+            opcode.arguments.scene = self
+            instruction(opcode.arguments)
+        end
+
+        -- We return a boolean indicating whether the opcode we just
+        -- processed was 'immediate' or not.  If it was immediate then
+        -- we also increment the opcode index, otherwise we get stuck
+        -- in an infinite loop in the repeat-until block below.
+        if opcode.immediate == true then
+            self:moveForward()
+            return true
+        else
+            return false
+        end
     end
+
+    -- We keep processing opcodes and executing instructions until we
+    -- reach an opcode that is not to be treated immediately.
+    repeat
+        local keepExecuting = executeInstruction()
+    until
+        keepExecuting == false
 end
 
 -- Assign our default handler implementation.

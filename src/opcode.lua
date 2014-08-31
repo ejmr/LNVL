@@ -28,6 +28,14 @@ Opcode.ValidOpcodes = {
     ["set-character-text-font"] = true,
 }
 
+-- This lists all of the opcodes which the engine should immediately
+-- convert to instructions and execute.  Any opcode that appears here
+-- will have its 'immediate' property set to true when constructing
+-- the Opcode object.
+local ImmediateOpcodes = {
+    ["set-character-name"] = true,
+}
+
 -- The opcode constructor, which requires two arguments: the name of
 -- an instruction as a string, and a table (which may be nil) of
 -- arguments to give to that instruction later.
@@ -43,6 +51,24 @@ function Opcode:new(name, arguments)
     -- arguments: A table of additional arguments we will give to the
     -- instruction when executing it.
     opcode.arguments = arguments
+
+    -- immediate: A boolean that controls when the engine processes
+    -- the opcode.  If true, LNVL will immediately convert the opcode
+    -- to its corresponding instruction and execute it when the engine
+    -- sees the opcode in the opcode list of a Scene.  Normally LNVL
+    -- only does that conversion and execution based on user input, to
+    -- "move through the content" of a scene.  Immediate opcodes perform
+    -- this "movement" without any user input.
+    --
+    -- By default this property is false.  It will be set to true if
+    -- the name of the opcode appears in the 'ImmediateOpcodes' table.
+    -- No code outside of this constructor should ever change the
+    -- value of this property.
+    if (ImmediateOpcodes[name] == true) then
+        opcode.immediate = true
+    else
+        opcode.immediate = false
+    end
 
     return opcode
 end
