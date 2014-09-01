@@ -127,7 +127,7 @@ end
 --
 -- It is a fatal error for any processor function to *not* return an
 -- opcode or a table of opcodes.
-Opcode.Processor = {}
+local Processors = {}
 
 -- Processor for opcode 'say'
 --
@@ -139,7 +139,7 @@ Opcode.Processor = {}
 -- return.  That table will have the '__flatten' property because
 -- without it the engine will not be able to show each line of speech
 -- separately.
-Opcode.Processor["say"] = function (opcode)
+Processors["say"] = function (opcode)
     if type(opcode.arguments.content) == "string" then
         return opcode
     end
@@ -161,7 +161,7 @@ end
 -- individual though, or a table of opcodes representing many thoughts
 -- grouped together.  If the processor returns a table then it will
 -- have the '__flatten' property.
-Opcode.Processor["think"] = function (opcode)
+Processors["think"] = function (opcode)
     if type(opcode.arguments.content) == "string" then
         return opcode
     end
@@ -184,7 +184,7 @@ end
 -- opcode arguments to that Character so that the 'set-position'
 -- instruction (which this opcode becomes) will know where to apply
 -- the new position.
-Opcode.Processor["move-character"] = function (opcode)
+Processors["move-character"] = function (opcode)
     opcode.arguments.target = opcode.arguments.character
     return opcode
 end
@@ -194,7 +194,7 @@ end
 -- For this opcode we must set the 'target' property to point to the
 -- associated Character object so that the resulting 'set-image'
 -- instruction knows what to update.
-Opcode.Processor["set-character-image"] = function (opcode)
+Processors["set-character-image"] = function (opcode)
     opcode.arguments.target = opcode.arguments.character
     return opcode
 end
@@ -205,7 +205,7 @@ end
 -- LNVL.Character method which generates this opcode will make sure
 -- that 'name' has an allowable value as described in the document
 -- referenced at the top of this file.
-Opcode.Processor["set-character-name"] = function (opcode)
+Processors["set-character-name"] = function (opcode)
     opcode.arguments.target = opcode.arguments.character
     return opcode
 end
@@ -213,7 +213,7 @@ end
 -- Processor for opcode 'set-character-text-color'
 --
 -- This opcode changes the text color of the character.
-Opcode.Processor["set-character-text-color"] = function (opcode)
+Processors["set-character-text-color"] = function (opcode)
     opcode.arguments.target = opcode.arguments.character
     return opcode
 end
@@ -222,7 +222,7 @@ end
 --
 -- This is similar to the opcode above, except we are changing the
 -- font instead of the text color.
-Opcode.Processor["set-character-text-font"] = function (opcode)
+Processors["set-character-text-font"] = function (opcode)
     opcode.arguments.target = opcode.arguments.character
     return opcode
 end
@@ -250,7 +250,7 @@ end
 -- instruction can later determine that it is dealing with a scene,
 -- and by then we will have access to the Scene object to actually
 -- modify it.
-Opcode.Processor["set-scene-image"] = function (opcode)
+Processors["set-scene-image"] = function (opcode)
     opcode.arguments.target = {}
     setmetatable(opcode.arguments.target, LNVL.Scene)
     return opcode
@@ -259,15 +259,15 @@ end
 -- The following opcodes require no additional processing after their
 -- creation and so they have no-op's for their processor functions.
 local returnOpcode = function (opcode) return opcode end
-Opcode.Processor["change-scene"] = returnOpcode
-Opcode.Processor["no-op"] = returnOpcode
-Opcode.Processor["deactivate-character"] = returnOpcode
-Opcode.Processor["add-menu"] = returnOpcode
+Processors["change-scene"] = returnOpcode
+Processors["no-op"] = returnOpcode
+Processors["deactivate-character"] = returnOpcode
+Processors["add-menu"] = returnOpcode
 
 -- This method processes an opcode by running it through the
 -- appropriate function above, returning the modified version.
 function Opcode:process()
-    return Opcode.Processor[self.name](self)
+    return Processors[self.name](self)
 end
 
 -- If LNVL is running in debugging mode then make sure that every
@@ -276,7 +276,7 @@ end
 -- can lead to some tricky bugs.
 if LNVL.Settings.DebugModeEnabled == true then
     for name,_ in pairs(Opcode.ValidOpcodes) do
-        if Opcode.Processor[name] == nil then
+        if Processors[name] == nil then
             error("No opcode processor for " .. name)
         end
     end
