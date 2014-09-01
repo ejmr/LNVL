@@ -5,11 +5,12 @@
 -- those objects inside of the Scene to actually create conversation.
 
 Eric = Character {dialogName = "Eric", textColor = "#c8ffc8"}
-Jeff = Character {dialogName = "Jeff", textColor = "#c8c8ff"}
+Jeff = Character {dialogName = "Jeff", textColor = "#c8c8ff", dialogSpeed = 100}
 
 START = Scene {
     boxBackgroundColor = Color.DeepSkyBlue4,
     borderColor = Color.White,
+    Eric = 200, -- This must be the character's dialogName
     Jeff "Why did you use a copyrighted song for an example?",
     Eric "Oh come on, who is going to sue us?",
     Jeff "Susumu Hirawhat's-his-name?  You know, the author?",
@@ -17,7 +18,7 @@ START = Scene {
     Eric "Also he seems pretty cool.",
     Jeff "He 'seems cool'?  How comforting...",
     Eric "Make the example one of your socio-economical rants then!",
-    Eric "I'm not going to argue about this!"
+    Eric "I'm not going to argue about this!",
 }
 
 -- And that's how we handle that.

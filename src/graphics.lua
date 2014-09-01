@@ -51,6 +51,19 @@ function Graphics.DrawContainer(arguments)
                             LNVL.Settings.Scenes.Height)
 end
 
+-- Here we're initializing the variables used to display text.
+-- First, the length of the initial display.
+Graphics.displayLength = 2
+-- The text we currently want to display.
+Graphics.currentConversationText = ""
+-- The default speed of the display.
+Graphics.displaySpeedDefault = 55
+-- The variable speed of the display.
+Graphics.displaySpeed = Graphics.displaySpeedDefault
+-- The number of characters being drawn to the screen after the first
+-- displayLength characters.
+Graphics.dialogProgress = 0
+
 -- This function draws text to the screen.  It accepts one argument, a
 -- table of content.  The elements in that table can be any of these:
 --
@@ -71,17 +84,21 @@ end
 function Graphics.DrawText(content)
     for _,element in ipairs(content) do
         if type(element) == "string" then
-                        Graphics.currentConversationText = element
+            Graphics.currentConversationText = element
 			Graphics.displayLength = 2
 			if displaySpeedLocal ~= nil then
 				Graphics.displaySpeed = displaySpeedLocal
 			end
 			Graphics.DrawAndUpdate(0)
+		elseif type(element) == "number" then
+			if (element > 0) then
+				Graphics.displaySpeed = element
+			end
         elseif getmetatable(element) == LNVL.Color then
             love.graphics.setColor(element)
         elseif element:typeOf("Font") == true then
             love.graphics.setFont(element)
-        else
+		else
             error("Cannot draw text content " .. tostring(element))
         end
     end
@@ -104,20 +121,19 @@ function love.update(dt)
 	Graphics.DrawAndUpdate(dt)
 end
 
--- This function updates the message displayed to the screen.
+-- This function updates the amount of text displayed on the screen.
+-- It ensures that the display advances and lets us display text gradually.
 function updateDisplay(dt)
 	if Graphics.displayLength <= #(Graphics.currentConversationText) then
 		Graphics.dialogProgress = Graphics.dialogProgress + Graphics.displaySpeed*dt
-		local displayLengthLocal = Graphics.displayLength + Graphics.dialogProgress
-		textToDraw = Graphics.currentConversationText:sub(1, math.floor(displayLengthLocal))
+		Graphics.textToDraw = Graphics.currentConversationText:sub(1, math.floor(Graphics.displayLength + Graphics.dialogProgress))
 	end
 end
 
--- This function draws text gradually to the screen. 
+-- This function simply draws text to the screen.
 function drawDialogGradually()
-	assert(Graphics.displaySpeed ~= nil, "Display speed can't be nil.")
 	love.graphics.printf(
-		textToDraw,
+		Graphics.textToDraw,
 		LNVL.Settings.Scenes.X + 10,
 		LNVL.Settings.Scenes.Y + 10,
 		LNVL.Settings.Scenes.Width - 15,

@@ -160,6 +160,7 @@ function LNVL.Advance()
 	if LNVL.Graphics.dialogProgress >= (#LNVL.Graphics.currentConversationText - LNVL.Graphics.displayLength)
 		and LNVL.CurrentScene.opcodeIndex < #LNVL.CurrentScene.opcodes then
 			LNVL.Graphics.dialogProgress = 0
+			LNVL.Graphics.displayLength = LNVL.Graphics.displaySpeedDefault
 			LNVL.CurrentScene:moveForward()
 	else
 		LNVL.Graphics.dialogProgress = #LNVL.Graphics.currentConversationText
