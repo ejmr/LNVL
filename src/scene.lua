@@ -74,7 +74,7 @@ function Scene:new(properties)
         end
     end
 		
-	-- activeCharacters: This is a table of all of the active
+    -- activeCharacters: This is a table of all of the active
     -- characters in the scene.  Each time we render the contents of
     -- the scene we also render all active characters.  An individual
     -- Character object has all of the data to know where it should
