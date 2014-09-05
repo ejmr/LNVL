@@ -169,7 +169,7 @@ LNVL.CreateConstructorAlias("Scene", Scene)
 -- in the scene.
 Scene.__tostring = function (scene)
     if scene["opcodes"] ~= nil then
-        return string.format("<Scene: %q Opcodes>", #scene.opcodes)
+        return string.format("<Scene: %i Opcodes>", #scene.opcodes)
     else
         return "<Scene: Unknown Opcode Count>"
     end
