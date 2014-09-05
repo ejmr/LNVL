@@ -14,7 +14,7 @@ Important Note
 
 As of 25 August 2014 you **must** re-clone the repository because we
 rewrote the entire history to remove the superfluous `lnvl.love` file.
-You can build it from the makefile now.**
+You can build it from the makefile now.
 
 
 Installation and Configuration
