@@ -23,6 +23,10 @@ function love.load(arguments)
     else
         LNVL.LoadScript("examples/02-TwoCharacters.lua")
     end
+
+    if LNVL.Settings.DebugModeEnabled == true then
+        LNVL.Debug.DumpScriptEnvironment()
+    end
 end
 
 function love.keypressed(key)
