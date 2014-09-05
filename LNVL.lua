@@ -198,7 +198,8 @@ function LNVL.LoadScript(filename)
     -- should update the current scene if the 'START' scene exists.
     if LNVL.ScriptEnvironment["START"] ~= nil then
         LNVL.CurrentScene = LNVL.ScriptEnvironment["START"]
-        assert(getmetatable(LNVL.CurrentScene) == LNVL.Scene)
+        assert(getmetatable(LNVL.CurrentScene) == LNVL.Scene,
+               "LNVL.CurrentScene is not a Scene object")
     end
 end
 
