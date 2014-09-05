@@ -4,7 +4,7 @@
 --
 -- This is the only module your game must import in order to use LNVL.
 -- Since the intent of LNVL is to act as a sub-module for a larger
--- game it cannot make assumptions about the paths to use in require()
+    -- game it cannot make assumptions about the paths to use in require()
 -- statements below.  Often a prefix will need to appear in each of
 -- those statements.  For that reason it is a two-step process to use
 -- LNVL, for example:
@@ -23,7 +23,10 @@
 --]]
 
 -- This table is the global namespace for all LNVL classes, functions,
--- and data.
+-- and data.  Some of the modules, i.e. the source code files we load
+-- during LNVL.Initialize(), rely on access to this global table.
+-- Therefore we cannot declare this table as 'local', even though that
+-- would be a cleaner approach overall.
 LNVL = {}
 
 -- We sandbox all dialog scripts we load via LNVL.LoadScript() in
