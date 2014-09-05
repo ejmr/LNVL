@@ -198,8 +198,8 @@ Implementations["set-scene"] = Instruction:new {
         end
 
         -- Before we switch scenes we record that we have seen, or
-        -- more specifically about *about* to see, the new scene.  And
-        -- furthmore we record the name of the most recent scene.
+        -- more specifically *about* to see, the new scene.  And
+        -- furthermore we record the name of the most recent scene.
         LNVL.VisitedScenes[arguments.name] = true
         table.insert(LNVL.SceneHistory, arguments.name)
 
