@@ -83,7 +83,7 @@ However, one file, `src/rgb.txt`, comes from the
 Special Thanks
 --------------
 
-* Yusuke Tanaka
+* Yusuke Tanaka for providing compatibility with LÖVE 0.9.1.
 * The code for `LNVL.Debug.TableToString()` uses the work of
   [Julio Manuel Fernandez-Diaz](http://lua-users.org/wiki/TableSerialization).
 
