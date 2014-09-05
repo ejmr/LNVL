@@ -8,17 +8,17 @@ scenes.
 
 Eric = Character { dialogName = "Eric", textColor = "Black" }
 
-START = {
+START = Scene {
     Eric "Testing switching scenes with preconditions.",
     Eric "Since we always must begin with START it is always a valid precondition.",
     ChangeToScene "ROOM"
 }
 
-ROOM = {
+ROOM = Scene {
     Eric "Now I am in a room, about to enter the bathroom."
 }
 
-BATHROOM = {
-    preconditions = { "ROOM "},
+BATHROOM = Scene {
+    preconditions = { "ROOM" },
     Eric "And now I enter the room from the bathroom."
 }
