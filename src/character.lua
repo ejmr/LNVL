@@ -115,15 +115,24 @@ function Character:new(properties)
     end
 
     -- The for-loop above may set the color-related properties to
-    -- strings.  If so then we assume they now have a value like
-    -- '#33cfaf', i.e. a hex color string.  We need to convert that
-    -- back into a table of RGB color values.
-    if type(character.textColor) == "string" then
-        character.textColor = LNVL.Color.FromHex(character.textColor)
+    -- strings.  First we check to see if the string names a specific
+    -- color in the LNVL.Color table.  If not then we assume they now
+    -- have a value like '#33cfaf', i.e. a hex color string.  We need
+    -- to convert that back into a table of RGB color values.
+    local convertColorString = function (characterProperty)
+        if type(characterProperty) ~= "string" then
+            return characterProperty
+        end
+
+        if LNVL.Color[characterProperty] ~= nil then
+            return LNVL.Color[characterProperty]
+        else
+            return LNVL.Color.FromHex(characterProperty)
+        end
     end
-    if type(character.borderColor) == "string" then
-        character.borderColor = LNVL.Color.FromHex(character.borderColor)
-    end
+
+    character.textColor = convertColorString(character.textColor)
+    character.borderColor = convertColorString(character.borderColor)
 
     -- Make sure the character has a name, because we do not support
     -- unnamed characters.  First try using the first name as a
