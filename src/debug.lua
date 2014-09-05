@@ -115,5 +115,15 @@ function Debug.PrintSceneOpcodes(scene)
     printOpcodeTable(scene.opcodes)
 end
 
+-- This function displays every variable in the LNVL script
+-- environment and its type.
+function Debug.DumpScriptEnvironment()
+    print("--- Script Environment ---\n")
+    for name,value in pairs(LNVL.ScriptEnvironment) do
+        print(string.format("%q = %q", name, type(value)))
+    end
+    print("\n--- End of Script Environment ---\n")
+end
+
 -- Return the class as the module.
 return Debug
