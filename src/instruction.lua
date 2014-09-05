@@ -182,8 +182,7 @@ Implementations["set-scene"] = Instruction:new {
     name = "set-scene",
     action = function (arguments)
         local scene = LNVL.ScriptEnvironment[arguments.name]
-        for _,n in pairs(LNVL.ScriptEnvironment) do print(n) end
-        for _,n in pairs(LNVL.ScriptEnvironment) do print(n) end
+
             assert(scene == nil,
                    "Cannot find scene with variable name " .. arguments.name)
             assert(getmetatable(scene) == LNVL.Scene,
