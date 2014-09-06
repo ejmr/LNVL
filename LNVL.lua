@@ -1,25 +1,25 @@
 --[[
---
--- LNVL: The LÖVE Visual Novel Engine
---
--- This is the only module your game must import in order to use LNVL.
--- Since the intent of LNVL is to act as a sub-module for a larger
-    -- game it cannot make assumptions about the paths to use in require()
--- statements below.  Often a prefix will need to appear in each of
--- those statements.  For that reason it is a two-step process to use
--- LNVL, for example:
---
---     local LNVL = require "LNVL"
---     LNVL.Initialize("prefix.to.LNVL.src")
---
--- Note well that the argument to Initialize does not end with a
--- period.  It is acceptable for the argument to be an empty string or
--- nil as well, if no path prefix is necessary.
---
--- See the file README.md for more information and links to the
--- official website with documentation.  See the file LICENSE for
--- information on the license for LNVL.
---
+
+LNVL: The LÖVE Visual Novel Engine
+
+This is the only module your game must import in order to use LNVL.
+Since the intent of LNVL is to act as a sub-module for a larger game
+it cannot make assumptions about the paths to use in require()
+statements below.  Often a prefix will need to appear in each of those
+statements.  For that reason it is a two-step process to use LNVL, for
+example:
+
+    local LNVL = require "LNVL"
+    LNVL.Initialize("prefix.to.LNVL.src")
+
+Note well that the argument to Initialize does not end with a period.
+It is acceptable for the argument to be an empty string or nil as
+well, if no path prefix is necessary.
+
+See the file README.md for more information and links to the official
+website with documentation.  See the file LICENSE for information on
+the license for LNVL.
+
 --]]
 
 -- This table is the global namespace for all LNVL classes, functions,
