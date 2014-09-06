@@ -125,8 +125,8 @@ function Scene:new(properties)
         -- may be a table representing an array of them.  If it is the
         -- latter then we must check to see if the table has the
         -- '__flatten' property and if it is true.  The commentary for
-        -- the LNVL.Opcode.Processor table explains the purpose of
-        -- this property.
+        -- the Processors in 'src/opcode.lua' table explains the
+        -- purpose of this property.
         if rawget(new_opcode, "__flatten") == true then
             for _,op in ipairs(new_opcode) do
                 table.insert(opcodes, op)
