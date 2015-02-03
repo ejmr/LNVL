@@ -71,7 +71,7 @@ unable to run any of the examples.
 Copyright and License
 ---------------------
 
-Copyright 2012, 2013, 2014 Plutono INC.
+Copyright 2012, 2013, 2014, 2015 Plutono INC.
 
 LNVL uses the [GNU General Public License][gpl].
 
