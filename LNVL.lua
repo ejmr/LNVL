@@ -153,6 +153,7 @@ function LNVL.Initialize(prefix)
     loadModule("Character", "src.character")
     loadModule("Scene", "src.scene")
     loadModule("Menu", "src.menu")
+    loadModule("Progress", "src.progress")
 end
 
 -- This function lets us advance through a dialog by pressing the 
