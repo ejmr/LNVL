@@ -48,7 +48,7 @@ the scene.  If that name exists in the table and has a value of
 boolean true that means the character has started that scene.  The
 related table `LNVL.SceneHistory` provides a paper-trail of the order
 in which the player passed through scenes.  The engine itself does
-nothing with this table besides update its contetns, but games making
+nothing with this table besides update its contents, but games making
 use of LNVL may be it beneficial in their own games.
 
 
