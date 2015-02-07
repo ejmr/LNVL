@@ -10,6 +10,20 @@ many times the player has died or how often they have used certain
 items and abilities.  In this regard the module is a cornerstone for
 future implementations of anything like an achievements system.
 
+It is *not* necessary to use this module to track progress through
+individual scenes.  If we need to know whether or not a player has
+been through the scene named “Intro” then we can write:
+
+    if LNVL.VisitedScenes["Intro"] == true then ... end
+
+Likewise, if we want to see the history of scene progress then we can
+write a loop like this:
+
+   for _,scene in ipairs(LNVL.SceneHistory) do ... end
+
+That would give us access to each LNVL.Scene object in the order in
+which the player encountered them.
+
 --]]
 
 -- Create the Progress class.
