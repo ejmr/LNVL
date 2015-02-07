@@ -95,6 +95,14 @@ LNVL.VisitedScenes = {}
 -- the implementation of the 'set-scene' instruction for details.
 --
 -- The keys are numeric indicates and the values are LNVL.Scene's.
+-- Developers may write code like
+--
+--     for index,scene in ipairs(LNVL.SceneHistory) do
+--         ...
+--     end
+--
+-- to access each LNVL.Scene (as 'scene' above) in the order in which
+-- the player encountered those scenes (indicated by 'index' above).
 LNVL.SceneHistory = {}
 
 -- This function loads all of the LNVL sub-modules, initializing the
