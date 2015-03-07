@@ -41,7 +41,7 @@ which is only accessible in the `src/instruction.lua` source file.
 The keys of that table are the names of the instructions as strings.
 The values are the objects themselves.
 
-The global table `LNVL.VisitedInstructions` indicates whether or not
+The global table `LNVL.VisitedScenes` indicates whether or not
 the player has *begun* a certain scene, not whether he or she has
 completed the scene.  The key for the table is the variable name for
 the scene.  If that name exists in the table and has a value of
