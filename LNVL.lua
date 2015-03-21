@@ -44,6 +44,23 @@ LNVL = {}
 -- characters, or do anything meaningful.
 LNVL.ScriptEnvironment = { ["LNVL"] = LNVL }
 
+-- This is a lookup table of functions which are essential to LNVL and
+-- which we do not let the user overwrite, otherwise they may be able
+-- to do something like rewrite the Character constructor accidentally
+local ReservedKeywords = {}
+
+-- This metatable changes the __newindex() of the script environment
+-- so that we cannot add anything that conflicts with those names.
+setmetatable(LNVL.ScriptEnvironment, {
+                 __newindex = function (table, key, value)
+                     if ReservedKeywords[key] == true then
+                         error(key .. " is a reserved word.")
+                     else
+                         rawset(table, key, value)
+                     end
+                 end
+})
+
 -- This function creates a constructor alias in the script
 -- environment.  These aliases allow us to write more terse, readable
 -- code in dialog scripts by providing shortcuts for common LNVL
@@ -59,11 +76,15 @@ LNVL.ScriptEnvironment = { ["LNVL"] = LNVL }
 -- the second argument.  The function expects the class to have a
 -- new() method for a constructor.
 --
+-- The constructor created by this function becomes a reserved
+-- keyword in all LNVL dialogue scripts.
+--
 -- The function returns nothing.
 function LNVL.CreateConstructorAlias(name, class)
     LNVL.ScriptEnvironment[name] = function (...)
         return class:new(...)
     end
+    ReservedKeywords[name] = t
 end
 
 -- This function creates a function alias, i.e. a function we can use
@@ -71,10 +92,14 @@ end
 -- within LNVL.  The first argument must be the alias we want to
 -- create, as a string, and the second argument a reference to the
 -- actual function to call.  This function returns no value.
+--
+-- Like the above, function aliases created this way become reserved
+-- words in all LNVL dialogue scripts.
 function LNVL.CreateFunctionAlias(name, implementation)
     LNVL.ScriptEnvironment[name] = function (...)
         return implementation(...)
     end
+    ReservedKeywords[name] = t
 end
 
 -- This property represents the current Scene in use.  We should
