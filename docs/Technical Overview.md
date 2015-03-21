@@ -5,8 +5,8 @@ This document describes the technical behavior of LNVL, intended for
 programmers who want to modify or extend the engine.
 
 
-Execution Model
----------------
+Basic Execution Model
+---------------------
 
 1. `LNVL.Initialize()` creates the global `LNVL` table and adds the
    engine’s modules to that table.  This step happens only once.
@@ -39,3 +39,17 @@ Execution Model
    These instructions perform many of the actions which the player
    sees, e.g. introducing character sprites, changing scenes,
    modifying the background, and so forth.
+
+
+Using Contexts
+--------------
+
+1. In order to inject data from outside LNVL into a dialog script you
+   must create a `Context` object.  See the file
+   `examples/19-SharedState.lua` for a detailed example.
+
+2. A context modifies `LNVL.ScriptEnvironment`.  This means that any
+   context affects the global value of the environment.  *A context
+   will affect any pre-loaded dialogue.*
+
+3. See the file `src/contex.lua` for the API on using contexts.
