@@ -32,7 +32,11 @@ LNVL = {}
 -- We sandbox all dialog scripts we load via LNVL.LoadScript() in
 -- their own environment so that global variables in those scripts
 -- cannot clobber existing global variables in any game using LNVL or
--- in LNVL itself.  This table represents that environment.
+-- in LNVL itself.  This table represents the blueprint for that
+-- environment.  Because of the ability to use Context objects with
+-- LoadScript(), it is possibly that we will load a script with an
+-- environment that is different from what is in this table by
+-- default.
 --
 -- We explicitly define the 'LNVL' key so that scripts can access the
 -- LNVL table.  Without that key the scripts could not call any LNVL
@@ -162,6 +166,7 @@ function LNVL.Initialize(prefix)
     loadModule("Scene", "src.scene")
     loadModule("Menu", "src.menu")
     loadModule("Progress", "src.progress")
+    loadModule("Context", "src.context")
 end
 
 -- This function lets us advance through a dialog by pressing the 
@@ -179,13 +184,34 @@ function LNVL.Advance()
 	end
 end
 
+-- The purpose of this function is to merge the data of Context
+-- objects with LNVL.ScriptEnvironment whenever we call LoadScript().
+-- It is not intended to be a general-purpose table merging function
+-- and will break on such things as tables with circular values.
+--
+-- The function returns no value.  It directly modifies the key-value
+-- pairs of the LNVL.ScriptEnvironment table itself.
+local function mergeContexts(...)
+    local contexts = {...}
+
+    if #contexts == 0 then return end
+
+    for _,context in ipairs(contexts) do
+        for key,value in pairs(context.data) do
+            LNVL.ScriptEnvironment[key] = value
+        end
+    end
+end
+
 -- This function loads an external LNVL script, i.e. one defining
 -- scenes and story content.  The argument is the path to the file;
 -- the function assumes the caller has already ensured the file exists
 -- and will crash with an error if the file is not found.  The
 -- function returns no value.
-function LNVL.LoadScript(filename)
+function LNVL.LoadScript(filename, ...)
     local script = love.filesystem.load(filename)
+
+    mergeContexts(...)
     assert(script, "Could not load script " .. filename)
     setfenv(script, LNVL.ScriptEnvironment)
 

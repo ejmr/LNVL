@@ -14,14 +14,20 @@
 local LNVL = require("LNVL")
 LNVL.Initialize()
 
+-- This global exists to help test Context objects.
+local keyword = [["Foo"]]
+
 function love.load(arguments)
     love.window.setMode(LNVL.Settings.Screen.Width, LNVL.Settings.Screen.Height)
     love.graphics.setBackgroundColor(LNVL.Color.Black)
 
+    local extraData = LNVL.Context:new()
+    extraData:add("password", [["LobbyWasHere"]])
+
     if #arguments > 1 then
-        LNVL.LoadScript(arguments[2])
+        LNVL.LoadScript(arguments[2], extraData)
     else
-        LNVL.LoadScript("examples/02-TwoCharacters.lua")
+        LNVL.LoadScript("examples/02-TwoCharacters.lua", extraData)
     end
 
     if LNVL.Settings.DebugModeEnabled == true then
