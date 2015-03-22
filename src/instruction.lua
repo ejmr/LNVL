@@ -25,6 +25,7 @@ Instruction.ValidInstructions = {
     ["set-name"] = true,
     ["set-color"] = true,
     ["set-font"] = true,
+    ["set-data"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
@@ -106,6 +107,13 @@ Implementations["set-name"] = Instruction:new {
         else
             character.dialogName = character[name]
         end
+    end
+}
+
+Implementations["set-data"] = Instruction:new {
+    name = "set-data",
+    action = function (arguments)
+        rawset(LNVL.ScriptEnvironment, arguments.name, arguments.value)
     end
 }
 
@@ -257,6 +265,7 @@ Instruction.ForOpcode = {
     ["deactivate-character"] = Implementations["no-op"],
     ["move-character"] = Implementations["set-position"],
     ["add-menu"] = Implementations["show-menu"],
+    ["export-variable"] = Implementations["set-data"],
 }
 
 -- If LNVL is running in debugging mode then make sure that every

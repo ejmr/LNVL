@@ -172,6 +172,16 @@ character to the screen.
 1. `character`: An instance of `LNVL.Character` representing the
 character to deactivate.
 
+### Export-Variable ###
+
+The `export-variable` opcode tells LNVL to change the value of a
+variable defined in the script environment.
+
+1. `name`: The name of the variable as a string.
+
+2. `value`: The new value of that variable.  This can be any type but
+   using tables or userdata may cause unforseen problems.
+
 ### Move-Character ###
 
 The `move-character` opcode changes the position of a character, as in
@@ -336,6 +346,12 @@ its action function requires the following properties:
 2. `character`: *(Optional)* A instance of an `LNVL.Character` who
 will speak the dialog.  If this argument is present the text will
 appear in the color defined by the `character.textColor` property.
+
+### Set-Data ###
+
+This instruction sets a variable in the script environment to a new
+value.  It requires the `name` and `value` properties defined by the
+`export-variable` opcode.
 
 ### Set-Name ###
 

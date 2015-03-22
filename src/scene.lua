@@ -442,6 +442,17 @@ function Scene:moveBack()
     end
 end
 
+-- This method takes a table with two values.  The first is the name
+-- of a variable as a string.  The second is its new value.  The
+-- method generates an opcode and then an instruction that will update
+-- the history game with the new value given in the dialogue script.
+function Scene.export(data)
+    return LNVL.Opcode:new("export-variable", {name=data[1], value=data[2]})
+end
+
+-- Create the Export() alias for Scene.export().
+LNVL.CreateFunctionAlias("Export", Scene.export)
+
 -- This constant is an alias for the 'no-op' opcode.  We can use it in
 -- scripts to represent pauses in scenes, places where there is no
 -- dialog but the player must press a key to continue.  We could

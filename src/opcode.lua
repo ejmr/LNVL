@@ -26,6 +26,7 @@ Opcode.ValidOpcodes = {
     ["set-character-name"] = true,
     ["set-character-text-color"] = true,
     ["set-character-text-font"] = true,
+    ["export-variable"] = true,
 }
 
 -- This lists all of the opcodes which the engine should immediately
@@ -34,6 +35,7 @@ Opcode.ValidOpcodes = {
 -- the Opcode object.
 local ImmediateOpcodes = {
     ["set-character-name"] = true,
+    ["export-variable"] = true,
 }
 
 -- The opcode constructor, which requires two arguments: the name of
@@ -263,6 +265,7 @@ Processors["change-scene"] = returnOpcode
 Processors["no-op"] = returnOpcode
 Processors["deactivate-character"] = returnOpcode
 Processors["add-menu"] = returnOpcode
+Processors["export-variable"] = returnOpcode
 
 -- This method processes an opcode by running it through the
 -- appropriate function above, returning the modified version.
