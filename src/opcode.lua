@@ -27,6 +27,7 @@ Opcode.ValidOpcodes = {
     ["set-character-text-color"] = true,
     ["set-character-text-font"] = true,
     ["export-variable"] = true,
+    ["import-variable"] = true,
 }
 
 -- This lists all of the opcodes which the engine should immediately
@@ -266,6 +267,7 @@ Processors["no-op"] = returnOpcode
 Processors["deactivate-character"] = returnOpcode
 Processors["add-menu"] = returnOpcode
 Processors["export-variable"] = returnOpcode
+Processors["import-variable"] = returnOpcode
 
 -- This method processes an opcode by running it through the
 -- appropriate function above, returning the modified version.

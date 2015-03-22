@@ -180,7 +180,14 @@ variable defined in the script environment.
 1. `name`: The name of the variable as a string.
 
 2. `value`: The new value of that variable.  This can be any type but
-   using tables or userdata may cause unforseen problems.
+using tables or userdata may cause unforseen problems.
+
+### Import-Variable ###
+
+The `import-variable` opcode tells LNVL to load a value from the
+script environment.
+
+1. `name`: A string naming the variable to import.
 
 ### Move-Character ###
 
@@ -328,6 +335,12 @@ object.
 **Note:** The instruction must receive either `location` or
 `position`.  If the instruction receives both then `location` always
 takes precedence.
+
+### Get-Data ###
+
+This instruction loads and displays data from the script environment.
+It expects the same arguments as those required by the
+`import-variable` opcode.
 
 ### No-Op ###
 

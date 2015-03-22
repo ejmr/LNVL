@@ -26,6 +26,7 @@ Instruction.ValidInstructions = {
     ["set-color"] = true,
     ["set-font"] = true,
     ["set-data"] = true,
+    ["get-data"] = true,
 }
 
 -- Our constructor.  It requires a table with two properties, named
@@ -114,6 +115,16 @@ Implementations["set-data"] = Instruction:new {
     name = "set-data",
     action = function (arguments)
         rawset(LNVL.ScriptEnvironment, arguments.name, arguments.value)
+    end
+}
+
+Implementations["get-data"] = Instruction:new {
+    name = "get-data",
+    action = function (arguments)
+        local content = rawget(LNVL.ScriptEnvironment, arguments.name)
+        local font = arguments.scene.font
+        local textColor = arguments.scene.textColor or LNVL.Settings.Characters.TextColor
+        LNVL.Graphics.DrawText{font, textColor, content}
     end
 }
 
@@ -266,6 +277,7 @@ Instruction.ForOpcode = {
     ["move-character"] = Implementations["set-position"],
     ["add-menu"] = Implementations["show-menu"],
     ["export-variable"] = Implementations["set-data"],
+    ["import-variable"] = Implementations["get-data"],
 }
 
 -- If LNVL is running in debugging mode then make sure that every

@@ -453,6 +453,15 @@ end
 -- Create the Export() alias for Scene.export().
 LNVL.CreateFunctionAlias("Export", Scene.export)
 
+-- This function fetches a variable from the script environment and so
+-- that we can inject its value into dialogue scripts.
+function Scene.getEnvironmentVariable(name)
+    return LNVL.Opcode:new("import-variable", {name=name})
+end
+
+-- Create an alias for fetching environment variables.
+LNVL.CreateFunctionAlias("Get", Scene.getEnvironmentVariable)
+
 -- This constant is an alias for the 'no-op' opcode.  We can use it in
 -- scripts to represent pauses in scenes, places where there is no
 -- dialog but the player must press a key to continue.  We could

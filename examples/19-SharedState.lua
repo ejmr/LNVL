@@ -23,5 +23,5 @@ START = Scene {
 } 
 
 NEXT = Scene {
-    "The password has changed to " .. password
+    "The password has changed to ", Get "password"
 }
