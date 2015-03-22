@@ -183,7 +183,7 @@ Implementations["set-scene"] = Instruction:new {
     action = function (arguments)
         local scene = LNVL.ScriptEnvironment[arguments.name]
 
-        assert(scene == nil,
+        assert(scene ~= nil,
                "Cannot find scene with variable name " .. arguments.name)
         assert(getmetatable(scene) == LNVL.Scene,
                arguments.name .. " is a variable but not a Scene")
