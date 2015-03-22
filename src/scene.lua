@@ -450,8 +450,8 @@ function Scene.export(data)
     return LNVL.Opcode:new("export-variable", {name=data[1], value=data[2]})
 end
 
--- Create the Export() alias for Scene.export().
-LNVL.CreateFunctionAlias("Export", Scene.export)
+-- Create the Set() alias for Scene.export().
+LNVL.CreateFunctionAlias("Set", Scene.export)
 
 -- This function fetches a variable from the script environment and so
 -- that we can inject its value into dialogue scripts.

@@ -18,10 +18,10 @@ local keyword = [["Bar"]]
 START = Scene {
     "The secret keyword was " .. keyword,
     "And the full password is " .. password,
-    Export {"password", "LobbyIsLongGone"},
+    Set { "password", "LobbyIsLongGone" },
     ChangeToScene "NEXT",
 } 
 
 NEXT = Scene {
-    "The password has changed to ", Get "password"
+    "The password has changed to...", Get "password"
 }
