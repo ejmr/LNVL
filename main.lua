@@ -13,6 +13,7 @@
 
 local LNVL = require("LNVL")
 LNVL.Initialize()
+print("LNVL Version " .. LNVL.GetVersion())
 
 -- These globals exists to help test Context objects.
 local keyword = [["Foo"]]

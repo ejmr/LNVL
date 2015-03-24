@@ -29,6 +29,22 @@ the license for LNVL.
 -- would be a cleaner approach overall.
 LNVL = {}
 
+-- Version information.
+LNVL.Version = {
+    ["Major"] = 1,
+    ["Minor"] = 0,
+    ["Patch"] = "0-alpha",
+}
+
+-- This function returns the version as a string, useful for display
+-- for debugging purposes and such.
+LNVL.GetVersion = function ()
+    return string.format("%d.%d.%q",
+                         LNVL.Version.Major,
+                         LNVL.Version.Minor,
+                         LNVL.Version.Patch)
+end
+
 -- We sandbox all dialog scripts we load via LNVL.LoadScript() in
 -- their own environment so that global variables in those scripts
 -- cannot clobber existing global variables in any game using LNVL or
