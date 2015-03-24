@@ -77,6 +77,9 @@ Implementations["say"] = Instruction:new {
         local font = arguments.scene.font
         local textColor = arguments.scene.textColor or LNVL.Settings.Characters.TextColor
 
+        -- Interpolate any variables that may be in the content.
+        local content = string.gsub(arguments.content, "<<(%w+)>>", LNVL.ScriptEnvironment)
+
         if arguments["character"] ~= nil then
 			local displaySpeed = arguments.scene.speedTable[arguments.character.dialogName] or 
 			arguments.character.dialogSpeed
@@ -89,9 +92,9 @@ Implementations["say"] = Instruction:new {
    				displaySpeed,
                 string.format("%s: %s",
                               arguments.character.dialogName,
-                              arguments.content) }
+                              content) }
         else
-            LNVL.Graphics.DrawText{font, textColor, arguments.content}
+            LNVL.Graphics.DrawText{font, textColor, content}
         end
     end }
 

@@ -26,6 +26,9 @@ function love.load(arguments)
     local extraData = LNVL.Context:new()
     extraData:add("password", password)
 
+    -- This is for examples/20-StringInterpolation.lua
+    extraData:add("ClosingRemark", "Have a wonderful day!")
+
     if #arguments > 1 then
         LNVL.LoadScript(arguments[2], extraData)
     else
