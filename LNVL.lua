@@ -30,20 +30,21 @@ the license for LNVL.
 LNVL = {}
 
 -- Version information.
-LNVL.Version = {
-    ["Major"] = 1,
-    ["Minor"] = 0,
-    ["Patch"] = "0-alpha",
-}
-
--- This function returns the version as a string, useful for display
--- for debugging purposes and such.
-LNVL.GetVersion = function ()
-    return string.format("%d.%d.%q",
-                         LNVL.Version.Major,
-                         LNVL.Version.Minor,
-                         LNVL.Version.Patch)
-end
+LNVL.Version = setmetatable(
+    {
+        ["Major"] = 1,
+        ["Minor"] = 0,
+        ["Patch"] = "0-alpha",
+    },
+    {
+        __tostring = function()
+            return string.format("%d.%d.%s",
+                                 LNVL.Version.Major,
+                                 LNVL.Version.Minor,
+                                 LNVL.Version.Patch)
+        end
+    }
+)
 
 -- We sandbox all dialog scripts we load via LNVL.LoadScript() in
 -- their own environment so that global variables in those scripts

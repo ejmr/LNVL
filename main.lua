@@ -13,7 +13,7 @@
 
 local LNVL = require("LNVL")
 LNVL.Initialize()
-print("LNVL Version " .. LNVL.GetVersion())
+print("LNVL Version " .. tostring(LNVL.Version))
 
 -- These globals exists to help test Context objects.
 local keyword = [["Foo"]]
@@ -22,7 +22,7 @@ local password = [["LobbyWasHere"]]
 function love.load(arguments)
     love.window.setMode(LNVL.Settings.Screen.Width, LNVL.Settings.Screen.Height)
     love.graphics.setBackgroundColor(LNVL.Color.Black)
-
+    
     local extraData = LNVL.Context:new()
     extraData:add("password", password)
 
