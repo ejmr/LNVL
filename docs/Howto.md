@@ -232,6 +232,24 @@ display any dialog or do anything else in a scene once it is told to
 switch to another scene.  So that means `ChangeToScene()` is best
 placed as the final part of a scene.
 
+#### Scene Preconditions ####
+
+LNVL keeps a record of every scene visited during the course of a
+story.  You can use this information to enforce order in the way
+scenes appear by listing `preconditions`.  [For example][HarvestMoon]:
+
+    MARRIAGE = Scene {
+        preconditions = { "GIVE_GIFT", "BLUE_FEATHER" },
+        -- ...
+    }
+
+Any attempt to use `ChangeToScene "MARRIAGE"` will only work if the
+player has previously visited the scenes `GIVE_GIFT` and
+`BLUE_FEATHER`.  The order of the preconditions is not enforced.  In
+the example above, the player can visit `GIVE_GIFT` and `BLUE_FEATHER`
+in either order to satisfy the preconditions for the `MARRIAGE`
+scene.
+
 
 Characters
 ----------
@@ -656,3 +674,4 @@ scenes.
 [love-files]: https://love2d.org/wiki/love.filesystem
 [nvl]: http://en.wikipedia.org/wiki/Visual_novel
 [coroutines]: http://www.lua.org/manual/5.1/manual.html#2.11
+[HarvestMoon]: http://en.m.wikipedia.org/wiki/Harvest_Moon_(series)#Getting_married
