@@ -214,8 +214,12 @@ Implementations["set-scene"] = Instruction:new {
         -- making the transition.
         if scene["preconditions"] ~= nil then
             for _,requisite in pairs(scene.preconditions) do
-                assert(LNVL.ScriptEnvironment[requisite] ~= nil
-                           and getmetatable(LNVL.ScriptEnvironment[requisite] == LNVL.Scene))
+                assert(LNVL.ScriptEnvironment[requisite] ~= nil,
+                       "Cannot find prerequisite scene " .. requisite)
+                assert(getmetatable(LNVL.ScriptEnvironment[requisite]) == LNVL.Scene,
+                       "Prerequsite scene " .. requisite .. " is not a valid Scene")
+                assert(LNVL.VisitedScenes[requisite] == true,
+                       "Have not visited prerequisite scene " .. requisite) 
             end
         end
 

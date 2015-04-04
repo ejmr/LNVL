@@ -11,14 +11,16 @@ Eric = Character { dialogName = "Eric", textColor = "Black" }
 START = Scene {
     Eric "Testing switching scenes with preconditions.",
     Eric "Since we always must begin with START it is always a valid precondition.",
+    -- Changing "ROOM" below to "BATHROOM" should always fail.
     ChangeToScene "ROOM"
 }
 
 ROOM = Scene {
-    Eric "Now I am in a room, about to enter the bathroom."
+    Eric "Now I am in a room, about to enter the bathroom.",
+    ChangeToScene "BATHROOM"
 }
 
 BATHROOM = Scene {
     preconditions = { "ROOM" },
-    Eric "And now I enter the room from the bathroom."
+    Eric "And now I enter the bathroom."
 }
