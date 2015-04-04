@@ -218,6 +218,8 @@ Implementations["set-scene"] = Instruction:new {
                        "Cannot find prerequisite scene " .. requisite)
                 assert(getmetatable(LNVL.ScriptEnvironment[requisite]) == LNVL.Scene,
                        "Prerequsite scene " .. requisite .. " is not a valid Scene")
+                assert(LNVL.VisitedScenes[requisite] == true,
+                       "Have not visited prerequisite scene " .. requisite) 
             end
         end
 
