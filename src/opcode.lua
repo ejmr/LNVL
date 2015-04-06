@@ -272,7 +272,10 @@ Processors["import-variable"] = returnOpcode
 -- This method processes an opcode by running it through the
 -- appropriate function above, returning the modified version.
 function Opcode:process()
-    return Processors[self.name](self)
+   local result = Processors[self.name](self)
+   assert(type(result) == "table",
+	  "Opcode processor for " .. self.name .. " did not return a table.")
+   return result
 end
 
 -- If LNVL is running in debugging mode then make sure that every
