@@ -410,8 +410,9 @@ table for its action function requires one property:
 
 1. `name`: The name of a scene as a string to use as the new current
 scene.  The instruction looks for an `LNVL.Scene` object with this
-name in the global scope, i.e. inside of `_G`.  That scene becomes the
-value of the global `LNVL.CurrentScene` variable.
+name in the script environment, i.e. inside of the
+`LNVL.ScriptEnvironment` table.  That scene becomes the value of the
+global `LNVL.CurrentScene` variable.
 
 ### Show-Menu ###
 
