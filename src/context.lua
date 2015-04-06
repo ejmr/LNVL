@@ -5,11 +5,10 @@ interact with “the outside world.”  They are trapped in a sandbox: the
 LNVL.ScriptEnvironment global table.  However, since LNVL is intended
 to be a component embedded in other games we need a way to share data
 between LNVL dialog scripts and those games.  We accomplish this with
-Context objects.  They serve a role similar to LNVL.ScriptEnvironment
-but they are specific to a single LNVL script.  By putting data into a
-Context and that giving that to LNVL.LoadScript() we can have LNVL
-dialog scripts with limited read-write access to data that is outside
-of LNVL itself.
+Context objects.  They serve a role similar to LNVL.ScriptEnvironment.
+By putting data into a Context and that giving that to
+LNVL.LoadScript() we can have LNVL dialog scripts with limited
+read-write access to data that is outside of LNVL itself.
 
 --]]
 
