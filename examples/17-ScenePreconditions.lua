@@ -21,6 +21,12 @@ ROOM = Scene {
 }
 
 BATHROOM = Scene {
-    preconditions = { "ROOM" },
-    Eric "And now I enter the bathroom."
+   preconditions = {
+      "ROOM",
+      -- This function has the same effect as if we simply entered the
+      -- string "START" as a precondition, but we use this convoluted
+      -- approach to test using functions for preconditions.
+      function (scene) return LNVL.VisitedScenes["START"] == true end,
+   },
+   Eric "And now I enter the bathroom."
 }

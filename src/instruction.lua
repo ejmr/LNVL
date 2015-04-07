@@ -198,7 +198,33 @@ Implementations["draw-image"] = Instruction:new {
                                arguments.location[1],
                                arguments.location[2])
         end
-    end }
+end }
+
+-- This utility function ensures that a Scene (the required argument)
+-- satisfies all of its preconditions.  It returns two values.  The
+-- first is a boolean indicating whether or not all preconditions are
+-- satisfied; in this situation the second return value is nil.  If
+-- the boolean is false, however, then the second return value is a
+-- number, an index in 'scene.preconditions' for the precondition that
+-- failed.
+local function sceneSatisfiesPreconditions(scene)
+   for index,requisite in pairs(scene.preconditions) do
+      if type(requisite) == "string" then
+	 assert(LNVL.ScriptEnvironment[requisite] ~= nil,
+		"Cannot find prerequisite scene " .. requisite)
+	 assert(getmetatable(LNVL.ScriptEnvironment[requisite]) == LNVL.Scene,
+		"Prerequsite scene " .. requisite .. " is not a valid Scene")
+	 assert(LNVL.VisitedScenes[requisite] == true,
+		"Have not visited prerequisite scene " .. requisite)
+      elseif type(requisite) == "function" then
+	 return requisite(scene), index
+      else
+	 error("Unknown type of precondition.  Must be a string or function.")
+      end
+   end
+
+   return true
+end
 
 Implementations["set-scene"] = Instruction:new {
     name = "set-scene",
@@ -213,14 +239,9 @@ Implementations["set-scene"] = Instruction:new {
         -- See if we meet the preconditions for the new scene before
         -- making the transition.
         if scene["preconditions"] ~= nil then
-            for _,requisite in pairs(scene.preconditions) do
-                assert(LNVL.ScriptEnvironment[requisite] ~= nil,
-                       "Cannot find prerequisite scene " .. requisite)
-                assert(getmetatable(LNVL.ScriptEnvironment[requisite]) == LNVL.Scene,
-                       "Prerequsite scene " .. requisite .. " is not a valid Scene")
-                assert(LNVL.VisitedScenes[requisite] == true,
-                       "Have not visited prerequisite scene " .. requisite) 
-            end
+	   if sceneSatisfiesPreconditions(scene) ~= true then
+	      error("Scene " .. arguments.name .. " fails to satisfy preconditions.")
+	   end
         end
 
         -- Before we switch scenes we record that we have seen, or

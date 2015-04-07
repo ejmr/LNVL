@@ -14,9 +14,22 @@ function Scene:new(properties)
     local scene = {}
     setmetatable(scene, Scene)
 
-    -- preconditions: A list of scene names (strings) which they
-    -- player must have visited in order to be able to access this
-    -- scene.
+    -- preconditions: This array can contain strings and functions.
+    -- 
+    -- If an element is a string then it must name a scene; the player
+    -- must have already visited that scene in order to view the scene
+    -- we're constructing here.
+    --
+    -- If an element is a function then LNVL will call it with one
+    -- argument: the Scene object containing these preconditions.  The
+    -- function must return a boolean.  If the boolean is false then
+    -- the scene does not satisfy the preconditions and the player
+    -- will not see it.  If the function returns boolean true then the
+    -- preconditions are satisfied.  These functions allow the complex
+    -- and dynamic creation of pre-requisites that cannot be simply
+    -- expressed as scene names, and if fact may have nothing to do
+    -- with pre-visited scenes with regard to satisfying the
+    -- precondition.
     scene.preconditions = {}
 
     -- boxBackgroundColor: The color that fills the background

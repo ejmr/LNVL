@@ -61,6 +61,10 @@ LNVL.Version = setmetatable(
 -- characters, or do anything meaningful.
 LNVL.ScriptEnvironment = { ["LNVL"] = LNVL }
 
+-- For debugging purposes we allow the use of Lua's standard print()
+-- function within dialogue scripts.
+LNVL.ScriptEnvironment["print"] = print
+
 -- This is a lookup table of functions which are essential to LNVL and
 -- which we do not let the user overwrite, otherwise they may be able
 -- to do something like rewrite the Character constructor accidentally
@@ -131,9 +135,12 @@ LNVL.CurrentScene = nil
 -- each key is always 'true', allowing us to perform a simple look-up
 -- to determine if we have already shown a scene or not.
 --
+-- Because LNVL requires all stories to have a 'START' scene we
+-- automatically include it in the list of visited scenes.
+--
 -- N.B. This table does not represent the order in which we displayed
 -- each scene.
-LNVL.VisitedScenes = {}
+LNVL.VisitedScenes = { ["START"] = true }
 
 -- This table is a stack respresenting the exact order in which the
 -- player has traversed through the scenes.  Using various gameplay
@@ -149,7 +156,10 @@ LNVL.VisitedScenes = {}
 --
 -- to access each LNVL.Scene (as 'scene' above) in the order in which
 -- the player encountered those scenes (indicated by 'index' above).
-LNVL.SceneHistory = {}
+--
+-- This table contains the 'START' scene for the same reason given in
+-- the commentary for the LNVL.VisitedScenes table.
+LNVL.SceneHistory = { "START" }
 
 -- This function loads all of the LNVL sub-modules, initializing the
 -- engine.  The argument, if given, must be a string that will be
