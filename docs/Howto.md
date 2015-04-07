@@ -258,6 +258,17 @@ preconditions allows use of arbitrary logic to determine whether a
 scene has satisfied all of its preconditions.  See the code in
 `examples/17-ScenePreconditions` for an example.
 
+### Standard Lua Functions ###
+
+LNVL dialogue scripts allow the use of three functions from Lua’s
+standard library:
+
+- [`print()`](http://www.lua.org/manual/5.2/manual.html#pdf-print)
+- [`assert()`](http://www.lua.org/manual/5.2/manual.html#pdf-assert)
+- [`error()`](http://www.lua.org/manual/5.2/manual.html#pdf-error)
+
+They exist to help with debugging scripts during development.
+
 
 Characters
 ----------

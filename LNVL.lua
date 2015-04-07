@@ -61,9 +61,11 @@ LNVL.Version = setmetatable(
 -- characters, or do anything meaningful.
 LNVL.ScriptEnvironment = { ["LNVL"] = LNVL }
 
--- For debugging purposes we allow the use of Lua's standard print()
--- function within dialogue scripts.
+-- For debugging purposes we allow the use of Lua's standard print(),
+-- assert(), and error() functions within dialogue scripts.
 LNVL.ScriptEnvironment["print"] = print
+LNVL.ScriptEnvironment["assert"] = assert
+LNVL.ScriptEnvironment["error"] = error
 
 -- This is a lookup table of functions which are essential to LNVL and
 -- which we do not let the user overwrite, otherwise they may be able
