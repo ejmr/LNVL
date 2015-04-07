@@ -160,9 +160,14 @@ corresponding object it will yield to a ‘menu handler’, a
 The `change-scene` opcode tells LNVL to switch to a different scene,
 i.e. another `LNVL.Scene` object.
 
-1. `name`: The name of the scene the engine should change to.  This
-must be a string naming an `LNVL.Scene` object accessible in global
-scope, i.e. from the `_G` table.
+1. `target`: This must be either a string or a function.  If it is a
+string then it must be a valid key for `LNVL.ScriptEnvironment` that
+points to an `LNVL.Scene` object as its value.  If the parameter is a
+function then LNVL will call it with one argument: the `LNVL.Scene`
+object containing the opcode.  That function must return a string
+naming a scene, with the same requirements as if `target` were a
+string in the first place.  If `target` is a function then it is a
+fatal error for it to return anything other than a string.
 
 ### Deactivate-Character ###
 
@@ -408,11 +413,9 @@ or an `LNVL.Drawable` object.
 This instruction changes the currently active scene.  The arguments
 table for its action function requires one property:
 
-1. `name`: The name of a scene as a string to use as the new current
-scene.  The instruction looks for an `LNVL.Scene` object with this
-name in the script environment, i.e. inside of the
-`LNVL.ScriptEnvironment` table.  That scene becomes the value of the
-global `LNVL.CurrentScene` variable.
+1. `target`: This argument accepts the same types and has the same
+restrictions and implications as the `target` argument for the
+`change-scene` opcode, so consult it for documentation.
 
 ### Show-Menu ###
 

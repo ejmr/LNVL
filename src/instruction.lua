@@ -229,28 +229,43 @@ end
 Implementations["set-scene"] = Instruction:new {
     name = "set-scene",
     action = function (arguments)
-        local scene = LNVL.ScriptEnvironment[arguments.name]
+       local target = arguments.target
+       local name
+       local scene
 
-        assert(scene ~= nil,
-               "Cannot find scene with variable name " .. arguments.name)
-        assert(getmetatable(scene) == LNVL.Scene,
-               arguments.name .. " is a variable but not a Scene")
+       -- The target must be either a string or a function.  See the
+       -- comments for Scene.changeTo() for an explanation.
+       if type(target) == "string" then
+	  name = target
+       elseif type(target) == "function" then
+	  name = target(arguments.scene)
+	  assert(type(name) == "string")
+       else
+	  error("Invalid target for set-scene: " .. target)
+       end
 
-        -- See if we meet the preconditions for the new scene before
-        -- making the transition.
-        if scene["preconditions"] ~= nil then
-	   if sceneSatisfiesPreconditions(scene) ~= true then
-	      error("Scene " .. arguments.name .. " fails to satisfy preconditions.")
-	   end
-        end
+       scene = LNVL.ScriptEnvironment[name]
 
-        -- Before we switch scenes we record that we have seen, or
-        -- more specifically *about* to see, the new scene.  And
-        -- furthermore we record the name of the most recent scene.
-        LNVL.VisitedScenes[arguments.name] = true
-        table.insert(LNVL.SceneHistory, arguments.name)
+       assert(scene ~= nil,
+	      "Cannot find scene with variable name " .. name)
+       assert(getmetatable(scene) == LNVL.Scene,
+	      name .. " is a variable but not a Scene")
 
-        LNVL.CurrentScene = scene
+       -- See if we meet the preconditions for the new scene before
+       -- making the transition.
+       if scene["preconditions"] ~= nil then
+	  if sceneSatisfiesPreconditions(scene) ~= true then
+	     error("Scene " .. name .. " fails to satisfy preconditions.")
+	  end
+       end
+
+       -- Before we switch scenes we record that we have seen, or
+       -- more specifically *about* to see, the new scene.  And
+       -- furthermore we record the name of the most recent scene.
+       LNVL.VisitedScenes[name] = true
+       table.insert(LNVL.SceneHistory, name)
+
+       LNVL.CurrentScene = scene
     end
 }
 
