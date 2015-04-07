@@ -250,6 +250,14 @@ the example above, the player can visit `GIVE_GIFT` and `BLUE_FEATHER`
 in either order to satisfy the preconditions for the `MARRIAGE`
 scene.
 
+Preconditions can also be functions.  They must return a boolean.  If
+any function returns `false` then the scene fails the preconditions.
+Returning `true` indicates satisfaction of that particular
+precondition and LNVL will move on to the next.  Using functions for
+preconditions allows use of arbitrary logic to determine whether a
+scene has satisfied all of its preconditions.  See the code in
+`examples/17-ScenePreconditions` for an example.
+
 
 Characters
 ----------
