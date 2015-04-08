@@ -126,9 +126,10 @@ function LNVL.CreateFunctionAlias(name, implementation)
 end
 
 -- This property represents the current Scene in use.  We should
--- rarely change the value of this property directly.  Instead the
--- LNVL.LoadScript() function and Scene:changeTo() method are the
--- preferred ways to change changes.
+-- rarely change the value of this property directly.  Instead we
+-- should use the Scene.changeTo() function.  LNVL.LoadScript() will
+-- also change this value whenever we load a script that defines a
+-- scene named 'START'.
 LNVL.CurrentScene = nil
 
 -- This table is a map of all scenes we have visited.  That is, scenes
@@ -137,12 +138,9 @@ LNVL.CurrentScene = nil
 -- each key is always 'true', allowing us to perform a simple look-up
 -- to determine if we have already shown a scene or not.
 --
--- Because LNVL requires all stories to have a 'START' scene we
--- automatically include it in the list of visited scenes.
---
 -- N.B. This table does not represent the order in which we displayed
 -- each scene.
-LNVL.VisitedScenes = { ["START"] = true }
+LNVL.VisitedScenes = {}
 
 -- This table is a stack respresenting the exact order in which the
 -- player has traversed through the scenes.  Using various gameplay
@@ -158,10 +156,7 @@ LNVL.VisitedScenes = { ["START"] = true }
 --
 -- to access each LNVL.Scene (as 'scene' above) in the order in which
 -- the player encountered those scenes (indicated by 'index' above).
---
--- This table contains the 'START' scene for the same reason given in
--- the commentary for the LNVL.VisitedScenes table.
-LNVL.SceneHistory = { "START" }
+LNVL.SceneHistory = {}
 
 -- This function loads all of the LNVL sub-modules, initializing the
 -- engine.  The argument, if given, must be a string that will be
@@ -284,11 +279,9 @@ function LNVL.LoadScript(filename, ...)
     end
 
     -- We always treat 'START' as the initial scene in any story so we
-    -- should update the current scene if the 'START' scene exists.
+    -- update the current scene if 'START' exists.
     if LNVL.ScriptEnvironment["START"] ~= nil then
-        LNVL.CurrentScene = LNVL.ScriptEnvironment["START"]
-        assert(getmetatable(LNVL.CurrentScene) == LNVL.Scene,
-               "LNVL.CurrentScene is not a Scene object")
+       LNVL.Scene.changeTo("START")
     end
 end
 

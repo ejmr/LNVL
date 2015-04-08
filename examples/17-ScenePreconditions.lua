@@ -16,6 +16,7 @@ START = Scene {
 }
 
 ROOM = Scene {
+    preconditions = { "START" },
     Eric "Now I am in a room, about to enter the bathroom.",
     ChangeToScene "BATHROOM"
 }

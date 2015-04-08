@@ -422,8 +422,74 @@ function Scene:draw()
     LNVL.Settings.Handlers.Scene(self)
 end
 
+-- This utility function ensures that a Scene (the required argument)
+-- satisfies all of its preconditions.  It returns two values.  The
+-- first is a boolean indicating whether or not all preconditions are
+-- satisfied; in this situation the second return value is nil.  If
+-- the boolean is false, however, then the second return value is a
+-- number, an index in 'scene.preconditions' for the precondition that
+-- failed.
+local function sceneSatisfiesPreconditions(scene)
+   for index,requisite in pairs(scene.preconditions) do
+      if type(requisite) == "string" then
+	 assert(LNVL.ScriptEnvironment[requisite] ~= nil,
+		"Cannot find prerequisite scene " .. requisite)
+	 assert(getmetatable(LNVL.ScriptEnvironment[requisite]) == LNVL.Scene,
+		"Prerequsite scene " .. requisite .. " is not a valid Scene")
+	 assert(LNVL.VisitedScenes[requisite] == true,
+		"Have not visited prerequisite scene " .. requisite)
+      elseif type(requisite) == "function" then
+	 return requisite(scene), index
+      else
+	 error("Unknown type of precondition.  Must be a string or function.")
+      end
+   end
+
+   return true
+end
+
+-- This function changes the current scene to the one given, which
+-- must be a string that names a scene in the script environment.
+-- I.e. the function looks for
+--
+--     LNVL.ScriptEnvironment[name]
+--
+-- which must have an LNVL.Scene object as its value.
+--
+-- This function will properly update the scene history and mark the
+-- scene as 'visited'.  Use this function to change scenes in code
+-- outside of dialogue scripts (cf. ChangeToScene() defined elsewhere
+-- in this file).  Always use this function instead of directly
+-- modifying the value of LNVL.CurrentScene.
+--
+-- This function returns no value.
+function Scene.changeTo(name)
+    local scene = LNVL.ScriptEnvironment[name]
+
+    assert(scene ~= nil,
+	   "Cannot find scene with variable name " .. name)
+    assert(getmetatable(scene) == LNVL.Scene,
+	   name .. " is a variable but not a Scene")
+
+    -- Ensure that we've satisfied any preconditions for the scene.
+    if scene["preconditions"] ~= nil then
+	if sceneSatisfiesPreconditions(scene) ~= true then
+	    error("Scene " .. name .. " fails to satisfy preconditions.")
+	end
+    end
+
+    -- Before we switch scenes we record that we have seen, or
+    -- more specifically *about* to see, the new scene.  And
+    -- furthermore we record the name of the most recent scene.
+    LNVL.VisitedScenes[name] = true
+    table.insert(LNVL.SceneHistory, name)
+
+    LNVL.CurrentScene = scene
+end
+
 -- This function changes to a different scene based on the given
--- target, which can one of two types of values.
+-- target, which can one of two types of values.  It is meant strictly
+-- for use within dialogue scripts.
 --
 -- If the target is a string then it must be the name of a scene,
 -- i.e. a key for the LNVL.ScriptEnvironment table which has a Scene
@@ -438,25 +504,25 @@ end
 -- paragraph.  Using a function instead of simply a string allows
 -- script authors to branch out to different scenes based on arbitrary
 -- criteria.
-function Scene.changeTo(target)
-   return LNVL.Opcode:new("change-scene", {target=target})
-end
-
--- Create the ChangeToScene() alias for Scene.changeTo().
-LNVL.CreateFunctionAlias("ChangeToScene", Scene.changeTo)
+LNVL.CreateFunctionAlias(
+   "ChangeToScene",
+   function (target)
+       return LNVL.Opcode:new("change-scene", {target=target})
+   end
+)
 
 -- This method moves forward to the next content in the scene.
 function Scene:moveForward()
-    if self.opcodeIndex < #self.opcodes then
-        self.opcodeIndex = self.opcodeIndex + 1
-    end
+   if self.opcodeIndex < #self.opcodes then
+      self.opcodeIndex = self.opcodeIndex + 1
+   end
 end
 
 -- This method moves back to the previous content in the scene.
 function Scene:moveBack()
-    if self.opcodeIndex > 1 then
-        self.opcodeIndex = self.opcodeIndex - 1
-    end
+   if self.opcodeIndex > 1 then
+      self.opcodeIndex = self.opcodeIndex - 1
+   end
 end
 
 -- This method takes a table with two values.  The first is the name
@@ -464,7 +530,7 @@ end
 -- method generates an opcode and then an instruction that will update
 -- the history game with the new value given in the dialogue script.
 function Scene.export(data)
-    return LNVL.Opcode:new("export-variable", {name=data[1], value=data[2]})
+   return LNVL.Opcode:new("export-variable", {name=data[1], value=data[2]})
 end
 
 -- Create the Set() alias for Scene.export().
@@ -473,7 +539,7 @@ LNVL.CreateFunctionAlias("Set", Scene.export)
 -- This function fetches a variable from the script environment and so
 -- that we can inject its value into dialogue scripts.
 function Scene.getEnvironmentVariable(name)
-    return LNVL.Opcode:new("import-variable", {name=name})
+   return LNVL.Opcode:new("import-variable", {name=name})
 end
 
 -- Create an alias for fetching environment variables.
