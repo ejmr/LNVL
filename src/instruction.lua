@@ -218,7 +218,7 @@ Implementations["set-scene"] = Instruction:new {
 	  error("Invalid target for set-scene: " .. target)
        end
 
-       LNVL.Scene.changeTo(name)
+       LNVL.ChangeToScene(name)
     end
 }
 

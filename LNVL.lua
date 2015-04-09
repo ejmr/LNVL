@@ -127,9 +127,9 @@ end
 
 -- This property represents the current Scene in use.  We should
 -- rarely change the value of this property directly.  Instead we
--- should use the Scene.changeTo() function.  LNVL.LoadScript() will
--- also change this value whenever we load a script that defines a
--- scene named 'START'.
+-- should use the LNVL.ChangeToScene() function.  LNVL.LoadScript()
+-- will also change this value whenever we load a script that defines
+-- a scene named 'START'.
 LNVL.CurrentScene = nil
 
 -- This table is a map of all scenes we have visited.  That is, scenes
@@ -157,6 +157,71 @@ LNVL.VisitedScenes = {}
 -- to access each LNVL.Scene (as 'scene' above) in the order in which
 -- the player encountered those scenes (indicated by 'index' above).
 LNVL.SceneHistory = {}
+
+-- This utility function ensures that a Scene (the required argument)
+-- satisfies all of its preconditions.  It returns two values.  The
+-- first is a boolean indicating whether or not all preconditions are
+-- satisfied; in this situation the second return value is nil.  If
+-- the boolean is false, however, then the second return value is a
+-- number, an index in 'scene.preconditions' for the precondition that
+-- failed.
+local function sceneSatisfiesPreconditions(scene)
+   for index,requisite in pairs(scene.preconditions) do
+      if type(requisite) == "string" then
+	 assert(LNVL.ScriptEnvironment[requisite] ~= nil,
+		"Cannot find prerequisite scene " .. requisite)
+	 assert(getmetatable(LNVL.ScriptEnvironment[requisite]) == LNVL.Scene,
+		"Prerequsite scene " .. requisite .. " is not a valid Scene")
+	 assert(LNVL.VisitedScenes[requisite] == true,
+		"Have not visited prerequisite scene " .. requisite)
+      elseif type(requisite) == "function" then
+	 return requisite(scene), index
+      else
+	 error("Unknown type of precondition.  Must be a string or function.")
+      end
+   end
+
+   return true
+end
+
+-- This function changes the current scene to the one given, which
+-- must be a string that names a scene in the script environment.
+-- I.e. the function looks for
+--
+--     LNVL.ScriptEnvironment[name]
+--
+-- which must have an LNVL.Scene object as its value.
+--
+-- This function will properly update the scene history and mark the
+-- scene as 'visited'.  Use this function to change scenes in code
+-- outside of dialogue scripts (cf. ChangeToScene() defined in the
+-- src/scene.lua file).  Always use this function instead of directly
+-- modifying the value of LNVL.CurrentScene.
+--
+-- This function returns no value.
+function LNVL.ChangeToScene(name)
+    local scene = LNVL.ScriptEnvironment[name]
+
+    assert(scene ~= nil,
+	   "Cannot find scene with variable name " .. name)
+    assert(getmetatable(scene) == LNVL.Scene,
+	   name .. " is a variable but not a Scene")
+
+    -- Ensure that we've satisfied any preconditions for the scene.
+    if scene["preconditions"] ~= nil then
+	if sceneSatisfiesPreconditions(scene) ~= true then
+	    error("Scene " .. name .. " fails to satisfy preconditions.")
+	end
+    end
+
+    -- Before we switch scenes we record that we have seen, or
+    -- more specifically *about* to see, the new scene.  And
+    -- furthermore we record the name of the most recent scene.
+    LNVL.VisitedScenes[name] = true
+    table.insert(LNVL.SceneHistory, name)
+
+    LNVL.CurrentScene = scene
+end
 
 -- This function loads all of the LNVL sub-modules, initializing the
 -- engine.  The argument, if given, must be a string that will be
@@ -281,7 +346,7 @@ function LNVL.LoadScript(filename, ...)
     -- We always treat 'START' as the initial scene in any story so we
     -- update the current scene if 'START' exists.
     if LNVL.ScriptEnvironment["START"] ~= nil then
-       LNVL.Scene.changeTo("START")
+	LNVL.ChangeToScene("START")
     end
 end
 
