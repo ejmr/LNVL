@@ -34,14 +34,16 @@ LNVL.Version = setmetatable(
     {
         ["Major"] = 1,
         ["Minor"] = 0,
-        ["Patch"] = "0-alpha",
+        ["Patch"] = 0,
+        ["Label"] = "-alpha",
     },
     {
         __tostring = function()
-            return string.format("%d.%d.%s",
+            return string.format("%d.%d.%d%s",
                                  LNVL.Version.Major,
                                  LNVL.Version.Minor,
-                                 LNVL.Version.Patch)
+                                 LNVL.Version.Patch,
+                                 LNVL.Version.Label)
         end
     }
 )
