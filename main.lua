@@ -35,6 +35,13 @@ function love.load(arguments)
         LNVL.LoadScript("examples/02-TwoCharacters.lua", extraData)
     end
 
+    -- If we ran the test for temporary characters then we make sure
+    -- the character defined in that script was destroyed at its
+    -- conclusion.
+    if arguments[2] == "examples/23-TemporaryCharacters.lua" then
+        assert(LNVL.ScriptEnvironment["Lobby"] == nil)
+    end
+
     if LNVL.Settings.DebugModeEnabled == true then
         LNVL.Debug.DumpScriptEnvironment()
     end

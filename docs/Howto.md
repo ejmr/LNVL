@@ -521,6 +521,27 @@ use a specific font that will *always* take precedence over the fonts
 for any scene.  If LNVL has to choose between the font of a character
 and the font of a scene, it will choose the character every time.
 
+### Temporary Characters ###
+
+If you want a character to be temporary, i.e. then assign that
+character the value `nil` at the end of the script.  For example:
+
+    Lobby = Character { firstName="Lobby", textColor = "#a33" }
+    
+    START = Scene {
+        Lobby {
+            "I have lots of important things to say.",
+            "You can never silence or delete me!",
+            "I'll exist in your story forever!"
+        }
+    }
+    
+    -- Oh really?
+    Lobby = nil
+
+Because of the final line, `Lobby` will not be a valid character in
+any other dialogue script.
+
 
 Settings
 --------
