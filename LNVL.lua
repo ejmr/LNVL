@@ -163,10 +163,10 @@ LNVL.SceneHistory = {}
 -- This utility function ensures that a Scene (the required argument)
 -- satisfies all of its preconditions.  It returns two values.  The
 -- first is a boolean indicating whether or not all preconditions are
--- satisfied; in this situation the second return value is nil.  If
--- the boolean is false, however, then the second return value is a
--- number, an index in 'scene.preconditions' for the precondition that
--- failed.
+-- satisfied; if they are the function returns 'true' and 'nil'.  If
+-- any preconditions are not met, however, the function returns
+-- 'false' and an integer, an index in 'scene.preconditions' for the
+-- first precondition that failed.
 local function sceneSatisfiesPreconditions(scene)
    for index,requisite in pairs(scene.preconditions) do
       if type(requisite) == "string" then
@@ -174,16 +174,19 @@ local function sceneSatisfiesPreconditions(scene)
 		"Cannot find prerequisite scene " .. requisite)
 	 assert(getmetatable(LNVL.ScriptEnvironment[requisite]) == LNVL.Scene,
 		"Prerequsite scene " .. requisite .. " is not a valid Scene")
-	 assert(LNVL.VisitedScenes[requisite] == true,
-		"Have not visited prerequisite scene " .. requisite)
+         if not LNVL.VisitedScenes[requisite] then
+             return false, index
+         end
       elseif type(requisite) == "function" then
-	 return requisite(scene), index
+          if requisite(scene) == false then
+              return false, index
+          end
       else
 	 error("Unknown type of precondition.  Must be a string or function.")
       end
    end
 
-   return true
+   return true, nil
 end
 
 -- This function changes the current scene to the one given, which

@@ -30,6 +30,8 @@ function Scene:new(properties)
     -- expressed as scene names, and if fact may have nothing to do
     -- with pre-visited scenes with regard to satisfying the
     -- precondition.
+    --
+    -- Cf. sceneSatisfiesPreconditions()
     scene.preconditions = {}
 
     -- boxBackgroundColor: The color that fills the background
