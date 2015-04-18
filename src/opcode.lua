@@ -40,8 +40,8 @@ local ImmediateOpcodes = {
 }
 
 -- The opcode constructor, which requires two arguments: the name of
--- an instruction as a string, and a table (which may be nil) of
--- arguments to give to that instruction later.
+-- an opcode as a string, and a table (which may be nil) of arguments
+-- to give to that instruction later.
 function Opcode:new(name, arguments)
     local opcode = {}
     setmetatable(opcode, Opcode)
