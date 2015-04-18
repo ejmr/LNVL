@@ -32,10 +32,10 @@ LNVL = {}
 -- Version information.
 LNVL.Version = setmetatable(
     {
-        ["Major"] = 1,
-        ["Minor"] = 0,
+        ["Major"] = 0,
+        ["Minor"] = 1,
         ["Patch"] = 0,
-        ["Label"] = "-alpha",
+        ["Label"] = "-unstable",
     },
     {
         __tostring = function()
