@@ -22,6 +22,15 @@ local password = [["LobbyWasHere"]]
 function love.load(arguments)
     love.window.setMode(LNVL.Settings.Screen.Width, LNVL.Settings.Screen.Height)
     love.graphics.setBackgroundColor(LNVL.Color.Black)
+
+    local dumpOnly = false
+
+    for index,value in ipairs(arguments) do
+        if value == "--dump-only" then
+            dumpOnly = true
+            table.remove(arguments, index)
+        end
+    end
     
     local extraData = LNVL.Context:new()
     extraData:add("password", password)
@@ -47,6 +56,10 @@ function love.load(arguments)
     end
 
     print("New password: " .. LNVL.ScriptEnvironment["password"])
+
+    if dumpOnly == true then
+        love.event.quit()
+    end
 end
 
 function love.keypressed(key)
