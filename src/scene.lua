@@ -135,7 +135,7 @@ function Scene:new(properties)
     local opcodes = {}
 
     for _,content in ipairs(properties) do
-        local new_opcode = self:createOpcodeFromContent(content)
+        local new_opcode = self.createOpcodeFromContent(content)
         -- The opcode above may be a single LNVL.Opcode object or it
         -- may be a table representing an array of them.  If it is the
         -- latter then we must check to see if the table has the
@@ -196,7 +196,7 @@ end
 -- 'properties' argument to Scene:new().  The method returns an
 -- appropriate LNVL.Opcode object based on the argument.  It may also
 -- return an array of LNVL.Opcode objects.
-function Scene:createOpcodeFromContent(content)
+function Scene.createOpcodeFromContent(content)
     local contentType = type(content)
 
     -- If the content is a string then all we only need to create a
