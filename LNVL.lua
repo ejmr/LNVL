@@ -325,8 +325,13 @@ end
 -- This function loads an external LNVL script, i.e. one defining
 -- scenes and story content.  The argument is the path to the file;
 -- the function assumes the caller has already ensured the file exists
--- and will crash with an error if the file is not found.  The
--- function returns no value.
+-- and will crash with an error if the file is not found.
+--
+-- After the filename can come any number of LNVL.Context objects,
+-- which will modify the script environment for the script we're
+-- loading *AND* all future scripts we load.
+--
+-- The function returns no value.
 function LNVL.LoadScript(filename, ...)
     local script = love.filesystem.load(filename)
 
