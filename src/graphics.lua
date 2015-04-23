@@ -86,9 +86,6 @@ function Graphics.DrawText(content)
         if type(element) == "string" then
             Graphics.currentConversationText = element
 			Graphics.displayLength = 2
-			if displaySpeedLocal ~= nil then
-				Graphics.displaySpeed = displaySpeedLocal
-			end
 			Graphics.DrawAndUpdate(0)
 		elseif type(element) == "number" then
 			if (element > 0) then
@@ -104,6 +101,25 @@ function Graphics.DrawText(content)
     end
 end
 
+-- This function updates the amount of text displayed on the screen.
+-- It ensures that the display advances and lets us display text gradually.
+local function updateDisplay(dt)
+	if Graphics.displayLength <= #(Graphics.currentConversationText) then
+		Graphics.dialogProgress = Graphics.dialogProgress + Graphics.displaySpeed*dt
+		Graphics.textToDraw = Graphics.currentConversationText:sub(1, math.floor(Graphics.displayLength + Graphics.dialogProgress))
+	end
+end
+
+-- This function simply draws text to the screen.
+local function drawDialogGradually()
+	love.graphics.printf(
+		Graphics.textToDraw,
+		LNVL.Settings.Scenes.X + 10,
+		LNVL.Settings.Scenes.Y + 10,
+		LNVL.Settings.Scenes.Width - 15,
+		"left")
+end
+
 -- This function is meant to be called within love.update(dt). dt should
 -- first be initialized to 0 by a call in Graphics.DrawText. Basically,
 -- this function just calls the necessary functions to display text
@@ -113,31 +129,6 @@ function Graphics.DrawAndUpdate(dt)
 		updateDisplay(dt)
 		drawDialogGradually()
 	end
-end
-
--- This function is used to update the message to display on the screen by
--- a speed that should be equal to displaySpeed characters per second.
-function love.update(dt)
-	Graphics.DrawAndUpdate(dt)
-end
-
--- This function updates the amount of text displayed on the screen.
--- It ensures that the display advances and lets us display text gradually.
-function updateDisplay(dt)
-	if Graphics.displayLength <= #(Graphics.currentConversationText) then
-		Graphics.dialogProgress = Graphics.dialogProgress + Graphics.displaySpeed*dt
-		Graphics.textToDraw = Graphics.currentConversationText:sub(1, math.floor(Graphics.displayLength + Graphics.dialogProgress))
-	end
-end
-
--- This function simply draws text to the screen.
-function drawDialogGradually()
-	love.graphics.printf(
-		Graphics.textToDraw,
-		LNVL.Settings.Scenes.X + 10,
-		LNVL.Settings.Scenes.Y + 10,
-		LNVL.Settings.Scenes.Width - 15,
-		"left")
 end
 
 -- Return the class as the module.
