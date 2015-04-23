@@ -79,7 +79,7 @@ end
 -- This function converts Opcode objects to strings intended for
 -- debugging purposes.
 local function formatOpcode(opcode)
-    output = string.format("Opcode %q = {", opcode.name)
+    local output = string.format("Opcode %q = {", opcode.name)
 
     if opcode.arguments ~= nil then
         output = output .. "\n"

@@ -81,7 +81,7 @@ function Menu:new(properties)
     end
 
     -- Finally assign the collected array of 'choices' to the menu.
-    menu.choices = choice
+    menu.choices = choices
 
     return menu
 end

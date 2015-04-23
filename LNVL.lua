@@ -109,7 +109,7 @@ function LNVL.CreateConstructorAlias(name, class)
     LNVL.ScriptEnvironment[name] = function (...)
         return class:new(...)
     end
-    ReservedKeywords[name] = t
+    ReservedKeywords[name] = true
 end
 
 -- This function creates a function alias, i.e. a function we can use
@@ -124,7 +124,7 @@ function LNVL.CreateFunctionAlias(name, implementation)
     LNVL.ScriptEnvironment[name] = function (...)
         return implementation(...)
     end
-    ReservedKeywords[name] = t
+    ReservedKeywords[name] = true
 end
 
 -- This property represents the current Scene in use.  We should
