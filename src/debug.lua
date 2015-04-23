@@ -51,12 +51,12 @@ function Debug.TableToString(table, name, indent)
         end
     end
 
-    local function addtocart(value, name, indent, saved, field)
+    local function addtocart(value, cname, cindent, saved, field)
         indent = indent or ""
         saved = saved or {}
-        field = field or name
+        field = field or cname
 
-        cart = cart .. indent .. field
+        cart = cart .. cindent .. field
 
         if type(value) ~= "table" then
             cart = cart .. " = " .. basicSerialize(value) .. ";\n"
@@ -66,7 +66,7 @@ function Debug.TableToString(table, name, indent)
                     .. " (self reference)\n"
                 autoref = autoref ..  name .. " = " .. saved[value] .. ";\n"
             else
-                saved[value] = name
+                saved[value] = cname
                 --if tablecount(value) == 0 then
                 if isemptytable(value) then
                     cart = cart .. " = {};\n"
@@ -74,12 +74,12 @@ function Debug.TableToString(table, name, indent)
                     cart = cart .. " = {\n"
                     for k, v in pairs(value) do
                         k = basicSerialize(k)
-                        local fname = string.format("%s[%s]", name, k)
+                        local fname = string.format("%s[%s]", cname, k)
                         field = string.format("[%s]", k)
                         -- three spaces between levels
-                        addtocart(v, fname, indent .. "   ", saved, field)
+                        addtocart(v, fname, cindent .. "   ", saved, field)
                     end
-                    cart = cart .. indent .. "};\n"
+                    cart = cart .. cindent .. "};\n"
                 end
             end
         end
