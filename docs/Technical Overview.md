@@ -8,6 +8,11 @@ programmers who want to modify or extend the engine.
 Basic Execution Model
 ---------------------
 
+**Note:** Running the test `main.lua` script with the `--dump-only`
+parameter will cause LNVL to exit as soon as it displays debugging
+information, without actually presenting the dialogue script for
+interaction by the player.
+
 1. `LNVL.Initialize()` creates the global `LNVL` table and adds the
    engine’s modules to that table.  This step happens only once.
 
