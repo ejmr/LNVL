@@ -73,3 +73,7 @@ end
 function love.draw()
     LNVL.CurrentScene:draw()
 end
+
+function love.update(dt)
+    LNVL.Graphics.DrawAndUpdate(dt)
+end
