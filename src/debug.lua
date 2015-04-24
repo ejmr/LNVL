@@ -56,7 +56,7 @@ function Debug.TableToString(table, name, indent)
         saved = saved or {}
         field = field or cname
 
-        cart = cart .. cindent .. field
+        cart = cart .. indent .. field
 
         if type(value) ~= "table" then
             cart = cart .. " = " .. basicSerialize(value) .. ";\n"
@@ -77,9 +77,9 @@ function Debug.TableToString(table, name, indent)
                         local fname = string.format("%s[%s]", cname, k)
                         field = string.format("[%s]", k)
                         -- three spaces between levels
-                        addtocart(v, fname, cindent .. "   ", saved, field)
+                        addtocart(v, fname, indent .. "   ", saved, field)
                     end
-                    cart = cart .. cindent .. "};\n"
+                    cart = cart .. indent .. "};\n"
                 end
             end
         end
