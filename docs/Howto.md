@@ -543,6 +543,36 @@ Because of the final line, `Lobby` will not be a valid character in
 any other dialogue script.
 
 
+Complex Scene Content
+---------------------
+
+LNVL also accepts functions for scene content.  For example:
+
+    Lobby = Character { dialogName="Lobby", textColor="#a66" }
+    Lobby.lazy = true
+    
+    START = Scene {
+        "What to do today...",
+        function ()
+            if Lobby.lazy == true then
+                return Lobby:says("Eh, nothing.  Too lazy!")
+            else
+                return Lobby:says("Maybe some actual work?")
+            end
+        end,
+        function () return "And thus the lobster made his decision." end
+    }
+
+The second piece of content is a function which has the character
+Lobby say something different depending on the value of the
+`Lobby.lazy` property.  Note the use of the `says()` method on the
+character to achieve this.  The final piece of content is an anonymous
+function which does nothing but return a string.  This is entirely
+equivalent to using a plain string in the first place, but with a
+function one could potentially return different strings based on
+property values, similar to the example using `Lobby.lazy` above.
+
+
 Settings
 --------
 
