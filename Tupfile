@@ -1,3 +1,5 @@
+# For use with Tup: http://gittup.org/tup/
+
 SOURCES += LNVL.lua
 SOURCES += src/*.lua
 SOURCES += src/rgb.txt
