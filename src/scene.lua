@@ -70,11 +70,11 @@ function Scene:new(properties)
     -- code for the sake of debugging.
     scene.backgroundImage = nil
 
-	-- speedTable: for each character in the current scene, if we want
-	-- the character's text's display speed to be different than his
-	-- default one, scene.speedTable[character.dialogName] contains
-	-- the new speed. If it's nil, the default speed is used.
-	scene.speedTable = {}
+    -- speedTable: for each character in the current scene, if we want
+    -- the character's text's display speed to be different than his
+    -- default one, scene.speedTable[character.dialogName] contains
+    -- the new speed. If it's nil, the default speed is used.
+    scene.speedTable = {}
 	
     -- Apply any properties passed in as arguments that replace any
     -- named defaults we have set above.  We only change values of
@@ -85,7 +85,7 @@ function Scene:new(properties)
         if rawget(scene, name) ~= nil then
             rawset(scene, name, value)
         else
-			rawset(scene.speedTable, name, value)
+            rawset(scene.speedTable, name, value)
         end
     end
 		
