@@ -572,6 +572,10 @@ equivalent to using a plain string in the first place, but with a
 function one could potentially return different strings based on
 property values, similar to the example using `Lobby.lazy` above.
 
+**Note for Programmers:** LNVL executes such functions in the context
+  of the ‘script environment’, i.e. the `LNVL.ScriptEnvironment`
+  table.
+
 
 Settings
 --------

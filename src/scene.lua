@@ -215,6 +215,7 @@ function Scene.createOpcodeFromContent(content)
     -- we treat it the same way we treat strings-as-content above, by
     -- creating 'say' opcodes from them.
     if contentType == "function" then
+        setfenv(content, LNVL.ScriptEnvironment)
         local contentValue = content()
         if type(contentValue) == "string" then
             return LNVL.Opcode:new("say", {content=contentValue})
