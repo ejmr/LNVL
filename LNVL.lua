@@ -76,7 +76,8 @@ LNVL.ScriptEnvironment["tostring"] = tostring
 local ReservedKeywords = {}
 
 -- This metatable changes the __newindex() of the script environment
--- so that we cannot add anything that conflicts with those names.
+-- so that we cannot add anything that conflicts with the names
+-- listed in the ReservedKeywords table.
 setmetatable(LNVL.ScriptEnvironment, {
                  __newindex = function (table, key, value)
                      if ReservedKeywords[key] == true then
