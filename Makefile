@@ -14,11 +14,13 @@
 # to the example settings file then you must manually delete
 # 'src/settings.lua' in order for the build system to update it.
 #
-# 4. And most importantly, it builds the LÖVE archive for LNVL.  This
+# 4. It ensures all third-party libraries are available.
+#
+# 5. And most importantly, it builds the LÖVE archive for LNVL.  This
 # package is not necessary for games using LNVL, but it is useful to
 # us for testing purposes.
 #
-# 5. It will delete all of the HTML documentation for regeneration as
+# 6. It will delete all of the HTML documentation for regeneration as
 # well as the settings file and the 'lnvl.love' archive.  Only use
 # this target to create a fresh, clean start.
 #
@@ -27,6 +29,7 @@
 #     - docs
 #     - tags
 #     - settings
+#     - libs
 #     - archive
 #     - clean
 #
@@ -40,7 +43,7 @@
 #
 ######################################################################
 
-TARGETS = settings archive
+TARGETS = settings libs archive
 
 game : $(TARGETS)
 
@@ -61,7 +64,10 @@ settings :
 		cp "src/settings.lua.example" "src/settings.lua"; \
 	fi
 
-SOURCES = "main.lua" "LNVL.lua" "src/" "examples/"
+libs :
+	git submodule init && git submodule update --remote
+
+SOURCES = "main.lua" "LNVL.lua" "src/" "libs/" "examples/"
 ARCHIVE = "LNVL.love"
 
 archive :
@@ -74,4 +80,4 @@ clean :
 	rm TAGS
 	rm ./docs/html/*.html
 	rm ./src/settings.lua
-
+	rm ./libs/ -rf
