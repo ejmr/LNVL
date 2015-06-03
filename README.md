@@ -79,6 +79,9 @@ However, one file, `src/rgb.txt`, comes from the
 [XFree86 project][xfree86] and therefore uses
 [version 1.1 of their license.][xlicense]
 
+LNVL also uses `[log.lua][]`, Copyright 2014 rxi, released under
+[the MIT license](./libs/log/LICENSE).
+
 
 Special Thanks
 --------------
@@ -86,6 +89,7 @@ Special Thanks
 * Yusuke Tanaka for providing compatibility with LÖVE 0.9.1.
 * The code for `LNVL.Debug.TableToString()` uses the work of
   [Julio Manuel Fernandez-Diaz](http://lua-users.org/wiki/TableSerialization).
+* [rxi][] for the `log.lua` library.
 
 
 
@@ -97,3 +101,5 @@ Special Thanks
 [pandoc]: http://johnmacfarlane.net/pandoc/
 [gpl]: http://www.gnu.org/copyleft/gpl.html
 [gnu make]: https://www.gnu.org/software/make/
+[log.lua]: https://github.com/rxi/log.lua
+[rxi]: https://github.com/rxi

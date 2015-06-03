@@ -8,6 +8,18 @@
 local Debug = {}
 Debug.__index = Debug
 
+-- The 'Log' property is an instance of the 'log.lua' library
+-- available from:
+--
+--     https://github.com/ejmr/log.lua
+--
+-- See the documentation in 'src/settings.lua.example' for details on
+-- the flags which affect logging.
+Debug.Log = require("libs.log.log")
+Debug.Log.outfile = LNVL.Settings.DebugLog
+Debug.Log.usecolor = LNVL.Settings.DebugLogColorEnabled
+Debug.Log.level = LNVL.Settings.DebugLogLevel
+
 -- This function takes a table and returns a string representing that
 -- table in a pretty-printed format.  The string is also valid Lua
 -- code, meaning the function can also serialize (most) tables.

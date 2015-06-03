@@ -17,6 +17,38 @@ Settings.__index = Settings
 -- Developers should set this to 'false' before releasing their games.
 Settings.DebugModeEnabled = true
 
+-- If debugging mode is enabled then LNVL will create a debugging log.
+-- This property determines where that log output appears.  If the
+-- value is a string then it must name a file, which will be created
+-- if it does not exist; output will go into that file.  If the value
+-- is nil then all logging output will instead go to the console.
+Settings.DebugLog = nil
+
+-- By default logging output on the console will be in color, using
+-- ANSI escape codes.  However, if this property is false then the log
+-- will use no color.  This only affects log output for the console.
+-- Logging output sent to a file will never use color regardless of
+-- this setting.
+Settings.DebugLogColorEnabled = true
+
+-- This setting controls the amount of debugging information which
+-- appears in the log.  The value must be one of the following
+-- strings:
+--
+-- 1. "trace"
+-- 2. "debug"
+-- 3. "info"
+-- 4. "warn"
+-- 5. "error"
+-- 6. "fatal"
+--
+-- These values represent the amount of information to appear in the
+-- debugging log, arranged from most to least.  For example, if the
+-- value is "trace" then all debugging information will be logged.
+-- However, if the value is "warn" then information classified as
+-- 'trace', 'debug', and 'info' will not appear.
+Settings.DebugLogLevel = "trace"
+
 
 
 -- -- SCREEN SIZE SETTINGS -------------------------------------------
