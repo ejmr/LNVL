@@ -168,8 +168,7 @@ function Scene:new(properties)
     -- If LNVL is in debugging mode then display the opcodes for the
     -- scene so we can make sure everything looks right.
     if LNVL.Settings.DebugModeEnabled == true then
-        print("-- New Scene --\n")
-        print(tostring(scene), "\n")
+        LNVL.Debug.Log.debug(tostring(scene))
         LNVL.Debug.PrintSceneOpcodes(scene)
     end
 
@@ -220,14 +219,17 @@ function Scene.createOpcodeFromContent(content)
         if type(contentValue) == "string" then
             return LNVL.Opcode:new("say", {content=contentValue})
         end
-        assert(type(contentValue) == "table"
+        LNVL.Debug.Log.assert(type(contentValue) == "table"
                    and getmetatable(contentValue) == LNVL.Opcode,
-               "Functions as scene content must return a string or opcode")
+               "Functions as scene content must return a string or opcode",
+               "error")
         return contentValue
     end
 
     -- By now the content must be a table.
-    assert(contentType == "table", "Unknown content type in Scene")
+    LNVL.Debug.Log.assert(contentType == "table",
+                          "Unknown content type in Scene",
+                          "error")
 
     -- If the content is an LNVL.Menu then we must create an opcode
     -- for it.  Normally functions we call as part of arguments to the

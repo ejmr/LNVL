@@ -115,11 +115,11 @@ function Debug.PrintSceneOpcodes(scene)
     local function printOpcodeTable(opcodes)
         for index,opcode in ipairs(opcodes) do
             if getmetatable(opcode) == nil then
-                print(string.format("[%i] Group = {\n", index))
+                Debug.Log.trace(string.format("[%i] Group = {\n", index))
                 printOpcodeTable(opcode)
-                print(string.format("} (Closing Group %i)\n", index))
+                Debug.Log.trace(string.format("} (Closing Group %i)\n", index))
             else
-                print(string.format("[%i] %s\n", index, tostring(opcode)))
+                Debug.Log.trace(string.format("[%i] %s\n", index, tostring(opcode)))
             end
         end
     end
@@ -130,11 +130,11 @@ end
 -- This function displays every variable in the LNVL script
 -- environment and its type.
 function Debug.DumpScriptEnvironment()
-    print("--- Script Environment ---\n")
+    Debug.Log.debug("--- Script Environment ---")
     for name,value in pairs(LNVL.ScriptEnvironment) do
-        print(string.format("%q = %q", name, type(value)))
+        Debug.Log.debug(string.format("%q = %q", name, type(value)))
     end
-    print("\n--- End of Script Environment ---\n")
+    Debug.Log.debug("--- End of Script Environment ---")
 end
 
 -- Return the class as the module.

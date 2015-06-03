@@ -13,7 +13,7 @@
 
 local LNVL = require("LNVL")
 LNVL.Initialize()
-print("LNVL Version " .. tostring(LNVL.Version))
+LNVL.Debug.Log.trace("LNVL Version " .. tostring(LNVL.Version))
 
 -- These globals exists to help test Context objects.
 local keyword = [["Foo"]]
@@ -55,7 +55,7 @@ function love.load(arguments)
         LNVL.Debug.DumpScriptEnvironment()
     end
 
-    print("New password: " .. LNVL.ScriptEnvironment["password"])
+    LNVL.Debug.Log.trace("New password: " .. LNVL.ScriptEnvironment["password"])
 
     if dumpOnly == true then
         love.event.quit()

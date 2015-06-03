@@ -34,8 +34,9 @@ Instruction.ValidInstructions = {
 function Instruction:new(properties)
     local instruction = {}
     setmetatable(instruction, Instruction)
-    assert(Instruction.ValidInstructions[properties.name] ~= nil,
-           string.format("Unknown instruction %s", properties.name))
+    LNVL.Debug.Log.assert(Instruction.ValidInstructions[properties.name] ~= nil,
+                          string.format("Unknown instruction %s", properties.name),
+                          "error")
 
     -- name: The name of the instruction as a string.
     instruction.name = properties.name
@@ -102,7 +103,9 @@ Implementations["set-name"] = Instruction:new {
     name = "set-name",
     action = function (arguments)
         local character, name = arguments.target, arguments.name
-        assert(getmetatable(character) == LNVL.Character)
+        LNVL.Debug.Log.assert(getmetatable(character) == LNVL.Character,
+                              "set-name instruction must receive a Character.",
+                              "error")
         
         if name == "default" then
             character.dialogName = character.firstName
@@ -134,7 +137,9 @@ Implementations["get-data"] = Instruction:new {
 Implementations["set-color"] = Instruction:new {
     name = "set-color",
     action = function (arguments)
-        assert(getmetatable(arguments.target) == LNVL.Character)
+        LNVL.Debug.Log.assert(getmetatable(arguments.target) == LNVL.Character,
+                              "set-name instruction must receive a Character.",
+                              "error")
         arguments.target.textColor = arguments.color
     end
 }
@@ -142,7 +147,9 @@ Implementations["set-color"] = Instruction:new {
 Implementations["set-font"] = Instruction:new {
     name = "set-font",
     action = function (arguments)
-        assert(getmetatable(arguments.target) == LNVL.Character)
+        LNVL.Debug.Log.assert(getmetatable(arguments.target) == LNVL.Character,
+                              "set-font instruction must receive a Character.",
+                              "error")
         arguments.target.font =
             love.graphics.newFont(arguments.font .. ".ttf", arguments.size)
     end
@@ -167,7 +174,7 @@ Implementations["set-image"] = Instruction:new {
             arguments.target.backgroundImage = arguments.image
         else
             -- If we reach this point then it is an error.
-            error(string.format("Cannot set-image for %s", targetType))
+            LNVL.Debug.Log.error(string.format("Cannot set-image for %s", targetType))
         end
     end }
 
@@ -213,9 +220,11 @@ Implementations["set-scene"] = Instruction:new {
 	  name = target
        elseif type(target) == "function" then
 	  name = target(arguments.scene)
-	  assert(type(name) == "string")
+	  LNVL.Debug.Log.assert(type(name) == "string",
+                                "set-scene instruction must receive a string.",
+                                "error")
        else
-	  error("Invalid target for set-scene: " .. target)
+	  LNVL.Debug.Log.error("Invalid target for set-scene: " .. target)
        end
 
        LNVL.ChangeToScene(name)
@@ -284,7 +293,7 @@ Instruction.ForOpcode = {
 if LNVL.Settings.DebugModeEnabled == true then
     for name,_ in pairs(Instruction.ValidInstructions) do
         if Implementations[name] == nil then
-            error("No implementation for the instruction " .. name)
+            LNVL.Debug.Log.fatal("No implementation for the instruction " .. name)
         end
     end
 
@@ -292,7 +301,7 @@ if LNVL.Settings.DebugModeEnabled == true then
         if Instruction.ForOpcode[name] == nil
             or getmetatable(Instruction.ForOpcode[name]) ~= Instruction
         then
-            error("No instruction implementation for the opcode " .. name)
+            LNVL.Debug.Log.fatal("No instruction implementation for the opcode " .. name)
         end
     end
 end
