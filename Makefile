@@ -78,6 +78,7 @@ archive :
 clean :
 	rm LNVL.love
 	rm TAGS
-	rm ./docs/html/*.html
+	rm ./docs/html/assets/ -rf
+	rm ./docs/html/html/ -rf
 	rm ./src/settings.lua
 	rm ./libs/ -rf
