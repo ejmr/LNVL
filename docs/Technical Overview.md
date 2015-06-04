@@ -5,6 +5,19 @@ This document describes the technical behavior of LNVL, intended for
 programmers who want to modify or extend the engine.
 
 
+Enable Debugging
+----------------
+
+Before doing anything else, open `src/settings.lua` and make sure to
+set the following variables:
+
+* `Settings.DebugModeEnabled = true`
+* `Settings.DebugLogLevel = "trace"`
+
+Optionally set `Settings.DebugLog` to a filename if you want a copy of
+all debugging output sent to that file.
+
+
 Basic Execution Model
 ---------------------
 
