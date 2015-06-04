@@ -22,8 +22,8 @@ Graphics.__index = Graphics
 --
 -- The function returns no value.
 function Graphics.DrawContainer(arguments)
-    assert(arguments["backgroundColor"] ~= nil,
-           "Cannot draw a container without a background color.")
+    LNVL.Debug.Log.assert(arguments["backgroundColor"] ~= nil,
+                          "Cannot draw a container without a background color.", "warn")
 
     -- If the container is using a transparent background we can bail
     -- now and have full transparency by simply drawing nothing.
@@ -96,7 +96,7 @@ function Graphics.DrawText(content)
         elseif element:typeOf("Font") == true then
             love.graphics.setFont(element)
 		else
-            error("Cannot draw text content " .. tostring(element))
+            LNVL.Debug.Log.error("Cannot draw text content " .. tostring(element))
         end
     end
 end

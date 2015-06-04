@@ -140,7 +140,7 @@ function Character:new(properties)
     
     if character.dialogName == nil or character.dialogName == "" then
         if character.firstName == nil or character.firstName == "" then
-            error("Cannot create unnamed character")
+            LNVL.Debug.Log.error("Cannot create unnamed character")
         else
             character.dialogName = character.firstName
         end
@@ -149,8 +149,7 @@ function Character:new(properties)
     -- If we are in debugging mode then dump the character data to the
     -- console so that we can verify everything looks correct.
     if LNVL.Settings.DebugModeEnabled == true then
-        print("-- New Character --\n")
-        print(LNVL.Debug.TableToString(character, character.dialogName))
+        LNVL.Debug.Log.debug(LNVL.Debug.TableToString(character, character.dialogName))
     end
 
     return character
@@ -197,7 +196,7 @@ function Character:displayName(nameType)
         return LNVL.Opcode:new("set-character-name",
                                {character=self, name=nameType})
     end
-    error(("Unacceptable character display name type: %s"):format(nameType))
+    LNVL.Debug.Log.error(("Unacceptable character display name type: %s"):format(nameType))
 end
 
 -- Returns the character's full name.  This method is not meant for

@@ -8,6 +8,18 @@
 local Debug = {}
 Debug.__index = Debug
 
+-- The 'Log' property is an instance of the 'log.lua' library
+-- available from:
+--
+--     https://github.com/ejmr/log.lua
+--
+-- See the documentation in 'src/settings.lua.example' for details on
+-- the flags which affect logging.
+Debug.Log = require("libs.log.log")
+Debug.Log.outfile = LNVL.Settings.DebugLog
+Debug.Log.usecolor = LNVL.Settings.DebugLogColorEnabled
+Debug.Log.level = LNVL.Settings.DebugLogLevel
+
 -- This function takes a table and returns a string representing that
 -- table in a pretty-printed format.  The string is also valid Lua
 -- code, meaning the function can also serialize (most) tables.
@@ -103,11 +115,11 @@ function Debug.PrintSceneOpcodes(scene)
     local function printOpcodeTable(opcodes)
         for index,opcode in ipairs(opcodes) do
             if getmetatable(opcode) == nil then
-                print(string.format("[%i] Group = {\n", index))
+                Debug.Log.trace(string.format("[%i] Group = {\n", index))
                 printOpcodeTable(opcode)
-                print(string.format("} (Closing Group %i)\n", index))
+                Debug.Log.trace(string.format("} (Closing Group %i)\n", index))
             else
-                print(string.format("[%i] %s\n", index, tostring(opcode)))
+                Debug.Log.trace(string.format("[%i] %s\n", index, tostring(opcode)))
             end
         end
     end
@@ -118,11 +130,11 @@ end
 -- This function displays every variable in the LNVL script
 -- environment and its type.
 function Debug.DumpScriptEnvironment()
-    print("--- Script Environment ---\n")
+    Debug.Log.debug("--- Script Environment ---")
     for name,value in pairs(LNVL.ScriptEnvironment) do
-        print(string.format("%q = %q", name, type(value)))
+        Debug.Log.debug(string.format("%q = %q", name, type(value)))
     end
-    print("\n--- End of Script Environment ---\n")
+    Debug.Log.debug("--- End of Script Environment ---")
 end
 
 -- Return the class as the module.

@@ -95,7 +95,7 @@ function Color.FromHex(color_hex)
         end
     else
         -- We should never get here.
-        error(string.format("Could not parse the color string %s", color_hex))
+        LNVL.Debug.Log.error(string.format("Could not parse the color string %s", color_hex))
     end
 
     setmetatable(color, Color)
