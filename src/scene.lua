@@ -171,6 +171,11 @@ function Scene:new(properties)
     -- current opcode we should process in the scene.
     scene.opcodeIndex = 1
 
+    -- definitionInfo: A table of information about where this scene
+    -- was created.  See the Lua documentation of lua_getinfo() for
+    -- details on what key-value pairs will be in this table.
+    scene.definitionInfo = debug.getinfo(2, "Sl")
+
     -- If LNVL is in debugging mode then display the opcodes for the
     -- scene so we can make sure everything looks right.
     if LNVL.Settings.DebugModeEnabled == true then
@@ -188,11 +193,12 @@ LNVL.CreateConstructorAlias("Scene", Scene)
 -- help with debugging the string version lists the number of opcodes
 -- in the scene.
 Scene.__tostring = function (scene)
-    if scene["opcodes"] ~= nil then
-        return string.format("<Scene: %i Opcodes>", #scene.opcodes)
-    else
-        return "<Scene: Unknown Opcode Count>"
-    end
+    local formatString = "<Scene: %s:%i: %i Opcodes>"
+
+    return string.format(formatString,
+                         scene.definitionInfo["source"],
+                         scene.definitionInfo["currentline"],
+                         #scene.opcodes)
 end
 
 -- We use this method to process the contents given to Scene objects
