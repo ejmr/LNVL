@@ -65,9 +65,11 @@ LNVL.ScriptEnvironment = { ["LNVL"] = LNVL }
 
 -- For debugging purposes we allow the use of Lua's print(), assert(),
 -- error(), and tostring() functions within dialogue scripts.
+--
+-- The definitions for assert() and error() are deferred until we load
+-- the LNVL.Debug module so that we can use the special versions of
+-- those functions defined by that module.
 LNVL.ScriptEnvironment["print"] = print
-LNVL.ScriptEnvironment["assert"] = assert
-LNVL.ScriptEnvironment["error"] = error
 LNVL.ScriptEnvironment["tostring"] = tostring
 
 -- This is a lookup table of functions which are essential to LNVL and

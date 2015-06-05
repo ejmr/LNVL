@@ -137,5 +137,10 @@ function Debug.DumpScriptEnvironment()
     Debug.Log.debug("--- End of Script Environment ---")
 end
 
+-- Make our Debug.Log.assert() and error() functions available for use
+-- within dialog scripts.
+LNVL.ScriptEnvironment["assert"] = Debug.Log.assert
+LNVL.ScriptEnvironment["error"] = Debug.Log.error
+
 -- Return the class as the module.
 return Debug
