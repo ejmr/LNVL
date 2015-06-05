@@ -71,7 +71,7 @@ However, one file, `src/rgb.txt`, comes from the
 [XFree86 project][xfree86] and therefore uses
 [version 1.1 of their license.][xlicense]
 
-LNVL also uses [`log.lua`][log.lua], Copyright 2014 rxi, released
+LNVL also uses [`log.lua`][log.lua], Copyright 2014–2015 rxi, released
 under [the MIT license](./libs/log/LICENSE).
 
 
