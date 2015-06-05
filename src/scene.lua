@@ -161,6 +161,12 @@ function Scene:new(properties)
     -- opcodes: The list of opcodes for the scene, created above.
     scene.opcodes = opcodes
 
+    -- Log a warning if the scene has no opcodes, because it's rare
+    -- for this to happen, although LNVL does allow it.
+    if #scene.opcodes < 1 then
+        LNVL.Debug.Log.warn("Creating a Scene with zero opcodes.")
+    end
+
     -- opcodeIndex: An index for the 'opcodes' list indicating the
     -- current opcode we should process in the scene.
     scene.opcodeIndex = 1
@@ -395,10 +401,15 @@ end
 -- characters and handles other visual we consider essential to render
 -- each tick.
 --
+-- Because this function renders the results of the current opcode, it
+-- will do nothing and return immediately if the scene has no opcodes.
+--
 -- This function is the default implementation for the hook
 -- Settings.Handlers.Scene().  See the Settings module for more
 -- documentation on the handler.
 function Scene.DefaultHandler(self)
+    if #self.opcodes < 1 then return end
+
     self:refreshActiveCharacters()
     self:drawEssentialElements()
 
