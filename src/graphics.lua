@@ -22,8 +22,8 @@ Graphics.__index = Graphics
 --
 -- The function returns no value.
 function Graphics.DrawContainer(arguments)
-    LNVL.Debug.Log.assert(arguments["backgroundColor"] ~= nil,
-                          "Cannot draw a container without a background color.", "warn")
+    LNVL.Debug.Log.check(arguments["backgroundColor"] ~= nil,
+                         "Cannot draw a container without a background color.")
 
     -- If the container is using a transparent background we can bail
     -- now and have full transparency by simply drawing nothing.

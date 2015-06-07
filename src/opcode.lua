@@ -45,9 +45,9 @@ local ImmediateOpcodes = {
 function Opcode:new(name, arguments)
     local opcode = {}
     setmetatable(opcode, Opcode)
-    LNVL.Debug.Log.assert(Opcode.ValidOpcodes[name] ~= nil,
-                          string.format("Unknown opcode %s", name),
-                          "error")
+    LNVL.Debug.Log.check(Opcode.ValidOpcodes[name] ~= nil,
+                         string.format("Unknown opcode %s", name),
+                         "fatal")
 
     -- name: The name of the instruction this opcode will execute.
     opcode.name = name
@@ -274,9 +274,9 @@ Processors["import-variable"] = returnOpcode
 -- appropriate function above, returning the modified version.
 function Opcode:process()
    local result = Processors[self.name](self)
-   LNVL.Debug.Log.assert(type(result) == "table",
-                         "Opcode processor for " .. self.name .. " did not return a table.",
-                         "error")
+   LNVL.Debug.Log.check(type(result) == "table",
+                        "Opcode processor for " .. self.name .. " did not return a table.",
+                        "error")
    return result
 end
 

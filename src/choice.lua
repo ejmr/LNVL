@@ -34,10 +34,10 @@ function MenuChoice:new(properties)
     choice.action = properties["action"]
 
     -- Make sure the choice has the required properties.
-    LNVL.Debug.Log.assert(choice.label ~= nil,
-                          "MenuChoice must have a label.", "warn")
-    LNVL.Debug.Log.assert(type(choice.action) == "function",
-                          "MenuChoice action must be a function.", "warn")
+    LNVL.Debug.Log.check(choice.label ~= nil,
+                         "MenuChoice must have a label.")
+    LNVL.Debug.Log.check(type(choice.action) == "function",
+                         "MenuChoice action must be a function.")
 
     return choice
 end
