@@ -138,7 +138,7 @@ Implementations["set-color"] = Instruction:new {
     name = "set-color",
     action = function (arguments)
         LNVL.Debug.Log.check(getmetatable(arguments.target) == LNVL.Character,
-                             "set-name instruction must receive a Character.",
+                             "set-color instruction must receive a Character.",
                              "error")
         arguments.target.textColor = arguments.color
     end
