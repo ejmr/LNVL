@@ -231,7 +231,7 @@ function Scene.createOpcodeFromContent(content)
         if type(contentValue) == "string" then
             return LNVL.Opcode:new("say", {content=contentValue})
         end
-        LNVL.Debug.Log.assert(type(contentValue) == "table"
+        LNVL.Debug.Log.check(type(contentValue) == "table"
                    and getmetatable(contentValue) == LNVL.Opcode,
                "Functions as scene content must return a string or opcode",
                "error")
@@ -239,9 +239,9 @@ function Scene.createOpcodeFromContent(content)
     end
 
     -- By now the content must be a table.
-    LNVL.Debug.Log.assert(contentType == "table",
-                          "Unknown content type in Scene",
-                          "error")
+    LNVL.Debug.Log.check(contentType == "table",
+                         "Unknown content type in Scene",
+                         "error")
 
     -- If the content is an LNVL.Menu then we must create an opcode
     -- for it.  Normally functions we call as part of arguments to the

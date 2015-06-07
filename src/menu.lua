@@ -63,9 +63,8 @@ function Menu:new(properties)
     local choices = {}
 
     for _,value in pairs(properties) do
-        LNVL.Debug.Log.assert(type(value) == "table" and #value >= 2,
-                              "Invalid data for a menu choice.",
-                              "warn")
+        LNVL.Debug.Log.check(type(value) == "table" and #value >= 2,
+                             "Invalid data for a menu choice.")
 
         local action
 
