@@ -362,6 +362,20 @@ function LNVL.LoadScript(filename, ...)
     if LNVL.ScriptEnvironment["START"] ~= nil then
 	LNVL.ChangeToScene("START")
     end
+
+    -- Once we have finished loading a script we loop through the
+    -- script environment looking for every Scene object.  We then
+    -- take the key for that Scene from the environment table,
+    -- representing the variable name used when defining the scene,
+    -- and assign it to the Scene.id property for future debugging
+    -- output.  There is some redundancy here in that we will perform
+    -- this action for scenes which we have already tagged earlier.
+    for key,value in pairs(LNVL.ScriptEnvironment) do
+        if getmetatable(value) == LNVL.Scene
+        or getmetatable(value) == LNVL.Character then
+            value.id = key
+        end
+    end
 end
 
 -- Return the LNVL module.

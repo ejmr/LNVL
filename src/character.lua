@@ -15,6 +15,11 @@ function Character:new(properties)
     local character = {}
     setmetatable(character, Character)
 
+    -- id: A string which uniquely identifies this character.  The
+    -- value of this property is for debugging purposes only and no
+    -- script or code outside of LNVL should rely on its value.
+    character.id = nil
+
     -- dialogName: The name of the character as a string that we
     -- display in scene.  Right now we set it as an empty string
     -- because the loop later through 'properties' should give it a

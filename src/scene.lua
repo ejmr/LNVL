@@ -14,6 +14,11 @@ function Scene:new(properties)
     local scene = {}
     setmetatable(scene, Scene)
 
+    -- id: A string which uniquely identifies this scene.  The value
+    -- of this property is for debugging purposes only and no script
+    -- or code outside of LNVL should rely on its value.
+    scene.id = nil
+
     -- preconditions: This array can contain strings and functions.
     -- 
     -- If an element is a string then it must name a scene; the player
