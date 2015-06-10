@@ -260,11 +260,10 @@ scene has satisfied all of its preconditions.  See the code in
 
 ### Standard Lua Functions ###
 
-LNVL dialogue scripts allow the use of three functions from Lua’s
+LNVL dialogue scripts allow the use of two functions from Lua’s
 standard library:
 
 - [`print()`](http://www.lua.org/manual/5.2/manual.html#pdf-print)
-- [`assert()`](http://www.lua.org/manual/5.2/manual.html#pdf-assert)
 - [`error()`](http://www.lua.org/manual/5.2/manual.html#pdf-error)
 
 They exist to help with debugging scripts during development.
