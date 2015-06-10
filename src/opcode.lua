@@ -274,9 +274,9 @@ Processors["import-variable"] = returnOpcode
 -- appropriate function above, returning the modified version.
 function Opcode:process()
    local result = Processors[self.name](self)
-   LNVL.Debug.Log.check(type(result) == "table",
-                        "Opcode processor for " .. self.name .. " did not return a table.",
-                        "error")
+   LNVL.Debug.Log.check(result ~= nil,
+                        "Opcode processor for " .. self.name .. " did not return a value.",
+                        "fatal")
    return result
 end
 
