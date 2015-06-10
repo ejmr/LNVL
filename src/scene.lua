@@ -468,10 +468,10 @@ LNVL.Settings.Handlers.Scene = Scene.DefaultHandler
 local function sceneSatisfiesPreconditions(scene)
    for index,requisite in pairs(scene.preconditions) do
       if type(requisite) == "string" then
-	 assert(LNVL.ScriptEnvironment[requisite] ~= nil,
-		"Cannot find prerequisite scene " .. requisite)
-	 assert(getmetatable(LNVL.ScriptEnvironment[requisite]) == LNVL.Scene,
-		"Prerequsite scene " .. requisite .. " is not a valid Scene")
+	 LNVL.Debug.Log.check(LNVL.ScriptEnvironment[requisite] ~= nil,
+                              "Cannot find prerequisite scene " .. requisite)
+	 LNVL.Debug.Log.check(getmetatable(LNVL.ScriptEnvironment[requisite]) == LNVL.Scene,
+                              "Prerequsite scene " .. requisite .. " is not a valid Scene")
          if not LNVL.VisitedScenes[requisite] then
              return false, index
          end
@@ -480,7 +480,7 @@ local function sceneSatisfiesPreconditions(scene)
               return false, index
           end
       else
-	 error("Unknown type of precondition.  Must be a string or function.")
+	 LNVL.Debug.Log.error("Unknown type of precondition.  Must be a string or function.")
       end
    end
 
@@ -505,15 +505,16 @@ end
 local function changeToScene(name)
     local scene = LNVL.ScriptEnvironment[name]
 
-    assert(scene ~= nil,
-	   "Cannot find scene with variable name " .. name)
-    assert(getmetatable(scene) == LNVL.Scene,
-	   name .. " is a variable but not a Scene")
+    LNVL.Debug.Log.trace("Changing to scene " .. name)
+    LNVL.Debug.Log.check(scene ~= nil,
+                         "Cannot find scene with variable name " .. name)
+    LNVL.Debug.Log.check(getmetatable(scene) == LNVL.Scene,
+                         name .. " is a variable but not a Scene")
 
     -- Ensure that we've satisfied any preconditions for the scene.
     if scene["preconditions"] ~= nil then
 	if sceneSatisfiesPreconditions(scene) ~= true then
-	    error("Scene " .. name .. " fails to satisfy preconditions.")
+	    LNVL.Debug.Log.error("Scene " .. name .. " fails to satisfy preconditions.")
 	end
     end
 
