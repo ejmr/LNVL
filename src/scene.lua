@@ -458,6 +458,77 @@ end
 -- Assign our default handler implementation.
 LNVL.Settings.Handlers.Scene = Scene.DefaultHandler
 
+-- This utility function ensures that a Scene (the required argument)
+-- satisfies all of its preconditions.  It returns two values.  The
+-- first is a boolean indicating whether or not all preconditions are
+-- satisfied; if they are the function returns 'true' and 'nil'.  If
+-- any preconditions are not met, however, the function returns
+-- 'false' and an integer, an index in 'scene.preconditions' for the
+-- first precondition that failed.
+local function sceneSatisfiesPreconditions(scene)
+   for index,requisite in pairs(scene.preconditions) do
+      if type(requisite) == "string" then
+	 assert(LNVL.ScriptEnvironment[requisite] ~= nil,
+		"Cannot find prerequisite scene " .. requisite)
+	 assert(getmetatable(LNVL.ScriptEnvironment[requisite]) == LNVL.Scene,
+		"Prerequsite scene " .. requisite .. " is not a valid Scene")
+         if not LNVL.VisitedScenes[requisite] then
+             return false, index
+         end
+      elseif type(requisite) == "function" then
+          if requisite(scene) == false then
+              return false, index
+          end
+      else
+	 error("Unknown type of precondition.  Must be a string or function.")
+      end
+   end
+
+   return true, nil
+end
+
+-- This function changes the current scene to the one given, which
+-- must be a string that names a scene in the script environment.
+-- I.e. the function looks for
+--
+--     LNVL.ScriptEnvironment[name]
+--
+-- which must have an LNVL.Scene object as its value.
+--
+-- This function will properly update the scene history and mark the
+-- scene as 'visited'.  Use this function to change scenes in code
+-- outside of dialogue scripts (cf. ChangeToScene() defined in the
+-- src/scene.lua file).  Always use this function instead of directly
+-- modifying the value of LNVL.CurrentScene.
+--
+-- This function returns no value.
+local function changeToScene(name)
+    local scene = LNVL.ScriptEnvironment[name]
+
+    assert(scene ~= nil,
+	   "Cannot find scene with variable name " .. name)
+    assert(getmetatable(scene) == LNVL.Scene,
+	   name .. " is a variable but not a Scene")
+
+    -- Ensure that we've satisfied any preconditions for the scene.
+    if scene["preconditions"] ~= nil then
+	if sceneSatisfiesPreconditions(scene) ~= true then
+	    error("Scene " .. name .. " fails to satisfy preconditions.")
+	end
+    end
+
+    -- Before we switch scenes we record that we have seen, or
+    -- more specifically *about* to see, the new scene.  And
+    -- furthermore we record the name of the most recent scene.
+    LNVL.VisitedScenes[name] = true
+    table.insert(LNVL.SceneHistory, name)
+
+    LNVL.CurrentScene = scene
+end
+
+-- Set the handler for changing scenes.
+LNVL.ChangeToScene = LNVL.Settings.Handlers.ChangeScene or changeToScene
+
 -- This method draws the scene and is the method intended for use
 -- outside of LNVL, e.g. inside of the love.draw() function.
 function Scene:draw()
