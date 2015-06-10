@@ -130,7 +130,7 @@ end
 -- This function displays every variable in the LNVL script
 -- environment and its type.
 function Debug.DumpScriptEnvironment()
-    Debug.Log.debug("--- Script Environment ---")
+    Debug.Log.debug("--- Begin Script Environment ---")
     for name,value in pairs(LNVL.ScriptEnvironment) do
         Debug.Log.debug(string.format("%q = %q", name, type(value)))
     end
