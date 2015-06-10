@@ -184,6 +184,39 @@ Settings.Handlers = {}
 -- LNVL ignores any return values from this function.
 Settings.Handlers.Scene = nil
 
+-- CHANGE SCENE HANDLER: Function
+--
+-- LNVL calls this function whenever it changes to a difference scene.
+-- The function receives one argument: a string naming a scene, which
+-- is the scene to which the function should switch.  The value of
+-- this handler is assigned to the LNVL.ChangeToScene() function.
+--
+-- The handler should, at a minimum, perform the following:
+--
+-- 1. It should look for the scene inside `LNVL.ScriptEnvironment`,
+-- using the given name as the key, e.g.
+--
+--     local scene = LNVL.ScriptEnvironment[name]
+--
+-- 2. It should see if that scene has preconditions, i.e. test to
+-- see if `scene["preconditions"]` is not-nil.
+--
+-- 3. If the scene has preconditions the handler should call
+-- `sceneSatisfiesPreconditions()` on the scene and make sure that it
+-- retursn true.
+--
+-- 4. The handler should set `LNVL.VisitedScenes[name]` to true.
+--
+-- 5. The handler should add the name of the scene to the
+-- `LNVL.SceneHistory` table.
+--
+-- 6. Finally it should assign the new scene to `LNVL.CurrentScene`.
+--
+-- See the default implementation in `src/scene.lua` for an example.
+--
+-- LNVL ignores any return values from this function.
+Settings.Handlers.ChangeScene = nil
+
 -- CHARACTER HANDLER: Function
 --
 -- Characters in visual novels often have avatars, images associated
