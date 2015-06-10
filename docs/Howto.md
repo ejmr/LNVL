@@ -268,6 +268,11 @@ standard library:
 
 They exist to help with debugging scripts during development.
 
+The function `assert()` is also available.  However, unlike the
+standard Lua `assert()`, the version in LNVL will send output to
+various places based on values in the `src/settings.lua` file.  See
+the comments in that file for further details.
+
 
 Characters
 ----------

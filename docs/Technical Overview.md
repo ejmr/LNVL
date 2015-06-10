@@ -15,7 +15,9 @@ set the following variables:
 * `Settings.DebugLogLevel = "trace"`
 
 Optionally set `Settings.DebugLog` to a filename if you want a copy of
-all debugging output sent to that file.
+all debugging output sent to that file; by default its value is `nil`,
+which sends output to the terminal.  Any use of `assert()` in dialog
+scripts will send output to the location of `Settings.DebugLog`.
 
 
 Basic Execution Model
