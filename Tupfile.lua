@@ -9,6 +9,11 @@ local sources = {
 }
 
 tup.rule(
+    {"LNVL.lua", "./src/*.lua"},
+    "^ Running luacheck^ luacheck %f"
+)
+
+tup.rule(
     sources,
     [[^ Creating TAGS^ ctags-exuberant -e --languages=lua %f \
           --regex-lua="/Processors\[\"([a-z-]+)\"\].+/Opcode.\1/" \
