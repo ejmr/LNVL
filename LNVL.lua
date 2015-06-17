@@ -74,15 +74,28 @@ LNVL.ScriptEnvironment["tostring"] = tostring
 
 -- This is a lookup table of functions which are essential to LNVL and
 -- which we do not let the user overwrite, otherwise they may be able
--- to do something like rewrite the Character constructor accidentally
+-- to do something like rewrite the Character constructor.  The keys
+-- are strings naming the keywords and the values are strings naming
+-- their type, i.e. return values from type().  For example, the value
+-- of
+--
+--     ReservedKeywords["Character"]
+--
+-- should always be "function".  After loading dialog scripts we check
+-- to make sure all reserved keywords still have their expected type
+-- as a way to see if the user overwrote their definitions.  This is
+-- not bullet-proof though, as a script could redefine "Character" as
+-- another function and get away with it.
 local ReservedKeywords = {}
 
 -- This metatable changes the __newindex() of the script environment
--- so that we cannot add anything that conflicts with the names
--- listed in the ReservedKeywords table.
+-- so that we cannot add anything that conflicts with the names listed
+-- in the ReservedKeywords table.  Because the __newindex() metamethod
+-- is only called when we are adding a new key this is a weak form of
+-- protection, but still may help catch some errors.
 setmetatable(LNVL.ScriptEnvironment, {
                  __newindex = function (table, key, value)
-                     if ReservedKeywords[key] == true then
+                     if ReservedKeywords[key] ~= nil then
                          error(key .. " is a reserved word.")
                      else
                          rawset(table, key, value)
@@ -113,7 +126,7 @@ function LNVL.CreateConstructorAlias(name, class)
     LNVL.ScriptEnvironment[name] = function (...)
         return class:new(...)
     end
-    ReservedKeywords[name] = true
+    ReservedKeywords[name] = "function"
 end
 
 -- This function creates a function alias, i.e. a function we can use
@@ -128,7 +141,7 @@ function LNVL.CreateFunctionAlias(name, implementation)
     LNVL.ScriptEnvironment[name] = function (...)
         return implementation(...)
     end
-    ReservedKeywords[name] = true
+    ReservedKeywords[name] = "function"
 end
 
 -- This property represents the current Scene in use.  We should
@@ -265,6 +278,23 @@ local function mergeContexts(...)
     end
 end
 
+-- We run this function after loading a script to make sure the
+-- reserved keywords still have their required type.  This is a way of
+-- protecting dialog scripts from overwriting such things as the
+-- 'Scene' constructor.  However, it is not a bullet-proof solution.
+-- If a dialog script redefines 'Scene' as another function then this
+-- test will not see that as an error.
+local function checkReservedKeywordTypes()
+    for key,value in pairs(LNVL.ScriptEnvironment) do
+        if ReservedKeywords[key] ~= nil then
+            local environmentType = type(LNVL.ScriptEnvironment[key])
+            if environmentType ~= ReservedKeywords[key] then
+                error(("Reserved keyword %s has the incorrect type %s."):format(key, environmentType))
+            end
+        end
+    end
+end
+
 -- This function loads an external LNVL script, i.e. one defining
 -- scenes and story content.  The argument is the path to the file;
 -- the function assumes the caller has already ensured the file exists
@@ -295,6 +325,10 @@ function LNVL.LoadScript(filename, ...)
     else
         pcall(script)
     end
+
+    -- Immediately after loading a script we try to ensure that the
+    -- script did not redefine any reserved keywords.
+    checkReservedKeywordTypes()
 
     -- We always treat 'START' as the initial scene in any story so we
     -- update the current scene if 'START' exists.
