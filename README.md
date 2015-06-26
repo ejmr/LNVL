@@ -1,6 +1,8 @@
 LNVL
 ====
 
+[![Travis-CI-Badge][]][Travis-CI]
+
 LNVL implements a simple [visual novel][nvl] component for use in
 games based on the [LÖVE engine][love].  LNVL provides only basic
 functionality and works best as an addition to another program which
@@ -95,3 +97,6 @@ Special Thanks
 [gnu make]: https://www.gnu.org/software/make/
 [log.lua]: https://github.com/rxi/log.lua
 [rxi]: https://github.com/rxi
+[Travis-CI-Badge]: https://travis-ci.org/ejmr/LNVL.svg
+[Travis-CI]: https://travis-ci.org/ejmr/LNVL
+
