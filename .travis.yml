@@ -1,0 +1,24 @@
+language: lua
+
+sudo: required
+
+env:
+  LUA=luajit
+
+branches:
+  only:
+    - master
+
+before_install:
+  - sudo apt-get install luajit
+  - sudo luarocks install luafilesystem
+  - sudo luarocks install luacheck
+
+script: "luacheck LNVL.lua ./src/*.lua"
+
+notifications:
+  email:
+    recipients:
+      - ejmr@plutono.org
+    on_success: change
+    on_failure: always
