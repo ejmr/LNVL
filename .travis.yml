@@ -20,6 +20,6 @@ script: "luacheck LNVL.lua ./src/*.lua"
 notifications:
   email:
     recipients:
-      - ejmr@plutono.org
+      - ejmr@plutono.com
     on_success: change
     on_failure: always
