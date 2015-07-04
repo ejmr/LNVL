@@ -233,7 +233,9 @@ Implementations["set-scene"] = Instruction:new {
 
 Implementations["no-op"] = Instruction:new {
     name = "no-op",
-    action = function (arguments) end
+    action = function (arguments)
+        LNVL.Debug.Log.error("The engine must never generate a no-op instruction.")
+    end
 }
 
 Implementations["show-menu"] = Instruction:new {
