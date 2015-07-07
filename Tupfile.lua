@@ -3,14 +3,28 @@
 local sources = {
     "LNVL.lua",
     "src/*.lua",
+    "src/settings.lua.example",
     "src/rgb.txt",
     "examples/*.lua",
     "main.lua",
 }
 
 tup.rule(
-    {"LNVL.lua", "./src/*.lua"},
-    "^ Running luacheck^ luacheck %f --std=luajit"
+    {"LNVL.lua", "./src/*.lua", "./src/settings.lua.example"},
+    "^ Running luacheck on LNVL^ luacheck %f --std=luajit"
+)
+
+-- Our invocation of Luacheck on the example/test code uses many more
+-- options because we have to make the scripts aware of the global
+-- shortcut constructors that LNVL provides, among other things.
+tup.rule(
+    {"main.lua", "./examples"},
+    [[^ Running luacheck on examples^ luacheck %f \
+      --std=luajit --globals love \
+      --read-globals Scene Character Color Set Get ChangeToScene Pause Menu ChangeSceneBackgroundTo \
+      --allow-defined-top \
+      --ignore="password" \
+      --no-unused --no-unused-globals]]
 )
 
 tup.rule(
