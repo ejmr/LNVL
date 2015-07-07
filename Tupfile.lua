@@ -10,7 +10,7 @@ local sources = {
 
 tup.rule(
     {"LNVL.lua", "./src/*.lua"},
-    "^ Running luacheck^ luacheck %f"
+    "^ Running luacheck^ luacheck %f --std=luajit"
 )
 
 tup.rule(
