@@ -15,7 +15,7 @@ before_install:
   - sudo luarocks install luafilesystem
   - sudo luarocks install luacheck
 
-script: "luacheck LNVL.lua ./src/*.lua"
+script: "luacheck LNVL.lua ./src/*.lua ./src/settings.lua.example --std=luajit"
 
 notifications:
   email:
