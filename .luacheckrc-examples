@@ -1,0 +1,14 @@
+-- This configuration for Luacheck is meant *ONLY* for use when
+-- running Luacheck on the `examples/` directory.
+
+std = "luajit"
+color = true
+globals = { "LNVL" }
+read_globals = { "love" }
+unused = false
+codes = true
+allow_defined_top = true
+ignore = {
+    "113",
+    "131",
+}
