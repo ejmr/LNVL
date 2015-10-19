@@ -3,6 +3,19 @@ LNVL
 
 [![Travis-CI-Badge][]][Travis-CI]
 
+Status
+------
+
+**Important:** As of October 2015 I am not working too much on LNVL.
+The project is not dead though.  But still, it is currently not a high
+priority for me.  I still welcome any feature requests or bug reports,
+but if you intend to use LNVL right now please be aware that the
+current rate of development is extremely slow.
+
+
+About
+-----
+
 LNVL implements a simple [visual novel][nvl] component for use in
 games based on the [LÖVE engine][love].  LNVL provides only basic
 functionality and works best as an addition to another program which
