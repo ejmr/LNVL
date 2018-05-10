@@ -1,16 +1,32 @@
 LNVL
 ====
 
-[![Travis-CI-Badge][]][Travis-CI]
+IMPORTANT: Development and Legal Status
+---------------------------------------
 
-Status
-------
+LNVL is no longer in active development, and has not been since late 2015.
+For personal reasons I rarely contribute to code publically anymore,
+and thus I have archived this project on GitHub since I have no desire
+or intention to respond to pull-requests or bug reports.  Nonetheless, I
+give my complete support and blessing to anyone wishing to use this code
+for any purpose.  I am not the *sole* author of the LNVL codebase, but I
+am the principle author, having written almost every line.  For my part,
+I release all LNVL code I've written to the Public Domain, and legally
+release any claim of copyright for my work.  **The copyright remains
+for the code I did not write.**  You can use Git (e.g. `git-blame`)
+to see exactly who wrote which lines, if that is important to you for
+legal reasons; I have no authority nor wish to reliquinsh the copyright
+of LNVL's contributors.  If you want to have a "clean" (legally-speaking)
+codebase to use, then I suggest you use Git to identify and then delete
+all code authored by anyone *except* Eric James Michael Ritz.
 
-**Important:** As of October 2015 I am not working too much on LNVL.
-The project is not dead though.  But still, it is currently not a high
-priority for me.  I still welcome any feature requests or bug reports,
-but if you intend to use LNVL right now please be aware that the
-current rate of development is extremely slow.
+*Note:* Git distinguishes between authors and committers; there is
+code for which I am the committer but *not* the author, and I *do not*
+release any such code to the Public Domain, only that for which I am
+*both* the author and committer.
+
+    -- ejmr, 10 May 2018
+
 
 
 About
@@ -80,14 +96,19 @@ Copyright and License
 
 Copyright 2012, 2013, 2014, 2015 Plutono INC.
 
-LNVL uses the [GNU General Public License][gpl].
+All work by Eric James Michael Ritz belongs to the Public Domain as of 2018.
+Read the 'Status' section at the top of this document for details.
 
-However, one file, `src/rgb.txt`, comes from the
+All of LNVL prior to the 10th of May 2018 is protected by the [GNU General Public License][gpl],
+with two exceptions:
+
+1. One file, `src/rgb.txt`, comes from the
 [XFree86 project][xfree86] and therefore uses
 [version 1.1 of their license.][xlicense]
 
-LNVL also uses [`log.lua`][log.lua], Copyright 2014–2015 rxi, released
+2. LNVL also uses [`log.lua`][log.lua], Copyright 2014–2015 rxi, released
 under [the MIT license](./libs/log/LICENSE).
+
 
 
 Special Thanks
@@ -97,6 +118,18 @@ Special Thanks
 * The code for `LNVL.Debug.TableToString()` uses the work of
   [Julio Manuel Fernandez-Diaz](http://lua-users.org/wiki/TableSerialization).
 * [rxi][] for the `log.lua` library.
+
+
+
+Dedication
+----------
+
+*For Jeff, Ben, and Mira.*
+
+As part of releasing my work to the Public Domain, I also hereby request
+that future developers never remove this dedication from this documentation.
+
+    -- ejmr
 
 
 
@@ -112,4 +145,3 @@ Special Thanks
 [rxi]: https://github.com/rxi
 [Travis-CI-Badge]: https://travis-ci.org/ejmr/LNVL.svg
 [Travis-CI]: https://travis-ci.org/ejmr/LNVL
-
